@@ -8,6 +8,7 @@ The collation utf8mb4_unicode_ci is used for all CHAR and VARCHAR fields.
 
 Table **publications**  
 Each record in this table describes a printed or online publication (a bibliographic entry).
+*Equivalent: <http://www.cidoc-crm.org/cidoc-crm/E31_document>*
 
 | Field name | Type | Description |
 | --- | :---: | :--- |
@@ -15,12 +16,13 @@ Each record in this table describes a printed or online publication (a bibliogra
 | csl_json | TEXT | Bibliographical data in the CSL-JSON format |
 | author_year | VARCHAR(255) | The author-year handle for refererring |
 | html_entry | VARCHAR(4000) | Precomposed bibliographical entry in the Chicago Manual of Art Style format (HTML) |
-| oeb_id | VARCHAR(4000) | The ID of the corresponding record in the Online Egyptological Bibliography (not available for all records) |
+| oeb_id | VARCHAR(4000) | The ID of the corresponding record in the [Online Egyptological Bibliography](http://oeb.griffith.ox.ac.uk/) (not available for all records) |
 
 
 Table **biblio_refs**  
 Each record in this table describes a reference from a publication (if the `source_id` field is not empty) or a webpage (if the `source_url` field is not empty) to an entity (an inscribed object, a person's dossier, 
 a workshop, an archaeological assemblage, a personal name, or a title. 
+*Equivalent: <http://www.cidoc-crm.org/cidoc-crm/P70i_is_documented_in> statements*
 
 | Field name | Type | Description |
 | --- | :---: | :--- |
