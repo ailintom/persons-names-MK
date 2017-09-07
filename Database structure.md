@@ -7,8 +7,8 @@ The data is stored in a MySQL database. For the sake of compatibility with other
 The collation utf8mb4_unicode_ci is used for all CHAR and VARCHAR fields.
 
 Table **publications**  
-Each record in this table describes a printed or online publication (a bibliographic entry).
-*Equivalent: <http://www.cidoc-crm.org/cidoc-crm/E31_document>*
+Each record in this table describes a printed or online publication (a bibliographic entry).  
+*Equivalent: <http://www.cidoc-crm.org/cidoc-crm/E31_document>*  
 
 | Field name | Type | Description |
 | --- | :---: | :--- |
@@ -21,8 +21,8 @@ Each record in this table describes a printed or online publication (a bibliogra
 
 Table **biblio_refs**  
 Each record in this table describes a reference from a publication (if the `source_id` field is not empty) or a webpage (if the `source_url` field is not empty) to an entity (an inscribed object, a person's dossier, 
-a workshop, an archaeological assemblage, a personal name, or a title. 
-*Equivalent: <http://www.cidoc-crm.org/cidoc-crm/P70i_is_documented_in> statements*
+a workshop, an archaeological assemblage, a personal name, or a title.   
+*Equivalent: <http://www.cidoc-crm.org/cidoc-crm/P70i_is_documented_in> statements*  
 
 | Field name | Type | Description |
 | --- | :---: | :--- |
