@@ -6,7 +6,7 @@ The data is stored in a MySQL database. For the sake of compatibility with other
 * `INT (11)` (standard SQL data type `INTEGER`) for IDs.  
 The collation utf8mb4_unicode_ci is used for all CHAR and VARCHAR fields.
 
-Table **publications**
+Table **publications**  
 Each record in this table describes a printed or online publication (a bibliographic entry).
 
 | Field name | Type | Description |
@@ -18,7 +18,7 @@ Each record in this table describes a printed or online publication (a bibliogra
 | oeb_id | VARCHAR(4000) | The ID of the corresponding record in the Online Egyptological Bibliography (not available for all records) |
 
 
-Table **biblio_refs**
+Table **biblio_refs**  
 Each record in this table describes a reference from a publication (if the `source_id` field is not empty) or a webpage (if the `source_url` field is not empty) to an entity (an inscribed object, a person's dossier, 
 a workshop, an archaeological assemblage, a personal name, or a title. 
 
