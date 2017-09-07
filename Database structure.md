@@ -11,7 +11,7 @@ Each record in this table describes a printed or online publication (a bibliogra
 
 
 | Field name | Type | Description |
-| --- | :---: | ---: |
+| --- | :---: | :--- |
 | biblio_entries_id | INTEGER | Unique record ID |
 | csl_json | TEXT | Bibliographical data in the CSL-JSON format |
 | author_year | VARCHAR(255) | The author-year handle for refererring |
