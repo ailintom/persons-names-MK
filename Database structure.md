@@ -21,11 +21,12 @@ This is a supporting table containing keys and values of own and third-party the
 | --- | :---: | :--- |
 | thesauri_id | INTEGER | Unique record ID |
 | thesaurus   | INTEGER | The handle of the thesaurus to which this record belongs. Under thesaurus=0 all thesauri represented in this table are listed.  |
-<!--- | key_number  | INTEGER | The numeric key of the thesaurus entry | --->
 | parent      | INTEGER | The `thesauri_id` of the superordinate thesaurus entry |
 | sort_value  | INTEGER | The value used for sorting thesaurus entries  |
 | item_name  | VARCHAR(255) | The textual value of the thesaurus entry |
 | external_key| VARCHAR(255) | The key of the corresponding thesaurus entry in a standard external thesaurus (such as the [THOT](http://thot.philo.ulg.ac.be/index.html) project)  |
+
+<!--- | key_number  | INTEGER | The numeric key of the thesaurus entry | --->
 
 ### publications (table_id: 2)  
 Each record in this table describes a printed or online publication (a bibliographic entry). Here goes everything published that can be cited using the author-year system.   
@@ -87,4 +88,4 @@ Each record in this table represents a physical object with an Egyptian inscript
 
   
   
-**Disclaimer: This is a work in progress **
+**Disclaimer: This is a work in progress**  
