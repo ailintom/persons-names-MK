@@ -1,4 +1,4 @@
-## Persons and Names of the Middle Kingdom
+# Persons and Names of the Middle Kingdom
 
 These are the source files and documentation related to the project 
 Persons and Names of the Middle Kingdom  

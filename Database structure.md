@@ -1,4 +1,4 @@
-# Database structure
+# Persons and Names of the Middle Kingdom. Database structure
 The data is stored in a MySQL database. For the sake of compatibility with other relational database management systems only the following datatypes are used:  
 * `CHAR` (standard SQL data type `NATIONAL CHARACTER`) for short attributes;  
 * `VARCHAR(255)` (standard SQL data type `NATIONAL CHARACTER VARYING (255)`) for short text values;  
