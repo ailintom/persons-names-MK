@@ -15,7 +15,8 @@ The IDs are stored as signed 32-bit integers, which are used as bit fields, wher
 ## Tables
 
 ### thesauri (table_id: 2)  
-This is a supporting table containing keys and values of own and third-party thesauri used in the database. 
+This is a supporting table containing keys and values of own and third-party thesauri used in the database.  
+
 | Field name | Type | Description |
 | --- | :---: | :--- |
 | thesauri_id | INTEGER | Unique record ID |
