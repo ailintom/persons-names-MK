@@ -1,4 +1,5 @@
-# Persons and Names of the Middle Kingdom. Database structure
+# Persons and Names of the Middle Kingdom  
+# Database structure
 The data is stored in a MySQL database. For the sake of compatibility with other relational database management systems only the following datatypes are used:  
 * `CHAR` (standard SQL data type `NATIONAL CHARACTER`) for short attributes;  
 * `VARCHAR(255)` (standard SQL data type `NATIONAL CHARACTER VARYING (255)`) for short text values;  
@@ -10,7 +11,7 @@ The collation `utf8mb4_unicode_ci` is used for all `CHAR` and `VARCHAR` fields.
 ## The ID numbers
 The database uses a system of ID numbers that ensures that each ID uniquely identifies an entity within the whole database and thus contains information on the table where the record is stored.
 The IDs are stored as signed 32-bit integers, which are used as bit fields, whereby the table is coded in bits 4 to 9, and bits 10 to 32 are used for the number of the record in the table, allowing for 8388607
- records per table. Bits 1 to 3 are reserved. The table ID can be extracted from the record ID with two simple arithmetic operations    `$table_id = (($id & 0x1F800000) / 0x800000);` in PHP 5 or in javascript.
+ records per table. Bits 1 to 3 are reserved. The table ID can be extracted from the record ID with two simple arithmetic operations    `$table_id = (($id & 0x1F800000) / 0x800000);` in PHP 5 or in JavaScript.
 
 ## Tables
 
@@ -61,25 +62,25 @@ a workshop, an archaeological assemblage, a personal name, or a title.
 | note           | VARCHAR(4000) | Note related to the reference (for example, mistakes in the publication) |
 
 ### inscriptions (table_id: 7)  
-Each record in this table represents a physical object with an Egyptian inscription. This can be an object now located in a museum or a private collection or known from a publication, archival materials or a sales catalogue (such as a stela, statue, offering table, coffin, seal, papyrus, etc.), a rock inscription, an inscribed tomb or another structure. Objects coming from the same structure of a different type than the objects themselves (e. g., stelae originally installed in the same offering chapel) are considered different objects, but objects that are parts of an originally integral object of the same type, now decomposed, (e. g. two parts of the same statue, now stored in different museums) are considered one and the same object. 
+Each record in this table represents a physical object with an Egyptian inscription. This can be an object now located in a museum or a private collection or known from a publication, archival material, or a sale catalogue (such as a stela, statue, offering table, coffin, seal, papyrus, etc.), a rock inscription, an inscribed tomb, or another structure. Objects coming from the same structure of a different type than the objects themselves (e. g., stelae originally installed in the same offering chapel) are considered different objects, but objects that are parts of an originally integral object of the same type, now decomposed, (e. g. two parts of the same statue, now stored in different museums) are considered the same object. 
 
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
 | inscriptions_id   | INT | Unique record ID, primary key |
-| title  | VARCHAR(255) | The title under which the object is referred to in the database (the most relevant pair of the museum name and inventory number for objects or the reference to the most relevant (usually first) publication )  |
+| title  | VARCHAR(255) | The title under which the object is referred to in the database (the most relevant pair of the museum name and inventory number for objects or the reference to the most relevant (usually first) publication)  |
 | object_type  | VARCHAR(255) | The `item_name` of the inscription type in the object_type thesaurus (thesaurus 1) *example: stela*  |
 | object_subtype | VARCHAR(255) | The `item_name` of the inscription type in the object_subtype thesaurus (thesaurus 2) *example: block-statue *  |
 | material          | VARCHAR(255) | The `item_name` of the material type in the material  thesaurus (thesaurus 3) *based on a subset of the [THOT Material thesaurus](http://thot.philo.ulg.ac.be/concept/thot-6200)* |
 | assemblages_id    | INT | The ID of the archaeological assemblage to which the inscribed object belongs in the table `assemblages` |
 | text_content      | VARCHAR(255) | The `item_name` of the inscription type in the text_content thesaurus (thesaurus 2) *based on a subset of the [THOT Text content thesaurus](http://thot.philo.ulg.ac.be/concept/thot-18634)* |
 | script            | VARCHAR(255) | The `item_name` of the inscription type in the script thesaurus (thesaurus 4) *based on a subset of the [THOT Ancient Egyptian scripts thesaurus](http://thot.philo.ulg.ac.be/concept/thot-111)* |
-| provenance        | VARCHAR(255) | The `place_name` of the record in the table `places` corresponding to the the place where the object was found or purchased |
+| provenance        | VARCHAR(255) | The `place_name` of the record in the table `places` corresponding to the place where the object was found or purchased |
 | provenance_note   | VARCHAR(4000) | Note related to the `provenance` |
-| installation_place| VARCHAR(255) | The `place_name` of the record in the table `places` corresponding to the the place where the object should have been installed (when different from the provenance or when the provenance is unknown or unreliable, as in case of purchases) |
+| installation_place| VARCHAR(255) | The `place_name` of the record in the table `places` corresponding to the place where the object should have been installed (when different from the provenance or when the provenance is unknown or unreliable, as in case of purchases) |
 | installation_place_note   | VARCHAR(4000) | Note related to the `installation_place` |
-| origin            | VARCHAR(255) | The `place_name` of the record in the table `places` corresponding to the the place where the person(s) named in the inscription should have lived |
+| origin            | VARCHAR(255) | The `place_name` of the record in the table `places` corresponding to the place where the person(s) named in the inscription should have lived |
 | origin_note       | VARCHAR(4000) | The reasoning behind the `origin` with relevant bibliographical references whenever possible |
-| production_place  | VARCHAR(255) | The `place_name` of the record in the table `places` corresponding to the the place where the object should have been produced |
+| production_place  | VARCHAR(255) | The `place_name` of the record in the table `places` corresponding to the place where the object should have been produced |
 | production_place_note | VARCHAR(4000) | The reasoning behind the `production_place` with relevant bibliographical references whenever possible |
 | dating            | VARCHAR(255) | The `item_name` of the period to which the object can be dated in the dating thesaurus (thesaurus 5) *loosely based on a subset of the [THOT Dates and dating systems thesaurus](http://thot.philo.ulg.ac.be/concept/thot-114)* |
 | dating_note       | VARCHAR(4000) | The reasoning behind the `dating`  |
@@ -92,7 +93,7 @@ Each record in this table represents an archaeological assemblage (such as a bur
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
 | assemblages_id    | INT   | Unique record ID, primary key |
-| site              | VARCHAR(255) | The `place_name` of the record in the table `places` corresponding to the the place where the assemblage is located |
+| site              | VARCHAR(255) | The `place_name` of the record in the table `places` corresponding to the place where the assemblage is located |
 | site_area         | VARCHAR(255) | The part of the site where the assemblage is located |
 | exact_location    | VARCHAR(4000)| A detailed description of the assemblage location |
 | title             | VARCHAR(255) | The title under which the assemblage is referred to in the database |
@@ -112,7 +113,7 @@ Each record in this table represents a workshop producing inscribed objects that
 | ---               | :---: | :---        |
 | workshops_id      | INT   | Unique record ID, primary key |
 | title             | VARCHAR(255) | The title under which the workshop is referred to in the database |
-| production_place  | VARCHAR(255) | The `place_name` of the record in the table `places` corresponding to the the place where the objects should have been produced |
+| production_place  | VARCHAR(255) | The `place_name` of the record in the table `places` corresponding to the place where the objects should have been produced |
 | production_place_note | VARCHAR(4000) | The reasoning behind the `production_place` with relevant bibliographical references whenever possible |
 | dating            | VARCHAR(255) | The `item_name` of the period to which the workshop can be dated in the dating thesaurus (thesaurus 5) *loosely based on a subset of the [THOT Dates and dating systems thesaurus](http://thot.philo.ulg.ac.be/concept/thot-114)* |
 | dating_note       | VARCHAR(4000) | The reasoning behind the `dating`  |
