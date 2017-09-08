@@ -10,7 +10,7 @@ The collation `utf8mb4_unicode_ci` is used for all `CHAR` and `VARCHAR` fields.
 ## The ID numbers
 The database uses a system of ID numbers that ensures that each ID uniquely identifies an entity within the whole database and thus contains information on the table where the record is stored.
 The IDs are stored as signed 32-bit integers, which are used as bit fields, whereby the table is coded in bits 4 to 9, and bits 10 to 32 are used for the number of the record in the table, allowing for 8388607
- records per table. Bits 1 to 3 are reserved. The table ID can be extracted from the record ID with simple arithmetic operations    `$table_id = (($id & 0x1F800000) / 0x800000);` in PHP 5 or in javascript.
+ records per table. Bits 1 to 3 are reserved. The table ID can be extracted from the record ID with two simple arithmetic operations    `$table_id = (($id & 0x1F800000) / 0x800000);` in PHP 5 or in javascript.
 
 ## Tables
 
@@ -19,8 +19,8 @@ This is a supporting table containing keys and values of own and third-party the
 
 | Field name | Type | Description |
 | --- | :---: | :--- |
-| thesauri_id | INTEGER | Unique record ID |
-| thesaurus   | INTEGER | The handle of the thesaurus to which this record belongs. Under thesaurus=0 all thesauri represented in this table are listed.  |
+| thesauri_id | INTEGER | Unique record ID, primary key |
+| thesaurus   | INTEGER | The handle of the thesaurus to which this record belongs. Under thesaurus=0 all thesauri represented in this table are listed.  |
 | parent      | INTEGER | The `thesauri_id` of the superordinate thesaurus entry |
 | sort_value  | INTEGER | The value used for sorting thesaurus entries  |
 | item_name  | VARCHAR(255) | The textual value of the thesaurus entry |
@@ -34,7 +34,7 @@ Each record in this table describes a printed or online publication (a bibliogra
 
 | Field name | Type | Description |
 | --- | :---: | :--- |
-| biblio_entries_id | INTEGER | Unique record ID |
+| biblio_entries_id | INTEGER | Unique record ID, primary key |
 | csl_json | TEXT | Bibliographical data in the [CSL-JSON](https://github.com/citation-style-language/schema/blob/master/csl-data.json) format |
 | author_year | VARCHAR(255) | The author-year handle for referring |
 | html_entry | VARCHAR(4000) | Precomposed bibliographical entry in the Chicago Manual of Art Style format (HTML) |
@@ -50,7 +50,7 @@ a workshop, an archaeological assemblage, a personal name, or a title.
 
 | Field name     | Type | Description |
 | ---            | :---: | :--- |
-| biblio_refs_id | INTEGER | Unique record ID |
+| biblio_refs_id | INTEGER | Unique record ID, primary key |
 | reference_type | CHAR(20) | The type of the reference |
 | source_id      | INTEGER | The ID of the referring publication in the table `publications` |
 | source_url     | VARCHAR(4000) | URL for online sources that cannot be cited using the author-year system |
@@ -65,7 +65,7 @@ Each record in this table represents a physical object with an Egyptian inscript
 
 | Field name        | Type | Description |
 | ---               | :---: | :--- |
-| inscriptions_id   | INTEGER | Unique record ID |
+| inscriptions_id   | INTEGER | Unique record ID, primary key |
 | title  | VARCHAR(255) | The title under which the object is referred to in the database (the most relevant pair of the museum name and inventory number for objects or the reference to the most relevant (usually first) publication )  |
 | object_type  | VARCHAR(255) | The `item_name` of the inscription type in the object_type thesaurus (thesaurus 1) *example: stela*  |
 | object_subtype | VARCHAR(255) | The `item_name` of the inscription type in the object_subtype thesaurus (thesaurus 2) *example: block-statue *  |
