@@ -167,6 +167,6 @@ Each record in this table represents a collection containing inscribed objects i
 | online_collection | VARCHAR(4000)| URL of the online collection |
 | tm_coll_id        | INT    | [Trismegistos Collections](http://www.trismegistos.org/coll/index.php) ID  |
 | thot_url        | VARCHAR(4000)    | URI of the collection in the [THOT Museums and private collections thesaurus](http://thot.philo.ulg.ac.be/concept/thot-6197) |
-| artefacts_url | VARCHAR(4000)| The URL of the site page in the [Artefacts of Excavation](http://egyptartefacts.griffith.ox.ac.uk) database |
+| artefacts_url | VARCHAR(4000)| URL of the collection page in the [Artefacts of Excavation](http://egyptartefacts.griffith.ox.ac.uk) database |
 
 **Disclaimer: This is a work in progress. The database structure is subject to change before the database itself is published.**  
