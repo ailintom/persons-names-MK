@@ -1,4 +1,8 @@
 # Persons and Names of the Middle Kingdom  
+Author: Alexander Ilin-Tomich (ailintom@uni-mainz.de)  
+Johannes Gutenberg University Mainz  
+Funded by the Fritz Thyssen Foundation as part of the project
+[Umformung und Variabilität im Korpus altägyptischer Personennamen 2055-1550 v.Chr.](https://www.aegyptologie.uni-mainz.de/umformung-und-variabilitaet-1/)  
 # Database structure
 The data is stored in a MySQL database. For the sake of compatibility with other relational database management systems only the following datatypes are used:  
 * `CHAR` (standard SQL data type `NATIONAL CHARACTER`) for short attributes;  
