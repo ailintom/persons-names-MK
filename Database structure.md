@@ -209,7 +209,12 @@ Each record in this table represents a dossier of a person attested in more than
 
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
-|persons_id    | INT   | Unique record ID, primary key |
+| persons_id        | INT   | Unique record ID, primary key |
+| sex               | CHAR(1)        | Sex of the person ("m", "f", "?" *sex unknown*, or "a" *for animals*)|
+| title             | VARCHAR(255)   | The designation of the dossier referred to in the database such as the reference to the work where the dossier was first established |
+| title_string      | VARCHAR(4000)| Transliterated title string in lowercase Unicode as reconstructed from all available attestations, separated by semicolons |
+| personal_name     | VARCHAR(255)   | Transliterated personal name or combination of names in lowercase Unicode as reconstructed from all available attestations, double names separated by / |
+| note              | VARCHAR(4000)| General notes related to the person |
 
 
 ### titles_att (table_id: 28)  
@@ -222,14 +227,24 @@ Each record in this table represents an attestation of a title in a string of ti
 |titles_id          | INT   | ID of the attested title |
 |attestations_id    | INT   | ID of the attestation of a person bearing a title |
 |sequence_number    | INT   | Sequence number of the title in the title string |
+|spelling    | VARCHAR(255)   | Optional: the spelling of the title in JSESH-compatible MdC codes |
 
 ### titles (table_id: 5)  
 Each record in this table represents an Egyptian title.  
 *Equivalent: entries in* W. A. Ward, *Index of Egyptian Administrative and Religious Titles of the Middle Kingdom*
 
+
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
-|titles_id    | INT   | Unique record ID, primary key |
+|      titles_id    | INT   | Unique record ID, primary key |
+| title             | VARCHAR(255)   | Transliterated title in lowercase unicode |
+| translation_en    | VARCHAR(255)   | English translation of the title |
+| translation_de    | VARCHAR(255)   | German translation of the title |
+| tla | VARCHAR(255)   | List of corresponding lemma numbers in the [Thesaurus Linguae Aegyptiae](http://aaew.bbaw.de/tla/servlet/TlaLogin), separated by semicolons |
+| hannig | VARCHAR(255)   | List of corresponding lemma numbers in R. Hannig, *Ägyptisches Wörterbuch II: Mittleres Reich und Zweite Zwischenzeit*, separated by semicolons |
+| note              | VARCHAR(4000)| General notes related to the title |
+
+*Note:* The numbers of the title in W. A. Ward, *Index of Egyptian Administrative and Religious Titles* and H. G. Fischer, *Supplement* are entered using `biblio_refs` |
 
 ### spellings (table_id: 29)  
 Each record in this table represents a spelling type of a personal name. Generic entries are generated for names attested in sources accessible only in transliteration or translation.   
@@ -237,7 +252,9 @@ Each record in this table represents a spelling type of a personal name. Generic
 
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
-|spellings_id    | INT   | Unique record ID, primary key |
+| spellings_id      | INT   | Unique record ID, primary key |
+| personal_names_id | INT   | ID of the personal name |
+| spelling          | VARCHAR(255)   | The spelling of the name in in JSESH-compatible MdC codes |
   
 
 ### personal_names (table_id: 17)  
@@ -248,6 +265,8 @@ Each record in this table represents an Egyptian title.
 | ---               | :---: | :---        |
 |personal_names_id  | INT   | Unique record ID, primary key |
 |personal_name      | VARCHAR(255)   | Transliterated personal name in lowercase Unicode |
+|translation_en     | VARCHAR(255)   | English translation of the name |
+|translation_de     | VARCHAR(255)   | German translation of the name |
 |sex                | CHAR(4)        | Sex of persons bearing the name ("m", "f", or "both")|
 |ranke              | VARCHAR(255)   | List of corresponding entries in Ranke, *Personennamen*, separated by semicolons |
 |tla                | VARCHAR(255)   | List of corresponding lemma numbers in the [Thesaurus Linguae Aegyptiae](http://aaew.bbaw.de/tla/servlet/TlaLogin), separated by semicolons |
