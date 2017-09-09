@@ -4,7 +4,7 @@ Johannes Gutenberg University Mainz
 Funded by the Fritz Thyssen Foundation as part of the project
 [Umformung und Variabilität im Korpus altägyptischer Personennamen 2055-1550 v.Chr.](https://www.aegyptologie.uni-mainz.de/umformung-und-variabilitaet-1/)  
 # Database structure
-The data is stored in a MySQL database. For the sake of compatibility with other relational database management systems only the following datatypes are used:  
+Data are stored in a MySQL database. For the sake of compatibility with other relational database management systems only the following datatypes are used:  
 * `CHAR` (standard SQL data type `NATIONAL CHARACTER`) for short attributes;  
 * `VARCHAR(255)` (standard SQL data type `NATIONAL CHARACTER VARYING (255)`) for short text values;  
 * `VARCHAR(4000)` (standard SQL data type `NATIONAL CHARACTER VARYING (4000)`) for longer text values (length restricted for compatibility with MS SQL Server);  
@@ -14,13 +14,13 @@ The collation `utf8mb4_unicode_ci` is used for all `CHAR` and `VARCHAR` fields.
 
 ## ID numbers
 The database uses a system of ID numbers that ensures that each ID uniquely identifies an entity within the whole database and thus contains information on the table where the record is stored.
-The IDs are stored as signed 32-bit integers, which are used as bit fields, whereby the table is coded in bits 4 to 9, and bits 10 to 32 are used for the number of the record in the table, allowing for 8388607
- records per table. Bits 1 to 3 are reserved. The table ID can be extracted from the record ID with two simple arithmetic operations    `$table_id = (($id & 0x1F800000) >> 23);` in PHP 5 or in JavaScript or `CAST((id & 0x1F800000) >> 23 AS INT) AS table_id` in MySQL.
+ IDs are stored as signed 32-bit integers, which are used as bit fields, whereby the table is coded in bits 4 to 9, and bits 10 to 32 are used for the number of the record in the table, allowing for 8388607
+ records per table. Bits 1 to 3 are reserved. The table ID can be extracted from the record ID with two simple arithmetic operations `$table_id = (($id & 0x1F800000) >> 23);` in PHP 5 or in JavaScript or `CAST((id & 0x1F800000) >> 23 AS INT) AS table_id` in MySQL.
 
 ## Tables
 
 ### thesauri *(table_id: 2)*  
-This is a supporting table containing keys and values of own and third-party thesauri used in the database.  
+This is a supporting table containing keys and values of self-developed and third-party thesauri used in the database.  
 
 | Field name | Type | Description |
 | --- | :---: | :--- |
@@ -30,6 +30,7 @@ This is a supporting table containing keys and values of own and third-party the
 | sort_value  | INT | The value used for sorting thesaurus entries  |
 | item_name  | VARCHAR(255) | The textual value of the thesaurus entry |
 | external_key| VARCHAR(255) | The key of the corresponding thesaurus entry in a standard external thesaurus (such as the [THOT](http://thot.philo.ulg.ac.be/index.html) project)  |
+| explanation  | VARCHAR(4000) | The meaning of the thesaurus entry |
 
 <!--- | key_number  | INT | The numeric key of the thesaurus entry | --->
 
@@ -48,9 +49,8 @@ Each record in this table describes a printed or online publication (a bibliogra
 *Note:* On the back end, CLS-JSON bibliographical descriptions are converted into HTML bibliographical entries using [citeproc-node](https://github.com/zotero/citeproc-node).
 
 ### biblio_refs *(table_id: 7)*  
-Each record in this table describes a reference from a publication (if the `source_id` field is not empty)
-or a webpage (if the `source_url` field is not empty) to an entity (an inscribed object, a person's dossier, 
-a workshop, an archaeological assemblage, a personal name, or a title.   
+Each record in this table describes a reference from a publication (if the `source_id` field is not empty), a webpage (if the `source_url` field is not empty), or an offline source that cannot be cited using the author-date system to an entity (an inscribed object, a person's dossier, 
+a workshop, an archaeological assemblage, a personal name, or a title).   
 *Equivalent: <http://www.cidoc-crm.org/cidoc-crm/P70i_is_documented_in> statements*  
 
 | Field name     | Type | Description |
@@ -61,12 +61,12 @@ a workshop, an archaeological assemblage, a personal name, or a title.
 | source_url     | VARCHAR(4000) | URL for online sources that cannot be cited using the author-year system |
 | source_title   | VARCHAR(4000) | Reference to an offline source that cannot be cited using the author-year system (an archival document, and offline museum database, etc.; this also includes the references to the Topographical Bibliography to keep references to published and unpublished TopBib entries in one place) or the title of the online source referred to in `source_url` |
 | accessed_on    | DATE | The date when the online or offline source that cannot be cited using the author-year system was accessed |
-| object_id      | INT | The ID of the referred entity |
+| object_id      | INT | The ID of the referred entity in any of the tables that can be referred to (inscriptions, assemblages, workshops, persons_att, persons, titles, personal_names, name_types) |
 | pages          | VARCHAR(255) | Pages |
 | note           | VARCHAR(4000) | Note related to the reference (for example, mistakes in the publication) |
 
 ### inscriptions *(table_id: 7)*  
-Each record in this table represents a physical object with an Egyptian inscription. This can be an object now located in a museum or a private collection or known from a publication, archival material, or a sale catalogue (such as a stela, statue, offering table, coffin, seal, papyrus, etc.), a rock inscription, an inscribed tomb, or another structure. Objects coming from the same structure of a different type than the objects themselves (e. g., stelae originally installed in the same offering chapel) are considered different objects, but objects that are parts of an originally integral object of the same type, now decomposed, (e. g. two parts of the same statue, now stored in different museums) are considered the same object. 
+Each record in this table represents a physical object with an Egyptian inscription. This can be an object now located in a museum or a private collection or known from a publication, archival material, or a sale catalogue (such as a stela, statue, offering table, coffin, seal, papyrus, etc.), a rock inscription, an inscribed tomb, or another structure. Objects originally belonging to the same structure that has a different type than the objects themselves (e. g., stelae originally installed in the same offering chapel) are considered different objects, but objects that are parts of an originally integral object of the same type, now decomposed, (e. g. two parts of the same statue, now stored in different museums) are considered the same object. 
 
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
@@ -92,7 +92,7 @@ Each record in this table represents a physical object with an Egyptian inscript
 | note              | VARCHAR(4000) | General notes related to the object |
 
 ### assemblages *(table_id: 23)*  
-Each record in this table represents an archaeological assemblage (such as a burial or a memorial chapel) where one or more inscribed objects were found. This data is supplementary and is entered only to the extent that it can be relevant for dating and grouping together inscribed objects.  
+Each record in this table represents an archaeological assemblage (such as a burial or a memorial chapel) where one or more inscribed objects were found. These data are supplementary and is entered only to the extent that it can be relevant for dating and grouping together inscribed objects.  
 
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
@@ -133,7 +133,7 @@ An associative table for linking workshops to inscriptions (assuming that contra
 | inscriptions_id                | INT   | ID of the workshop |
 
 ### places *(table_id: 22)*  
-Each record in this table represents the name of a place or a region associated with inscriptions catalogues in this database. One location can be listed in this table several times under different names (modern and ancient).
+Each record in this table represents the name of a place or a region associated with inscriptions catalogued in this database. One location can be listed in this table several times under different names (modern and ancient).
 
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
@@ -231,7 +231,7 @@ Each record in this table represents an attestation of a title in a string of ti
 |titles_id          | INT   | ID of the attested title |
 |attestations_id    | INT   | ID of the attestation of a person bearing a title |
 |sequence_number    | INT   | Sequence number of the title in the title string |
-|spelling    | VARCHAR(255)   | Optional: the spelling of the title in JSESH-compatible MdC codes |
+|spelling    | VARCHAR(255)   | Optional: the spelling of the title in JSesh-compatible MdC codes |
 
 ### titles *(table_id: 5)*  
 Each record in this table represents an Egyptian title.  
@@ -258,8 +258,9 @@ Each record in this table represents a spelling type of a personal name. Generic
 | ---               | :---: | :---        |
 | spellings_id      | INT   | Unique record ID, primary key |
 | personal_names_id | INT   | ID of the personal name |
-| spelling          | VARCHAR(255)   | The spelling of the name in in JSESH-compatible MdC codes |
-  
+| spelling          | VARCHAR(255)   | The spelling of the name in in JSesh-compatible MdC codes |
+
+*Note:* On the back end, a script uses [JSesh](http://jsesh.qenherkhopeshef.org/) to generate PNG graphical files corresponding to MdC codes. These graphical files get names according to `spellings_id` and appear in the online database. 
 
 ### personal_names *(table_id: 17)*  
 Each record in this table represents an Egyptian title.  
