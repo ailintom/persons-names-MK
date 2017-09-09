@@ -4,18 +4,21 @@ Johannes Gutenberg University Mainz
 Funded by the Fritz Thyssen Foundation as part of the project
 [Umformung und Variabilität im Korpus altägyptischer Personennamen 2055-1550 v.Chr.](https://www.aegyptologie.uni-mainz.de/umformung-und-variabilitaet-1/)  
 # Database structure
+## Conventions  
 Data are stored in a MySQL database. For the sake of compatibility with other relational database management systems only the following datatypes are used:  
 * `CHAR` (standard SQL data type `NATIONAL CHARACTER`) for short attributes;  
 * `VARCHAR(255)` (standard SQL data type `NATIONAL CHARACTER VARYING (255)`) for short text values;  
 * `VARCHAR(4000)` (standard SQL data type `NATIONAL CHARACTER VARYING (4000)`) for longer text values (length restricted for compatibility with MS SQL Server);  
 * `INT` (standard SQL data type `INTEGER`) for IDs;    
 * `DATE` (standard SQL data type `DATE`) for dates.  
-The collation `utf8mb4_unicode_ci` is used for all `CHAR` and `VARCHAR` fields.
+The collation `utf8mb4_unicode_ci` is used for all `CHAR` and `VARCHAR` fields.  Table and field names are in lower case separated by underscores.
 
 ## ID numbers
 The database uses a system of ID numbers that ensures that each ID uniquely identifies an entity within the whole database and thus contains information on the table where the record is stored.
  IDs are stored as signed 32-bit integers, which are used as bit fields, whereby the table is coded in bits 4 to 9, and bits 10 to 32 are used for the number of the record in the table, allowing for 8388607
  records per table. Bits 1 to 3 are reserved. The table ID can be extracted from the record ID with two simple arithmetic operations `$table_id = (($id & 0x1F800000) >> 23);` in PHP 5 or in JavaScript or `CAST((id & 0x1F800000) >> 23 AS INT) AS table_id` in MySQL.
+
+[![Database structure](database_structure.svg)](database_structure.png)
 
 ## Tables
 
@@ -322,6 +325,6 @@ Each record represents a statement about a bond between two personal dossiers re
 | predicate         | VARCHAR(255) | The `item_name` of the bond type in the bond thesaurus (thesaurus #) * based on a subset of the elements of [SNAP:DRGN Bond class](http://snapdrgn.net/ontology); example: SonOf* |
 |      object_id    | INT   | `persons_id` of the record in `persons` corresponding to the object of the statement  |
 
-[![Database structure](database_structure.svg)](database_structure.png)
+
 
 **Disclaimer: This is a work in progress. The database structure is subject to change before the database itself is published.**  
