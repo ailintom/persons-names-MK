@@ -171,7 +171,87 @@ Each record in this table represents a collection containing inscribed objects i
 | artefacts_url | VARCHAR(4000)| URL of the collection page in the [Artefacts of Excavation](http://egyptartefacts.griffith.ox.ac.uk) database |
 
   
+### attestations (table_id: 8)  
+Each record in this table represents an attestation of a person, of one or two spellings of names and of a string of titles in an inscription.  
+
+
+| Field name        | Type  | Description |
+| ---               | :---: | :---        |
+| attestations_id    | INT   | Unique record ID, primary key |
+
+
+### persons (table_id: 27)  
+Each record in this table represents a dossier of a person attested in more than one inscription.  
+
+
+| Field name        | Type  | Description |
+| ---               | :---: | :---        |
+|persons_id    | INT   | Unique record ID, primary key |
+
+
+### titles_att (table_id: 28)  
+Each record in this table represents an attestation of a title in a string of titles attested in an inscription.  
+
+
+| Field name        | Type  | Description |
+| ---               | :---: | :---        |
+|titles_att_id    | INT   | Unique record ID, primary key |
+
+### titles (table_id: 5)  
+Each record in this table represents an Egyptian title.  
+*Equivalent: entries in* W. A. Ward, *Index of Egyptian Administrative and Religious Titles of the Middle Kingdom*
+
+| Field name        | Type  | Description |
+| ---               | :---: | :---        |
+|titles_id    | INT   | Unique record ID, primary key |
+
+### spellings (table_id: 29)  
+Each record in this table represents a spelling type of a personal name. Generic entries are generated for names attested in sources known only from translations.   
+
+
+| Field name        | Type  | Description |
+| ---               | :---: | :---        |
+|spellings_id    | INT   | Unique record ID, primary key |
   
+
+### personal_names (table_id: 17)  
+Each record in this table represents an Egyptian title.  
+*Equivalent: entries in* H. Ranke, *Die ägyptischen Personennamen*
+
+| Field name        | Type  | Description |
+| ---               | :---: | :---        |
+|personal_names_id    | INT   | Unique record ID, primary key |
+
+### name_types (table_id: 30)  
+Each record in this table represents a pattern in Egyptian personal names.  
+
+| Field name        | Type  | Description |
+| ---               | :---: | :---        |
+|name_types_id    | INT   | Unique record ID, primary key |
+
+### names_types_xref (table_id: 31)  
+Each record in this table represents a correspondence between a personal name and a name pattern.  
+
+| Field name        | Type  | Description |
+| ---               | :---: | :---        |
+|names_types_xref_id    | INT   | Unique record ID, primary key |
+
+### bonds (table_id: 24)  
+Each record represents a statement about a relation between two persons stated in inscriptions or representations (as in cases when the bond of matrimony between the represented persons is implied only by iconography) on an inscribed object.  
+*Equivalent: [SNAP:DRGN](http://snapdrgn.net/ontology)/Bond*
+
+| Field name        | Type  | Description |
+| ---               | :---: | :---        |
+|bonds_id    | INT   | Unique record ID, primary key |
+
+### persons_bonds (table_id: 32)  
+Each record represents a statement about a relation between two personal dossiers reconstructed from more than one source.  
+*Equivalent: [SNAP:DRGN](http://snapdrgn.net/ontology)/Bond*
+
+| Field name        | Type  | Description |
+| ---               | :---: | :---        |
+|persons_bonds_id    | INT   | Unique record ID, primary key |
+
 ![Database structure](database_structure.svg)
 
 **Disclaimer: This is a work in progress. The database structure is subject to change before the database itself is published.**  
