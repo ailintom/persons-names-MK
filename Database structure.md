@@ -268,6 +268,6 @@ Each record represents a statement about a bond between two personal dossiers re
 | ---               | :---: | :---        |
 |persons_bonds_id    | INT   | Unique record ID, primary key |
 
-![Database structure](database_structure.svg)
+[![Database structure](database_structure.svg)](database_structure.png)
 
 **Disclaimer: This is a work in progress. The database structure is subject to change before the database itself is published.**  
