@@ -177,7 +177,16 @@ Each record in this table represents an attestation of a person, of one or two p
 
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
-| attestations_id    | INT   | Unique record ID, primary key |
+| attestations_id   | INT   | Unique record ID, primary key |
+| inscriptions_id   | INT   | ID of the inscription |
+| sex               | CHAR(1)        | Sex of the attested person ("m", "f", "?" *sex unknown*, or "a" *for animals*)|
+| title_string      | VARCHAR(4000)| Transliterated title string in lowercase Unicode as preserved in the inscription, separated by semicolons |
+| personal_name     | VARCHAR(255)   | Transliterated personal name or combination of names in lowercase Unicode as preserved in the inscription, double names separated by / |
+| spellings_id1     | INT   | ID of the corresponding personal name spelling (the first or the only name) |
+| spellings_id2     | INT   | ID of the corresponding personal name spelling (the second name) |
+| status            | CHAR(5)        | Status of the person on the monument ("owner" or "")|
+| location          | VARCHAR(255)        | The place in the inscription where the person is mentioned (register, line number, according to the standard publication or other relevant indications)|
+| note              | VARCHAR(4000)| General notes related to the attestation |
 
 ### persons_att (table_id: 1)  
 Each record in this table represents an statement on the appurtenance of an attestation to a dossier.  
@@ -239,7 +248,7 @@ Each record in this table represents an Egyptian title.
 | ---               | :---: | :---        |
 |personal_names_id  | INT   | Unique record ID, primary key |
 |personal_name      | VARCHAR(255)   | Transliterated personal name in lowercase Unicode |
-|sex                | CHAR(4)        | Sex of persons bearing the name ("m", "f", "both")|
+|sex                | CHAR(4)        | Sex of persons bearing the name ("m", "f", or "both")|
 |ranke              | VARCHAR(255)   | List of corresponding entries in Ranke, *Personennamen*, separated by semicolons |
 |tla                | VARCHAR(255)   | List of corresponding lemma numbers in the [Thesaurus Linguae Aegyptiae](http://aaew.bbaw.de/tla/servlet/TlaLogin), separated by semicolons |
 |scheele-schweitzer | VARCHAR(255)   | List of corresponding entries in K. Scheele-Schweitzer, *Die Personennamen des Alten Reiches*, separated by semicolons |
