@@ -237,21 +237,32 @@ Each record in this table represents an Egyptian title.
 
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
-|personal_names_id    | INT   | Unique record ID, primary key |
+|personal_names_id  | INT   | Unique record ID, primary key |
+|personal_name      | VARCHAR(255)   | Transliterated personal name in lowercase Unicode |
+|sex                | CHAR(4)        | Sex of persons bearing the name ("m", "f", "both")|
+|ranke              | VARCHAR(255)   | List of corresponding entries in *Ranke, Personennamen*, separated by semicolons |
+|tla                | VARCHAR(255)   | List of corresponding lemma numbers in the [Thesaurus Linguae Aegyptiae](http://aaew.bbaw.de/tla/servlet/TlaLogin), separated by semicolons |
+|scheele-schweitzer | VARCHAR(255)   | List of corresponding entries in K. Scheele-Schweitzer, *Die Personennamen des Alten Reiches*, separated by semicolons |
+|agea               | VARCHAR(255)   | List of corresponding name numbers in the (AGÉA database)[http://www.ifao.egnet.net/bases/agea/], separated by semicolons |
 
 ### name_types (table_id: 30)  
-Each record in this table represents a pattern in Egyptian personal names.  
+Each record in this table represents a type or a  pattern in Egyptian personal names.  
 
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
-|name_types_id    | INT   | Unique record ID, primary key |
+|name_types_id      | INT   | Unique record ID, primary key |
+|parent_id          | INT   | ID of the parent name type |
+|title              | VARCHAR(255)   | Transliterated personal name pattern in lowercase Unicode or the title of a name type |
+| note              | VARCHAR(4000)| General notes related to the name type |
 
 ### names_types_xref (table_id: 31)  
 Each record in this table represents a correspondence between a personal name and a name pattern.  
 
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
-|names_types_xref_id    | INT   | Unique record ID, primary key |
+|names_types_xref_id| INT   | Unique record ID, primary key |
+|personal_names_id  | INT   | ID of the personal name |
+|name_types_id      | INT   | ID of the name type |
 
 ### bonds (table_id: 24)  
 Each record represents a statement about a bond between two persons stated in inscriptions or representations (as in cases when the bond of matrimony between the two persons persons is implied only by iconography) on an inscribed object.  
