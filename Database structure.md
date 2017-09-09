@@ -171,5 +171,7 @@ Each record in this table represents a collection containing inscribed objects i
 | artefacts_url | VARCHAR(4000)| URL of the collection page in the [Artefacts of Excavation](http://egyptartefacts.griffith.ox.ac.uk) database |
 
 ![Database structure](database_structure.png)
+##_
+![Database structure](database_structure.svg)
 
 **Disclaimer: This is a work in progress. The database structure is subject to change before the database itself is published.**  
