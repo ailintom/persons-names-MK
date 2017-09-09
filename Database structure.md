@@ -35,7 +35,7 @@ Each record in this table describes a printed or online publication (a bibliogra
 
 | Field name | Type | Description |
 | --- | :---: | :--- |
-| biblio_entries_id | INT | Unique record ID, primary key |
+| publications_id | INT | Unique record ID, primary key |
 | csl_json | TEXT | Bibliographical data in the [CSL-JSON](https://github.com/citation-style-language/schema/blob/master/csl-data.json) format |
 | author_year | VARCHAR(255) | The author-year handle for referring |
 | html_entry | VARCHAR(4000) | Precomposed bibliographical entry in the Chicago Manual of Art Style format (HTML) |
@@ -169,5 +169,7 @@ Each record in this table represents a collection containing inscribed objects i
 | tm_coll_id        | INT    | [Trismegistos Collections](http://www.trismegistos.org/coll/index.php) ID  |
 | thot_url        | VARCHAR(4000)    | URI of the collection in the [THOT Museums and private collections thesaurus](http://thot.philo.ulg.ac.be/concept/thot-6197) |
 | artefacts_url | VARCHAR(4000)| URL of the collection page in the [Artefacts of Excavation](http://egyptartefacts.griffith.ox.ac.uk) database |
+
+![Database structure](database_structure.png)
 
 **Disclaimer: This is a work in progress. The database structure is subject to change before the database itself is published.**  
