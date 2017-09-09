@@ -179,6 +179,19 @@ Each record in this table represents an attestation of a person, of one or two p
 | ---               | :---: | :---        |
 | attestations_id    | INT   | Unique record ID, primary key |
 
+### persons_att (table_id: 1)  
+Each record in this table represents an statement on the appurtenance of an attestation to a dossier.  
+
+
+| Field name        | Type  | Description |
+| ---               | :---: | :---        |
+| persons_att_id    | INT   | Unique record ID, primary key |
+| attestations_id   | INT   | ID of the attestation  |
+| persons_id        | INT   | ID of the dossier  |
+| reasoning         | VARCHAR(255)   | a list of `item_name` values in the dossier_reasoning thesaurus divided by semicolon |
+| status            | CHAR(14)   | the status of the statement: accepted; weak; counterfactual  |
+
+
 
 ### persons (table_id: 27)  
 Each record in this table represents a dossier of a person attested in more than one inscription.  
@@ -198,7 +211,7 @@ Each record in this table represents an attestation of a title in a string of ti
 |titles_att_id      | INT   | Unique record ID, primary key |
 |titles_id          | INT   | ID of the attested title |
 |attestations_id    | INT   | ID of the attestation of a person bearing a title |
-|sequence_number    | INT   | sequence number of the title in the title string |
+|sequence_number    | INT   | Sequence number of the title in the title string |
 
 ### titles (table_id: 5)  
 Each record in this table represents an Egyptian title.  
