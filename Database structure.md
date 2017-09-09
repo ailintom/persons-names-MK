@@ -172,7 +172,7 @@ Each record in this table represents a collection containing inscribed objects i
 
   
 ### attestations (table_id: 8)  
-Each record in this table represents an attestation of a person, of one or two spellings of names and of a string of titles in an inscription.  
+Each record in this table represents an attestation of a person, of one or two personal names, and of a string of titles (if any) born by that person in an inscription.  
 
 
 | Field name        | Type  | Description |
@@ -190,12 +190,15 @@ Each record in this table represents a dossier of a person attested in more than
 
 
 ### titles_att (table_id: 28)  
-Each record in this table represents an attestation of a title in a string of titles attested in an inscription.  
+Each record in this table represents an attestation of a title in a string of titles in an inscription.  
 
 
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
-|titles_att_id    | INT   | Unique record ID, primary key |
+|titles_att_id      | INT   | Unique record ID, primary key |
+|titles_id          | INT   | ID of the attested title |
+|attestations_id    | INT   | ID of the attestation of a person bearing a title |
+|sequence_number    | INT   | sequence number of the title in the title string |
 
 ### titles (table_id: 5)  
 Each record in this table represents an Egyptian title.  
@@ -206,7 +209,7 @@ Each record in this table represents an Egyptian title.
 |titles_id    | INT   | Unique record ID, primary key |
 
 ### spellings (table_id: 29)  
-Each record in this table represents a spelling type of a personal name. Generic entries are generated for names attested in sources known only from translations.   
+Each record in this table represents a spelling type of a personal name. Generic entries are generated for names attested in sources accessible only in transliteration or translation.   
 
 
 | Field name        | Type  | Description |
@@ -237,7 +240,7 @@ Each record in this table represents a correspondence between a personal name an
 |names_types_xref_id    | INT   | Unique record ID, primary key |
 
 ### bonds (table_id: 24)  
-Each record represents a statement about a relation between two persons stated in inscriptions or representations (as in cases when the bond of matrimony between the represented persons is implied only by iconography) on an inscribed object.  
+Each record represents a statement about a bond between two persons stated in inscriptions or representations (as in cases when the bond of matrimony between the two persons persons is implied only by iconography) on an inscribed object.  
 *Equivalent: [SNAP:DRGN](http://snapdrgn.net/ontology)/Bond*
 
 | Field name        | Type  | Description |
@@ -245,7 +248,7 @@ Each record represents a statement about a relation between two persons stated i
 |bonds_id    | INT   | Unique record ID, primary key |
 
 ### persons_bonds (table_id: 32)  
-Each record represents a statement about a relation between two personal dossiers reconstructed from more than one source.  
+Each record represents a statement about a bond between two personal dossiers reconstructed from more than one source.  
 *Equivalent: [SNAP:DRGN](http://snapdrgn.net/ontology)/Bond*
 
 | Field name        | Type  | Description |
