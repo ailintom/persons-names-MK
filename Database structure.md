@@ -240,10 +240,10 @@ Each record in this table represents an Egyptian title.
 |personal_names_id  | INT   | Unique record ID, primary key |
 |personal_name      | VARCHAR(255)   | Transliterated personal name in lowercase Unicode |
 |sex                | CHAR(4)        | Sex of persons bearing the name ("m", "f", "both")|
-|ranke              | VARCHAR(255)   | List of corresponding entries in *Ranke, Personennamen*, separated by semicolons |
+|ranke              | VARCHAR(255)   | List of corresponding entries in Ranke, *Personennamen*, separated by semicolons |
 |tla                | VARCHAR(255)   | List of corresponding lemma numbers in the [Thesaurus Linguae Aegyptiae](http://aaew.bbaw.de/tla/servlet/TlaLogin), separated by semicolons |
 |scheele-schweitzer | VARCHAR(255)   | List of corresponding entries in K. Scheele-Schweitzer, *Die Personennamen des Alten Reiches*, separated by semicolons |
-|agea               | VARCHAR(255)   | List of corresponding name numbers in the (AGÉA database)[http://www.ifao.egnet.net/bases/agea/], separated by semicolons |
+|agea               | VARCHAR(255)   | List of corresponding name numbers in the [AGÉA database](http://www.ifao.egnet.net/bases/agea/), separated by semicolons |
 
 ### name_types (table_id: 30)  
 Each record in this table represents a type or a  pattern in Egyptian personal names.  
