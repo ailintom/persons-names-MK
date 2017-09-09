@@ -150,8 +150,8 @@ Each record in this table represents an inventory number of an inscribed object 
 | inv_nos_id        | INT   | Unique record ID, primary key |
 | inscriptions_id   | INT   | ID of the inscribed object identified by the inventory number |
 | collections_id    | INT   | ID of the museum |
-| inv_no            | VARCHAR(255) | Inventory number *Equivalent: *<http://www.w3.org/2000/01/rdf-schema#label>.* |
-| status            | VARCHAR(255) | Status of the inventory number ("main", "alternative", "obsolete", "erroneous") |
+| inv_no            | VARCHAR(255) | Inventory number *Equivalent: <http://www.w3.org/2000/01/rdf-schema#label>* |
+| status            | CHAR(11) | Status of the inventory number ("main", "alternative", "obsolete", or "erroneous") |
 | note              | VARCHAR(4000)| General notes related to the inventory number |
 
 ### collections (table_id: 26)  
@@ -188,9 +188,9 @@ Each record in this table represents an statement on the appurtenance of an atte
 | persons_att_id    | INT   | Unique record ID, primary key |
 | attestations_id   | INT   | ID of the attestation  |
 | persons_id        | INT   | ID of the dossier  |
-| reasoning         | VARCHAR(255)   | a list of `item_name` values in the dossier_reasoning thesaurus divided by semicolon |
-| status            | CHAR(14)   | the status of the statement: accepted; weak; counterfactual  |
-
+| reasoning         | VARCHAR(255)   | List of `item_name` values in the dossier_reasoning thesaurus separated by semicolons |
+| status            | CHAR(14)   | Status of the statement ("accepted", "weak", or "counterfactual")  |
+| note              | VARCHAR(4000)| General notes related to the statement |
 
 
 ### persons (table_id: 27)  
