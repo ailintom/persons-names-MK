@@ -244,7 +244,7 @@ Each record in this table represents an Egyptian title.
 | hannig | VARCHAR(255)   | List of corresponding lemma numbers in R. Hannig, *Ägyptisches Wörterbuch II: Mittleres Reich und Zweite Zwischenzeit*, separated by semicolons |
 | note              | VARCHAR(4000)| General notes related to the title |
 
-*Note:* The numbers of the title in W. A. Ward, *Index of Egyptian Administrative and Religious Titles* and H. G. Fischer, *Supplement* are entered using `biblio_refs` |
+*Note:* The numbers of the title in W. A. Ward, *Index of Egyptian Administrative and Religious Titles* and H. G. Fischer, *Supplement* are entered using `biblio_refs`
 
 ### spellings (table_id: 29)  
 Each record in this table represents a spelling type of a personal name. Generic entries are generated for names attested in sources accessible only in transliteration or translation.   
@@ -298,7 +298,13 @@ Each record represents a statement about a bond between two persons stated in in
 
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
-|bonds_id    | INT   | Unique record ID, primary key |
+|       bonds_id    | INT   | Unique record ID, primary key |
+|     subject_id    | INT   | `attestations_id` of the record in `attestations` corresponding to the subject of the statement (the person whose name stands in apposition to the phrase expressing the bond or the antecedent of the relative form) |
+| predicate         | VARCHAR(255) | The `item_name` of the bond type in the bond thesaurus (thesaurus #) * based on a subset of the elements of [SNAP:DRGN Bond class](http://snapdrgn.net/ontology); example: SonOf* |
+| wording           | VARCHAR(255) | Transliterated exact expression of the bond in lowercase Unicode as attested in the inscription. *Example: sꜣ⸗f* |
+|      object_id    | INT   | `attestations_id` of the record in `attestations` corresponding to the object of the statement (usually the person referred to by the suffix pronoun or introduced as the agent of a relative form ) |
+
+
 
 ### persons_bonds (table_id: 32)  
 Each record represents a statement about a bond between two personal dossiers reconstructed from more than one source.  
@@ -307,6 +313,9 @@ Each record represents a statement about a bond between two personal dossiers re
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
 |persons_bonds_id    | INT   | Unique record ID, primary key |
+|     subject_id    | INT   | `persons_id` of the record in `persons` corresponding to the subject of the statement   |
+| predicate         | VARCHAR(255) | The `item_name` of the bond type in the bond thesaurus (thesaurus #) * based on a subset of the elements of [SNAP:DRGN Bond class](http://snapdrgn.net/ontology); example: SonOf* |
+|      object_id    | INT   | `persons_id` of the record in `persons` corresponding to the object of the statement  |
 
 [![Database structure](database_structure.svg)](database_structure.png)
 
