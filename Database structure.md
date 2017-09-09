@@ -8,14 +8,14 @@ The data is stored in a MySQL database. For the sake of compatibility with other
 * `DATE` (standard SQL data type `DATE`) for dates.  
 The collation `utf8mb4_unicode_ci` is used for all `CHAR` and `VARCHAR` fields.
 
-## The ID numbers
+## ID numbers
 The database uses a system of ID numbers that ensures that each ID uniquely identifies an entity within the whole database and thus contains information on the table where the record is stored.
 The IDs are stored as signed 32-bit integers, which are used as bit fields, whereby the table is coded in bits 4 to 9, and bits 10 to 32 are used for the number of the record in the table, allowing for 8388607
  records per table. Bits 1 to 3 are reserved. The table ID can be extracted from the record ID with two simple arithmetic operations    `$table_id = (($id & 0x1F800000) / 0x800000);` in PHP 5 or in JavaScript.
 
 ## Tables
 
-### thesauri (table_id: 2)  
+### thesauri *(table_id: 2)*  
 This is a supporting table containing keys and values of own and third-party thesauri used in the database.  
 
 | Field name | Type | Description |
@@ -29,7 +29,7 @@ This is a supporting table containing keys and values of own and third-party the
 
 <!--- | key_number  | INT | The numeric key of the thesaurus entry | --->
 
-### publications (table_id: 2)  
+### publications *(table_id: 2)*  
 Each record in this table describes a printed or online publication (a bibliographic entry). Here goes everything published that can be cited using the author-year system.   
 *Equivalent: <http://www.cidoc-crm.org/cidoc-crm/E31_document>*  
 
@@ -43,7 +43,7 @@ Each record in this table describes a printed or online publication (a bibliogra
 
 *Note:* On the back end, CLS-JSON bibliographical descriptions are converted into HTML bibliographical entries using [citeproc-node](https://github.com/zotero/citeproc-node).
 
-### biblio_refs (table_id: 7)  
+### biblio_refs *(table_id: 7)*  
 Each record in this table describes a reference from a publication (if the `source_id` field is not empty)
 or a webpage (if the `source_url` field is not empty) to an entity (an inscribed object, a person's dossier, 
 a workshop, an archaeological assemblage, a personal name, or a title.   
@@ -61,7 +61,7 @@ a workshop, an archaeological assemblage, a personal name, or a title.
 | pages          | VARCHAR(255) | Pages |
 | note           | VARCHAR(4000) | Note related to the reference (for example, mistakes in the publication) |
 
-### inscriptions (table_id: 7)  
+### inscriptions *(table_id: 7)*  
 Each record in this table represents a physical object with an Egyptian inscription. This can be an object now located in a museum or a private collection or known from a publication, archival material, or a sale catalogue (such as a stela, statue, offering table, coffin, seal, papyrus, etc.), a rock inscription, an inscribed tomb, or another structure. Objects coming from the same structure of a different type than the objects themselves (e. g., stelae originally installed in the same offering chapel) are considered different objects, but objects that are parts of an originally integral object of the same type, now decomposed, (e. g. two parts of the same statue, now stored in different museums) are considered the same object. 
 
 | Field name        | Type  | Description |
@@ -87,7 +87,7 @@ Each record in this table represents a physical object with an Egyptian inscript
 | last_king_id      | VARCHAR(255) | The `id`  of the most recent king explicitly named on the object in the king thesaurus (thesaurus 6) *loosely based on a subset of the [THOT Dates and dating systems thesaurus](http://thot.philo.ulg.ac.be/concept/thot-114)* |
 | note              | VARCHAR(4000) | General notes related to the object |
 
-### assemblages (table_id: 23)  
+### assemblages *(table_id: 23)*  
 Each record in this table represents an archaeological assemblage (such as a burial or a memorial chapel) where one or more inscribed objects were found. This data is supplementary and is entered only to the extent that it can be relevant for dating and grouping together inscribed objects.  
 
 | Field name        | Type  | Description |
@@ -106,7 +106,7 @@ Each record in this table represents an archaeological assemblage (such as a bur
 | dating_note       | VARCHAR(4000) | The reasoning behind the `dating`  |
 | note              | VARCHAR(4000) | General notes related to the assemblage |
 
-### workshops (table_id: 20)  
+### workshops *(table_id: 20)*  
 Each record in this table represents a workshop producing inscribed objects that was discussed in scholarly literature. In other words, it represents a group of objects set off by several artistic and/or palaeographic peculiarities, which allow surmising that the objects come from the same timeframe and were produced at the same place.  
 
 | Field name        | Type  | Description |
@@ -119,7 +119,7 @@ Each record in this table represents a workshop producing inscribed objects that
 | dating_note       | VARCHAR(4000) | The reasoning behind the `dating`  |
 | note              | VARCHAR(4000) | General notes related to the assemblage |
 
-### inscriptions_workshops_xref (table_id: 21)  
+### inscriptions_workshops_xref *(table_id: 21)*  
 An associative table for linking workshops to inscriptions (assuming that contradictory opinions can be expressed in scholarly literature). 
 
 | Field name        | Type  | Description |
@@ -128,7 +128,7 @@ An associative table for linking workshops to inscriptions (assuming that contra
 | workshops_id                   | INT   | ID of the workshop |
 | inscriptions_id                | INT   | ID of the workshop |
 
-### places (table_id: 22)  
+### places *(table_id: 22)*  
 Each record in this table represents the name of a place or a region associated with inscriptions catalogues in this database. One location can be listed in this table several times under different names (modern and ancient).
 
 | Field name        | Type  | Description |
@@ -141,7 +141,7 @@ Each record in this table represents the name of a place or a region associated 
 | tm_geoid          | INT   | The ID of the place in the Trismegistos Geo database, example: [188](http://www.trismegistos.org/place/188) |
 | artefacts_url     | VARCHAR(255) | The URL of the site page in the [Artefacts of Excavation](http://egyptartefacts.griffith.ox.ac.uk) database, example: <http://egyptartefacts.griffith.ox.ac.uk/node/1149> |
 
-### inv_nos (table_id: 25)  
+### inv_nos *(table_id: 25)*  
 Each record in this table represents an inventory number of an inscribed object in a museum.  
 *Equivalent: <http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by> statement and <http://www.cidoc-crm.org/cidoc-crm/E42_Identifier> entity*   
 
@@ -154,7 +154,7 @@ Each record in this table represents an inventory number of an inscribed object 
 | status            | CHAR(11) | Status of the inventory number ("main", "alternative", "obsolete", or "erroneous") |
 | note              | VARCHAR(4000)| General notes related to the inventory number |
 
-### collections (table_id: 26)  
+### collections *(table_id: 26)*  
 Each record in this table represents a collection containing inscribed objects identified by inventory numbers.  
   
 
@@ -171,7 +171,7 @@ Each record in this table represents a collection containing inscribed objects i
 | artefacts_url | VARCHAR(4000)| URL of the collection page in the [Artefacts of Excavation](http://egyptartefacts.griffith.ox.ac.uk) database |
 
   
-### attestations (table_id: 8)  
+### attestations *(table_id: 8)*  
 Each record in this table represents an attestation of a person, of one or two personal names, and of a string of titles (if any) born by that person in an inscription.  
 
 
@@ -188,7 +188,7 @@ Each record in this table represents an attestation of a person, of one or two p
 | location          | VARCHAR(255)        | The place in the inscription where the person is mentioned (register, line number, according to the standard publication or other relevant indications)|
 | note              | VARCHAR(4000)| General notes related to the attestation |
 
-### persons_att (table_id: 1)  
+### persons_att *(table_id: 1)*  
 Each record in this table represents an statement on the appurtenance of an attestation to a dossier.  
 
 
@@ -202,7 +202,7 @@ Each record in this table represents an statement on the appurtenance of an atte
 | note              | VARCHAR(4000)| General notes related to the statement |
 
 
-### persons (table_id: 27)  
+### persons *(table_id: 27)*  
 Each record in this table represents a dossier of a person attested in more than one inscription.  
 *Equivalent: entries in* D. Franke, *Personendaten aus dem Mittleren Reich (20.-16. Jahrhundert v. Chr.)*
 
@@ -217,7 +217,7 @@ Each record in this table represents a dossier of a person attested in more than
 | note              | VARCHAR(4000)| General notes related to the person |
 
 
-### titles_att (table_id: 28)  
+### titles_att *(table_id: 28)*  
 Each record in this table represents an attestation of a title in a string of titles in an inscription.  
 
 
@@ -229,7 +229,7 @@ Each record in this table represents an attestation of a title in a string of ti
 |sequence_number    | INT   | Sequence number of the title in the title string |
 |spelling    | VARCHAR(255)   | Optional: the spelling of the title in JSESH-compatible MdC codes |
 
-### titles (table_id: 5)  
+### titles *(table_id: 5)*  
 Each record in this table represents an Egyptian title.  
 *Equivalent: entries in* W. A. Ward, *Index of Egyptian Administrative and Religious Titles of the Middle Kingdom*
 
@@ -246,7 +246,7 @@ Each record in this table represents an Egyptian title.
 
 *Note:* The numbers of the title in W. A. Ward, *Index of Egyptian Administrative and Religious Titles* and H. G. Fischer, *Supplement* are entered using `biblio_refs`
 
-### spellings (table_id: 29)  
+### spellings *(table_id: 29)*  
 Each record in this table represents a spelling type of a personal name. Generic entries are generated for names attested in sources accessible only in transliteration or translation.   
 
 
@@ -257,7 +257,7 @@ Each record in this table represents a spelling type of a personal name. Generic
 | spelling          | VARCHAR(255)   | The spelling of the name in in JSESH-compatible MdC codes |
   
 
-### personal_names (table_id: 17)  
+### personal_names *(table_id: 17)*  
 Each record in this table represents an Egyptian title.  
 *Equivalent: entries in* H. Ranke, *Die ägyptischen Personennamen*
 
@@ -273,7 +273,7 @@ Each record in this table represents an Egyptian title.
 |scheele-schweitzer | VARCHAR(255)   | List of corresponding entries in K. Scheele-Schweitzer, *Die Personennamen des Alten Reiches*, separated by semicolons |
 |agea               | VARCHAR(255)   | List of corresponding name numbers in the [AGÉA database](http://www.ifao.egnet.net/bases/agea/), separated by semicolons |
 
-### name_types (table_id: 30)  
+### name_types *(table_id: 30)*  
 Each record in this table represents a type or a  pattern in Egyptian personal names.  
 
 | Field name        | Type  | Description |
@@ -283,7 +283,7 @@ Each record in this table represents a type or a  pattern in Egyptian personal n
 |title              | VARCHAR(255)   | Transliterated personal name pattern in lowercase Unicode or the title of a name type |
 | note              | VARCHAR(4000)| General notes related to the name type |
 
-### names_types_xref (table_id: 31)  
+### names_types_xref *(table_id: 31)*  
 Each record in this table represents a correspondence between a personal name and a name pattern.  
 
 | Field name        | Type  | Description |
@@ -292,7 +292,7 @@ Each record in this table represents a correspondence between a personal name an
 |personal_names_id  | INT   | ID of the personal name |
 |name_types_id      | INT   | ID of the name type |
 
-### bonds (table_id: 24)  
+### bonds *(table_id: 24)*  
 Each record represents a statement about a bond between two persons stated in inscriptions or representations (as in cases when the bond of matrimony between the two persons persons is implied only by iconography) on an inscribed object.  
 *Equivalent: [SNAP:DRGN](http://snapdrgn.net/ontology)/Bond*
 
@@ -306,7 +306,7 @@ Each record represents a statement about a bond between two persons stated in in
 
 
 
-### persons_bonds (table_id: 32)  
+### persons_bonds *(table_id: 11)*  
 Each record represents a statement about a bond between two personal dossiers reconstructed from more than one source.  
 *Equivalent: [SNAP:DRGN](http://snapdrgn.net/ontology)/Bond*
 
