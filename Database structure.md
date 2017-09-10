@@ -253,6 +253,10 @@ Each record in this table represents an Egyptian title.
 | translation_de    | VARCHAR(255)   | German translation of the title |
 | tla | VARCHAR(255)   | List of corresponding lemma numbers in the [Thesaurus Linguae Aegyptiae](http://aaew.bbaw.de/tla/servlet/TlaLogin), separated by semicolons |
 | hannig | VARCHAR(255)   | List of corresponding lemma numbers in R. Hannig, *Ägyptisches Wörterbuch II: Mittleres Reich und Zweite Zwischenzeit*, separated by semicolons |
+|usage_area         | VARCHAR(255)   | The `place_name` of the record in the table `places` corresponding to the region where the title was predominantly used |
+|usage_area_note    | VARCHAR(4000)  | Explanatory notes and bibliographic references to the `usage_area` |
+|usage_period       | VARCHAR(255)   | The `item_name` of the period when the title was predominantly used in the dating thesaurus (thesaurus 5), *loosely based on a subset of the [THOT Dates and dating systems thesaurus](http://thot.philo.ulg.ac.be/concept/thot-114)*   |
+|usage_period_note    | VARCHAR(4000)  | Explanatory notes and bibliographic references to the `usage_period` |
 | note              | VARCHAR(4000)| General notes related to the title |
 
 *Note:* The numbers of the title in W. A. Ward, *Index of Egyptian Administrative and Religious Titles* and H. G. Fischer, *Supplement* are entered using `biblio_refs`
@@ -264,11 +268,27 @@ Each record in this table represents a spelling type of a personal name. Generic
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
 | spellings_id      | INT   | Unique record ID, primary key |
-| personal_names_id | INT   | ID of the personal name |
+| personal_names_id | INT   | ID of the personal name corresponding to the preferred reading of the spelling |
 | spelling          | VARCHAR(255)   | The spelling of the name in in JSesh-compatible MdC codes |
-|ranke              | VARCHAR(255)   | The corresponding entry in Ranke, *Personennamen* |
+| ranke             | VARCHAR(255)   | The corresponding entry in Ranke, *Personennamen* |
+|usage_area         | VARCHAR(255)   | The `place_name` of the record in the table `places` corresponding to the region where the spelling was predominantly used |
+|usage_area_note    | VARCHAR(4000)  | Explanatory notes and bibliographic references to the `usage_area` |
+|usage_period       | VARCHAR(255)   | The `item_name` of the period when the spelling was predominantly used in the dating thesaurus (thesaurus 5), *loosely based on a subset of the [THOT Dates and dating systems thesaurus](http://thot.philo.ulg.ac.be/concept/thot-114)*   |
+|usage_period_note    | VARCHAR(4000)  | Explanatory notes and bibliographic references to the `usage_period` |
+
+<!--- ### spellings *(table_id: 29)*  
+Each record in this table represents a spelling type of a personal name. Generic entries with empty spellings are used for names attested in sources accessible only in transliteration or translation.    --->
 
 *Note:* On the back end, a script uses [JSesh](http://jsesh.qenherkhopeshef.org/) to generate PNG graphical files corresponding to MdC codes. These graphical files get names according to `spellings_id` and appear in the online database. 
+
+### alternative_readings *(table_id: 9)*  
+Each record in this table represents a possible reading of a spelling, differing from the preferred reading specified in the `personal_names_id`   
+
+| Field name        | Type  | Description |
+| ---               | :---: | :---        |
+| alternative_readings_id      | INT   | Unique record ID, primary key |
+| spellings_id      | INT   | ID of the spelling |
+| personal_names_id | INT   | ID of the personal name corresponding to the alternate reading of the spelling |
 
 ### personal_names *(table_id: 17)*  
 Each record in this table represents an Egyptian name.  
@@ -285,6 +305,11 @@ Each record in this table represents an Egyptian name.
 |tla                | VARCHAR(255)   | List of corresponding lemma numbers in the [Thesaurus Linguae Aegyptiae](http://aaew.bbaw.de/tla/servlet/TlaLogin), separated by semicolons |
 |scheele-schweitzer | VARCHAR(255)   | List of corresponding entries in K. Scheele-Schweitzer, *Die Personennamen des Alten Reiches*, separated by semicolons |
 |agea               | VARCHAR(255)   | List of corresponding name numbers in the [AGÉA database](http://www.ifao.egnet.net/bases/agea/), separated by semicolons |
+|usage_area         | VARCHAR(255)   | The `place_name` of the record in the table `places` corresponding to the region where the name was predominantly used |
+|usage_area_note    | VARCHAR(4000)  | Explanatory notes and bibliographic references to the `usage_area` |
+|usage_period       | VARCHAR(255)   | The `item_name` of the period when the name was predominantly used in the dating thesaurus (thesaurus 5), *loosely based on a subset of the [THOT Dates and dating systems thesaurus](http://thot.philo.ulg.ac.be/concept/thot-114)*   |
+|usage_period_note    | VARCHAR(4000)  | Explanatory notes and bibliographic references to the `usage_period` |
+| note              | VARCHAR(4000)  | General notes related to the name |
 
 ### name_types *(table_id: 30)*  
 Each record in this table represents a type or a  pattern in Egyptian personal names.  
@@ -325,7 +350,7 @@ Each record represents a statement about a bond between two personal dossiers re
 
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
-|persons_bonds_id    | INT   | Unique record ID, primary key |
+|persons_bonds_id   | INT   | Unique record ID, primary key |
 |     subject_id    | INT   | `persons_id` of the record in `persons` corresponding to the subject of the statement   |
 | predicate         | VARCHAR(255) | The `item_name` of the bond type in the bond thesaurus (thesaurus 11), *based on a subset of the elements of [SNAP:DRGN Bond class](http://snapdrgn.net/ontology); example: SonOf* |
 |      object_id    | INT   | `persons_id` of the record in `persons` corresponding to the object of the statement  |
