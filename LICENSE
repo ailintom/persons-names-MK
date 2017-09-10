@@ -2,7 +2,7 @@ Copyright Alexander Ilin-Tomich, 2017, unless specified otherwise in individual 
 
 This project is dual-licensed under the MIT License and the European Union Public Licence/Open-Source-Lizenz für die Europäische Union (EUPL) 1.2.
 
-You may use this code and documentation under the terms of either license.
+You may use this code and documentation under the terms of either licence.
 
 The MIT License
 
@@ -13,7 +13,8 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-The EUPL 1.2 License in German
+The EUPL 1.2 Licence in German
+Versions of the EUPL 1.2 Licence in other languages can be found on https://joinup.ec.europa.eu/community/eupl/og_page/eupl-text-11-12
 
 OPEN-SOURCE-LIZENZ FÜR DIE EUROPÄISCHE UNION v. 1.2 
 EUPL © Europäische Union 2007, 2016 
@@ -117,4 +118,3 @@ Anlage
 Die Europäische Kommission kann diesen Anhang aktualisieren, um neuere Fassungen der obigen Lizenzen aufzunehmen, ohne hierfür eine neue Fassung der EUPL auszuarbeiten, solange diese Lizenzen die in Artikel 2 gewährten Rechte gewährleisten und den erfassten Quellcode vor ausschließlicher Aneignung schützen.
 Alle sonstigen Änderungen oder Ergänzungen dieses Anhangs bedürfen der Ausarbeitung einer neuen Version der EUPL.    
 
-Versions of the EUPL 1.2 Licence in other languages can be found on https://joinup.ec.europa.eu/community/eupl/og_page/eupl-text-11-12
