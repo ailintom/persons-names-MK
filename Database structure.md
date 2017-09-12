@@ -48,7 +48,8 @@ Each record in this table describes a printed or online publication (a bibliogra
 | html_entry | VARCHAR(4000) | Precomposed bibliographical entry in the Chicago Manual of Style format (HTML) |
 | oeb_id | VARCHAR(4000) | The ID of the corresponding record in the [Online Egyptological Bibliography](http://oeb.griffith.ox.ac.uk/) (not available for all records) |
 
-*Note:* On the back end, CLS-JSON bibliographical descriptions are converted into HTML bibliographical entries using [citeproc-node](https://github.com/zotero/citeproc-node).
+*Note:* On the back end, CSL-JSON bibliographical descriptions are converted into HTML bibliographical entries using [citeproc-node](https://github.com/zotero/citeproc-node). When the data are converted to a machine-readable format, CSL-JSON entries can be converted to [BIBO, also known as Bibliontology](http://bibliographic-ontology.org/specification) RDF, using [Zotero translation server](https://github.com/zotero/translation-server).
+
 
 ### biblio_refs *(table_id: 7)*  
 Each record in this table describes a reference from a publication (if the `source_id` field is not empty), a webpage (if the `source_url` field is not empty), or an offline source that cannot be cited using the author-date system to an entity (an inscribed object, a person's dossier, 
