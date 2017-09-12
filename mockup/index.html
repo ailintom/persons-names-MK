@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Persons and Names of the Middle Kingdom</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+            .header {
+                border: none ;
+                padding: 6px;
+            }
+            .menu {
+                width: 20%;
+                float: left;
+                padding: 6px;
+                border: none ;
+
+            }
+            .main {
+                width: 80%;
+                float: left;
+                padding: 15px;
+                border: none;
+            }
+            @media only screen and (max-width: 768px) {
+                .menu {
+                    width: 100%;
+                }
+                .menu ul li {
+
+                    display:inline ;
+                }
+
+                .main {
+                    width: 100%;
+                }
+
+            }
+            .menu  ul {
+                list-style-type: none;
+            }
+
+            .menu   li {
+                background-color:#f8f8f8;
+                padding: 3px;
+            }
+            /*  .menu a { display: block } */
+            .menu a:link {color: black;text-decoration: none;}     
+            .menu a:visited {color: black;text-decoration: none;}   
+            .menu a:hover {color: black;text-decoration: underline;}      
+            .menu a:active {color: black;text-decoration: underline;}
+            tr:hover { 
+                background: #f8f8f8; 
+            }
+            td a { 
+                display: block; 
+                border: none;
+                padding: 1px; 
+            }
+            td a:link {color: black;text-decoration: none;}     
+            td a:visited {color: black;text-decoration: none;}   
+            td a:hover {color: black;text-decoration: none;}      
+            td a:active {color: black;text-decoration: none;}
+            .sex{
+                font-style: italic;
+                text-align: center;
+            }
+            .pn{
+                font-style: normal;
+            }
+            .tabhead{
+                font-variant: small-caps;
+                background-color:#fafafa;
+            }
+            .no-att{
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <h1>Persons and Names of the Middle Kingdom</h1>
+        </div>
+        <div class="menu">
+            <ul>
+                <li><a href=index.html>Personal names</a></li>
+                <li><a href=people.html>People</a></li>
+                <li><a href=about.html>Dossiers</a></li>
+                <li><a href=about.html>Inscribed objects</a></li>
+                <li><a href=about.html>Info</a></li>
+                <li><a href=impressum.html>Impressum</a></li>
+            </ul>
+
+        </div>
+        <div class="main">
+            <h2>Search personal names</h2>
+            Persons and Names of the Middle Kingdom is an online database of Egyptian Middle Kingdom personal names and their bearers. It includes data on personal names, people bearing names, written sources where people are attested, dossiers of persons attestated in different sources.
+            <h2>Search results</h2>
+            <table>
+                <tr>
+                    <td class="tabhead"><div> Personal name</div></td>
+                    <td class="tabhead"><div>Sex</div></td>
+                    <td class="tabhead"><div>Sources</div></td>
+                    <td class="tabhead"><div>Period</div></td>
+                    <td class="tabhead"><div>Area</div></td>
+                </tr>
+                <tr>
+                    <td><a href="/names/142606600"><div class="pn">jnpw-m-sꜣ⸗f</div></a></td>
+                    <td><a href="/names/142606600"><div class="sex">m</div></a></td>
+                    <td><a href="/names/142606600"><div class="no-att">1</div></a></td>
+                    <td><a href="/names/142606600"><div>early 12th Dyn.</div></a></td>
+                    <td><a href="/names/142606600"><div></div></a></td>
+                </tr>
+                <tr>
+                    <td><a href="/names/142606570"><div class="pn">jnpw-m-sꜣ⸗s</div></a></td>
+                    <td><a href="/names/142606570"><div class="sex">f</div></a></td>
+                    <td><a href="/names/142606600"><div class="no-att">2</div></a></td>
+                    <td><a href="/names/142606600"><div>12th Dyn.</div></a></td>
+                    <td><a href="/names/142606600"><div></div></a></td>
+
+                </tr>
+
+            </table>
+
+        </div>
+    </body>
+</html>
