@@ -5,7 +5,7 @@ Funded by the Fritz Thyssen Foundation as part of the project
 [Umformung und Variabilität im Korpus altägyptischer Personennamen 2055-1550 v.Chr.](https://www.aegyptologie.uni-mainz.de/umformung-und-variabilitaet-1/)  
 # Database structure
 ## Conventions  ,
-Data are stored in a MySQL database. It is also planned to export the data into a machine-readable format (RDF).
+Data are stored in a MySQL database. It is planned to export the data into an ontology-based machine-readable format (RDF); hence, equivalent classes and propertied in established ontologies are cited in this document.
 For the sake of compatibility with other relational database management systems only the following datatypes are used:  
 * `CHAR` (standard SQL data type `NATIONAL CHARACTER`) for short attributes;  
 * `VARCHAR(255)` (standard SQL data type `NATIONAL CHARACTER VARYING (255)`) for fields with a fixed set of values;  
@@ -86,13 +86,13 @@ Each record in this table represents a physical object with an Egyptian inscript
 | find_groups_id    | INT | The ID of the archaeological find_group to which the inscribed object belongs in the table `find_groups` |
 | text_content      | VARCHAR(255) | The `item_name` of the text content type in the text_content thesaurus (thesaurus 3), *based on a subset of the [THOT Text content thesaurus](http://thot.philo.ulg.ac.be/concept/thot-18634)* |
 | script            | VARCHAR(255) | The `item_name` of the script in the script thesaurus (thesaurus 4), *based on a subset of the [THOT Ancient Egyptian scripts thesaurus](http://thot.philo.ulg.ac.be/concept/thot-111)* |
-| provenance        | VARCHAR(255) | The `place_name` of the record in the table `places` corresponding to the place where the object was found or purchased |
+| provenance        | VARCHAR(255) | The `place_name` of the record in the table `places` corresponding to the place where the object was found or purchased | <http://lawd.info/ontology/foundAt> |
 | provenance_note   | VARCHAR(4000) | Note related to the `provenance` |
 | installation_place| VARCHAR(255) | The `place_name` of the record in the table `places` corresponding to the place where the object should have been installed (when different from the provenance or when the provenance is unknown or unreliable, as in case of purchases) |
 | installation_place_note   | VARCHAR(4000) | Note related to the `installation_place` |
 | origin            | VARCHAR(255) | The `place_name` of the record in the table `places` corresponding to the place where the person(s) named in the inscription should have lived |
 | origin_note       | VARCHAR(4000) | The reasoning behind the `origin` with relevant bibliographical references whenever possible |
-| production_place  | VARCHAR(255) | The `place_name` of the record in the table `places` corresponding to the place where the object should have been produced |
+| production_place  | VARCHAR(255) | The `place_name` of the record in the table `places` corresponding to the place where the object should have been produced | <http://lawd.info/ontology/origin> |
 | production_place_note | VARCHAR(4000) | The reasoning behind the `production_place` with relevant bibliographical references whenever possible |
 | dating            | VARCHAR(255) | The `item_name` of the period to which the object can be dated in the dating thesaurus (thesaurus 5), *loosely based on a subset of the [THOT Dates and dating systems thesaurus](http://thot.philo.ulg.ac.be/concept/thot-114)* |
 | dating_note       | VARCHAR(4000) | The reasoning behind the `dating`  |
