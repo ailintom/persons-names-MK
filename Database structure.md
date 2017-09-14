@@ -39,7 +39,7 @@ This is a supporting table containing keys and values of self-developed and thir
 
 ### publications *(table_id: 2)*  
 Each record in this table describes a printed or online publication (a bibliographic entry). Here belongs everything published that can be cited using the author-year system.   
-*Equivalent: <http://www.cidoc-crm.org/cidoc-crm/E31_document>*  
+*Equivalent class: <http://www.cidoc-crm.org/cidoc-crm/E31_document>*  
 
 | Field name | Type | Description | 
 | --- | :---: | :--- |
@@ -55,7 +55,7 @@ Each record in this table describes a printed or online publication (a bibliogra
 ### biblio_refs *(table_id: 7)*  
 Each record in this table describes a reference from a publication (if the `source_id` field is not empty), a webpage (if the `source_url` field is not empty), or an offline source that cannot be cited using the author-date system to an entity (an inscribed object, a person's dossier, 
 a workshop, an archaeological find group, a personal name, or a title).   
-*Equivalent property: <http://www.cidoc-crm.org/cidoc-crm/P70i_is_documented_in> *  
+*Equivalent property: <http://www.cidoc-crm.org/cidoc-crm/P70i_is_documented_in>*  
 
 | Field name     | Type | Description |
 | ---            | :---: | :--- |
@@ -141,8 +141,8 @@ An associative table for linking workshops to inscriptions (assuming that contra
 | inscriptions_id                | INT   | ID of the inscription |
 
 ### places *(table_id: 22)*  
-Each record in this table represents the name of a place or a region associated with inscriptions catalogued in this database. One location can be listed in this table several times under different names (modern and ancient).
-*Equivalent class: <http://lawd.info/ontology/PlaceName> *
+Each record in this table represents the name of a place or a region associated with inscriptions catalogued in this database. One location can be listed in this table several times under different names (modern and ancient).  
+*Equivalent class: <http://lawd.info/ontology/PlaceName>*  
 
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
@@ -163,7 +163,7 @@ Each record in this table represents an inventory number of an inscribed object 
 | inv_nos_id        | INT   | Unique record ID, primary key |
 | inscriptions_id   | INT   | ID of the inscribed object identified by the inventory number |
 | collections_id    | INT   | ID of the museum |
-| inv_no            | VARCHAR(255) | Inventory number | <http://www.w3.org/2000/01/rdf-schema#label>* |
+| inv_no            | VARCHAR(255) | Inventory number | <http://www.w3.org/2000/01/rdf-schema#label> |
 | status            | CHAR(11) | Status of the inventory number ("main", "alternative", "obsolete", or "erroneous"). The only case when an object can have more than one main inventory numbers is when its pieces bear separate inventory numbers |
 | note              | VARCHAR(4000)| General notes related to the inventory number |
 
@@ -186,7 +186,7 @@ Each record in this table represents a modern collection containing inscribed ob
   
 ### attestations *(table_id: 8)*  
 Each record in this table represents an attestation of a person, of one or two personal names, and of a string of titles (if any) born by that person in an inscription.  
-Equivalent classes: <http://lawd.info/ontology/NameAttestation>, <http://lawd.info/ontology/PersonAttestation>
+*Equivalent classes: <http://lawd.info/ontology/NameAttestation>, <http://lawd.info/ontology/PersonAttestation>*  
 
 | Field name        | Type  | Description | Equivalent classes, properties |
 | ---               | :---: | :---        | :---        |
@@ -217,8 +217,8 @@ Equvalent property: <http://lawd.info/ontology/hasAttestation>
 
 ### persons *(table_id: 27)*  
 Each record in this table represents a dossier of a person attested in more than one inscription.  
-*Equivalent: entries in* D. Franke, *Personendaten aus dem Mittleren Reich (20.-16. Jahrhundert v. Chr.)*  
-*Equivalent class: <http://lawd.info/ontology/Person> *
+*Equivalent: entries in* D. Franke, *Personendaten aus dem Mittleren Reich (20.-16. Jahrhundert v. Chr.)*   
+*Equivalent class: <http://lawd.info/ontology/Person>*   
 
 
 | Field name        | Type  | Description |
@@ -295,8 +295,8 @@ Each record in this table represents a possible reading of a spelling, differing
 
 ### personal_names *(table_id: 17)*  
 Each record in this table represents an Egyptian name.  
-*Equivalent: entries in* H. Ranke, *Die ägyptischen Personennamen*
-*Equivalent class: <http://lawd.info/ontology/PersonalName> *
+*Equivalent: entries in* H. Ranke, *Die ägyptischen Personennamen*  
+*Equivalent class: <http://lawd.info/ontology/PersonalName>*  
 
 | Field name        | Type  | Description | Equivalent classes, properties |
 | ---               | :---: | :---        | :---        |
@@ -336,7 +336,7 @@ Each record in this table represents a correspondence between a personal name an
 
 ### bonds *(table_id: 24)*  
 Each record represents a statement about a bond between two persons stated in inscriptions or representations (as in cases when the bond of matrimony between two persons is implied only by iconography) on an inscribed object.  
-*Equivalent class: <http://onto.snapdrgn.net/snap#Bond>*
+*Equivalent class: <http://onto.snapdrgn.net/snap#Bond>*  
 
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
@@ -350,7 +350,7 @@ Each record represents a statement about a bond between two persons stated in in
 
 ### persons_bonds *(table_id: 11)*  
 Each record represents a statement about a bond between two personal dossiers reconstructed from more than one source.  
-*Equivalent class: <http://onto.snapdrgn.net/snap#Bond>*
+*Equivalent class: <http://onto.snapdrgn.net/snap#Bond>*  
 
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
