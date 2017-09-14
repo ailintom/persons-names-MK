@@ -5,7 +5,8 @@ Funded by the Fritz Thyssen Foundation as part of the project
 [Umformung und Variabilität im Korpus altägyptischer Personennamen 2055-1550 v.Chr.](https://www.aegyptologie.uni-mainz.de/umformung-und-variabilitaet-1/)  
 # Database structure
 ## Conventions  ,
-Data are stored in a MySQL database. For the sake of compatibility with other relational database management systems only the following datatypes are used:  
+Data are stored in a MySQL database. It is also planned to export the data into a machine-readable format (RDF).
+For the sake of compatibility with other relational database management systems only the following datatypes are used:  
 * `CHAR` (standard SQL data type `NATIONAL CHARACTER`) for short attributes;  
 * `VARCHAR(255)` (standard SQL data type `NATIONAL CHARACTER VARYING (255)`) for fields with a fixed set of values;  
 * `VARCHAR(4000)` (standard SQL data type `NATIONAL CHARACTER VARYING (4000)`) for longer text values (length restricted for compatibility with MS SQL Server);  
@@ -40,7 +41,7 @@ This is a supporting table containing keys and values of self-developed and thir
 Each record in this table describes a printed or online publication (a bibliographic entry). Here belongs everything published that can be cited using the author-year system.   
 *Equivalent: <http://www.cidoc-crm.org/cidoc-crm/E31_document>*  
 
-| Field name | Type | Description |
+| Field name | Type | Description | 
 | --- | :---: | :--- |
 | publications_id | INT | Unique record ID, primary key |
 | csl_json | TEXT | Bibliographical data in the [CSL-JSON](https://github.com/citation-style-language/schema/blob/master/csl-data.json) format |
@@ -54,7 +55,7 @@ Each record in this table describes a printed or online publication (a bibliogra
 ### biblio_refs *(table_id: 7)*  
 Each record in this table describes a reference from a publication (if the `source_id` field is not empty), a webpage (if the `source_url` field is not empty), or an offline source that cannot be cited using the author-date system to an entity (an inscribed object, a person's dossier, 
 a workshop, an archaeological find group, a personal name, or a title).   
-*Equivalent: <http://www.cidoc-crm.org/cidoc-crm/P70i_is_documented_in> statements*  
+*Equivalent property: <http://www.cidoc-crm.org/cidoc-crm/P70i_is_documented_in> *  
 
 | Field name     | Type | Description |
 | ---            | :---: | :--- |
@@ -71,17 +72,17 @@ a workshop, an archaeological find group, a personal name, or a title).
 ### inscriptions *(table_id: 7)*  
 Each record in this table represents a physical object with an Egyptian inscription. This can be an object now located in a museum or a private collection or known from a publication, archival document, or sale catalogue (such as a stela, statue, offering table, coffin, seal, papyrus, etc.), a rock inscription, an inscribed tomb, or another structure. Objects originally belonging to the same structure that has a different type than the objects themselves (e. g., stelae originally installed in the same offering chapel) are considered different objects, but objects that are parts of an originally integral object of the same type, now decomposed, (e. g., two parts of the same statue, now stored in different museums) are considered the same object. 
 
-| Field name        | Type  | Description |
-| ---               | :---: | :---        |
-| inscriptions_id   | INT | Unique record ID, primary key |
+| Field name        | Type  | Description | Equivalent classes, properties |
+| ---               | :---: | :---        | :--- |
+| inscriptions_id   | INT | Unique record ID, primary key | |
 | title  | VARCHAR(255) | The title under which the object is referred to in the database (short museum name and main inventory number for objects in the museums or the reference to the most relevant (usually first) publication for other objects)  |
 | object_type  | VARCHAR(255) | The `item_name` of the inscription type in the object_type thesaurus (thesaurus 1); *example: stela*  |
 | object_subtype | VARCHAR(255) | The `item_name` of the inscription subtype in the object_subtype thesaurus (thesaurus 2); *example: block-statue*  |
 | material          | VARCHAR(255) | The `item_name` of the material type in the material  thesaurus (thesaurus 3), *based on a subset of the [THOT Material thesaurus](http://thot.philo.ulg.ac.be/concept/thot-6200)* |
-| length            | INT | Preserved length of the object (for scarabs) in mm. Equivalents: <http://www.cidoc-crm.org/cidoc-crm/P43_has_dimension>, <http://www.cidoc-crm.org/cidoc-crm/E54_Dimension> |
-| height            | INT | Preserved height of the object in mm. Equivalents: <http://www.cidoc-crm.org/cidoc-crm/P43_has_dimension>, <http://www.cidoc-crm.org/cidoc-crm/E54_Dimension> |
-| width             | INT | Preserved width of the object in mm. Equivalents: <http://www.cidoc-crm.org/cidoc-crm/P43_has_dimension>, <http://www.cidoc-crm.org/cidoc-crm/E54_Dimension> |
-| thickness         | INT | Preserved thickness of the object in mm. Equivalents: <http://www.cidoc-crm.org/cidoc-crm/P43_has_dimension>, <http://www.cidoc-crm.org/cidoc-crm/E54_Dimension> | 
+| length            | INT | Preserved length of the object (for scarabs) in mm. | <http://www.cidoc-crm.org/cidoc-crm/P43_has_dimension>, <http://www.cidoc-crm.org/cidoc-crm/E54_Dimension> |
+| height            | INT | Preserved height of the object in mm. | <http://www.cidoc-crm.org/cidoc-crm/P43_has_dimension>, <http://www.cidoc-crm.org/cidoc-crm/E54_Dimension> |
+| width             | INT | Preserved width of the object in mm. | <http://www.cidoc-crm.org/cidoc-crm/P43_has_dimension>, <http://www.cidoc-crm.org/cidoc-crm/E54_Dimension> |
+| thickness         | INT | Preserved thickness of the object in mm. | <http://www.cidoc-crm.org/cidoc-crm/P43_has_dimension>, <http://www.cidoc-crm.org/cidoc-crm/E54_Dimension> | 
 | find_groups_id    | INT | The ID of the archaeological find_group to which the inscribed object belongs in the table `find_groups` |
 | text_content      | VARCHAR(255) | The `item_name` of the text content type in the text_content thesaurus (thesaurus 3), *based on a subset of the [THOT Text content thesaurus](http://thot.philo.ulg.ac.be/concept/thot-18634)* |
 | script            | VARCHAR(255) | The `item_name` of the script in the script thesaurus (thesaurus 4), *based on a subset of the [THOT Ancient Egyptian scripts thesaurus](http://thot.philo.ulg.ac.be/concept/thot-111)* |
@@ -141,6 +142,7 @@ An associative table for linking workshops to inscriptions (assuming that contra
 
 ### places *(table_id: 22)*  
 Each record in this table represents the name of a place or a region associated with inscriptions catalogued in this database. One location can be listed in this table several times under different names (modern and ancient).
+*Equivalent class: <http://lawd.info/ontology/PlaceName> *
 
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
@@ -154,14 +156,14 @@ Each record in this table represents the name of a place or a region associated 
 
 ### inv_nos *(table_id: 25)*  
 Each record in this table represents an inventory number of an inscribed object in a museum or other modern collection.  
-*Equivalents: <http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by> statement and <http://www.cidoc-crm.org/cidoc-crm/E42_Identifier> entity*   
+*Equivalents: <http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by> property and <http://www.cidoc-crm.org/cidoc-crm/E42_Identifier> class*   
 
-| Field name        | Type  | Description |
-| ---               | :---: | :---        |
+| Field name        | Type  | Description |  Equivalent classes, properties |
+| ---               | :---: | :---        | :---        |
 | inv_nos_id        | INT   | Unique record ID, primary key |
 | inscriptions_id   | INT   | ID of the inscribed object identified by the inventory number |
 | collections_id    | INT   | ID of the museum |
-| inv_no            | VARCHAR(255) | Inventory number; *equivalent: <http://www.w3.org/2000/01/rdf-schema#label>* |
+| inv_no            | VARCHAR(255) | Inventory number | <http://www.w3.org/2000/01/rdf-schema#label>* |
 | status            | CHAR(11) | Status of the inventory number ("main", "alternative", "obsolete", or "erroneous"). The only case when an object can have more than one main inventory numbers is when its pieces bear separate inventory numbers |
 | note              | VARCHAR(4000)| General notes related to the inventory number |
 
@@ -184,24 +186,24 @@ Each record in this table represents a modern collection containing inscribed ob
   
 ### attestations *(table_id: 8)*  
 Each record in this table represents an attestation of a person, of one or two personal names, and of a string of titles (if any) born by that person in an inscription.  
+Equivalent classes: <http://lawd.info/ontology/NameAttestation>, <http://lawd.info/ontology/PersonAttestation>
 
-
-| Field name        | Type  | Description |
-| ---               | :---: | :---        |
+| Field name        | Type  | Description | Equivalent classes, properties |
+| ---               | :---: | :---        | :---        |
 | attestations_id   | INT   | Unique record ID, primary key |
-| inscriptions_id   | INT   | ID of the inscription |
+| inscriptions_id   | INT   | ID of the inscription | <http://lawd.info/ontology/hasCitation> + <http://lawd.info/ontology/represents> |
 | sex               | CHAR(1)        | Sex of the attested person ("m", "f", "?" *sex unknown*, or "a" *for animals*)|
 | title_string      | VARCHAR(4000)| Transliterated title string in lowercase Unicode as preserved in the inscription, separated by semicolons |
 | personal_name     | VARCHAR(255)   | Transliterated personal name or combination of names in lowercase Unicode as preserved in the inscription, double names separated by / |
 | spellings_id1     | INT   | ID of the corresponding personal name spelling (the first or the only name) |
 | spellings_id2     | INT   | ID of the corresponding personal name spelling (the second name) |
 | status            | CHAR(5)        | Status of the person on the monument ("owner" or "")|
-| location          | VARCHAR(255)        | The place in the inscription where the person is mentioned (register, line number according to the standard publication or other relevant indications)|
+| location          | VARCHAR(255)        | The place in the inscription where the person is mentioned (register, line number according to the standard publication or other relevant indications)| Data stored in the <http://lawd.info/ontology/Citation> class |
 | note              | VARCHAR(4000)| General notes related to the attestation |
 
 ### persons_att *(table_id: 1)*  
 Each record in this table represents a statement on the appurtenance of an attestation to a dossier.  
-
+Equvalent property: <http://lawd.info/ontology/hasAttestation>
 
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
@@ -215,7 +217,8 @@ Each record in this table represents a statement on the appurtenance of an attes
 
 ### persons *(table_id: 27)*  
 Each record in this table represents a dossier of a person attested in more than one inscription.  
-*Equivalent: entries in* D. Franke, *Personendaten aus dem Mittleren Reich (20.-16. Jahrhundert v. Chr.)*
+*Equivalent: entries in* D. Franke, *Personendaten aus dem Mittleren Reich (20.-16. Jahrhundert v. Chr.)*  
+*Equivalent class: <http://lawd.info/ontology/Person> *
 
 
 | Field name        | Type  | Description |
@@ -293,11 +296,12 @@ Each record in this table represents a possible reading of a spelling, differing
 ### personal_names *(table_id: 17)*  
 Each record in this table represents an Egyptian name.  
 *Equivalent: entries in* H. Ranke, *Die ägyptischen Personennamen*
+*Equivalent class: <http://lawd.info/ontology/PersonalName> *
 
-| Field name        | Type  | Description |
-| ---               | :---: | :---        |
+| Field name        | Type  | Description | Equivalent classes, properties |
+| ---               | :---: | :---        | :---        |
 |personal_names_id  | INT   | Unique record ID, primary key |
-|personal_name      | VARCHAR(255)   | Transliterated personal name in lowercase Unicode |
+|personal_name      | VARCHAR(255)   | Transliterated personal name in lowercase Unicode | <http://lawd.info/ontology/primaryForm> |
 |translation_en     | VARCHAR(255)   | English translation of the name |
 |translation_de     | VARCHAR(255)   | German translation of the name |
 |sex                | CHAR(4)        | Sex of persons bearing the name ("m", "f", "both", or "a" *for animals*)|
@@ -332,7 +336,7 @@ Each record in this table represents a correspondence between a personal name an
 
 ### bonds *(table_id: 24)*  
 Each record represents a statement about a bond between two persons stated in inscriptions or representations (as in cases when the bond of matrimony between two persons is implied only by iconography) on an inscribed object.  
-*Equivalent: [SNAP:DRGN](http://snapdrgn.net/ontology)/Bond*
+*Equivalent class: <http://onto.snapdrgn.net/snap#Bond>*
 
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
@@ -346,7 +350,7 @@ Each record represents a statement about a bond between two persons stated in in
 
 ### persons_bonds *(table_id: 11)*  
 Each record represents a statement about a bond between two personal dossiers reconstructed from more than one source.  
-*Equivalent: [SNAP:DRGN](http://snapdrgn.net/ontology)/Bond*
+*Equivalent class: <http://onto.snapdrgn.net/snap#Bond>*
 
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
