@@ -192,7 +192,7 @@ Each record in this table represents an attestation of a person, of one or two p
 | ---               | :---: | :---        | :---        |
 | attestations_id   | INT   | Unique record ID, primary key |
 | inscriptions_id   | INT   | ID of the inscription | <http://lawd.info/ontology/hasCitation> + <http://lawd.info/ontology/represents> |
-| sex               | CHAR(1)        | Sex of the attested person ("m", "f", "?" *sex unknown*, or "a" *for animals*)|
+| gender               | CHAR(1)        | Gender of the attested person ("m", "f", "?" *gender unknown*, or "a" *for animals*)|
 | title_string      | VARCHAR(4000)| Transliterated title string in lowercase Unicode as preserved in the inscription, separated by semicolons |
 | personal_name     | VARCHAR(255)   | Transliterated personal name or combination of names in lowercase Unicode as preserved in the inscription, double names separated by / |
 | spellings_id1     | INT   | ID of the corresponding personal name spelling (the first or the only name) |
@@ -224,7 +224,7 @@ Each record in this table represents a dossier of a person attested in more than
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
 | persons_id        | INT   | Unique record ID, primary key |
-| sex               | CHAR(1)        | Sex of the person ("m", "f", "?" *sex unknown*, or "a" *for animals*)|
+| gender               | CHAR(1)        | Gender of the person ("m", "f", "?" *gender unknown*, or "a" *for animals*)|
 | title             | VARCHAR(255)   | The designation of the dossier referred to in the database such as the reference to the work where the dossier was first established; *example: "PD 599"* |
 | title_string      | VARCHAR(4000)| Transliterated title string in lowercase Unicode as reconstructed from all available attestations, separated by semicolons |
 | personal_name     | VARCHAR(255)   | Transliterated personal name or combination of names in lowercase Unicode as reconstructed from all available attestations, double names separated by / |
@@ -254,6 +254,7 @@ Each record in this table represents an Egyptian title.
 | title             | VARCHAR(255)   | Transliterated title in lowercase unicode |
 | translation_en    | VARCHAR(255)   | English translation of the title |
 | translation_de    | VARCHAR(255)   | German translation of the title |
+|gender                | CHAR(4)        | Gender of persons bearing the title ("m", "f", or "both")|
 | tla | VARCHAR(255)   | List of corresponding lemma numbers in the [Thesaurus Linguae Aegyptiae](http://aaew.bbaw.de/tla/servlet/TlaLogin), separated by semicolons |
 | hannig | VARCHAR(255)   | List of corresponding lemma numbers in R. Hannig, *Ägyptisches Wörterbuch II: Mittleres Reich und Zweite Zwischenzeit*, separated by semicolons |
 |usage_area         | VARCHAR(255)   | The `place_name` of the record in the table `places` corresponding to the region where the title was predominantly used |
@@ -304,7 +305,7 @@ Each record in this table represents an Egyptian name.
 |personal_name      | VARCHAR(255)   | Transliterated personal name in lowercase Unicode | <http://lawd.info/ontology/primaryForm> |
 |translation_en     | VARCHAR(255)   | English translation of the name |
 |translation_de     | VARCHAR(255)   | German translation of the name |
-|sex                | CHAR(4)        | Sex of persons bearing the name ("m", "f", "both", or "a" *for animals*)|
+|gender                | CHAR(4)        | Gender of persons bearing the name ("m", "f", "both", or "a" *for animals*)|
 |ranke              | VARCHAR(255)   | List of corresponding entries in Ranke, *Personennamen*, separated by semicolons |
 |tla                | VARCHAR(255)   | List of corresponding lemma numbers in the [Thesaurus Linguae Aegyptiae](http://aaew.bbaw.de/tla/servlet/TlaLogin), separated by semicolons |
 |scheele-schweitzer | VARCHAR(255)   | List of corresponding entries in K. Scheele-Schweitzer, *Die Personennamen des Alten Reiches*, separated by semicolons |
