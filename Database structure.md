@@ -164,6 +164,7 @@ Each record in this table represents the name of a place or a region associated 
 | date_created| DATE | Date when the record was created in the published version of the database |
 | date_changed| DATE | Date when the last change to the record was published |
 | place_name        | VARCHAR(255) | The form of the name used in this database |
+| short_place_name  | VARCHAR(255) | The abbreviated form of the name used in this database |
 | relative_location | VARCHAR(255) | The `item_name` in the relative_location thesaurus (thesaurus 9), either "Eastern Desert", "Nile Valley", "Western Desert", or the "Levant" |
 | latitude          | INT   | The latitude of the place (or of the central point of the region) in decimal degrees north of equator multiplied by 100. Thus 2572 stands for 25.72 N or 25° 43' N. This value is used for sorting the places in a north to south or south to north order.  |
 | topbib_id         | VARCHAR(255) | The ID of the place name in the [Digital TopBib](http://topbib.griffith.ox.ac.uk) database; *examples: [501-180](http://topbib.griffith.ox.ac.uk//dtb.html?topbib=501-180) or [901-210-003](http://topbib.griffith.ox.ac.uk//dtb.html?topbib=901-210-003)* |
