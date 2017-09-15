@@ -362,7 +362,7 @@ Each record in this table represents a type or a  pattern in Egyptian personal n
 | date_changed| DATE | Date when the last change to the record was published |
 |parent_id          | INT   | ID of the parent name type |
 |title              | VARCHAR(255)   | Transliterated personal name pattern in lowercase Unicode or the title of a name type |
-|category           | |The category of the name type ("semantic" or "formal")
+|category           | CHAR(8) |The category of the name type ("semantic" or "formal")
 | note              | VARCHAR(4000)| General notes related to the name type |
 
 ### names_types_xref *(table_id: 31)*  
