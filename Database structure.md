@@ -28,6 +28,8 @@ This is a supporting table containing keys and values of self-developed and thir
 | Field name | Type | Description |
 | --- | :---: | :--- |
 | thesauri_id | INT | Unique record ID, primary key |
+| date_created| DATE | Date when the record was created in the published version of the database |
+| date_changed| DATE | Date when the last change to the record was published |
 | thesaurus   | INT | The handle of the thesaurus to which this record belongs. Under `thesaurus=0` all thesauri represented in this table are listed with the keys to the `thesaurus` field stored in `sort_value`.  |
 | parent      | INT | The `thesauri_id` of the superordinate thesaurus entry |
 | sort_value  | INT | The value used for sorting entries within a thesaurus |
@@ -44,6 +46,8 @@ Each record in this table describes a printed or online publication (a bibliogra
 | Field name | Type | Description | 
 | --- | :---: | :--- |
 | publications_id | INT | Unique record ID, primary key |
+| date_created| DATE | Date when the record was created in the published version of the database |
+| date_changed| DATE | Date when the last change to the record was published |
 | csl_json | TEXT | Bibliographical data in the [CSL-JSON](https://github.com/citation-style-language/schema/blob/master/csl-data.json) format |
 | author_year | VARCHAR(255) | The author-year handle for referring |
 | html_entry | VARCHAR(4000) | Precomposed bibliographical entry in the Chicago Manual of Style format (HTML) |
@@ -60,6 +64,8 @@ a workshop, an archaeological find group, a personal name, or a title).
 | Field name     | Type | Description |
 | ---            | :---: | :--- |
 | biblio_refs_id | INT | Unique record ID, primary key |
+| date_created| DATE | Date when the record was created in the published version of the database |
+| date_changed| DATE | Date when the last change to the record was published |
 | reference_type | CHAR(20) | The type of the reference |
 | source_id      | INT | The ID of the referring publication in the table `publications` |
 | source_url     | VARCHAR(4000) | URL for online sources that cannot be cited using the author-year system |
@@ -75,6 +81,8 @@ Each record in this table represents a physical object with an Egyptian inscript
 | Field name        | Type  | Description | Equivalent classes, properties |
 | ---               | :---: | :---        | :--- |
 | inscriptions_id   | INT | Unique record ID, primary key | |
+| date_created| DATE | Date when the record was created in the published version of the database |
+| date_changed| DATE | Date when the last change to the record was published |
 | title  | VARCHAR(255) | The title under which the object is referred to in the database (short museum name and main inventory number for objects in the museums or the reference to the most relevant (usually first) publication for other objects)  |
 | object_type  | VARCHAR(255) | The `item_name` of the inscription type in the object_type thesaurus (thesaurus 1); *example: stela*  |
 | object_subtype | VARCHAR(255) | The `item_name` of the inscription subtype in the object_subtype thesaurus (thesaurus 2); *example: block-statue*  |
@@ -105,6 +113,8 @@ Each record in this table represents an archaeological find group (such as a bur
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
 | find_groups_id    | INT   | Unique record ID, primary key |
+| date_created| DATE | Date when the record was created in the published version of the database |
+| date_changed| DATE | Date when the last change to the record was published |
 | site              | VARCHAR(255) | The `place_name` of the record in the table `places` corresponding to the place where the find group is located |
 | site_area         | VARCHAR(255) | The part of the site where the find group is located |
 | exact_location    | VARCHAR(4000)| A detailed description of the find group location |
@@ -124,6 +134,8 @@ Each record in this table represents a workshop producing inscribed objects that
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
 | workshops_id      | INT   | Unique record ID, primary key |
+| date_created| DATE | Date when the record was created in the published version of the database |
+| date_changed| DATE | Date when the last change to the record was published |
 | title             | VARCHAR(255) | The title under which the workshop is referred to in the database |
 | production_place  | VARCHAR(255) | The `place_name` of the record in the table `places` corresponding to the place where the objects should have been produced |
 | production_place_note | VARCHAR(4000) | The reasoning behind the `production_place` with relevant bibliographical references whenever possible |
@@ -137,6 +149,8 @@ An associative table for linking workshops to inscriptions (assuming that contra
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
 | inscriptions_workshops_xref_id | INT   | Unique record ID, primary key |
+| date_created| DATE | Date when the record was created in the published version of the database |
+| date_changed| DATE | Date when the last change to the record was published |
 | workshops_id                   | INT   | ID of the workshop |
 | inscriptions_id                | INT   | ID of the inscription |
 
@@ -147,6 +161,8 @@ Each record in this table represents the name of a place or a region associated 
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
 | places_id         | INT   | Unique record ID, primary key |
+| date_created| DATE | Date when the record was created in the published version of the database |
+| date_changed| DATE | Date when the last change to the record was published |
 | place_name        | VARCHAR(255) | The form of the name used in this database |
 | relative_location | VARCHAR(255) | The `item_name` in the relative_location thesaurus (thesaurus 9), either "Eastern Desert", "Nile Valley", "Western Desert", or the "Levant" |
 | latitude          | INT   | The latitude of the place (or of the central point of the region) in decimal degrees north of equator multiplied by 100. Thus 2572 stands for 25.72 N or 25° 43' N. This value is used for sorting the places in a north to south or south to north order.  |
@@ -161,6 +177,8 @@ Each record in this table represents an inventory number of an inscribed object 
 | Field name        | Type  | Description |  Equivalent classes, properties |
 | ---               | :---: | :---        | :---        |
 | inv_nos_id        | INT   | Unique record ID, primary key |
+| date_created| DATE | Date when the record was created in the published version of the database |
+| date_changed| DATE | Date when the last change to the record was published |
 | inscriptions_id   | INT   | ID of the inscribed object identified by the inventory number |
 | collections_id    | INT   | ID of the museum |
 | inv_no            | VARCHAR(255) | Inventory number | <http://www.w3.org/2000/01/rdf-schema#label> |
@@ -174,6 +192,8 @@ Each record in this table represents a modern collection containing inscribed ob
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
 | collections_id    | INT   | Unique record ID, primary key |
+| date_created| DATE | Date when the record was created in the published version of the database |
+| date_changed| DATE | Date when the last change to the record was published |
 | full_name         | VARCHAR(4000) | Official full name of the collection |
 | title             | VARCHAR(255) | Short title used in the database |
 | location          | VARCHAR(255) | Locality and country |
@@ -191,6 +211,8 @@ Each record in this table represents an attestation of a person, of one or two p
 | Field name        | Type  | Description | Equivalent classes, properties |
 | ---               | :---: | :---        | :---        |
 | attestations_id   | INT   | Unique record ID, primary key |
+| date_created| DATE | Date when the record was created in the published version of the database |
+| date_changed| DATE | Date when the last change to the record was published |
 | inscriptions_id   | INT   | ID of the inscription | <http://lawd.info/ontology/hasCitation> + <http://lawd.info/ontology/represents> |
 | gender               | CHAR(1)        | Gender of the attested person ("m", "f", "?" *gender unknown*, or "a" *for animals*)|
 | title_string      | VARCHAR(4000)| Transliterated title string in lowercase Unicode as preserved in the inscription, separated by semicolons |
@@ -208,6 +230,8 @@ Equvalent property: <http://lawd.info/ontology/hasAttestation>
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
 | persons_att_id    | INT   | Unique record ID, primary key |
+| date_created| DATE | Date when the record was created in the published version of the database |
+| date_changed| DATE | Date when the last change to the record was published |
 | attestations_id   | INT   | ID of the attestation  |
 | persons_id        | INT   | ID of the dossier  |
 | reasoning         | VARCHAR(255)   | List of `item_name` values in the dossier_reasoning thesaurus (thesaurus 10) separated by semicolons; *example: "same name; related title; same mother's name"* |
@@ -224,6 +248,8 @@ Each record in this table represents a dossier of a person attested in more than
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
 | persons_id        | INT   | Unique record ID, primary key |
+| date_created| DATE | Date when the record was created in the published version of the database |
+| date_changed| DATE | Date when the last change to the record was published |
 | gender               | CHAR(1)        | Gender of the person ("m", "f", "?" *gender unknown*, or "a" *for animals*)|
 | title             | VARCHAR(255)   | The designation of the dossier referred to in the database such as the reference to the work where the dossier was first established; *example: "PD 599"* |
 | title_string      | VARCHAR(4000)| Transliterated title string in lowercase Unicode as reconstructed from all available attestations, separated by semicolons |
@@ -238,6 +264,8 @@ Each record in this table represents an attestation of a title in a string of ti
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
 |titles_att_id      | INT   | Unique record ID, primary key |
+| date_created| DATE | Date when the record was created in the published version of the database |
+| date_changed| DATE | Date when the last change to the record was published |
 |titles_id          | INT   | ID of the attested title |
 |attestations_id    | INT   | ID of the attestation of a person bearing a title |
 |sequence_number    | INT   | Sequence number of the title in the title string |
@@ -251,6 +279,8 @@ Each record in this table represents an Egyptian title.
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
 |      titles_id    | INT   | Unique record ID, primary key |
+| date_created| DATE | Date when the record was created in the published version of the database |
+| date_changed| DATE | Date when the last change to the record was published |
 | title             | VARCHAR(255)   | Transliterated title in lowercase unicode |
 | translation_en    | VARCHAR(255)   | English translation of the title |
 | translation_de    | VARCHAR(255)   | German translation of the title |
@@ -272,6 +302,8 @@ Each record in this table represents a spelling type of a personal name. Generic
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
 | spellings_id      | INT   | Unique record ID, primary key |
+| date_created| DATE | Date when the record was created in the published version of the database |
+| date_changed| DATE | Date when the last change to the record was published |
 | personal_names_id | INT   | ID of the personal name corresponding to the preferred reading of the spelling |
 | spelling          | VARCHAR(255)   | The spelling of the name in in JSesh-compatible MdC codes |
 | ranke             | VARCHAR(255)   | The corresponding entry in Ranke, *Personennamen* |
@@ -291,6 +323,8 @@ Each record in this table represents a possible reading of a spelling, differing
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
 | alternative_readings_id      | INT   | Unique record ID, primary key |
+| date_created| DATE | Date when the record was created in the published version of the database |
+| date_changed| DATE | Date when the last change to the record was published |
 | spellings_id      | INT   | ID of the spelling |
 | personal_names_id | INT   | ID of the personal name corresponding to the alternate reading of the spelling |
 
@@ -302,6 +336,8 @@ Each record in this table represents an Egyptian name.
 | Field name        | Type  | Description | Equivalent classes, properties |
 | ---               | :---: | :---        | :---        |
 |personal_names_id  | INT   | Unique record ID, primary key |
+| date_created| DATE | Date when the record was created in the published version of the database |
+| date_changed| DATE | Date when the last change to the record was published |
 |personal_name      | VARCHAR(255)   | Transliterated personal name in lowercase Unicode | <http://lawd.info/ontology/primaryForm> |
 |translation_en     | VARCHAR(255)   | English translation of the name |
 |translation_de     | VARCHAR(255)   | German translation of the name |
@@ -322,8 +358,11 @@ Each record in this table represents a type or a  pattern in Egyptian personal n
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
 |name_types_id      | INT   | Unique record ID, primary key |
+| date_created| DATE | Date when the record was created in the published version of the database |
+| date_changed| DATE | Date when the last change to the record was published |
 |parent_id          | INT   | ID of the parent name type |
 |title              | VARCHAR(255)   | Transliterated personal name pattern in lowercase Unicode or the title of a name type |
+|category           | |The category of the name type ("semantic" or "formal")
 | note              | VARCHAR(4000)| General notes related to the name type |
 
 ### names_types_xref *(table_id: 31)*  
@@ -332,6 +371,8 @@ Each record in this table represents a correspondence between a personal name an
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
 |names_types_xref_id| INT   | Unique record ID, primary key |
+| date_created| DATE | Date when the record was created in the published version of the database |
+| date_changed| DATE | Date when the last change to the record was published |
 |personal_names_id  | INT   | ID of the personal name |
 |name_types_id      | INT   | ID of the name type |
 
@@ -342,6 +383,8 @@ Each record represents a statement about a bond between two persons stated in in
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
 |       bonds_id    | INT   | Unique record ID, primary key |
+| date_created| DATE | Date when the record was created in the published version of the database |
+| date_changed| DATE | Date when the last change to the record was published |
 |     subject_id    | INT   | `attestations_id` of the record in `attestations` corresponding to the subject of the statement (the person whose name stands in apposition to the phrase expressing the bond or the antecedent of the relative form) |
 | predicate         | VARCHAR(255) | The `item_name` of the bond type in the bond thesaurus (thesaurus 11), *based on a subset of the elements of [SNAP:DRGN Bond class](http://snapdrgn.net/ontology); example: SonOf* |
 | wording           | VARCHAR(255) | Transliterated exact expression of the bond in lowercase Unicode as attested in the inscription; *example: sꜣ⸗f* |
@@ -356,10 +399,12 @@ Each record represents a statement about a bond between two personal dossiers re
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
 |persons_bonds_id   | INT   | Unique record ID, primary key |
+| date_created| DATE | Date when the record was created in the published version of the database |
+| date_changed| DATE | Date when the last change to the record was published |
 |     subject_id    | INT   | `persons_id` of the record in `persons` corresponding to the subject of the statement   |
 | predicate         | VARCHAR(255) | The `item_name` of the bond type in the bond thesaurus (thesaurus 11), *based on a subset of the elements of [SNAP:DRGN Bond class](http://snapdrgn.net/ontology); example: SonOf* |
 |      object_id    | INT   | `persons_id` of the record in `persons` corresponding to the object of the statement  |
 
-
+Besides, temporary tables for speeding up queries to hierarchal data (hierarchies of name_types and thesauri) are created each time when a new version of the database is published. 
 
 **Disclaimer: This is a work in progress. The database structure is subject to change before the database itself is published.**  
