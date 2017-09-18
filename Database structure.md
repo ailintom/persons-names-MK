@@ -73,7 +73,7 @@ Each record in this table describes a printed or online publication (a bibliogra
 
 ### biblio_refs *(table_id: 7)*  
 Each record in this table describes a reference from a publication (if the `source_id` field is not empty), a webpage (if the `source_url` field is not empty), or an offline source that cannot be cited using the author-date system to an entity (an inscribed object, a person's dossier, 
-a workshop, an archaeological find group, a personal name, or a title).   
+a workshop, an archaeological find group, a personal name, a title, or a criterion).   
 *Equivalent property: <http://www.cidoc-crm.org/cidoc-crm/P70i_is_documented_in>*  
 
 | Field name     | Type | Description |
