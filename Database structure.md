@@ -39,6 +39,21 @@ This is a supporting table containing keys and values of self-developed and thir
 
 <!--- | key_number  | INT | The numeric key of the thesaurus entry | --->
 
+### criteria *(table_id: 14)*  
+This is a supporting table containing criteria for establishing the date or the production place of inscribed objects.  
+
+| Field name | Type | Description |
+| --- | :---: | :--- |
+| criteria_id | INT | Unique record ID, primary key |
+| date_created| DATE | Date when the record was created in the published version of the database |
+| date_changed| DATE | Date when the last change to the record was published |
+| title   | INT | The short title of the criterion used throughout the database.  |
+| criterion           | VARCHAR(4000) | Short summary of the rule |
+| production_place  | VARCHAR(255) | The `place_name` of the record in the table `places` corresponding to the place the criterion points to |
+| dating            | VARCHAR(255) | The `item_name` of the period the criterion points to in the dating thesaurus (thesaurus 5), *loosely based on a subset of the [THOT Dates and dating systems thesaurus](http://thot.philo.ulg.ac.be/concept/thot-114)* |
+
+*Note:* Bibliography is added through `biblio_refs`. The criteria are referred to in other records using the textual handles `@id-any-human-readable-handle` parsed by the online database.  
+
 ### publications *(table_id: 2)*  
 Each record in this table describes a printed or online publication (a bibliographic entry). Here belongs everything published that can be cited using the author-year system.   
 *Equivalent class: <http://www.cidoc-crm.org/cidoc-crm/E31_document>*  
