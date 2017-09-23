@@ -233,8 +233,6 @@ Each record in this table represents an attestation of a person, of one or two p
 | gender               | CHAR(1)        | Gender of the attested person ("m", "f", "?" *gender unknown*, or "a" *for animals*)|
 | title_string      | VARCHAR(4000)| Transliterated title string in lowercase Unicode as preserved in the inscription, separated by semicolons |
 | personal_name     | VARCHAR(255)   | Transliterated personal name or combination of names in lowercase Unicode as preserved in the inscription, double names separated by / |
-| spellings_id1     | INT   | ID of the corresponding personal name spelling (the first or the only name) |
-| spellings_id2     | INT   | ID of the corresponding personal name spelling (the second name) |
 | status            | CHAR(5)        | Status of the person on the monument ("owner" or "")|
 | location          | VARCHAR(255)        | The place in the inscription where the person is mentioned (register, line number according to the standard publication or other relevant indications)| Data stored in the <http://lawd.info/ontology/Citation> class |
 | note              | VARCHAR(4000)| General notes related to the attestation |
