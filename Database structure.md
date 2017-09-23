@@ -90,7 +90,7 @@ a workshop, an archaeological find group, a personal name, a title, or a criteri
 | pages          | VARCHAR(255) | Pages, figures, plates, catalogue numbers, database ID where the entity is referred to in the source |
 | note           | VARCHAR(4000) | Note related to the reference (for example, mistakes in the publication) |
 
-### inscriptions *(table_id: 7)*  
+### inscriptions *(table_id: 4)*  
 Each record in this table represents a physical object with an Egyptian inscription. This can be an object now located in a museum or a private collection or known from a publication, archival document, or sale catalogue (such as a stela, statue, offering table, coffin, seal, papyrus, etc.), a rock inscription, an inscribed tomb, or another structure. Objects originally belonging to the same structure that has a different type than the objects themselves (e. g., stelae originally installed in the same offering chapel) are considered different objects, but objects that are parts of an originally integral object of the same type, now decomposed, (e. g., two parts of the same statue, now stored in different museums) are considered the same object. 
 
 | Field name        | Type  | Description | Equivalent classes, properties |
@@ -239,6 +239,16 @@ Each record in this table represents an attestation of a person, of one or two p
 | location          | VARCHAR(255)        | The place in the inscription where the person is mentioned (register, line number according to the standard publication or other relevant indications)| Data stored in the <http://lawd.info/ontology/Citation> class |
 | note              | VARCHAR(4000)| General notes related to the attestation |
 
+
+### spellings_attestations_xref *(table_id: 15)*  
+Each record in this table represents a link between an attestation of a person and a spelling. When a person bears a double name in a particular source, two records are created in `spellings_attestations_xref`, one for the first name and one for the second name. When a person is attested on the same monuments with the same name in two different spellings, two records are created in  `spellings_attestations_xref`, one for the first name, and one for the second name. 
+
+| Field name        | Type  | Description | Equivalent classes, properties |
+| ---               | :---: | :---        | :---        |
+| attestations_id   | INT   | Unique record ID, primary key |
+| attestations_id   | INT   | ID of the attestation |
+| spellings_id      | INT   | ID of the spelling |
+
 ### persons_att *(table_id: 1)*  
 Each record in this table represents a statement on the appurtenance of an attestation to a dossier.  
 Equvalent property: <http://lawd.info/ontology/hasAttestation>
@@ -327,9 +337,6 @@ Each record in this table represents a spelling type of a personal name. Generic
 |usage_area_note    | VARCHAR(4000)  | Explanatory notes and bibliographic references to the `usage_area` |
 |usage_period       | VARCHAR(255)   | The `item_name` of the period when the spelling was predominantly used in the dating thesaurus (thesaurus 5), *loosely based on a subset of the [THOT Dates and dating systems thesaurus](http://thot.philo.ulg.ac.be/concept/thot-114)*   |
 |usage_period_note    | VARCHAR(4000)  | Explanatory notes and bibliographic references to the `usage_period` |
-
-<!--- ### spellings *(table_id: 29)*  
-Each record in this table represents a spelling type of a personal name. Generic entries with empty spellings are used for names attested in sources accessible only in transliteration or translation.    --->
 
 *Note:* On the back end, a script uses [JSesh](http://jsesh.qenherkhopeshef.org/) to generate PNG graphical files corresponding to MdC codes. These graphical files get names according to `spellings_id` and appear in the online database. 
 
