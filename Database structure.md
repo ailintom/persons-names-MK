@@ -36,8 +36,9 @@ This is a supporting table containing keys and values of self-developed and thir
 | item_name  | VARCHAR(255) | The textual value of the thesaurus entry |
 | external_key| VARCHAR(255) | The key of the corresponding thesaurus entry in a standard external thesaurus (such as the [THOT](http://thot.philo.ulg.ac.be/index.html) project)  |
 | explanation  | VARCHAR(4000) | The meaning of the thesaurus entry |
+| sort_date_range_start | INT | The start of the date range for the entries in the dating thesaurus (thesaurus 5) (a negative integer value corresponding to a year BC, used for sorting purposes) |
+| sort_date_range_end | INT | The end of the date range for the entries in the dating thesaurus (thesaurus 5) (a negative integer value corresponding to a year BC, used for sorting purposes) |
 
-<!--- | key_number  | INT | The numeric key of the thesaurus entry | --->
 
 ### criteria *(table_id: 14)*  
 This is a supporting table containing criteria for establishing the date or the production place of inscribed objects.  
