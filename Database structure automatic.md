@@ -17,7 +17,7 @@ Each record in this table describes a printed or online publication (a bibliogra
 
 | Column | Data type | Attributes | Default | Description |
 | --- | --- | --- | --- | ---  |
-| `publications_id` | INT(11) | PRIMARY, Not null |   | Unique record ID |
+| `publications_id` | INT | PRIMARY, Not null |   | Unique record ID |
 | `date_created` | DATE |  | `NULL` | Date when the record was created in the published version of the database |
 | `date_changed` | DATE |  | `NULL` | Date when the last change to the record was published |
 | `csl_json` | VARCHAR(4000) |  | `NULL` | Bibliographical data in the [CSL-JSON](https://github.com/citation-style-language/schema/blob/master/csl-data.json) format |
@@ -62,5 +62,39 @@ This is a supporting table containing keys and values of self-developed and thir
 | Name | Columns | Type | Description |
 | --- | --- | --- | --- |
 | PRIMARY | `thesauri_id` | PRIMARY |   |
+
+
+## Table: `biblio_refs`
+
+### Description: 
+
+__table_id: 7__  
+Each record in this table describes a reference from a publication (if the `source_id` field is not empty), a webpage (if the `source_url` field is not empty), or an offline source that cannot be cited using the author-date system to an entity (an inscribed object, a person's dossier, 
+a workshop, an archaeological find group, a personal name, a title, or a criterion).   
+*Equivalent property: <http://www.cidoc-crm.org/cidoc-crm/P70i_is_documented_in>*  
+
+### Columns: 
+
+| Column | Data type | Attributes | Default | Description |
+| --- | --- | --- | --- | ---  |
+| `biblio_refs_id` | INT | PRIMARY, Not null |   | Unique record ID |
+| `date_created` | DATE |  |   | Date when the record was created in the published version of the database |
+| `date_changed` | DATE |  |   | Date when the last change to the record was published |
+| `reference_type` | CHAR(20) |  |   | The type of the reference |
+| `source_id` | INT |  |   | The ID of the referring publication in the table `publications`<br /><br />**foreign key** to column `publications_id` on table `publications`. |
+| `source_url` | VARCHAR(4000) |  |   | URL for online sources that cannot be cited using the author-year system |
+| `source_title` | VARCHAR(4000) |  |   | Reference to an offline source that cannot be cited using the author-year system (an archival document, an offline museum database, etc.; this also includes the references to the Topographical Bibliography to keep references to published and unpublished TopBib entries in one place) or the title of the online source referred to in `source_url` |
+| `accessed_on` | DATE |  |   | The date when the online or offline source that cannot be cited using the author-year system was accessed |
+| `object_id` | INT |  |   | The ID of the referred entity in any of the tables that can be referred to (`inscriptions`, `find_groups`, `workshops`, `persons_att`, `persons`, `titles`, `personal_names`, `name_types`) |
+| `pages` | VARCHAR(255) |  |   | Pages, figures, plates, catalogue numbers, database ID where the entity is referred to in the source |
+| `note` | VARCHAR(4000) |  |   | Note related to the reference (for example, mistakes in the publication) |
+
+
+### Indices: 
+
+| Name | Columns | Type | Description |
+| --- | --- | --- | --- |
+| PRIMARY | `biblio_refs_id` | PRIMARY |   |
+| source_id_idx | `source_id` | INDEX |   |
 
 
