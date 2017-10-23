@@ -18,12 +18,12 @@ Each record in this table describes a printed or online publication (a bibliogra
 | Column | Data type | Attributes | Default | Description |
 | --- | --- | --- | --- | ---  |
 | `publications_id` | INT | PRIMARY, Not null |   | Unique record ID |
-| `date_created` | DATE |  | `NULL` | Date when the record was created in the published version of the database |
-| `date_changed` | DATE |  | `NULL` | Date when the last change to the record was published |
-| `csl_json` | VARCHAR(4000) |  | `NULL` | Bibliographical data in the [CSL-JSON](https://github.com/citation-style-language/schema/blob/master/csl-data.json) format |
-| `author_year` | VARCHAR(255) |  | `NULL` | The author-year handle for referring |
-| `html_entry` | VARCHAR(4000) |  | `NULL` | Precomposed bibliographical entry in the Chicago Manual of Style format (HTML) |
-| `oeb_id` | VARCHAR(4000) |  | `NULL` | The ID of the corresponding record in the [Online Egyptological Bibliography](http://oeb.griffith.ox.ac.uk/) (not available for all records) |
+| `date_created` | DATE |  |   | Date when the record was created in the published version of the database |
+| `date_changed` | DATE |  |   | Date when the last change to the record was published |
+| `csl_json` | VARCHAR(4000) |  |   | Bibliographical data in the [CSL-JSON](https://github.com/citation-style-language/schema/blob/master/csl-data.json) format |
+| `author_year` | VARCHAR(255) |  |   | The author-year handle for referring |
+| `html_entry` | VARCHAR(4000) |  |   | Precomposed bibliographical entry in the Chicago Manual of Style format (HTML) |
+| `oeb_id` | VARCHAR(4000) |  |   | The ID of the corresponding record in the [Online Egyptological Bibliography](http://oeb.griffith.ox.ac.uk/) (not available for all records) |
 
 
 ### Indices: 
@@ -44,17 +44,17 @@ This is a supporting table containing keys and values of self-developed and thir
 
 | Column | Data type | Attributes | Default | Description |
 | --- | --- | --- | --- | ---  |
-| `thesauri_id` | INT(11) | PRIMARY, Not null |   | Unique record ID |
-| `date_created` | DATE |  | `NULL` | Date when the record was created in the published version of the database |
-| `date_changed` | DATE |  | `NULL` | Date when the last change to the record was published |
-| `thesaurus` | INT(11) |  | `NULL` | The handle of the thesaurus to which this record belongs. Under thesaurus=0 all thesauri represented in this table are listed with the keys to the thesaurus field stored in sort_value. |
-| `parent` | INT(11) |  | `NULL` | The thesauri_id of the superordinate thesaurus entry |
-| `sort_value` | INT(11) |  | `NULL` | The value used for sorting entries within a thesaurus |
-| `item_name` | VARCHAR(255) |  | `NULL` |   |
-| `external_key` | VARCHAR(255) |  | `NULL` | The key of the corresponding thesaurus entry in a standard external thesaurus (such as the THOT project) |
-| `explanation` | VARCHAR(4000) |  | `NULL` | The meaning of the thesaurus entry |
-| `sort_date_range_start` | INT(11) |  | `NULL` | The start of the date range for the entries in the dating thesaurus (thesaurus 5) (a negative integer value corresponding to a year BC, used for sorting purposes) |
-| `sort_date_range_end` | INT(11) |  | `NULL` | The end of the date range for the entries in the dating thesaurus (thesaurus 5) (a negative integer value corresponding to a year BC, used for sorting purposes) |
+| `thesauri_id` | INT | PRIMARY, Not null |   | Unique record ID |
+| `date_created` | DATE |  |   | Date when the record was created in the published version of the database |
+| `date_changed` | DATE |  |   | Date when the last change to the record was published |
+| `thesaurus` | INT |  |   | The handle of the thesaurus to which this record belongs. Under thesaurus=0 all thesauri represented in this table are listed with the keys to the thesaurus field stored in sort_value. |
+| `parent` | INT |  |   | The thesauri_id of the superordinate thesaurus entry |
+| `sort_value` | INT |  |   | The value used for sorting entries within a thesaurus |
+| `item_name` | VARCHAR(255) |  |   |   |
+| `external_key` | VARCHAR(255) |  |   | The key of the corresponding thesaurus entry in a standard external thesaurus (such as the [THOT](http://thot.philo.ulg.ac.be/index.html) project) |
+| `explanation` | VARCHAR(4000) |  |   | The meaning of the thesaurus entry |
+| `sort_date_range_start` | INT |  |   | The start of the date range for the entries in the dating thesaurus (thesaurus 5) (a negative integer value corresponding to a year BC, used for sorting purposes) |
+| `sort_date_range_end` | INT |  |   | The end of the date range for the entries in the dating thesaurus (thesaurus 5) (a negative integer value corresponding to a year BC, used for sorting purposes) |
 
 
 ### Indices: 
@@ -96,5 +96,87 @@ a workshop, an archaeological find group, a personal name, a title, or a criteri
 | --- | --- | --- | --- |
 | PRIMARY | `biblio_refs_id` | PRIMARY |   |
 | source_id_idx | `source_id` | INDEX |   |
+
+
+## Table: `find_groups`
+
+### Description: 
+
+__table_id: 23__  
+Each record in this table represents an archaeological find group (such as a burial or a memorial chapel) where one or more inscribed objects were found. These data are supplementary and are entered only to the extent that it can be relevant for dating and grouping together inscribed objects.  
+
+### Columns: 
+
+| Column | Data type | Attributes | Default | Description |
+| --- | --- | --- | --- | ---  |
+| `find_groups_id` | INT | PRIMARY, Not null |   | Unique record ID |
+| `date_created` | DATE |  |   | Date when the record was created in the published version of the database |
+| `date_changed` | DATE |  |   | Date when the last change to the record was published |
+| `site` | VARCHAR(255) |  |   | The `place_name` of the record in the table `places` corresponding to the place where the find group is located |
+| `site_area` | VARCHAR(255) |  |   | The part of the site where the find group is located |
+| `exact_location` | VARCHAR(4000) |  |   | A detailed description of the find group location |
+| `title` | VARCHAR(255) |  |   | The title under which the find group is referred to in the database |
+| `find_group_type` | VARCHAR(255) |  |   | The `item_name` of the find group type in the find_group_type thesaurus (thesaurus 7) |
+| `architecture` | VARCHAR(4000) |  |   | Relevant information on the substructure and the superstructure |
+| `human_remains` | VARCHAR(4000) |  |   | Relevant information on the deceased in the find group |
+| `finds` | VARCHAR(4000) |  |   | Relevant information on the finds other than inscribed objects |
+| `disturbance` | VARCHAR(255) |  |   | The `item_name` of the find group type in the disturbance thesaurus (thesaurus 8) |
+| `dating` | VARCHAR(255) |  |   | The `item_name` of the period to which the find group can be dated in the dating thesaurus (thesaurus 5), *loosely based on a subset of the [THOT Dates and dating systems thesaurus](http://thot.philo.ulg.ac.be/concept/thot-114)* |
+| `dating_note` | VARCHAR(4000) |  |   | The reasoning behind the `dating` |
+| `note` | VARCHAR(4000) |  |   | General notes related to the find group |
+
+
+### Indices: 
+
+| Name | Columns | Type | Description |
+| --- | --- | --- | --- |
+| PRIMARY | `find_groups_id` | PRIMARY |   |
+
+
+## Table: `inscriptions`
+
+### Description: 
+
+__table_id: 4__  
+Each record in this table represents a physical object with an Egyptian inscription. This can be an object now located in a museum or a private collection or known from a publication, archival document, or sale catalogue (such as a stela, statue, offering table, coffin, seal, papyrus, etc.), a rock inscription, an inscribed tomb, or another structure. Objects originally belonging to the same structure that has a different type than the objects themselves (e. g., stelae originally installed in the same offering chapel) are considered different objects, but objects that are parts of an originally integral object of the same type, now decomposed, (e. g., two parts of the same statue, now stored in different museums) are considered the same object. 
+
+### Columns: 
+
+| Column | Data type | Attributes | Default | Description |
+| --- | --- | --- | --- | ---  |
+| `inscriptions_id` | INT | PRIMARY, Not null |   | Unique record ID |
+| `date_created` | DATE |  |   | Date when the record was created in the published version of the database |
+| `date_changed` | DATE |  |   | Date when the last change to the record was published |
+| `title` | VARCHAR(255) |  |   | The title under which the object is referred to in the database (short museum name and main inventory number for objects in the museums or the reference to the most relevant (usually first) publication for other objects) |
+| `object_type` | VARCHAR(255) |  |   | The `item_name` of the inscription type in the object_type thesaurus (thesaurus 1); *example: stela* |
+| `object_subtype` | VARCHAR(255) |  |   | The `item_name` of the inscription subtype in the object_subtype thesaurus (thesaurus 2); *example: block-statue* |
+| `material` | VARCHAR(255) |  |   | The `item_name` of the material type in the material  thesaurus (thesaurus 3), *based on a subset of the [THOT Material thesaurus](http://thot.philo.ulg.ac.be/concept/thot-6200)* |
+| `length` | INT |  |   | Preserved length of the object (for scarabs) in mm. | <http://www.cidoc-crm.org/cidoc-crm/P43_has_dimension>, <http://www.cidoc-crm.org/cidoc-crm/E54_Dimension> |
+| `height` | INT |  |   | Preserved height of the object in mm. | <http://www.cidoc-crm.org/cidoc-crm/P43_has_dimension>, <http://www.cidoc-crm.org/cidoc-crm/E54_Dimension> |
+| `width` | INT |  |   | Preserved width of the object in mm. | <http://www.cidoc-crm.org/cidoc-crm/P43_has_dimension>, <http://www.cidoc-crm.org/cidoc-crm/E54_Dimension> |
+| `thickness` | INT |  |   | Preserved thickness of the object in mm. | <http://www.cidoc-crm.org/cidoc-crm/P43_has_dimension>, <http://www.cidoc-crm.org/cidoc-crm/E54_Dimension> |
+| `find_groups_id` | INT |  |   | The ID of the archaeological find_group to which the inscribed object belongs in the table `find_groups`<br /><br />**foreign key** to column `find_groups_id` on table `find_groups`. |
+| `text_content` | VARCHAR(255) |  |   | The `item_name` of the text content type in the text_content thesaurus (thesaurus 3), *based on a subset of the [THOT Text content thesaurus](http://thot.philo.ulg.ac.be/concept/thot-18634)* |
+| `script` | VARCHAR(255) |  |   | The `item_name` of the script in the script thesaurus (thesaurus 4), *based on a subset of the [THOT Ancient Egyptian scripts thesaurus](http://thot.philo.ulg.ac.be/concept/thot-111)* |
+| `provenance` | VARCHAR(255) |  |   | The `place_name` of the record in the table `places` corresponding to the place where the object was found or purchased | <http://lawd.info/ontology/foundAt> |
+| `provenance_note` | VARCHAR(4000) |  |   | Note related to the `provenance` |
+| `installation_place` | VARCHAR(255) |  |   | The `place_name` of the record in the table `places` corresponding to the place where the object should have been installed (when different from the provenance or when the provenance is unknown or unreliable, as in case of purchases) |
+| `installation_place_note` | VARCHAR(4000) |  |   | Note related to the `installation_place` |
+| `origin` | VARCHAR(255) |  |   | The `place_name` of the record in the table `places` corresponding to the place where the person(s) named in the inscription should have lived |
+| `origin_note` | VARCHAR(4000) |  |   | The reasoning behind the `origin` with relevant bibliographical references whenever possible |
+| `production_place` | VARCHAR(255) |  |   | The `place_name` of the record in the table `places` corresponding to the place where the object should have been produced | <http://lawd.info/ontology/origin> |
+| `production_place_note` | VARCHAR(4000) |  |   | The reasoning behind the `production_place` with relevant bibliographical references whenever possible |
+| `dating` | VARCHAR(255) |  |   | The `item_name` of the period to which the object can be dated in the dating thesaurus (thesaurus 5), *loosely based on a subset of the [THOT Dates and dating systems thesaurus](http://thot.philo.ulg.ac.be/concept/thot-114)* |
+| `dating_note` | VARCHAR(4000) |  |   | The reasoning behind the `dating` |
+| `last_king_id` | INT |  |   | The `thesauri_id`  of the most recent king explicitly named on the object in the king thesaurus (thesaurus 6), *loosely based on a subset of the [THOT Dates and dating systems thesaurus](http://thot.philo.ulg.ac.be/concept/thot-114)* |
+| `note` | VARCHAR(4000) |  |   | General notes related to the object |
+
+
+### Indices: 
+
+| Name | Columns | Type | Description |
+| --- | --- | --- | --- |
+| PRIMARY | `inscriptions_id` | PRIMARY |   |
+| key-inscriptions-find_groups_idx | `find_groups_id` | INDEX |   |
 
 

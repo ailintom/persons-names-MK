@@ -120,7 +120,7 @@ Each record in this table represents a physical object with an Egyptian inscript
 | production_place_note | VARCHAR(4000) | The reasoning behind the `production_place` with relevant bibliographical references whenever possible |
 | dating            | VARCHAR(255) | The `item_name` of the period to which the object can be dated in the dating thesaurus (thesaurus 5), *loosely based on a subset of the [THOT Dates and dating systems thesaurus](http://thot.philo.ulg.ac.be/concept/thot-114)* |
 | dating_note       | VARCHAR(4000) | The reasoning behind the `dating`  |
-| last_king_id      | VARCHAR(255) | The `thesauri_id`  of the most recent king explicitly named on the object in the king thesaurus (thesaurus 6), *loosely based on a subset of the [THOT Dates and dating systems thesaurus](http://thot.philo.ulg.ac.be/concept/thot-114)* |
+| last_king_id      | INT | The `thesauri_id`  of the most recent king explicitly named on the object in the king thesaurus (thesaurus 6), *loosely based on a subset of the [THOT Dates and dating systems thesaurus](http://thot.philo.ulg.ac.be/concept/thot-114)* |
 | note              | VARCHAR(4000) | General notes related to the object |
 
 ### find_groups *(table_id: 23)*  
