@@ -10,7 +10,7 @@ To encode Egyptian transliteration, the following Unicode chars are used:
 Ꜣꜣ Jj Ꜥꜥ Ww Bb Pp Ff Mm Nn Rr Hh Ḥḥ Ḫḫ H̱ẖ Ss Šš Qq Kk Gg Tt Ṯṯ Dd Ḏd ⸗ .
 
 ## Bibliography
-Bibliography is produced with [citeproc-node](https://github.com/zotero/citeproc-node) using a custom [CSL chicago-author-date-initials.csl](https://github.com/ailintom/persons-names-MK/blob/master/chicago-author-date-initials.csl).
+Bibliography is produced with [citeproc-node](https://github.com/zotero/citeproc-node) using a custom [CSL chicago-author-date-initials.csl](https://github.com/ailintom/persons-names-MK/blob/master/chicago-author-date-initials.csl). It retains the case of bibliographic descriptions (for it is impossible to properly capitalise titles when an English article appears in a non-English journal/edited volume or vice versa.
 
 ## Egyptian hieroglyphs
 Spellings are stored in the database as JSesh-compatible MdC codes. PNG files with transparent background are produced using [JSesh-Web](https://github.com/macleginn/jsesh-web) or a similar own Java program for batch producing graphical files using [JSesh](http://jsesh.qenherkhopeshef.org/).
