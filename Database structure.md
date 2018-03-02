@@ -108,8 +108,8 @@ Each record in this table represents a physical object with an Egyptian inscript
 | width             | INT | Preserved width of the object in mm. | <http://www.cidoc-crm.org/cidoc-crm/P43_has_dimension>, <http://www.cidoc-crm.org/cidoc-crm/E54_Dimension> |
 | thickness         | INT | Preserved thickness of the object in mm. | <http://www.cidoc-crm.org/cidoc-crm/P43_has_dimension>, <http://www.cidoc-crm.org/cidoc-crm/E54_Dimension> | 
 | find_groups_id    | INT | The ID of the archaeological find_group to which the inscribed object belongs in the table `find_groups` |
-| text_content      | VARCHAR(255) | The `item_name` of the text content type in the text_content thesaurus (thesaurus 3), *based on a subset of the [THOT Text content thesaurus](http://thot.philo.ulg.ac.be/concept/thot-18634)* |
-| script            | VARCHAR(255) | The `item_name` of the script in the script thesaurus (thesaurus 4), *based on a subset of the [THOT Ancient Egyptian scripts thesaurus](http://thot.philo.ulg.ac.be/concept/thot-111)* |
+| text_content      | VARCHAR(255) | The `item_name` of the text content type in the text_content thesaurus (thesaurus 4), *based on a subset of the [THOT Text content thesaurus](http://thot.philo.ulg.ac.be/concept/thot-18634)* |
+| script            | VARCHAR(255) | The `item_name` of the script in the script thesaurus (thesaurus 12), *based on a subset of the [THOT Ancient Egyptian scripts thesaurus](http://thot.philo.ulg.ac.be/concept/thot-111)* |
 | provenance        | VARCHAR(255) | The `place_name` of the record in the table `places` corresponding to the place where the object was found or purchased | <http://lawd.info/ontology/foundAt> |
 | provenance_note   | TEXT | Note related to the `provenance` |
 | installation_place| VARCHAR(255) | The `place_name` of the record in the table `places` corresponding to the place where the object should have been installed (when different from the provenance or when the provenance is unknown or unreliable, as in case of purchases) |
