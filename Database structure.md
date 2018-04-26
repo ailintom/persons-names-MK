@@ -184,6 +184,7 @@ Each record in this table represents the name of a place or a region associated 
 | place_name        | VARCHAR(191) | The short form of the name used in this database |
 | long_place_name  | VARCHAR(255) | The expanded form of the name used in this database |
 | relative_location | VARCHAR(255) | The `item_name` in the relative_location thesaurus (thesaurus 9), either "Eastern Desert", "Nile Valley", "Western Desert", or the "Levant" |
+| macro_region | VARCHAR(191) | The `place_name` in the `places` table corresponding to the larger region this place is a part of |
 | latitude          | INT   | The latitude of the place (or of the central point of the region) in decimal degrees north of equator multiplied by 100. Thus 2572 stands for 25.72 N or 25° 43' N. This value is used for sorting the places in a north to south or south to north order.  |
 | topbib_id         | VARCHAR(255) | The ID of the place name in the [Digital TopBib](http://topbib.griffith.ox.ac.uk) database; *examples: [501-180](http://topbib.griffith.ox.ac.uk//dtb.html?topbib=501-180) or [901-210-003](http://topbib.griffith.ox.ac.uk//dtb.html?topbib=901-210-003)* |
 | tm_geoid          | INT   | The ID of the place in the Trismegistos Geo database; *example: [188](http://www.trismegistos.org/place/188)* |
