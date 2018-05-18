@@ -26,17 +26,15 @@
 
 namespace PNM;
 
-/**
- * 
- *
- */
-class ObjectTitles extends ListModel {
+class personsMicroView extends MicroView {
 
-    protected $tablename = 'titles INNER JOIN titles_att ON titles.titles_id = titles_att.titles_id';
-    public $defaultsort = 'sequence_number';
-    
-    protected function initFieldNames() {
-        $this->field_names = new FieldList(['titles.titles_id', 'titles.title'], ['titles_id', 'title']);
+    protected $controller =  "person";
+
+    protected function echoTemplate() {
+       
+        return <<<EOF
+<span class="person"><a href="$this->url">$this->value</a></span>
+EOF;
     }
 
 }

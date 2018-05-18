@@ -27,7 +27,7 @@
 namespace PNM;
 
 /**
- * Description of ObjectBibliography
+ * 
  *
  */
 class title_relations extends ListModel {

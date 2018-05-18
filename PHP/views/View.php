@@ -46,11 +46,11 @@ class View {
 
     protected function descriptionElement($term, $value, $note = NULL, $class = NULL, $noteClass = NULL) {
         if (!empty($value) & !empty($note)) {
-            return '<dt>' . $term . ':</dt><dd><span' . (empty($class) ? NULL : ' class="' . $class . '"') . '>' . $value . '</span> <span class="' . (empty($noteClass) ? 'note' : $noteClass) . '">(' . $note . ')</span></dd>';
+            return "\n<dt>" . $term . ":</dt>\n<dd><span" . (empty($class) ? NULL : ' class="' . $class . '"') . '>' . $value . '</span> <span class="' . (empty($noteClass) ? 'note' : $noteClass) . '">(' . $note . ')</span></dd>';
 
             //<dt>Provenance:</dt><dd><span class="place"><a href="place/184549377.html">Abydos</a></span> <span class="note">(Northern Necropolis)</span></dd>
         } elseif (!empty($value)) {
-            return '<dt>' . $term . ':</dt><dd><span' . (empty($class) ? NULL : ' class="' . $class . '"') . '>' . $value . '</span>';
+            return "\n<dt>" . $term . ":</dt>\n<dd><span" . (empty($class) ? NULL : ' class="' . $class . '"') . '>' . $value . '</span>';
         }
     }
 
@@ -145,6 +145,17 @@ class View {
         }
     }
 
+    static function renderObjectType($objectType) {
+        switch ($objectType) {
+            case 'Scarab, seal, scaraboid, intaglio and similar objects':
+                return 'Seal/sealing';
+            case 'Sculpture in the round':
+                return 'Statue';
+            default:
+                return ucfirst($objectType);
+        }
+    }
+
     /*
      * Toggles filters after loading the page based on data in the request
      * 
@@ -173,6 +184,27 @@ class View {
             </script>
             <?php
         }
+    }
+        protected function renderChildren($rec, $level) {
+        $typesMV = new name_typesMicroView();
+        if (empty($rec['children'])) {
+            return NULL;
+        }
+        if ($level == 0) {
+            echo '<ul>';
+        } else {
+            echo '<ul class="link-list">';
+        }
+        if (!empty($rec['children'])) {
+            foreach ($rec['children'] as $subrec) {
+                echo '<li>', $typesMV->render($subrec['title'], $subrec['name_types_id']);
+                $this->renderChildren($subrec, $level + 1);
+                echo '</li>';
+            }
+        }
+        ?>
+        </ul>
+        <?php
     }
 
 }

@@ -30,13 +30,16 @@ namespace PNM;
  * 
  *
  */
-class ObjectTitles extends ListModel {
+class AttestationPersons extends ListModel {
 
-    protected $tablename = 'titles INNER JOIN titles_att ON titles.titles_id = titles_att.titles_id';
-    public $defaultsort = 'sequence_number';
-    
+    protected $tablename = 'persons_attestations_xref INNER JOIN persons ON persons_attestations_xref.persons_id = persons.persons_id';
+    public $defaultsort = 'title';
+
     protected function initFieldNames() {
-        $this->field_names = new FieldList(['titles.titles_id', 'titles.title'], ['titles_id', 'title']);
+        $this->field_names = new FieldList(['IF(persons.title>"", persons.title, CONCAT(persons.personal_name, "##"))', 'persons.persons_id', 'status'], ['title', 'persons_id', 'status']);
     }
 
+     
+
 }
+

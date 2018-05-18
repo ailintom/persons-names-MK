@@ -37,6 +37,28 @@ define('BASE', '/test/');
 //mb_internal_encoding('UTF-8');
 //mb_http_output('UTF-8');
 require_once('Config.php');
+/*
+ * Config.php is not included in the source code for security reasons 
+ * It should look as follows:
+  Class Config {
+
+  const DB_CONFIG = ['host' => 'host',
+  'username' => 'user',
+  'password' => 'password',
+  'db' => 'db'
+  ];
+  const VERSIONS = [[1, "15.04.2018"], [2, "16.04.2018"]];
+
+  static function maxVer() {
+  return self::VERSIONS[count(self::VERSIONS) - 1][0];
+  }
+
+  }
+ * 
+ * 
+ * 
+ */
+
 require_once('CriticalError.php');
 require_once('Db.php');
 require_once('Request.php');
@@ -66,6 +88,17 @@ require_once('models/ObjectSpellings.php');
 require_once('models/ObjectTitles.php');
 require_once('models/ObjectAltReadings.php');
 require_once('models/titleAttestations.php');
+require_once('models/NameSpellings.php');
+require_once('models/SpellingAttestations.php');
+
+require_once('models/NamePersons.php');
+require_once('models/AttestationPersons.php');
+require_once('models/NameTypes.php');
+require_once('models/types.php');
+require_once('models/names.php');
+require_once('models/TypeNames.php');
+
+
 
 
 require_once('models/find_groups.php');
@@ -90,6 +123,8 @@ require_once('views/publicationsMicroView.php');
 require_once('views/inv_nosMicroView.php');
 require_once('views/placesMicroView.php');
 require_once('views/name_typesMicroView.php');
+require_once('views/personsMicroView.php');
+
 
 require_once('views/Table.php');
 

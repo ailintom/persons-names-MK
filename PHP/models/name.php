@@ -26,27 +26,27 @@
 
 namespace PNM;
 
-/**
- * Description of Bibliography
- *
- */
-class types extends ListModelTitleSort {
+class name extends EntryModel {
 
-    protected $tablename = 'name_types';
-    public $defaultsort = 'title';
+    protected $tablename = 'personal_names';
+    protected $hasBiblio = TRUE;
+    protected $idField = 'personal_names_id';
 
     protected function initFieldNames() {
-        $this->field_names = new FieldList(['name_types_id', 'parent_id', 'REPLACE(title, "#","")'], ['name_types_id', 'parent_id', 'title']);
+
+        $this->field_names = new FieldList(['personal_names_id', 'personal_name', 'gender', 'SELECT Count(DISTINCT attestations_id) FROM spellings JOIN spellings_attestations_xref ON spellings_attestations_xref.spellings_id=spellings.spellings_id WHERE spellings.personal_names_id=personal_names.personal_names_id', 'usage_period', 'usage_area', 'usage_period_note', 'usage_area_note', 'note', 'ranke', '`scheele-schweitzer`', 'tla', 'agea', 'translation_en', 'translation_de'], ['personal_names_id', 'personal_name', 'gender', 'count_attestations', 'usage_period', 'usage_area', 'usage_period_note', 'usage_area_note', 'note', 'ranke', '`scheele-schweitzer`', 'tla', 'agea', 'translation_en', 'translation_de']);
     }
 
+    protected function parse() {
+        //This should be implemented in child classes to parse data after retrieving from the database
+        $this->parseNote(['usage_period_note', 'usage_area_note', 'note']);
+       
+    }
     protected function loadChildren() {
-        $total = count($this->data);
-
-        for ($i = 0; $i < $total; $i++) {
-            $rules = [New Rule('parent_id', 'exact', $this->data[$i]['name_types_id'], 'i')];
-            $filter = new Filter($rules);
-            $this->data[$i]['children'] = (New types(NULL, 0, 0, $filter))->data;
-        }
+         $filter = new Filter([New Rule('personal_names_id', 'exact', $this->data['personal_names_id'], 'i')]);
+         $this->data['name_types'] = New NameTypes(NULL, 0,0, $filter);
     }
+
+    
 
 }

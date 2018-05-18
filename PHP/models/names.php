@@ -36,7 +36,7 @@ class names extends ListModel {
     public $defaultsort = 'personal_name';
 
     protected function initFieldNames() {
-        $this->field_names = new FieldList(['personal_names_id', 'personal_name', 'translation_en',
+        $this->field_names = new FieldList(['personal_names.personal_names_id', 'personal_name', 'translation_en',
             'gender', 'ranke', 'usage_area', 'usage_period', 'SELECT count(DISTINCT attestations_id) '
             . 'FROM spellings INNER JOIN spellings_attestations_xref ON spellings.spellings_id = spellings_attestations_xref.spellings_id '
             . 'WHERE spellings.personal_names_id=personal_names.personal_names_id'], ['personal_names_id', 'personal_name', 'translation_en',

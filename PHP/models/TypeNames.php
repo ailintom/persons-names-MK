@@ -27,16 +27,12 @@
 namespace PNM;
 
 /**
- * 
+ * Description of TypeNames
  *
  */
-class ObjectTitles extends ListModel {
+class TypeNames extends names {
+protected $distinct = ' DISTINCT ';
+    protected $tablename = 'personal_names INNER JOIN (names_types_xref INNER JOIN name_types_temp  ON names_types_xref.name_types_id = name_types_temp.child_id) ON personal_names.personal_names_id = names_types_xref.personal_names_id';
 
-    protected $tablename = 'titles INNER JOIN titles_att ON titles.titles_id = titles_att.titles_id';
-    public $defaultsort = 'sequence_number';
-    
-    protected function initFieldNames() {
-        $this->field_names = new FieldList(['titles.titles_id', 'titles.title'], ['titles_id', 'title']);
-    }
 
 }

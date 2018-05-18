@@ -27,7 +27,7 @@
 namespace PNM;
 
 /**
- * Description of ObjectBibliography
+ * 
  *
  */
 class titleAttestations extends ListModel {

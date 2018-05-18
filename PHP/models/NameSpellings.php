@@ -30,13 +30,27 @@ namespace PNM;
  * 
  *
  */
-class ObjectTitles extends ListModel {
+class NameSpellings extends ListModel {
 
-    protected $tablename = 'titles INNER JOIN titles_att ON titles.titles_id = titles_att.titles_id';
-    public $defaultsort = 'sequence_number';
-    
+    protected $tablename = 'spellings';
+    public $defaultsort = 'count_attestations DESC, spelling_norm ASC';
+
     protected function initFieldNames() {
-        $this->field_names = new FieldList(['titles.titles_id', 'titles.title'], ['titles_id', 'title']);
+        $this->field_names = new FieldList(['spellings_id', 'spelling', 'ranke', 'SELECT Count(DISTINCT attestations_id) FROM spellings_attestations_xref WHERE spellings.spellings_id=spellings_attestations_xref.spellings_id', 'usage_period', 'usage_area', 'usage_period_note', 'usage_area_note'], ['spellings_id', 'spelling', 'ranke', 'count_attestations', 'usage_period', 'usage_area', 'usage_period_note', 'usage_area_note']);
+    }
+
+    protected function loadChildren() {
+        $total = count($this->data);
+        for ($i = 0; $i < $total; $i++) {
+            $filter = new Filter([New Rule('spellings_id', 'exact', $this->data[$i]['spellings_id'], 'i')]);
+            $objAltReadings = New ObjectAltReadings(NULL, 0, 0, $filter);
+            $this->data[$i]['alt_readings'] = $objAltReadings;
+            $rulesAtt = [New Rule('spellings_id', 'exact', $this->data[$i]['spellings_id'], 'i')];
+            $filterSpellAtt = new Filter($rulesAtt);
+            $objSpellAtt = New SpellingAttestations(NULL, 0, 0, $filterSpellAtt);
+            $this->data[$i]['attestations'] = $objSpellAtt;
+        }
     }
 
 }
+

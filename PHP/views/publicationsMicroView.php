@@ -42,12 +42,6 @@ EOF;
     }
 
 }
-
-/*
-$mv = new MicroView;
-$mv->render("dd", "/ddddd.html");
-
-$mvn = new NameMicroView;
-$mvn->render("name", "ddddd.html");
  
- */
+ 
+ 

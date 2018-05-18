@@ -27,13 +27,13 @@
 namespace PNM;
 
 /**
- * Description of ObjectBibliography
+ * 
  *
  */
 class ObjectBibliography extends ListModel {
 
     protected $tablename = 'biblio_refs LEFT JOIN publications ON biblio_refs.source_id = publications.publications_id';
-    public $defaultsort = 'author_year_sort';
+    public $defaultsort = 'order_value, year DESC, source_url, source_title, author_year_sort';
     //(source_id>0) DESC , source_url, source_title, author_year_sort
 
     protected function initFieldNames() {

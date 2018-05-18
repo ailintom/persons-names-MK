@@ -53,7 +53,7 @@ class MicroView {
       return Request::makeURL($this->controller, $inputid);
     }
     public function echoRender($inputvalue, $inputid = null, $secondinput = null) {
-        echo (render($inputvalue, $inputid, $secondinput) );
+        echo ($this->render($inputvalue, $inputid, $secondinput) );
     }
 
     protected function echoTemplate() {

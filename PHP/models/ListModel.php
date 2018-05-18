@@ -42,7 +42,7 @@ class ListModel {
     public $start = null;
     public $count = null;
     public $total_count = null;
-
+protected $distinct = null;
     protected function initFieldNames() {
         
     }
@@ -54,7 +54,7 @@ class ListModel {
         $this->start = $start + 1;
 
         $strsql = $this->makeSQL($sort, $start, $count, $filter);
-        //  echo "<br>$strsql"; //TURN ON TO DISPLAY THE PRINCIPAL QUERY
+         //  echo "<br>$strsql"; //TURN ON TO DISPLAY THE PRINCIPAL QUERY
         // if ($this->defaultsort == 'sequence_number'){ echo "<br>$strsql";} // for testing
         try {
             $stmt = $db->prepare($strsql);
@@ -87,10 +87,10 @@ class ListModel {
             $this->total_count = $resultTotal->fetch_array(MYSQLI_NUM)[0];
             
         }
-        $this->load_children();
+        $this->loadChildren();
     }
 
-    protected function load_children() {
+    protected function loadChildren() {
         
     }
 
@@ -123,7 +123,7 @@ class ListModel {
         } else {
             $LIMIT = null;
         }
-        return 'SELECT ' . $this->field_names->SQL() . ' FROM ' . $this->tablename . $WHERE . $ORDER . $LIMIT;
+        return 'SELECT ' . $this->distinct . $this->field_names->SQL() . ' FROM ' . $this->tablename . $WHERE . $ORDER . $LIMIT;
     }
 
     protected function makeSQLTotal(Filter $filter = null) {

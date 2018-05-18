@@ -54,7 +54,7 @@ class titleView extends View {
         </p>
         <dl>
             <?php
-            echo $this->descriptionElement('Usage area', $data->get('note'), NULL, 'note'),
+            echo $this->descriptionElement('Note', $data->get('note'), NULL, 'note'),
             $this->descriptionElement('Usage area', $data->get('usage_area'), $data->get('usage_area_note'), 'place'),
             $this->descriptionElement('Usage period', $data->get('usage_period'), $data->get('usage_period_note'), 'period'),
             $this->descriptionElement('Gender', $data->get('gender'), NULL, 'gender');

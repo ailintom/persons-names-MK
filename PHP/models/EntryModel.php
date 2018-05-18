@@ -127,7 +127,7 @@ class EntryModel {
 
     protected function setBiblio() {
         $filter = new Filter([new Rule('object_id', 'exact', $this->getID(), 'i')]);
-        $objbibliography = New ObjectBibliography('(source_id>0) DESC , source_url, source_title, author_year_sort', 0, 0, $filter); //$sort = null, $start = 0, $count = 0, Filter $filter = null
+        $objbibliography = New ObjectBibliography(NULL, 0, 0, $filter); //$sort = null, $start = 0, $count = 0, Filter $filter = null
 
         $res = null;
         $bibView = New publicationsMicroView();

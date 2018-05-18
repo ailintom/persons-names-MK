@@ -30,13 +30,20 @@ namespace PNM;
  * 
  *
  */
-class ObjectTitles extends ListModel {
+class SpellingAttestations extends ListModel {
 
-    protected $tablename = 'titles INNER JOIN titles_att ON titles.titles_id = titles_att.titles_id';
-    public $defaultsort = 'sequence_number';
-    
+    protected $tablename = 'spellings_attestations_xref INNER JOIN (attestations INNER JOIN inscriptions ON attestations.inscriptions_id = inscriptions.inscriptions_id) ON attestations.attestations_id = spellings_attestations_xref.attestations_id';
+    public $defaultsort = 'title_sort';
+
     protected function initFieldNames() {
-        $this->field_names = new FieldList(['titles.titles_id', 'titles.title'], ['titles_id', 'title']);
+        $this->field_names = new FieldList(['inscriptions.inscriptions_id','attestations.attestations_id', 'gender', 'title', 'object_type', 'title_string', 'provenance', 'installation_place', 'origin', 'production_place', 'dating',
+            'SELECT count(persons.persons_id) FROM persons_attestations_xref INNER JOIN persons ON persons_attestations_xref.persons_id = persons.persons_id WHERE persons_attestations_xref.attestations_id = attestations.attestations_id'], ['inscriptions_id','attestations_id',
+            'gender', 'title', 'object_type', 'title_string', 'provenance', 'installation_place', 'origin', 'production_place', 'dating', 'persons_count']);
+    }
+
+    //GROUP_CONCAT(CONCAT("<a href=\'#", persons.persons_id, "\'>", title, " (", SUBSTR(status, 1,1), ")</a>") SEPARATOR "; ") 
+    protected function loadChildren() {
+        
     }
 
 }

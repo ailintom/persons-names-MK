@@ -51,7 +51,7 @@ $placesMV = new placesMicroView;
         $res .= $this->descriptionElement('Obsolete inv.', $data->get('obsolete_inv_no'), NULL, 'obsolete_inv_no');
         $res .= $this->descriptionElement('Erroneusly', $data->get('erroneous_inv_no'), NULL, 'erroneous_inv_no');
 
-        $res .= $this->descriptionElement('Type', $data->get('object_type'), NULL, 'type');
+        $res .= $this->descriptionElement('Type', $this->renderObjectType($data->get('object_type')), NULL, 'type');
         $res .= $this->descriptionElement('Subtype', $data->get('object_subtype'), NULL, 'type');
         $res .= $this->descriptionElement('Material', $data->get('material'), NULL, 'type');
         $res .= $this->descriptionElement('Size', $this->Size($data), NULL, 'type');
@@ -125,7 +125,7 @@ $placesMV = new placesMicroView;
                             $currentLoc .= ', ';
                         }
                         $currentLoc .= '<span class="name">';
-                        $currentLoc .= '<a href="' . BASE . 'name/' . $name['personal_names_id'] . '.html#' . $spelling['spellings_id'] . '">';
+                        $currentLoc .= '<a href="' . BASE . 'name/' . $name['personal_names_id'] . '#' . $spelling['spellings_id'] . '">';
                         if ($spellingPerNameCount++ == 0) {
                             $currentLoc .= $name['personal_name'] . ' ';
                         }

@@ -71,26 +71,6 @@ class typesView extends View {
         <?php
     }
 
-    protected function renderChildren($rec, $level) {
-        $typesMV = new name_typesMicroView();
-        if (empty($rec['children'])) {
-            return NULL;
-        }
-        if ($level == 0) {
-            echo '<ul>';
-        } else {
-            echo '<ul class="link-list">';
-        }
-        if (!empty($rec['children'])) {
-            foreach ($rec['children'] as $subrec) {
-                echo '<li>', $typesMV->render($subrec['title'], $subrec['name_types_id']);
-                $this->renderChildren($subrec, $level + 1);
-                echo '</li>';
-            }
-        }
-        ?>
-        </ul>
-        <?php
-    }
+
 
 }
