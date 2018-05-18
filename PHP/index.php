@@ -1,0 +1,127 @@
+<?php
+
+/*
+ * MIT License
+ * 
+ * Copyright (c) 2017 Alexander Ilin-Tomich (unless specified otherwise for individual source files and documents)
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+namespace PNM;
+
+error_reporting(E_ALL);
+error_reporting(E_ALL | E_STRICT);
+ini_set('display_errors', 1);
+
+define('BASE', '/test/');
+
+
+
+//mb_internal_encoding('UTF-8');
+//mb_http_output('UTF-8');
+require_once('Config.php');
+require_once('CriticalError.php');
+require_once('Db.php');
+require_once('Request.php');
+require_once('functions.php');
+
+require_once('controllers/Translit.php');
+
+require_once('models/Filter.php');
+require_once('models/Rule.php');
+require_once('models/FieldList.php');
+require_once('ID.php');
+
+require_once('models/Lookup.php');
+require_once('models/EntryModel.php');
+
+require_once('models/ListModel.php');
+require_once('models/ListModelTitleSort.php');
+
+require_once('models/ObjectBibliography.php');
+
+require_once('models/ObjectInv_nos.php');
+require_once('models/ObjectAttestations.php');
+require_once('models/ObjectBonds.php');
+require_once('models/title_relations.php');
+
+require_once('models/ObjectSpellings.php');
+require_once('models/ObjectTitles.php');
+require_once('models/ObjectAltReadings.php');
+require_once('models/titleAttestations.php');
+
+
+require_once('models/find_groups.php');
+
+require_once('models/workshops.php');
+
+
+require_once('models/placeMicroModel.php');
+
+
+require_once('Note.php');
+require_once('views/MicroView.php');
+require_once('views/attestationsMicroView.php');
+
+require_once('views/inscriptionsMicroView.php');
+require_once('views/collectionsMicroView.php');
+require_once('views/personal_namesMicroView.php');
+require_once('views/spellingsMicroView.php');
+require_once('views/titlesMicroView.php');
+require_once('views/criteriaMicroView.php');
+require_once('views/publicationsMicroView.php');
+require_once('views/inv_nosMicroView.php');
+require_once('views/placesMicroView.php');
+require_once('views/name_typesMicroView.php');
+
+require_once('views/Table.php');
+
+require_once('views/Datalist.php');
+require_once('views/View.php');
+/*
+  require_once('views/collectionsView.php');
+
+  require_once('views/criterionView.php');
+  require_once('views/placeView.php');
+  require_once('views/inscriptionView.php');
+  require_once('views/bibliographyView.php');
+  require_once('views/inscriptionsView.php');
+  require_once('views/collectionView.php');
+ */
+
+require_once ('views/html-head.php');
+require 'views/header.php';
+
+// require the file that matches the controller name
+$ClassName = "PNM\\" . Request::get('controller') . "Controller";
+$controllerClassPath = 'controllers/' . Request::get('controller') . 'Controller.php';
+require_once($controllerClassPath);
+$modelClassPath = 'models/' . Request::get('controller') . '.php';
+require_once($modelClassPath);
+$viewClassPath = 'views/' . Request::get('controller') . 'View.php';
+require_once($viewClassPath);
+
+$controllerobj = new $ClassName();
+
+
+
+// call the action
+$controllerobj->load();
+require 'views/footer.php';
