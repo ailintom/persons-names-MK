@@ -39,6 +39,7 @@ class Table {
     protected $default_field;
     protected $target_controller;
     protected $hashpos;
+    protected $extraHeader;
 
     public function __construct(ListModel $data, $id_field, $target_controller, $sort_param = 'sort', $hashpos = NULL) {
         $this->data = $data;
@@ -62,6 +63,9 @@ class Table {
         } else {
             return [NULL, $field . ' ASC', 'ascending', NULL];
         }
+    }
+    public function addHeader($header){
+        $this->extraHeader = $header;
     }
 
     public function render_table(Array $columns, Array $column_titles, $pagination = FALSE, $items_name = NULL) {
@@ -95,7 +99,7 @@ class Table {
         }
         ?>  
         <div class="table-container">
-            <table>
+            <table><?=$this->extraHeader?>
                 <tr>
                     <?php
                     echo ( "\r");
@@ -112,26 +116,31 @@ class Table {
                 <?php
                 foreach ($this->data->data as $row) {
                     echo ( "\r");
-                    $url = Request::makeURL($this->target_controller, $row[$this->id_field]);
+                    if ($this->target_controller == 'auto') {
+                        //getDefaultController
+                        $idObj = New ID(intval($row[$this->id_field]));
+                        $controller = $idObj->getDefaultController();
+                    } else {
+                        $controller = $this->target_controller;
+                    }
+
+                    $url = Request::makeURL($controller, $row[$this->id_field]);
                     /* <tr onclick="MK.open(event, '<?= $url ?>')" onkeydown="MK.open(event, '<?= $url ?>')" role="link" tabindex="0">
                      */
                     ?>
-                    <tr onclick="MK.open(event, '<?= $url ?>')" tabindex="0">
-                        <?php
+                    <tr onclick="MK.open(event, '<?= $url ?>')" tabindex="0"><?php
                         for ($i = 0; $i < count($columns); ++$i) {
-                            if ($columns[$i] == 'gender') {
-                                $cellval = View::renderGender($row[$columns[$i]]);
+                            if ($columns[$i] == 'gender' || $columns[$i] == 'gender_b') {
+                                $cellval = View::renderGender(empty($row[$columns[$i]]) ? NULL : $row[$columns[$i]]) ?: '&nbsp;';
                             } else {
-                                $cellval = $row[$columns[$i]];
+                                $cellval = empty($row[$columns[$i]]) ? '&nbsp;' : $row[$columns[$i]];
                             }
                             //role="presentation"
-                            echo('<td' . $sort_renders[$i][0] . '><a href="' . $url . '" style="border-bottom-width:0px;display: block;text-decoration: none;">' . ( $cellval ?: '&nbsp;') . '</a></td>' . "\r" );
+                            echo('<td' . $sort_renders[$i][0] . '><a href="' . $url . '" style="border-bottom-width:0px;display: block;text-decoration: none;">' . $cellval . '</a></td>' . "\r" );
                         }
                         echo ( "\r");
                         ?>
-                    </tr>
-
-                    <?php
+                    </tr><?php
                 }
                 ?>
             </table>

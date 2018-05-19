@@ -102,7 +102,7 @@ class placeView extends View {
 
             <?php
             $tableFG = new Table($data->get('find_groups'), 'find_groups_id', 'find_group', 'find_groups_sort', '#find_groups');
-            $tableFG->render_table(['title', 'dating', 'find_group_type', 'count_inscriptions'], ['Find group', 'Date', 'Type', 'Inscribed objects']);
+            $tableFG->render_table(['title', 'dating', 'find_group_type', 'inscriptions_count'], ['Find group', 'Date', 'Type', 'Inscribed objects']);
         }
         if (intval($data->get('count_workshops')) > 0) {
             ?>  
@@ -111,17 +111,11 @@ class placeView extends View {
 
             <?php
             $tableWk = new Table($data->get('workshops'), 'workshops_id', 'workshop', 'workshops_sort', '#workshops');
-            $tableWk->render_table(['title', 'dating', 'count_inscriptions'], ['Find group', 'Date', 'Inscribed objects']);
+            $tableWk->render_table(['title', 'dating', 'inscriptions_count'], ['Find group', 'Date', 'Inscribed objects']);
         }
     }
 
-    protected function renderLat($lat) {
-        if (!empty($lat)) {
-            if (strlen($lat == 4)) {
-                return substr($lat, 0, 2) . "." . substr($lat, 2, 2) . " ° N";
-            }
-        }
-    }
+    
 
 }
 

@@ -35,7 +35,7 @@ class Translit {
 
     //put your code here
 
-    static function sortfromMdCorUnicode($input) {
+    static function searchVal($input) {
         if (empty($input)) {
             return NULL;
         }

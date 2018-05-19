@@ -70,11 +70,13 @@ class Rule {
                 $rendVal = '%' . $value;
                 break;
             case 'not-later':
+                case 'lessorequal':
                 $this->compare = "<=";
                 $rendVal = $value;
                 
                 break;
             case 'not-earlier':
+            case 'moreorequal':
                 $this->compare = ">=";
                 $rendVal = $value;
                

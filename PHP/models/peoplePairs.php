@@ -27,23 +27,28 @@
 namespace PNM;
 
 /**
- * Description of Bibliography
+ * Description of people
  *
  */
-class find_groups extends ListModelTitleSort {
+class peoplePairs extends ListModel {
 
-    protected $tablename = 'find_groups';
-    public $defaultsort = 'title';
+    const DOUBLE_PARAMS = TRUE;
+public $type = "double";
+    //protected $tablename = 'attestations';
+    //public $defaultsort = 'title';
+    //protected function initFieldNames() {
+    //    $this->field_names = new FieldList(['collections_id', 'title', 'IFNULL(full_name_en, full_name_national_language)', 'location', 'IFNULL(url, online_collection)', 'IF(online_collection>"", "available", "")', 'tm_coll_id',
+    //       'SELECT COUNT(DISTINCT inscriptions_id) FROM inv_nos WHERE inv_nos.collections_id = collections.collections_id and status<>"erroneous"'], ['collections_id', 'title', 'full_name', 'location', 'url', 'online_collection', 'tm_coll_id',
+    //       'inscriptions_count']);
+    //}
 
-    protected function initFieldNames() {
-        $this->field_names = new FieldList(['find_groups_id', 'title', 'dating', 'find_group_type',
-            'SELECT COUNT(inscriptions_id) from inscriptions WHERE inscriptions.find_groups_id=find_groups.find_groups_id'], ['find_groups_id', 'title', 'dating', 'find_group_type', 'inscriptions_count']);
-    }
+    /* protected function getSortField($sortField = NULL) {
+      if (empty($sortField)) {
+      $sortField = $this->defaultsort;
+      }
+      return $this->replaceSortField($sortField, ['full_name', 'url',
+      'online_collection'], ['IFNULL(full_name_en, full_name_national_language)', 'IFNULL(url, online_collection)',
+      'IF(online_collection>"", "available", "")']);
 
-    protected function prepareDefaultSort() {
-        return 'title_sort';
-    }
-
-  
-
+      } */
 }

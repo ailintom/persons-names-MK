@@ -98,6 +98,14 @@ require_once('models/types.php');
 require_once('models/names.php');
 require_once('models/TypeNames.php');
 
+require_once('models/peoplePairs.php');
+require_once('models/peopleChild.php');
+require_once('models/peopleParent.php');
+require_once('models/peopleSameInscr.php');
+require_once('models/peopleSibling.php');
+require_once('models/peopleSpouse.php');
+
+
 
 
 

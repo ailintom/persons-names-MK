@@ -47,7 +47,7 @@ class type extends EntryModel {
 
     protected function loadChildren() {
 
-        $parent = 0;
+       
         $id = $this->get('parent_id');
         while (!empty($id)) {
             $parents[] = [$id, Lookup::get('SELECT title FROM name_types WHERE name_types_id = ?', $id)];

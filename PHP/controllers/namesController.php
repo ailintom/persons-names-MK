@@ -37,7 +37,7 @@ class namesController {
 
         $rules = [];
         if (!empty(Request::get('name'))) {
-            array_push($rules, new Rule('personal_name_search', Request::get('match') ?: 'exactlike', Translit::sortfromMdCorUnicode(Request::get('name'))));
+            array_push($rules, new Rule('personal_name_search', Request::get('match') ?: 'exactlike', Translit::searchVal(Request::get('name'))));
         }
         if (!empty(Request::get('translation'))) {
             array_push($rules, new Rule(['translation_en', 'translation_de'], Request::get('match') ?: 'exactlike', Request::get('translation')));
@@ -73,8 +73,8 @@ class namesController {
                     . ' COALESCE (inscriptions.origin, inscriptions.production_place, inscriptions.installation_place, inscriptions.provenance)="' . Request::get('place') . '")', 'exact', 1, 'i'));
         }
 
-        if (!empty(Request::get('name-type-formal'))) {
-            $nt = Lookup::name_types_idGet(Request::get('name-type-formal'));
+        if (!empty(Request::get('form_type'))) {
+            $nt = Lookup::name_types_idGet(Request::get('form_type'));
             if (!empty($nt)) {
                 array_push($rules, new Rule('Exists(SELECT name_types_temp.parent_id '
                         . ' FROM names_types_xref INNER JOIN name_types_temp ON names_types_xref.name_types_id = name_types_temp.child_id'
@@ -82,8 +82,8 @@ class namesController {
                         . ' name_types_temp.parent_id = ' . $nt . ')', 'exact', 1, 'i'));
             }
         }
-        if (!empty(Request::get('name-type-semantic'))) {
-            $nt = Lookup::name_types_idGet(Request::get('name-type-semantic'));
+        if (!empty(Request::get('sem_type'))) {
+            $nt = Lookup::name_types_idGet(Request::get('sem_type'));
             if (!empty($nt)) {
                 array_push($rules, new Rule('Exists(SELECT name_types_temp.parent_id '
                         . ' FROM names_types_xref INNER JOIN name_types_temp ON names_types_xref.name_types_id = name_types_temp.child_id'

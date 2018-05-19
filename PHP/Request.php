@@ -35,9 +35,9 @@ class Request {
 
 // This constant stores the filter parameteters for each possible value in GET requests
     const GET_PARAMS = ['id' => FILTER_SANITIZE_NUMBER_INT, 'ver' => FILTER_SANITIZE_NUMBER_INT, 'size' => FILTER_SANITIZE_NUMBER_INT,
-        'tm_coll_id' => FILTER_SANITIZE_NUMBER_INT,
+        'tm_coll_id' => FILTER_SANITIZE_NUMBER_INT, 'tm_geoid' => FILTER_SANITIZE_NUMBER_INT,
         'controller' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-        'name' => FILTER_SANITIZE_STRING, 'nameA' => FILTER_SANITIZE_STRING, 'nameB' => FILTER_SANITIZE_STRING,
+        'name' => FILTER_SANITIZE_STRING, 'Aname' => FILTER_SANITIZE_STRING, 'Bname' => FILTER_SANITIZE_STRING,
         'title' => FILTER_SANITIZE_STRING, 'Atitle' => FILTER_SANITIZE_STRING, 'Btitle' => FILTER_SANITIZE_STRING,
         'collection' => FILTER_SANITIZE_STRING, 'inv_no' => FILTER_SANITIZE_STRING, 'material' => FILTER_SANITIZE_STRING,
         'short_name' => FILTER_SANITIZE_STRING, 'full_name' => FILTER_SANITIZE_STRING, 'location' => FILTER_SANITIZE_STRING,
@@ -46,8 +46,8 @@ class Request {
         'northof' => FILTER_SANITIZE_STRING, 'southof' => FILTER_SANITIZE_STRING, 'near' => FILTER_SANITIZE_STRING,
         'period' => FILTER_SANITIZE_STRING, 'ranke' => FILTER_SANITIZE_STRING, 'ward' => FILTER_SANITIZE_STRING,
         'hannig' => FILTER_SANITIZE_STRING, 'topbib_id' => FILTER_SANITIZE_STRING,
-        'name-type-formal' => FILTER_SANITIZE_STRING, 'Aname-type-formal' => FILTER_SANITIZE_STRING, 'Bname-type-formal' => FILTER_SANITIZE_STRING,
-        'name-type-semantic' => FILTER_SANITIZE_STRING, 'Aname-type-semantic' => FILTER_SANITIZE_STRING, 'Bname-type-semantic' => FILTER_SANITIZE_STRING,
+        'form_type' => FILTER_SANITIZE_STRING, 'Aform_type' => FILTER_SANITIZE_STRING, 'Bform_type' => FILTER_SANITIZE_STRING,
+        'sem_type' => FILTER_SANITIZE_STRING, 'Asem_type' => FILTER_SANITIZE_STRING, 'Bsem_type' => FILTER_SANITIZE_STRING,
         'gender' => FILTER_SANITIZE_FULL_SPECIAL_CHARS, 'Agender' => FILTER_SANITIZE_FULL_SPECIAL_CHARS, 'Bgender' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
         'length-option' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
         'only_persons' => FILTER_SANITIZE_FULL_SPECIAL_CHARS, 'geo-filter' => FILTER_SANITIZE_FULL_SPECIAL_CHARS, 'chrono-filter' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,

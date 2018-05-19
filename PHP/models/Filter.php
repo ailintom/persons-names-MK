@@ -43,7 +43,7 @@ class Filter {
         }
     }
 
-    public function bind_param($stmt) {
+    public function bind_param($stmt, $double_params = FALSE) {
         if (empty($this->rules)) {
             return NULL;
         }
@@ -52,12 +52,13 @@ class Filter {
         foreach ($this->rules as $rule) {
             $type .= $rule->param_type;
             $params = array_merge((array) $params, (array) $rule->value);
-
-            //, ...$operators
-            //call_user_func_array(array($stmt, 'bind_param'), $args);
         }
-
-
+        if ($double_params) {
+            foreach ($this->rules as $rule) {
+                $type .= $rule->param_type;
+                $params = array_merge((array) $params, (array) $rule->value);
+            }
+        }
         $stmt->bind_param($type, ...$params);
     }
 

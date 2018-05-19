@@ -255,7 +255,7 @@ class titlesView extends View {
       <?php
       //$res = null;
       foreach ($data->data as $row) {
-      echo("<a href='" . BASE . "collection/" . $row[$data->getFieldName(0)] . "'>" . $row[$data->getFieldName(1)] . ' ' .  $row['count_inscriptions'] . '<br>');
+      echo("<a href='" . BASE . "collection/" . $row[$data->getFieldName(0)] . "'>" . $row[$data->getFieldName(1)] . ' ' .  $row['inscriptions_count'] . '<br>');
       }
       //return $res;
       }

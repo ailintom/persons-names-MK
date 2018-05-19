@@ -36,8 +36,8 @@ class workshops extends ListModel  {
     public $defaultsort = 'title';
 
     protected function initFieldNames() {
-        $this->field_names = new FieldList(['workshops_id', 'title', 'dating', 'SELECT count(inscriptions_id) FROM inscriptions_workshops_xref WHERE status<>"rejected" AND inscriptions_workshops_xref.workshops_id=workshops.workshops_id'],
-                ['workshops_id', 'title', 'dating', 'count_inscriptions']);
+        $this->field_names = new FieldList(['workshops_id', 'title', 'dating', 'dating_sort_start+dating_sort_end', 'SELECT count(inscriptions_id) FROM inscriptions_workshops_xref WHERE status<>"rejected" AND inscriptions_workshops_xref.workshops_id=workshops.workshops_id'],
+                ['workshops_id', 'title', 'dating', 'dating_sort','inscriptions_count']);
     }
      protected function getSortField($sortField = NULL) {
         if (empty($sortField)) {

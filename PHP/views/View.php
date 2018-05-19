@@ -121,6 +121,16 @@ class View {
         }
     }
 
+    protected function oldValueSelect($field, $value, $default = FALSE) {
+        if (!empty(Request::get($field))) {
+            if (Request::get($field) == $value) {
+                return ' selected';
+            }
+        } elseif ($default) {
+            return ' selected';
+        }
+    }
+
     static function GenderTitle($gender) {
         /*
          * "m", "f", "?" gender unknown, or "a" for animals
@@ -156,6 +166,16 @@ class View {
         }
     }
 
+    protected function renderLat($lat) {
+        if (!empty($lat)) {
+            if (strlen(strval($lat)) == 4) {
+                return substr(strval($lat), 0, 2) . "." . substr(strval($lat), 2, 2) . " ° N";
+            }else{
+                return $lat;
+            }                
+        }
+    }
+
     /*
      * Toggles filters after loading the page based on data in the request
      * 
@@ -185,7 +205,8 @@ class View {
             <?php
         }
     }
-        protected function renderChildren($rec, $level) {
+
+    protected function renderChildren($rec, $level) {
         $typesMV = new name_typesMicroView();
         if (empty($rec['children'])) {
             return NULL;

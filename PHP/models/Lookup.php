@@ -33,7 +33,6 @@ namespace PNM;
  */
 class Lookup {
 
-     
     static function get($SQL, $value, $param = 's') {
         $db = Db::getInstance();
 
@@ -47,20 +46,26 @@ class Lookup {
         $result = $stmt->get_result();
         if ($result->num_rows !== 0) {
             return $result->fetch_row()[0];
-        }else{
+        } else {
             echo "$SQL**$value**param*$param"; //Comment this line
         }
     }
-    static function dateStart($dating){
-       
+
+    static function dateStart($dating) {
+
         return self::get('SELECT sort_date_range_start FROM thesauri WHERE item_name = ?', $dating);
     }
-       static function dateEnd($dating){
-                 return self::get('SELECT sort_date_range_end FROM thesauri WHERE item_name = ?', $dating);
-    }
-      static function name_types_idGet($name_type){
-                 return self::get('SELECT name_types_id FROM name_types WHERE title = ?', $name_type);
+
+    static function dateEnd($dating) {
+        return self::get('SELECT sort_date_range_end FROM thesauri WHERE item_name = ?', $dating);
     }
 
+    static function latitude($place_name) {
+        return self::get('SELECT latitude FROM places WHERE place_name = ?', $place_name);
+    }
+
+    static function name_types_idGet($name_type) {
+        return self::get('SELECT name_types_id FROM name_types WHERE title = ?', $name_type);
+    }
 
 }

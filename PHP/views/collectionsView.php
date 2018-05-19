@@ -94,11 +94,11 @@ class collectionsView extends View {
             
             <?php
             $tableCo = new Table($data, 'collections_id', 'collection', 'sort', '#results');
-            $tableCo->render_table(['title', 'full_name', 'location', 'count_inscriptions', 'url', 'online_collection'], ['Short name', 'Full name', 'Location', 'Objects', 'Website', 'Online catalogue'], TRUE);
+            $tableCo->render_table(['title', 'full_name', 'location', 'inscriptions_count', 'url', 'online_collection'], ['Short name', 'Full name', 'Location', 'Objects', 'Website', 'Online catalogue'], TRUE);
 
             /*
              * ['collections_id', 'title', 'full_name_en', 'full_name_national_language', 'location', 'url', 'online_collection', 'tm_coll_id',
-              'count_inscriptions'])
+              'inscriptions_count'])
              */
         }
     }
@@ -110,7 +110,7 @@ class collectionsView extends View {
       <?php
       //$res = null;
       foreach ($data->data as $row) {
-      echo("<a href='" . BASE . "collection/" . $row[$data->getFieldName(0)] . "'>" . $row[$data->getFieldName(1)] . ' ' .  $row['count_inscriptions'] . '<br>');
+      echo("<a href='" . BASE . "collection/" . $row[$data->getFieldName(0)] . "'>" . $row[$data->getFieldName(1)] . ' ' .  $row['inscriptions_count'] . '<br>');
       }
       //return $res;
       }

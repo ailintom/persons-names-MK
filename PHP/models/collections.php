@@ -38,7 +38,7 @@ class collections extends ListModel {
     protected function initFieldNames() {
         $this->field_names = new FieldList(['collections_id', 'title', 'IFNULL(full_name_en, full_name_national_language)', 'location', 'IFNULL(url, online_collection)', 'IF(online_collection>"", "available", "")', 'tm_coll_id',
             'SELECT COUNT(DISTINCT inscriptions_id) FROM inv_nos WHERE inv_nos.collections_id = collections.collections_id and status<>"erroneous"'], ['collections_id', 'title', 'full_name', 'location', 'url', 'online_collection', 'tm_coll_id',
-            'count_inscriptions']);
+            'inscriptions_count']);
     }
 
     protected function getSortField($sortField = NULL) {

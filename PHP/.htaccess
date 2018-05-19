@@ -1,4 +1,8 @@
 RewriteEngine On
+
+#RewriteCond %{QUERY_STRING} ^(.+?&)?[^=]+=(?:&(.*))?$
+#RewriteRule ^ %{REQUEST_URI}?%1%2 [R=302,NE]
+
 RewriteCond %{QUERY_STRING} action=reset
 RewriteRule ^ %{REQUEST_URI} [R,QSD]
 

@@ -30,20 +30,16 @@ namespace PNM;
  * Description of Bibliography
  *
  */
-class find_groups extends ListModelTitleSort {
+class places extends ListModel {
 
-    protected $tablename = 'find_groups';
-    public $defaultsort = 'title';
+    protected $tablename = 'places';
+    public $defaultsort = 'latitude';
 
     protected function initFieldNames() {
-        $this->field_names = new FieldList(['find_groups_id', 'title', 'dating', 'find_group_type',
-            'SELECT COUNT(inscriptions_id) from inscriptions WHERE inscriptions.find_groups_id=find_groups.find_groups_id'], ['find_groups_id', 'title', 'dating', 'find_group_type', 'inscriptions_count']);
+        $this->field_names = new FieldList(['places_id', 'IFNULL(long_place_name,place_name)', 'IFNULL(macro_region, relative_location)', 'latitude',
+            '(SELECT COUNT(inscriptions_id) from inscriptions WHERE inscriptions.provenance=places.place_name OR inscriptions.installation_place=places.place_name 
+                OR inscriptions.origin=places.place_name OR inscriptions.production_place=places.place_name)'], ['places_id', 'place', 'region', 'latitude',
+            'inscriptions_count']);
     }
-
-    protected function prepareDefaultSort() {
-        return 'title_sort';
-    }
-
-  
 
 }

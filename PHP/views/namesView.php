@@ -209,8 +209,8 @@ class namesView extends View {
                         Name pattern
                     </div>
                     <div class="filter_content">
-                        <label for="name-type-formal" class="sr-only">Name pattern</label>
-                        <input id="name-type-formal" list="name-types-formal" name="name-type-formal" placeholder="Example: DN (m)+ḥtp.w" type="text"<?= $this->oldValue('name-type-formal') ?>>
+                        <label for="form_type" class="sr-only">Name pattern</label>
+                        <input id="form_type" list="name-types-formal" name="form_type" placeholder="Example: DN (m)+ḥtp.w" type="text"<?= $this->oldValue('form_type') ?>>
                     </div>
                 </div>
 
@@ -222,8 +222,8 @@ class namesView extends View {
                         Semantic class
                     </div>
                     <div class="filter_content">
-                        <label for="name-type-semantic" class="sr-only">Semantic class</label>
-                        <input id="name-type-semantic" list="name-types-semantic" name="name-type-semantic" placeholder="Example: theophoric names" type="text"<?= $this->oldValue('name-type-semantic') ?>>
+                        <label for="sem_type" class="sr-only">Semantic class</label>
+                        <input id="sem_type" list="name-types-semantic" name="sem_type" placeholder="Example: theophoric names" type="text"<?= $this->oldValue('sem_type') ?>>
                     </div>
                 </div>
             </div>
@@ -258,7 +258,7 @@ class namesView extends View {
          * 
          */
 
-        $this->toggleFilters([['place', 'region-filter'], ['period', 'period-filter'], ['gender', 'gender-filter', 'any'], ['ranke', 'ranke-filter'], ['name-type-formal', 'pattern-filter'], ['name-type-semantic', 'class-filter']]);
+        $this->toggleFilters([['place', 'region-filter'], ['period', 'period-filter'], ['gender', 'gender-filter', 'any'], ['ranke', 'ranke-filter'], ['form_type', 'pattern-filter'], ['sem_type', 'class-filter']]);
     }
 
 }

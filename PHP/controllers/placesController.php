@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * MIT License
  * 
  * Copyright (c) 2017 Alexander Ilin-Tomich (unless specified otherwise for individual source files and documents)
@@ -13,7 +13,7 @@
  * furnished to do so, subject to the following conditions:
  * 
  * The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+  copies or substantial portions of the Software.
  * 
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -23,29 +23,55 @@ copies or substantial portions of the Software.
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 namespace PNM;
-class PlacesController {
+
+class placesController {
 
     public function load() {
-        
- 
-        $db = Db::getInstance();
 
-        $sql = 'SELECT * FROM places ';
+        $rules = [];
 
-        try {
-            $result = $db->query($sql);
-        } catch (mysqli_sql_exception $e) {
-            CriticalError::Show($e);
+        if (!empty(Request::get('place'))) {
+            array_push($rules, new Rule('place_name', 'exactlike', Request::get('place')));
+        }
+        if (!empty(Request::get('macroregion'))) {
+            if (in_array(Request::get('macroregion'), ["Eastern Desert", "Nile Valley", "Western Desert", "Levant"])) {
+                array_push($rules, new Rule('relative_location', 'exact', Request::get('macroregion')));
+            } else {
+                array_push($rules, new Rule('macro_region', 'exact', Request::get('macroregion')));
+            }
+        }
+        if (!empty(Request::get('northof'))) {
+            $northofLat = Lookup::latitude(Request::get('northof'));
+            array_push($rules, new Rule('latitude', 'moreorequal', $northofLat));
+        }
+        if (!empty(Request::get('southof'))) {
+            $southofLat = Lookup::latitude(Request::get('southof'));
+            array_push($rules, new Rule('latitude', 'lessorequal', $southofLat));
+        }
+        if (!empty(Request::get('near'))) {
+            $southofLat = Lookup::latitude(Request::get('near')) + 30;
+            array_push($rules, new Rule('latitude', 'lessorequal', $southofLat));
+            $northofLat = Lookup::latitude(Request::get('near')) - 30;
+            array_push($rules, new Rule('latitude', 'moreorequal', $northofLat));
+        }
+        if (!empty(Request::get('topbib_id'))) {
+            array_push($rules, new Rule('topbib_id', 'exact', Request::get('topbib_id'), 's'));
         }
 
-
-        while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-            echo '<br>' . $row['places_id'] . ' ' . $row['place_name'];
+        if (!empty(Request::get('tm_geoid'))) {
+            array_push($rules, new Rule('tm_geoid', 'exact', Request::get('tm_geoid'), 'i'));
         }
 
+        $filter = new Filter($rules);
 
-        //require_once('views/posts/index.php');
+
+        $model = New places(Request::get('sort'), (Request::get('start') ?: 0), 50, $filter);
+
+
+        $view = new placesView ();
+        $view->echoRender($model);
     }
 
 }

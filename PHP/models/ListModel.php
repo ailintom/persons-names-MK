@@ -34,32 +34,35 @@ namespace PNM;
 class ListModel {
 
     const MAX_RECORD_COUNT = 8388607; // Maximum record count defined by the structure of ID fields
+    protected $double_params = FALSE;
 
-    public $data = null;
+    public $params = null;
     protected $tablename = null;
+    protected $flag = null;
     protected $field_names = null;
     public $defaultsort = null;
     public $start = null;
     public $count = null;
     public $total_count = null;
-protected $distinct = null;
+    protected $distinct = null;
+
     protected function initFieldNames() {
         
     }
 
-    public function __construct($sort = null, $start = 0, $count = 0, Filter $filter = null) {
+    public function __construct($sort = null, $start = 0, $count = 0, Filter $filter = null, $params = NULL) {
         $db = Db::getInstance();
         $this->initFieldNames();
         $filterTotal = $filter;
         $this->start = $start + 1;
-
+        $this->params = $params;
         $strsql = $this->makeSQL($sort, $start, $count, $filter);
-         //  echo "<br>$strsql"; //TURN ON TO DISPLAY THE PRINCIPAL QUERY
+        //echo "<br>$strsql"; //TURN ON TO DISPLAY THE PRINCIPAL QUERY
         // if ($this->defaultsort == 'sequence_number'){ echo "<br>$strsql";} // for testing
         try {
             $stmt = $db->prepare($strsql);
             if (!empty($filter)) {
-                $filter->bind_param($stmt);
+                $filter->bind_param($stmt, $this->double_params);
             }
             $stmt->execute();
         } catch (mysqli_sql_exception $e) {
@@ -77,7 +80,7 @@ protected $distinct = null;
             try {
                 $stmtTotal = $db->prepare($strsqlTotal);
                 if (!empty($filter)) {
-                    $filter->bind_param($stmtTotal);
+                    $filter->bind_param($stmtTotal, $this->double_params);
                 }
                 $stmtTotal->execute();
             } catch (mysqli_sql_exception $e) {
@@ -85,7 +88,6 @@ protected $distinct = null;
             }
             $resultTotal = $stmtTotal->get_result();
             $this->total_count = $resultTotal->fetch_array(MYSQLI_NUM)[0];
-            
         }
         $this->loadChildren();
     }
@@ -164,9 +166,10 @@ protected $distinct = null;
         $newFieldArr = (array) $newField;
         $total = count($oldFieldArr);
         for ($i = 0; $i < $total; $i++) {
-            $len = strlen($oldFieldArr[$i]);
-            if (substr($res, 0, $len) == $oldFieldArr[$i]) {
-                $res = $newFieldArr[$i] . substr($res, $len);
+            $matches = [];
+            preg_match('/(.+?)\b(.*)/', $res, $matches);
+            if ($matches[1] == $oldFieldArr[$i]) {
+                $res = $newFieldArr[$i] . $matches[2];
                 break;
             }
         }

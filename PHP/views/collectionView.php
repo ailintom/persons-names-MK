@@ -36,7 +36,7 @@ class collectionView extends View {
      *   $this->field_names = new FieldList(['collections_id', 'title', 'full_name_en', 'full_name_national_language', 'location', 'IFNULL(url, online_collection)', 'IF(online_collection>"", "available", "")', 'tm_coll_id',
       'SELECT COUNT(DISTINCT inscriptions_id) FROM inv_nos WHERE inv_nos.collections_id = collections.collections_id and status<>"erroneous"'],
       ['collections_id', 'title', 'full_name_en', 'full_name_national_language',  'location', 'url', 'online_collection', 'tm_coll_id',
-      'count_inscriptions']);
+      'inscriptions_count']);
      */
 
     public function EchoRender(&$data) {
@@ -47,7 +47,7 @@ class collectionView extends View {
         echo( $this->descriptionElement('Full name', $data->get('full_name_en')));
         echo( $this->descriptionElement('Name in local language', $data->get('full_name_national_language')));
         echo( $this->descriptionElement('Location', $data->get('location')));
-        echo( $this->descriptionElement('Inscribed objects in the database', $this->inscribedObjects($data->get('collections_id'), $data->get('count_inscriptions'))));
+        echo( $this->descriptionElement('Inscribed objects in the database', $this->inscribedObjects($data->get('collections_id'), $data->get('inscriptions_count'))));
          echo( $this->descriptionElement('Website', $this->renderURL($data->get('url'))));
          echo( $this->descriptionElement('Online catalogue', $this->renderURL($data->get('online_collection'))));
          echo( $this->descriptionElement('Trismegistos collection ID', $this->renderURL($data->get('tm_coll_id'), 'https://www.trismegistos.org/collection/')));
