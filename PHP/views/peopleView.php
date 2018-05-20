@@ -128,10 +128,10 @@ class peopleView extends View {
                     </div>
                     <div class="row -small">
                         <div class="column">
-                            <label for="personal_nameB">Name:</label>
+                            <label for="Bname">Name:</label>
                         </div>
                         <div class="column -wide">
-                            <input name="personal_nameB" id="personal_nameB" placeholder="MdC (ra-Htp) or Unicode (rꜥ-ḥtp)" type="text" <?= $this->oldValue('personal_nameB') ?>>
+                            <input name="Bname" id="Bname" placeholder="MdC (ra-Htp) or Unicode (rꜥ-ḥtp)" type="text" <?= $this->oldValue('Bname') ?>>
                         </div>
                     </div>
                     <div class="row -small">
@@ -234,12 +234,12 @@ class peopleView extends View {
                             During
                         </label>
                         /
-                        <input id="not-later" name="chrono-filter" type="radio" value="not-later" aria-labelledby="period-label"<?= $this->oldValueRadio('chrono-filter', 'not-later', TRUE) ?>>
+                        <input id="not-later" name="chrono-filter" type="radio" value="not-later" aria-labelledby="period-label"<?= $this->oldValueRadio('chrono-filter', 'not-later') ?>>
                         <label for="not-later" title="Attestations in sources dating not (demonstrably) later than">
                             not later than
                         </label>
                         /
-                        <input id="not-earlier" name="chrono-filter" type="radio" value="not-earlier" aria-labelledby="period-label"<?= $this->oldValueRadio('chrono-filter', 'not-earlier', TRUE) ?>>
+                        <input id="not-earlier" name="chrono-filter" type="radio" value="not-earlier" aria-labelledby="period-label"<?= $this->oldValueRadio('chrono-filter', 'not-earlier') ?>>
                         <label for="not-earlier" title="Attestations in sources dating not (demonstrably) earlier than">
                             not earlier than
                         </label>
@@ -250,7 +250,7 @@ class peopleView extends View {
                 </div>
             </div>
 
-            <button type="submit">
+            <button type="submit" class="submit">
                 Search
             </button>
             <button type="submit" title="Clear search and display all records" name="action" value="reset">
@@ -275,6 +275,11 @@ class peopleView extends View {
             <h2 class="sr-only" id="results">Results</h2>
 
             <?php
+            //$this->renderObjectType($att['object_type']) . ' ' . $att['title']
+            $total = $data->count;
+            for ($i = 0; $i < $total; $i++) {
+                $data->data[$i]['title'] = $this->renderObjectType($data->data[$i]['object_type']) . ' ' . $data->data[$i]['title'];
+            }
             if ($data->type == "double") {
                 $tableCo = new Table($data, 'id', 'auto', 'sort', '#results');
                 $tableCo->addHeader('<tr class="-no-border"><th colspan="3">Person A</th><th class="-border" colspan="3">Person B</th><th class="-border" colspan="3">Common</th></tr>');
@@ -288,6 +293,7 @@ class peopleView extends View {
              * ['id', 'inscriptions_id', 'gender', 'title_string', 'title_string_sort', 'personal_name', 'personal_name_sort', 'title', 'title_sort', 'dating', 'dating_sort', 'region']
              */
         }
+         $this->toggleFilters([['period', 'period-filter'], ['place', 'region-filter']]);
     }
 
 }

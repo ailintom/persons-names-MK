@@ -32,23 +32,63 @@ namespace PNM;
  */
 class peoplePairs extends ListModel {
 
-    const DOUBLE_PARAMS = TRUE;
-public $type = "double";
-    //protected $tablename = 'attestations';
-    //public $defaultsort = 'title';
-    //protected function initFieldNames() {
-    //    $this->field_names = new FieldList(['collections_id', 'title', 'IFNULL(full_name_en, full_name_national_language)', 'location', 'IFNULL(url, online_collection)', 'IF(online_collection>"", "available", "")', 'tm_coll_id',
-    //       'SELECT COUNT(DISTINCT inscriptions_id) FROM inv_nos WHERE inv_nos.collections_id = collections.collections_id and status<>"erroneous"'], ['collections_id', 'title', 'full_name', 'location', 'url', 'online_collection', 'tm_coll_id',
-    //       'inscriptions_count']);
-    //}
+    protected $double_params = TRUE;
+    public $type = "double";
+    public $defaultsort = 'title';
 
-    /* protected function getSortField($sortField = NULL) {
-      if (empty($sortField)) {
-      $sortField = $this->defaultsort;
-      }
-      return $this->replaceSortField($sortField, ['full_name', 'url',
-      'online_collection'], ['IFNULL(full_name_en, full_name_national_language)', 'IFNULL(url, online_collection)',
-      'IF(online_collection>"", "available", "")']);
+    CONST SELLIST = 'att_a.id as id, att_a.inscriptions_id as inscriptions_id, att_a.gender as gender, att_a.title_string as title_string, att_a.title_string_sort as title_string_sort, att_a.personal_name as personal_name, att_a.personal_name_sort as personal_name_sort, att_b.gender as gender_b, att_b.title_string as title_string_b, att_b.title_string_sort as title_string_sort_b, att_b.personal_name as personal_name_b, att_b.personal_name_sort as personal_name_sort_b, att_a.object_type as object_type, att_a.title as title, att_a.title_sort as title_sort, att_a.dating as dating, att_a.dating_sort as dating_sort, att_a.region as region';
+    CONST NOPERSONS = ' WHERE not (exists(SELECT attestations_id FROM persons_attestations_xref WHERE status = "accepted" AND persons_attestations_xref.attestations_id = att_a.attestations_id)=1 AND exists(SELECT attestations_id FROM persons_attestations_xref WHERE status = "accepted" AND persons_attestations_xref.attestations_id = att_b.attestations_id)=1)';
 
-      } */
+    protected function initFieldNames() {
+        $this->field_names = new FieldList(['id', 'inscriptions_id', 'gender', 'title_string', 'title_string_sort', 'personal_name', 'personal_name_sort', 'gender_b', 'title_string_b', 'title_string_sort_b', 'personal_name_b', 'personal_name_sort_b', 'object_type', 'title', 'title_sort', 'dating', 'dating_sort', 'region']);
+    }
+
+    protected function makeSQL($inputsort, $start, $count) {
+
+        if ($inputsort == $this->defaultsort) {
+            $sort = NULL;
+        } else {
+            $sort = $this->getSortField($inputsort);
+        }
+        if (!empty($sort . $this->getSortField())) {
+            $ORDER = ' ORDER BY ' . $sort . (empty($sort) || empty($this->getSortField()) ? null : ', ') . $this->getSortField();
+        } else {
+            $ORDER = null;
+        }
+        if ($start > 0 || $count > 0) {
+            $LIMIT = ' LIMIT ' . $start . ', ' . ($count > 0 ? $count : self::MAX_RECORD_COUNT);
+        } else {
+            $LIMIT = null;
+        }
+        if ($this->params == 'persons_only') {
+            $this->double_params = FALSE;
+            return $this->makeSelectFromWherePersons() . $ORDER . $LIMIT;
+        } else {
+            return $this->makeSelectFromWhere() . $ORDER . $LIMIT;
+        }
+    }
+
+    protected function makeSQLTotal() {
+        if ($this->params == 'persons_only') {
+            return 'SELECT Count(id) as count FROM (' . $this->makeSelectFromWherePersons() . ') as sum';
+        } else {
+            return 'SELECT Count(id) as count FROM (' . $this->makeSelectFromWhere() . ') as sum';
+        }
+    }
+
+    protected function makeSelectFromWhere() {
+        
+    }
+
+    protected function makeSelectFromWherePersons() {
+        
+    }
+
+    protected function getSortField($sortField = NULL) {
+        if (empty($sortField)) {
+            $sortField = $this->defaultsort;
+        }
+        return $this->replaceSortField($sortField, ['title', 'dating', 'title_string', 'personal_name', 'title_string_b', 'personal_name_b'], ['title_sort', 'dating_sort', 'title_string_sort', 'personal_name_sort', 'title_string_sort_b', 'personal_name_sort_b']);
+    }
+
 }

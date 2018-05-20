@@ -36,7 +36,7 @@ class title_relations extends ListModel {
         $this->field_names = new FieldList(['titles_id', 'title', 'predicate']);
     }
 
-    protected function makeSQL($sort, $start, $count, Filter $filter = null) {
+    protected function makeSQL($sort, $start, $count) {
         $sql1 = 'SELECT (object_id) as titles_id, title, predicate, title_sort, 0 as pred_sort'
                 . ' FROM title_relations INNER JOIN titles ON title_relations.object_id = titles.titles_id'
                 . ' WHERE subject_id=? ';

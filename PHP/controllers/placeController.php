@@ -32,27 +32,4 @@ class placeController {
         $view = new placeView();
         $view->echoRender($record);
     }
-/*
-    public function load() {
-        // we store all the posts in a variable
-        $db = Db::getInstance();
-
-        $sql = 'SELECT * FROM places where places_id = ' . Request::get('id'); 
-
-        try {
-            $result = $db->query($sql);
-        } catch (mysqli_sql_exception $e) {
-            CriticalError::Show($e);
-        }
-
-
-        while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-            echo '<br>' . $row['places_id'] . ' ' . $row['place_name'];
-        }
- * }
-
-*/
-        //require_once('views/posts/index.php');
-    
-
 }

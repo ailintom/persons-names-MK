@@ -47,7 +47,7 @@ class Lookup {
         if ($result->num_rows !== 0) {
             return $result->fetch_row()[0];
         } else {
-            echo "$SQL**$value**param*$param"; //Comment this line
+           // echo "$SQL**$value**param*$param"; //Comment this line
         }
     }
 

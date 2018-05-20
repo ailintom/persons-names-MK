@@ -41,7 +41,7 @@ class ObjectBonds extends ListModel {
         $this->field_names = new FieldList(['attestations_id', 'wording', 'predicate', 'predic', 'title_string', 'personal_name', 'gender', 'predic_cat']);
     }
 
-    protected function makeSQL($sort, $start, $count, Filter $filter = null) {
+    protected function makeSQL($sort, $start, $count) {
         $sql1 = 'SELECT (bonds.object_id) as attestations_id, wording, predicate, CONCAT("This", predicate ) as predic,  title_string, personal_name, gender'
                 . ' FROM bonds INNER JOIN attestations ON bonds.object_id = attestations.attestations_id'
                 . ' WHERE bonds.subject_id=? ORDER BY attestations.location, attestations.attestations_id';

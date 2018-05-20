@@ -34,8 +34,8 @@ namespace PNM;
 class ListModel {
 
     const MAX_RECORD_COUNT = 8388607; // Maximum record count defined by the structure of ID fields
-    protected $double_params = FALSE;
 
+    protected $double_params = FALSE;
     public $params = null;
     protected $tablename = null;
     protected $flag = null;
@@ -45,20 +45,30 @@ class ListModel {
     public $count = null;
     public $total_count = null;
     protected $distinct = null;
+    protected $WHERE = null;
+    protected $BWHERE = null;
 
     protected function initFieldNames() {
         
     }
 
-    public function __construct($sort = null, $start = 0, $count = 0, Filter $filter = null, $params = NULL) {
+    public function __construct($sort = null, $start = 0, $count = 0, Filter $filter = null, Filter $Bfilter = null, $params = NULL) {
         $db = Db::getInstance();
         $this->initFieldNames();
-        $filterTotal = $filter;
         $this->start = $start + 1;
         $this->params = $params;
+        if (!empty($filter)) {
+            $this->WHERE = (!empty($filter->WHERE) ? ' WHERE ' . $filter->WHERE : null);
+        }
+        if (!empty($Bfilter)) {
+            $this->BWHERE = (!empty($Bfilter->WHERE) ? ' WHERE ' . $Bfilter->WHERE : null);
+            $filter = New Filter(array_merge($filter->getRules(), $Bfilter->getRules()));
+            // echo $this->BWHERE, "doubleparams:", $this->double_params;
+            // print_r($filter);
+        }
+
         $strsql = $this->makeSQL($sort, $start, $count, $filter);
-        //echo "<br>$strsql"; //TURN ON TO DISPLAY THE PRINCIPAL QUERY
-        // if ($this->defaultsort == 'sequence_number'){ echo "<br>$strsql";} // for testing
+        // echo "<br>$strsql";
         try {
             $stmt = $db->prepare($strsql);
             if (!empty($filter)) {
@@ -74,8 +84,8 @@ class ListModel {
         if ($start == 0 && $count == 0) {
             $this->total_count = $this->count;
         } else {
-            $strsqlTotal = $this->makeSQLTotal($filterTotal);
-            //echo "<br>$strsqlTotal";
+            $strsqlTotal = $this->makeSQLTotal();
+            // echo "<br>$strsqlTotal";
             // if ($this->defaultsort == 'sequence_number'){ echo "<br>$strsql";} // for testing
             try {
                 $stmtTotal = $db->prepare($strsqlTotal);
@@ -108,8 +118,8 @@ class ListModel {
      * 
      */
 
-    protected function makeSQL($inputsort, $start, $count, Filter $filter = null) {
-        $WHERE = (!empty($filter->WHERE) ? ' WHERE ' . $filter->WHERE : null);
+    protected function makeSQL($inputsort, $start, $count) {
+
         if ($inputsort == $this->defaultsort) {
             $sort = NULL;
         } else {
@@ -125,13 +135,11 @@ class ListModel {
         } else {
             $LIMIT = null;
         }
-        return 'SELECT ' . $this->distinct . $this->field_names->SQL() . ' FROM ' . $this->tablename . $WHERE . $ORDER . $LIMIT;
+        return 'SELECT ' . $this->distinct . $this->field_names->SQL() . ' FROM ' . $this->tablename . $this->WHERE . $ORDER . $LIMIT;
     }
 
-    protected function makeSQLTotal(Filter $filter = null) {
-        $WHERE = (!empty($filter->WHERE) ? ' WHERE ' . $filter->WHERE : null);
-        //echo $WHERE;
-        return 'SELECT Count(*) as count FROM ' . $this->tablename . $WHERE;
+    protected function makeSQLTotal() {
+        return 'SELECT Count(*) as count FROM ' . $this->tablename . $this->WHERE;
     }
 
     /*

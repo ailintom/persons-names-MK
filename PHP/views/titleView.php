@@ -140,7 +140,7 @@ class titleView extends View {
                 <input id="period" list="periods" name="period" placeholder="period or reign" title="Enter the period" type="text" <?= $this->oldValue('period') ?>>
             </p>
 
-            <button type="submit">
+            <button type="submit" class="submit">
                 Filter
             </button>
             <button type="submit" title="Clear filters and display all records" name="action" value="reset">

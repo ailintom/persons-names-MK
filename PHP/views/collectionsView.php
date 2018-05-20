@@ -69,7 +69,7 @@ class collectionsView extends View {
                 </div>
             </div>
 
-            <button type="submit">
+            <button type="submit" class="submit">
                 Search
             </button>
             <button type="submit" title="Clear search and display all records" name="action" value="reset">

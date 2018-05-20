@@ -14,5 +14,19 @@ namespace PNM;
  * @author Tomich
  */
 class peopleSameInscr extends peoplePairs {
-    //put your code here
+
+    protected $query1a = 'SELECT attestations_id, CONCAT( inscriptions.inscriptions_id, "#", attestations_id) AS id, inscriptions.inscriptions_id AS inscriptions_id, gender, title_string, title_string_sort, personal_name, personal_name_sort, object_type, title, title_sort, dating, (dating_sort_start+dating_sort_end) as dating_sort, (COALESCE(inscriptions.origin, inscriptions.production_place, inscriptions.installation_place, inscriptions.provenance)) AS region FROM attestations INNER JOIN inscriptions ON attestations.inscriptions_id = inscriptions.inscriptions_id';
+    protected $query1b = 'SELECT attestations_id, CONCAT( inscriptions.inscriptions_id, "#", attestations_id) AS id, inscriptions.inscriptions_id AS inscriptions_id, gender, title_string, title_string_sort, personal_name, personal_name_sort, object_type, title, title_sort, dating, (dating_sort_start+dating_sort_end) as dating_sort, (COALESCE(inscriptions.origin, inscriptions.production_place, inscriptions.installation_place, inscriptions.provenance)) AS region FROM ( attestations INNER JOIN inscriptions ON attestations.inscriptions_id = inscriptions.inscriptions_id)';
+    protected $query2a = 'SELECT attestations.inscriptions_id AS inscr_id, persons.persons_id as id, 0 as inscriptions_id, gender, title_string, title_string_sort, personal_name, personal_name_sort, "Dossier" as object_type, title, title_sort, dating, (dating_sort_start+dating_sort_end) as dating_sort, region FROM persons INNER JOIN (SELECT persons_attestations_xref.attestations_id as attestations_id, persons_id, inscriptions_id from persons_attestations_xref INNER JOIN attestations on persons_attestations_xref.attestations_id=attestations.attestations_id WHERE persons_attestations_xref.status="accepted") AS attestations ON persons.persons_id = attestations.persons_id';
+    protected $query2b = 'SELECT attestations.inscriptions_id AS inscr_id, persons.persons_id as id, 0 as inscriptions_id, gender, title_string, title_string_sort, personal_name, personal_name_sort, "Dossier" as object_type, title, title_sort, dating, (dating_sort_start+dating_sort_end) as dating_sort, region FROM (persons INNER JOIN (SELECT persons_attestations_xref.attestations_id as attestations_id, persons_id, inscriptions_id from persons_attestations_xref INNER JOIN attestations on persons_attestations_xref.attestations_id=attestations.attestations_id WHERE persons_attestations_xref.status="accepted") AS attestations ON persons.persons_id = attestations.persons_id)';
+
+    protected function makeSelectFromWhere() {
+        return '(SELECT ' . static::SELLIST . ' FROM (' . $this->query1a . $this->WHERE . ') as att_a INNER JOIN (' . $this->query1b . $this->BWHERE . ') as att_b ON att_a.inscriptions_id = att_b.inscriptions_id AND att_a.attestations_id <> att_b.attestations_id' . static::NOPERSONS . ') UNION '
+                . '(SELECT DISTINCT ' . static::SELLIST . ' FROM (' . $this->query2a . $this->WHERE . ') as att_a INNER JOIN (' . $this->query2b . $this->BWHERE . ') as att_b ON att_a.inscr_id = att_b.inscr_id AND att_a.id <> att_b.id)';
+    }
+
+    protected function makeSelectFromWherePersons() {
+        return '(SELECT DISTINCT ' . static::SELLIST . ' FROM (' . $this->query2a . $this->WHERE . ') as att_a INNER JOIN (' . $this->query2b . $this->BWHERE . ') as att_b ON att_a.inscr_id = att_b.inscr_id AND att_a.id <> att_b.id)';
+    }
+
 }

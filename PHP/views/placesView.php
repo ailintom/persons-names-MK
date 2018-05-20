@@ -161,7 +161,7 @@ class placesView extends View {
             </div>  
 
 
-            <button type="submit">
+            <button type="submit" class="submit">
                 Search
             </button>
             <button type="submit" title="Clear search and display all records" name="action" value="reset">
@@ -185,7 +185,6 @@ class placesView extends View {
             <?php
             //renderLat($data->get('latitude')
             $total = $data->count;
-
             for ($i = 0; $i < $total; $i++) {
                 $data->data[$i]['latitude'] = $this->renderLat($data->data[$i]['latitude']);
             }

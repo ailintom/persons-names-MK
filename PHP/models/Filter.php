@@ -38,7 +38,6 @@ class Filter {
     public function __construct(array $data = []) {
         $this->rules = $data;
         foreach ($this->rules as $rule) {
-
             $this->WHERE .= (empty($this->WHERE) ? NULL : ' AND ') . '(' . $rule->WHERE . ')';
         }
     }
@@ -60,6 +59,9 @@ class Filter {
             }
         }
         $stmt->bind_param($type, ...$params);
+    }
+    public function getRules(){
+        return $this->rules;
     }
 
 }
