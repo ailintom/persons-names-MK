@@ -39,8 +39,8 @@ class peopleView extends View {
     }
 
     public function echoRender(&$data) {
+        (New Head)->render(Head::HEADERSLIM, 'People');
         ?>     
-        <h1>People</h1>
         <p class="info-box">
             <?= icon('info') ?>
             You can use <b>%</b> or <b>*</b> as wildcards.
@@ -55,16 +55,16 @@ class peopleView extends View {
                             <label id="gender-label-a">Gender:</label>
                         </div>
                         <div class="column -wide">
-                            <input id="Aany" name="Agender" value="any" type="radio" aria-labelledby="gender-label-a"<?= $this->oldValueRadio('Agender', 'any', TRUE) ?>>
+                            <input id="Aany" name="Agender" value="any" type="radio" aria-labelledby="gender-label-a"<?= View::oldValueRadio('Agender', 'any', TRUE) ?>>
                             <label for="Aany" title="Match people regardless of gender">any</label>
                             /
-                            <input id="Afemale" name="Agender" value="f" type="radio" aria-labelledby="gender-label-a"<?= $this->oldValueRadio('Agender', 'f') ?>>
+                            <input id="Afemale" name="Agender" value="f" type="radio" aria-labelledby="gender-label-a"<?= View::oldValueRadio('Agender', 'f') ?>>
                             <label for="Afemale" title="Match women">female</label>
                             /
-                            <input id="Amale" name="Agender" value="m" type="radio" aria-labelledby="gender-label-a"<?= $this->oldValueRadio('Agender', 'm') ?>>
+                            <input id="Amale" name="Agender" value="m" type="radio" aria-labelledby="gender-label-a"<?= View::oldValueRadio('Agender', 'm') ?>>
                             <label for="Amale" title="Match men">male</label>
                             /
-                            <input id="AAnimal" name="Agender" value="a" type="radio" aria-labelledby="gender-label-a"<?= $this->oldValueRadio('Agender', 'a') ?>>
+                            <input id="AAnimal" name="Agender" value="a" type="radio" aria-labelledby="gender-label-a"<?= View::oldValueRadio('Agender', 'a') ?>>
                             <label for="AAnimal" title="Match animals">animal</label>
                         </div>
                     </div>
@@ -73,7 +73,7 @@ class peopleView extends View {
                             <label for="Atitle">Title:</label>
                         </div>
                         <div class="column -wide">
-                            <input name="Atitle" id="Atitle" placeholder="MdC (jmj-rA pr) or Unicode (jmj-rꜣ pr)" type="text" <?= $this->oldValue('Atitle') ?>>
+                            <input name="Atitle" id="Atitle" placeholder="MdC (jmj-rA pr) or Unicode (jmj-rꜣ pr)" type="text" <?= View::oldValue('Atitle') ?>>
                         </div>
                     </div>
                     <div class="row -small">
@@ -81,7 +81,7 @@ class peopleView extends View {
                             <label for="Aname">Name:</label>
                         </div>
                         <div class="column -wide">
-                            <input name="Aname" id="Aname" placeholder="MdC (ra-Htp) or Unicode (rꜥ-ḥtp)" type="text" <?= $this->oldValue('Aname') ?>>
+                            <input name="Aname" id="Aname" placeholder="MdC (ra-Htp) or Unicode (rꜥ-ḥtp)" type="text" <?= View::oldValue('Aname') ?>>
                         </div>
                     </div>
                     <div class="row -small">
@@ -89,7 +89,7 @@ class peopleView extends View {
                             <label for="Aform_type">Name pattern:</label>
                         </div>
                         <div class="column -wide">
-                            <input id="Aform_type" name="Aform_type" title="" placeholder="Example: DN (m)+ḥtp.w" list="name-types-formal" type="text" <?= $this->oldValue('Aform_type') ?>>
+                            <input id="Aform_type" name="Aform_type" title="" placeholder="Example: DN (m)+ḥtp.w" list="name-types-formal" type="text" <?= View::oldValue('Aform_type') ?>>
                         </div>
                     </div>
                     <div class="row -small">
@@ -97,7 +97,7 @@ class peopleView extends View {
                             <label for="Asem_type">Semantic class:</label>
                         </div>
                         <div class="column -wide">
-                            <input id="Asem_type" name="Asem_type" title="" placeholder="Example: theophoric names" list="name-types-semantic" type="text" <?= $this->oldValue('Asem_type') ?>>
+                            <input id="Asem_type" name="Asem_type" title="" placeholder="Example: theophoric names" list="name-types-semantic" type="text" <?= View::oldValue('Asem_type') ?>>
                         </div>
                     </div>
                 </div>
@@ -108,13 +108,13 @@ class peopleView extends View {
                             <label id="gender-label-b">Gender:</label>
                         </div>
                         <div class="column -wide">
-                            <input id="Bany" name="Bgender" value="any" type="radio" aria-labelledby="gender-label-b"<?= $this->oldValueRadio('Bgender', 'any', TRUE) ?>>
+                            <input id="Bany" name="Bgender" value="any" type="radio" aria-labelledby="gender-label-b"<?= View::oldValueRadio('Bgender', 'any', TRUE) ?>>
                             <label for="Bany" title="Match names regardless of gender">any</label>
                             /
-                            <input id="Bfemale" name="Bgender" value="f" type="radio" aria-labelledby="gender-label-b"<?= $this->oldValueRadio('Bgender', 'f') ?>>
+                            <input id="Bfemale" name="Bgender" value="f" type="radio" aria-labelledby="gender-label-b"<?= View::oldValueRadio('Bgender', 'f') ?>>
                             <label for="Bfemale" title="Match names borne only by women">female</label>
                             /
-                            <input id="Bmale" name="Bgender" value="m" type="radio" aria-labelledby="gender-label-b"<?= $this->oldValueRadio('Bgender', 'm') ?>>
+                            <input id="Bmale" name="Bgender" value="m" type="radio" aria-labelledby="gender-label-b"<?= View::oldValueRadio('Bgender', 'm') ?>>
                             <label for="Bmale" title="Match names borne only by men">male</label>
                         </div>
                     </div>
@@ -123,7 +123,7 @@ class peopleView extends View {
                             <label for="Btitle">Title:</label>
                         </div>
                         <div class="column -wide">
-                            <input name="Btitle" id="Btitle" placeholder="MdC (jmj-rB pr) or Unicode (jmj-rꜣ pr)" type="text" <?= $this->oldValue('Btitle') ?>>
+                            <input name="Btitle" id="Btitle" placeholder="MdC (jmj-rB pr) or Unicode (jmj-rꜣ pr)" type="text" <?= View::oldValue('Btitle') ?>>
                         </div>
                     </div>
                     <div class="row -small">
@@ -131,7 +131,7 @@ class peopleView extends View {
                             <label for="Bname">Name:</label>
                         </div>
                         <div class="column -wide">
-                            <input name="Bname" id="Bname" placeholder="MdC (ra-Htp) or Unicode (rꜥ-ḥtp)" type="text" <?= $this->oldValue('Bname') ?>>
+                            <input name="Bname" id="Bname" placeholder="MdC (ra-Htp) or Unicode (rꜥ-ḥtp)" type="text" <?= View::oldValue('Bname') ?>>
                         </div>
                     </div>
                     <div class="row -small">
@@ -139,7 +139,7 @@ class peopleView extends View {
                             <label for="Bform_type">Name pattern:</label>
                         </div>
                         <div class="column -wide">
-                            <input id="Bform_type" name="Bform_type" title="" placeholder="Example: DN (m)+ḥtp.w" list="name-types-formal" type="text" <?= $this->oldValue('Bform_type') ?>>
+                            <input id="Bform_type" name="Bform_type" title="" placeholder="Example: DN (m)+ḥtp.w" list="name-types-formal" type="text" <?= View::oldValue('Bform_type') ?>>
                         </div>
                     </div>
                     <div class="row -small">
@@ -147,7 +147,7 @@ class peopleView extends View {
                             <label for="Bsem_type">Semantic class:</label>
                         </div>
                         <div class="column -wide">
-                            <input id="Bsem_type" name="Bsem_type" title="" placeholder="Example: theophoric names" list="name-types-semantic" type="text" <?= $this->oldValue('Bsem_type') ?>>
+                            <input id="Bsem_type" name="Bsem_type" title="" placeholder="Example: theophoric names" list="name-types-semantic" type="text" <?= View::oldValue('Bsem_type') ?>>
                         </div>
                     </div>
                 </div>
@@ -156,16 +156,16 @@ class peopleView extends View {
             <p>
                 <label for="relation">Relation between A and B:</label>
                 <select name="relation" id="relation">
-                    <option value="same_inscription"<?= $this->oldValueSelect('relation', 'same_inscription', TRUE) ?>>A and B appear in the same source</option>
-                    <option value="child"<?= $this->oldValueSelect('relation', 'child') ?>>A is a child of B</option>
-                    <option value="parent"<?= $this->oldValueSelect('relation', 'parent') ?>>A is a parent of B</option>
-                    <option value="spouses"<?= $this->oldValueSelect('relation', 'spouses') ?>>A and B are spouses</option>
-                    <option value="siblings"<?= $this->oldValueSelect('relation', 'siblings') ?>>A and B are siblings</option>
+                    <option value="same_inscription"<?= View::oldValueSelect('relation', 'same_inscription', TRUE) ?>>A and B appear in the same source</option>
+                    <option value="child"<?= View::oldValueSelect('relation', 'child') ?>>A is a child of B</option>
+                    <option value="parent"<?= View::oldValueSelect('relation', 'parent') ?>>A is a parent of B</option>
+                    <option value="spouses"<?= View::oldValueSelect('relation', 'spouses') ?>>A and B are spouses</option>
+                    <option value="siblings"<?= View::oldValueSelect('relation', 'siblings') ?>>A and B are siblings</option>
                 </select>
             </p>
 
             <p>
-                <input id="only_persons" name="only_persons" value="true" type="checkbox" <?= $this->oldValueRadio('only_persons', 'true') ?>>
+                <input id="only_persons" name="only_persons" value="true" type="checkbox" <?= View::oldValueRadio('only_persons', 'true') ?>>
                 <label for="only_persons" title="Only show dossiers of persons with multiple attestations">Only dossiers of persons with multiple attestations</label>
             </p>
 
@@ -191,33 +191,33 @@ class peopleView extends View {
                         <span id="region-label">Region or locality</span>
                     </div>
                     <div class="filter_content">
-                        <input id="provenance" name="geo-filter" type="radio" value="provenance" aria-labelledby="region-label" <?= $this->oldValueRadio('geo-filter', 'provenance') ?>>
+                        <input id="provenance" name="geo-filter" type="radio" value="provenance" aria-labelledby="region-label" <?= View::oldValueRadio('geo-filter', 'provenance') ?>>
                         <label for="provenance" title="Attestations in sources found in the certain region">
                             Provenance
                         </label>
                         /
-                        <input id="installation-place" name="geo-filter" type="radio" value="installation-place" aria-labelledby="region-label" <?= $this->oldValueRadio('geo-filter', 'installation-place') ?>>
+                        <input id="installation-place" name="geo-filter" type="radio" value="installation-place" aria-labelledby="region-label" <?= View::oldValueRadio('geo-filter', 'installation-place') ?>>
                         <label for="installation-place" title="Attestations on monuments installed in certain region">
                             installation place
                         </label>
                         /
-                        <input id="origin" name="geo-filter" type="radio" value="origin" aria-labelledby="region-label" <?= $this->oldValueRadio('geo-filter', 'origin') ?>>
+                        <input id="origin" name="geo-filter" type="radio" value="origin" aria-labelledby="region-label" <?= View::oldValueRadio('geo-filter', 'origin') ?>>
                         <label for="origin" title="Attestations on monuments owned by people from a certain region">
                             origin
                         </label>
                         /
-                        <input id="production" name="geo-filter" type="radio" value="production" aria-labelledby="region-label" <?= $this->oldValueRadio('geo-filter', 'production') ?>>
+                        <input id="production" name="geo-filter" type="radio" value="production" aria-labelledby="region-label" <?= View::oldValueRadio('geo-filter', 'production') ?>>
                         <label for="production" title="Attestations on monuments produced in a certain refino">
                             production
                         </label>
                         /
-                        <input id="all" name="geo-filter" type="radio" value="all" aria-labelledby="region-label" <?= $this->oldValueRadio('geo-filter', 'all', TRUE) ?>>
+                        <input id="all" name="geo-filter" type="radio" value="all" aria-labelledby="region-label" <?= View::oldValueRadio('geo-filter', 'all', TRUE) ?>>
                         <label for="all" title="Attestations in sources anyhow related to a certain region">
                             all
                         </label>
                         in the region
                         <label for="place" class="sr-only">Region</label>
-                        <input id="place" list="places" name="place" placeholder="region or locality" title="Enter the region" type="text" <?= $this->oldValue('place') ?>>
+                        <input id="place" list="places" name="place" placeholder="region or locality" title="Enter the region" type="text" <?= View::oldValue('place') ?>>
                     </div>
                 </div>
 
@@ -229,23 +229,23 @@ class peopleView extends View {
                         <span id="period-label">Period or reign</span>
                     </div>
                     <div class="filter_content">
-                        <input id="during" name="chrono-filter" type="radio" value="during" aria-labelledby="period-label"<?= $this->oldValueRadio('chrono-filter', 'during', TRUE) ?>>
+                        <input id="during" name="chrono-filter" type="radio" value="during" aria-labelledby="period-label"<?= View::oldValueRadio('chrono-filter', 'during', TRUE) ?>>
                         <label for="during" title="Attestations in sources beloging to a certain period">
                             During
                         </label>
                         /
-                        <input id="not-later" name="chrono-filter" type="radio" value="not-later" aria-labelledby="period-label"<?= $this->oldValueRadio('chrono-filter', 'not-later') ?>>
+                        <input id="not-later" name="chrono-filter" type="radio" value="not-later" aria-labelledby="period-label"<?= View::oldValueRadio('chrono-filter', 'not-later') ?>>
                         <label for="not-later" title="Attestations in sources dating not (demonstrably) later than">
                             not later than
                         </label>
                         /
-                        <input id="not-earlier" name="chrono-filter" type="radio" value="not-earlier" aria-labelledby="period-label"<?= $this->oldValueRadio('chrono-filter', 'not-earlier') ?>>
+                        <input id="not-earlier" name="chrono-filter" type="radio" value="not-earlier" aria-labelledby="period-label"<?= View::oldValueRadio('chrono-filter', 'not-earlier') ?>>
                         <label for="not-earlier" title="Attestations in sources dating not (demonstrably) earlier than">
                             not earlier than
                         </label>
                         the period
                         <label for="period" class="sr-only">Period</label>
-                        <input id="period" list="periods" name="period" placeholder="period or reign" title="Enter the period" type="text" <?= $this->oldValue('period') ?>>
+                        <input id="period" list="periods" name="period" placeholder="period or reign" title="Enter the period" type="text" <?= View::oldValue('period') ?>>
                     </div>
                 </div>
             </div>
@@ -282,7 +282,7 @@ class peopleView extends View {
             }
             if ($data->type == "double") {
                 $tableCo = new Table($data, 'id', 'auto', 'sort', '#results');
-                $tableCo->addHeader('<tr class="-no-border"><th colspan="3">Person A</th><th class="-border" colspan="3">Person B</th><th class="-border" colspan="3">Common</th></tr>');
+                $tableCo->addHeader('<div role="row" style="display: table-row" class="-no-border"><div class="th" role="gridcell" style="display: table-cell">Person A</div><div class="th -border" role="gridcell" style="display: table-cell">&nbsp;</div><div class="th -border" role="gridcell" style="display: table-cell">&nbsp;</div><div class="th -border" role="gridcell" style="display: table-cell">Person B</div><div class="th -border" role="gridcell" style="display: table-cell">&nbsp;</div><div class="th -border" role="gridcell" style="display: table-cell">&nbsp;</div><div class="th -border" role="gridcell" style="display: table-cell">Common</div><div class="th -border" role="gridcell" style="display: table-cell">&nbsp;</div><div class="th -border" role="gridcell" style="display: table-cell">&nbsp;</div></div>');
                 $tableCo->render_table(['gender', 'title_string', 'personal_name', 'gender_b', 'title_string_b', 'personal_name_b', 'title', 'dating', 'region'], ['Gender', 'Title', 'Name', 'Gender', 'Title', 'Name', 'Source or dossier', 'Date', 'Region'], TRUE);
             } else {
                 $tableCo = new Table($data, 'id', 'auto', 'sort', '#results');
@@ -303,7 +303,7 @@ class peopleView extends View {
       <?php
       //$res = null;
       foreach ($data->data as $row) {
-      echo("<a href='" . BASE . "collection/" . $row[$data->getFieldName(0)] . "'>" . $row[$data->getFieldName(1)] . ' ' .  $row['inscriptions_count'] . '<br>');
+      echo("<a href='" . Config::BASE . "collection/" . $row[$data->getFieldName(0)] . "'>" . $row[$data->getFieldName(1)] . ' ' .  $row['inscriptions_count'] . '<br>');
       }
       //return $res;
       }

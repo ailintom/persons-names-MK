@@ -39,12 +39,11 @@ class typesView extends View {
     }
 
     public function echoRender(&$data) {
+        (New Head)->render(Head::HEADERSLIM, "Name types");
         $typesMV = new name_typesMicroView();
         //     print_r($data);
         ?>     
-        <h1>Name types</h1>
-
-        <div class="row">
+                <div class="row">
             <div class="column">
                 <h2><?= $data->data[0]['title'] ?></h2>
                 <?php

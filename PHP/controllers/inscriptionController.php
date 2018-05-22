@@ -33,8 +33,7 @@ class inscriptionController {
         $record = new inscription; //'Inscription::find(Request::get('id'));
         $record->find(Request::get('id'));
 
-        $view = new inscriptionView();
-        $view->echoRender($record);
+        (new inscriptionView)->echoRender($record);
     }
 
 }

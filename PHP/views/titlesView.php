@@ -39,39 +39,38 @@ class titlesView extends View {
     }
 
     public function echoRender(&$data) {
+        (New Head)->render(Head::HEADERSLIM, "Titles");
         ?>     
-        <h1>Titles</h1>
-
         <form action="<?= Request::makeURL('titles') ?>" method="get">
             <div class="row">
                 <div class="column">
                     <label for="title">Title</label>
-                    <input id="title" name="title" placeholder="MdC (jmj-rA pr) or Unicode (jmj-rꜣ pr)" type="text" <?= $this->oldValue('title') ?>>
+                    <input id="title" name="title" placeholder="MdC (jmj-rA pr) or Unicode (jmj-rꜣ pr)" type="text" <?= View::oldValue('title') ?>>
                 </div>
                 <div class="column">
                     <label for="translation">Translation</label>
-                    <input id="translation" name="translation" placeholder="English or German translation" type="text" <?= $this->oldValue('personal_name') ?>>
+                    <input id="translation" name="translation" placeholder="English or German translation" type="text" <?= View::oldValue('personal_name') ?>>
                 </div>
             </div>
 
             <p>
                 <span id="match-label">Return titles</span>
-                <input type="radio" id="inexact" name="match" value="inexact" aria-labelledby="match-label"<?= $this->oldValueRadio('match', 'inexact', TRUE) ?>>
+                <input type="radio" id="inexact" name="match" value="inexact" aria-labelledby="match-label"<?= View::oldValueRadio('match', 'inexact', TRUE) ?>>
                 <label for="inexact" title="Match any title containing the search term">
                     containing
                 </label>
                 /
-                <input type="radio" id="exact" name="match" value="exact" aria-labelledby="match-label"<?= $this->oldValueRadio('match', 'exact') ?>>
+                <input type="radio" id="exact" name="match" value="exact" aria-labelledby="match-label"<?= View::oldValueRadio('match', 'exact') ?>>
                 <label for="exact" title="Match any title equal to the search term ">
                     equalling
                 </label>
                 /
-                <input type="radio" id="startswith" name="match" value="startswith" aria-labelledby="match-label"<?= $this->oldValueRadio('match', 'startswith') ?>>
+                <input type="radio" id="startswith" name="match" value="startswith" aria-labelledby="match-label"<?= View::oldValueRadio('match', 'startswith') ?>>
                 <label for="startswith" title="Match any title beginning with the search term ">
                     starting with
                 </label>
                 /
-                <input type="radio" id="endswith" name="match" value="endswith" aria-labelledby="match-label"<?= $this->oldValueRadio('match', 'endswith') ?>>
+                <input type="radio" id="endswith" name="match" value="endswith" aria-labelledby="match-label"<?= View::oldValueRadio('match', 'endswith') ?>>
                 <label for="endswith" title="Match any title ending with the search term ">
                     ending with
                 </label>
@@ -112,18 +111,18 @@ class titlesView extends View {
                         <span id="region-label">Region</span>
                     </div>
                     <div class="filter_content">
-                        <input id="region-attested" name="match-region" type="radio" value="attested" aria-labelledby="region-label"<?= $this->oldValueRadio('match-region', 'attested', TRUE) ?>>
+                        <input id="region-attested" name="match-region" type="radio" value="attested" aria-labelledby="region-label"<?= View::oldValueRadio('match-region', 'attested', TRUE) ?>>
                         <label for="region-attested" title="Match any title attested in the given region">
                             Attested in
                         </label>
                         /
-                        <input id="region-characteristic" name="match-region" type="radio" value="characteristic" aria-labelledby="region-label"<?= $this->oldValueRadio('match-region', 'characteristic') ?>>
+                        <input id="region-characteristic" name="match-region" type="radio" value="characteristic" aria-labelledby="region-label"<?= View::oldValueRadio('match-region', 'characteristic') ?>>
                         <label for="region-characteristic" title="Match any title characteristic of the given region">
                             characteristic of
                         </label>
                         the region
                         <label for="place" class="sr-only">Region</label>
-                        <input id="place" list="places" name="place" placeholder="region or locality" title="Enter the region" type="text"<?= $this->oldValue('place') ?>>
+                        <input id="place" list="places" name="place" placeholder="region or locality" title="Enter the region" type="text"<?= View::oldValue('place') ?>>
                     </div>
                 </div>
 
@@ -135,18 +134,18 @@ class titlesView extends View {
                         <span id="period-label">Period</span>
                     </div>
                     <div class="filter_content">
-                        <input id="period-attested" name="match-date" type="radio" value="attested" aria-labelledby="period-label"<?= $this->oldValueRadio('match-date', 'attested', TRUE) ?>>
+                        <input id="period-attested" name="match-date" type="radio" value="attested" aria-labelledby="period-label"<?= View::oldValueRadio('match-date', 'attested', TRUE) ?>>
                         <label for="period-attested" title="Match any title attested in the given period">
                             Attested in
                         </label>
                         /
-                        <input id="period-characteristic" name="match-date" type="radio" value="characteristic" aria-labelledby="period-label"<?= $this->oldValueRadio('match-date', 'characteristic') ?>>
+                        <input id="period-characteristic" name="match-date" type="radio" value="characteristic" aria-labelledby="period-label"<?= View::oldValueRadio('match-date', 'characteristic') ?>>
                         <label for="period-characteristic" title="Match any title characteristic of the given period ">
                             characteristic of
                         </label>
                         the period
                         <label for="period" class="sr-only">Period</label>
-                        <input id="period" list="periods" name="period" placeholder="period or reign" title="Enter the period" type="text"<?= $this->oldValue('period') ?>>
+                        <input id="period" list="periods" name="period" placeholder="period or reign" title="Enter the period" type="text"<?= View::oldValue('period') ?>>
                     </div>
                 </div>
 
@@ -159,22 +158,22 @@ class titlesView extends View {
                     </div>
                     <div class="filter_content">
                         <?php // TODO: The first option can probably be removed  ?>
-                        <input type="radio" id="any" name="gender" value="any" aria-labelledby="gender-label"<?= $this->oldValueRadio('gender', 'any', TRUE) ?>>
+                        <input type="radio" id="any" name="gender" value="any" aria-labelledby="gender-label"<?= View::oldValueRadio('gender', 'any', TRUE) ?>>
                         <label for="any" title="Match titles regardless of gender">
                             Regardless of gender
                         </label>
                         /
-                        <input type="radio" id="female" name="gender" value="f" aria-labelledby="gender-label"<?= $this->oldValueRadio('gender', 'f') ?>>
+                        <input type="radio" id="female" name="gender" value="f" aria-labelledby="gender-label"<?= View::oldValueRadio('gender', 'f') ?>>
                         <label for="female" title="Match titles borne only by women">
                             female titles
                         </label>
                         /
-                        <input type="radio" id="male" name="gender" value="m" aria-labelledby="gender-label"<?= $this->oldValueRadio('gender', 'm') ?>>
+                        <input type="radio" id="male" name="gender" value="m" aria-labelledby="gender-label"<?= View::oldValueRadio('gender', 'm') ?>>
                         <label for="male" title="Match titles borne only by men ">
                             male titles
                         </label>
                         /
-                        <input type="radio" id="both" name="gender" value="both" aria-labelledby="gender-label"<?= $this->oldValueRadio('gender', 'both') ?>>
+                        <input type="radio" id="both" name="gender" value="both" aria-labelledby="gender-label"<?= View::oldValueRadio('gender', 'both') ?>>
                         <label for="both" title="Match titles borne by both men and women">
                             unisex titles
                         </label>
@@ -190,7 +189,7 @@ class titlesView extends View {
                     </div>
                     <div class="filter_content">
                         <label for="ward" class="sr-only">Ward/Fischer number</label>
-                        <input id="ward" name="ward" placeholder="Example: 1346" title="Enter the entry number in Ward, Index of Egyptian Administrative and Religious Titles of the Middle Kingdom, or Fischer, Egyptian Titles of the Middle Kingdom. A Supplement to Wm. Ward's Index" type="text"<?= $this->oldValue('ward') ?>>
+                        <input id="ward" name="ward" placeholder="Example: 1346" title="Enter the entry number in Ward, Index of Egyptian Administrative and Religious Titles of the Middle Kingdom, or Fischer, Egyptian Titles of the Middle Kingdom. A Supplement to Wm. Ward's Index" type="text"<?= View::oldValue('ward') ?>>
                     </div>
                 </div>
 
@@ -203,7 +202,7 @@ class titlesView extends View {
                     </div>
                     <div class="filter_content">
                         <label for="hannig" class="sr-only">Hannig number</label>
-                        <input id="hannig" name="hannig" placeholder="Example: 2044" title="Enter the entry number Hannig, Ägyptisches Wörterbuch II: Mittleres Reich und Zweite Zwischenzeit" type="text"<?= $this->oldValue('hannig') ?>>
+                        <input id="hannig" name="hannig" placeholder="Example: 2044" title="Enter the entry number Hannig, Ägyptisches Wörterbuch II: Mittleres Reich und Zweite Zwischenzeit" type="text"<?= View::oldValue('hannig') ?>>
                     </div>
                 </div>
             </div>
@@ -255,7 +254,7 @@ class titlesView extends View {
       <?php
       //$res = null;
       foreach ($data->data as $row) {
-      echo("<a href='" . BASE . "collection/" . $row[$data->getFieldName(0)] . "'>" . $row[$data->getFieldName(1)] . ' ' .  $row['inscriptions_count'] . '<br>');
+      echo("<a href='" . Config::BASE . "collection/" . $row[$data->getFieldName(0)] . "'>" . $row[$data->getFieldName(1)] . ' ' .  $row['inscriptions_count'] . '<br>');
       }
       //return $res;
       }

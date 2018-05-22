@@ -30,10 +30,7 @@ error_reporting(E_ALL);
 error_reporting(E_ALL | E_STRICT);
 ini_set('display_errors', 1);
 
-define('BASE', '/test/');
-
-
-
+// define('Config::BASE', '/test3/');
 //mb_internal_encoding('UTF-8');
 //mb_http_output('UTF-8');
 require_once('Config.php');
@@ -48,6 +45,7 @@ require_once('Config.php');
   'db' => 'db'
   ];
   const VERSIONS = [[1, "15.04.2018"], [2, "16.04.2018"]];
+  const Config::BASE = '/subpath/';
 
   static function maxVer() {
   return self::VERSIONS[count(self::VERSIONS) - 1][0];
@@ -62,12 +60,14 @@ require_once('Config.php');
 require_once('CriticalError.php');
 require_once('Db.php');
 require_once('Request.php');
+require_once ('views/Head.php');
 require_once('functions.php');
 
 require_once('controllers/Translit.php');
 
 require_once('models/Filter.php');
 require_once('models/Rule.php');
+require_once('models/RuleExists.php');
 require_once('models/FieldList.php');
 require_once('ID.php');
 
@@ -83,7 +83,12 @@ require_once('models/ObjectInv_nos.php');
 require_once('models/ObjectAttestations.php');
 require_once('models/ObjectBonds.php');
 require_once('models/title_relations.php');
-
+require_once('models/PersonBonds.php');
+require_once('models/PersonAttestations.php');
+require_once('models/inv_nos.php');
+require_once('models/inscriptions.php');
+require_once('models/WorkshopInscriptions.php');
+require_once('models/InscriptionWorkshops.php');
 require_once('models/ObjectSpellings.php');
 require_once('models/ObjectTitles.php');
 require_once('models/ObjectAltReadings.php');
@@ -104,11 +109,7 @@ require_once('models/peopleParent.php');
 require_once('models/peopleSameInscr.php');
 require_once('models/peopleSibling.php');
 require_once('models/peopleSpouse.php');
-
-
-
-
-
+require_once('models/biblio_refs.php');
 require_once('models/find_groups.php');
 
 require_once('models/workshops.php');
@@ -132,27 +133,18 @@ require_once('views/inv_nosMicroView.php');
 require_once('views/placesMicroView.php');
 require_once('views/name_typesMicroView.php');
 require_once('views/personsMicroView.php');
+require_once('views/workshopsMicroView.php');
+require_once('views/find_groupsMicroView.php');
 
 
 require_once('views/Table.php');
-
+require_once('views/RadioGroup.php');
+require_once('views/TextInput.php');
+require_once('views/Select.php');
 require_once('views/Datalist.php');
+require_once('views/FormFilter.php');
 require_once('views/View.php');
-/*
-  require_once('views/collectionsView.php');
 
-  require_once('views/criterionView.php');
-  require_once('views/placeView.php');
-  require_once('views/inscriptionView.php');
-  require_once('views/bibliographyView.php');
-  require_once('views/inscriptionsView.php');
-  require_once('views/collectionView.php');
- */
-
-require_once ('views/html-head.php');
-require 'views/header.php';
-
-// require the file that matches the controller name
 $ClassName = "PNM\\" . Request::get('controller') . "Controller";
 $controllerClassPath = 'controllers/' . Request::get('controller') . 'Controller.php';
 require_once($controllerClassPath);

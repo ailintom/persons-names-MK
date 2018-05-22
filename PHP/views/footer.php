@@ -1,4 +1,6 @@
-    </div><?php // .main_content ?>
+<?php
+namespace PNM;
+?></div><?php // .main_content ?>
 </main>
 
 <footer class="footer">
@@ -11,17 +13,17 @@
                     Code <a href="TODO">available on GitHub</a> under MIT license.
                 </p>
                 <p>
-                    <a class="footer_link" href="<?=BASE?>impressum.php">Impressum</a>
+                    <a class="footer_link" href="<?=Config::BASE?>impressum.php">Impressum</a>
                     <a class="footer_link" href="TODO">Privacy policy</a>
                 </p>
             </div>
             <div class="column">
                 <p class="footer_logos">
                     <a href="https://uni-mainz.de/">
-                        <img src="<?=BASE?>assets/logos/johannes-gutenberg-universitaet-logo.svg" alt="Johannes Gutenberg University Mainz" width="145" height="75">
+                        <img src="<?=Config::BASE?>assets/logos/johannes-gutenberg-universitaet-logo.svg" alt="Johannes Gutenberg University Mainz" width="145" height="75">
                     </a>
                     <a href="http://www.fritz-thyssen-stiftung.de">
-                        <img src="<?=BASE?>assets/logos/fritz-thyssen-stiftung-logo.svg" alt="Fritz Thyssen Foundation" width="150" height="73">
+                        <img src="<?=Config::BASE?>assets/logos/fritz-thyssen-stiftung-logo.svg" alt="Fritz Thyssen Foundation" width="150" height="73">
                     </a>
                 </p>
             </div>
@@ -39,6 +41,6 @@
     </svg>
 <?php endif; ?>
 
-<script src="<?=BASE?>assets/script/script.js"></script>
+<script src="<?=Config::BASE?>assets/script/script.js"></script>
 
 </body>

@@ -27,7 +27,13 @@
 namespace PNM;
 
 class attestationsMicroView extends MicroView {
-  
+
+    protected $inscriptionID = NULL;
+    protected $controller = 'inscription';
+
+    public function setInscription($inscriptionID) {
+        $this->inscriptionID = intval($inscriptionID);
+    }
 
     protected function echoTemplate() {
         //<span class="tit">nb.t pr</span> <span class="pn">sꜣ.t-jp</span>
@@ -37,8 +43,13 @@ class attestationsMicroView extends MicroView {
 <a href="$this->url">$tit$pn</a>
 EOT;
     }
-    protected function makeUrl($inputid){
-        return "#" . $inputid;
+
+    protected function makeUrl($inputid) {
+        if (empty($this->inscriptionID)) {
+            return "#" . $inputid;
+        } else {
+            return Request::makeURL($this->controller, $this->inscriptionID) . "#" . $inputid;
+        }
     }
 
 }

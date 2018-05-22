@@ -39,7 +39,7 @@ class nameView extends View {
       'inscriptions_count']);
      */
 
-    public function EchoRender(&$data) {
+    public function echoRender(&$data) {
         $placesMV = new placesMicroView;
         $subtitle = NULL;
         if (!empty($data->get('translation_en'))) {
@@ -48,9 +48,8 @@ class nameView extends View {
         if (!empty($data->get('translation_de'))) {
             $subtitle .= '<span class="translation" lang="de">“' . $data->get('translation_de') . '”</span>';
         }
-        ?>
-        <h1><?php echo( $data->get('personal_name')) ?></h1>
-        <div class="toc">
+        (New Head)->render(Head::HEADERSLIM, $data->get('personal_name'));
+        ?><div class="toc">
             <h2>Spellings</h2>
             <ul class="toc_list">
                 <?php

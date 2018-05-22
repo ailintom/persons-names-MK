@@ -28,7 +28,7 @@ namespace PNM;
 
 class publicationsMicroView extends MicroView {
 
-    protected $controller = "bibliography";
+    protected $controller = "publication";
 
     protected function echoTemplate() {
 
@@ -36,10 +36,12 @@ class publicationsMicroView extends MicroView {
 <a href="$this->url">$this->value</a>
 EOF;
     }
-
+/*
     protected function makeURL($inputid) {
         return Request::makeURL($this->controller) . '#' . $inputid;
     }
+ * 
+ */
 
 }
  

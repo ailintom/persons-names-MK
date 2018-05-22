@@ -45,7 +45,7 @@ class title_relations extends ListModel {
                 . 'WHEN "refers to" THEN 1 ELSE 0 END as pred_sort'
                 . ' FROM title_relations INNER JOIN titles ON title_relations.subject_id = titles.titles_id'
                 . ' WHERE object_id=? ';
-        $sqlres = "SELECT * FROM (($sql1) UNION ($sql2)) as unibonds ORDER BY pred_sort, predicate, title_sort";
+        $sqlres = "SELECT SQL_CALC_FOUND_ROWS * FROM (($sql1) UNION ($sql2)) as unibonds ORDER BY pred_sort, predicate, title_sort";
          //echo ($sqlres);
         return $sqlres;
     }

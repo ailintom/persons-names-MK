@@ -40,9 +40,7 @@ class typeController {
         $filter = new Filter($rules);
         $record->data['subtypes'] = New types('name_types_id ASC', 0, 0, $filter);
         
-        
-        $view = new typeView();
-        $view->echoRender($record);
+        (new typeView)->echoRender($record);        
     }
  
 

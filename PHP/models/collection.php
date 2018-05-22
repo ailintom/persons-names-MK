@@ -28,26 +28,21 @@ namespace PNM;
 
 class collection extends EntryModel {
 
-   protected $tablename = 'collections';
+    protected $tablename = 'collections';
     protected $hasBiblio = FALSE;
     protected $idField = 'collections_id';
 
     protected function initFieldNames() {
 
         $this->field_names = new FieldList(['collections_id', 'title', 'full_name_en', 'full_name_national_language', 'location', 'url', 'online_collection', 'tm_coll_id',
-            'SELECT COUNT(DISTINCT inscriptions_id) FROM inv_nos WHERE inv_nos.collections_id = collections.collections_id and status<>"erroneous"'],
-                ['collections_id', 'title', 'full_name_en', 'full_name_national_language',  'location', 'url', 'online_collection', 'tm_coll_id',
+            'SELECT COUNT(DISTINCT inscriptions_id) FROM inv_nos WHERE inv_nos.collections_id = collections.collections_id and status<>"erroneous"'], ['collections_id', 'title', 'full_name_en', 'full_name_national_language', 'location', 'url', 'online_collection', 'tm_coll_id',
             'inscriptions_count']);
     }
 
-    protected function parse() {
-   //     if (empty(  $this->data['criterion'])) {$this->data['criterion'] = '&nbsp';}
-        //This should be implemented in child classes to parse data after retrieving from the database
-        //$this->parseNote(['provenance_note', 'installation_place_note', 'origin_note', 'production_place_note', 'dating_note', 'note']);
-
-        
+      protected function loadChildren() {
+        $filter = new Filter([New Rule('collections_id', 'exact', $this->getID(), 'i')]);
+        $objIns = New inv_nos(NULL, 0, 0, $filter);
+        $this->data['inv_nos'] = $objIns;
     }
-
-
 
 }

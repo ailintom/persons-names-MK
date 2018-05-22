@@ -57,9 +57,9 @@ class Table {
         if ((empty(Request::get($this->sort_param)) && $field == $this->default_field) || (Request::get($this->sort_param) == $field . ' ASC')) {
 
 
-            return [' class = "-highlight"', $field . ' DESC', 'descending', icon('arrow-up')];
+            return [' -highlight', $field . ' DESC', 'descending', icon('arrow-up')];
         } elseif (Request::get($this->sort_param) == $field . ' DESC') {
-            return [' class = "-highlight"', $field . ' ASC', 'ascending', ' ' . icon('arrow-down')];
+            return [' -highlight', $field . ' ASC', 'ascending', ' ' . icon('arrow-down')];
         } else {
             return [NULL, $field . ' ASC', 'ascending', NULL];
         }
@@ -99,20 +99,20 @@ class Table {
         }
         ?>  
         <div class="table-container">
-            <table><?=$this->extraHeader?>
-                <tr>
+            <div role="grid" style="display: table"><?=$this->extraHeader?>
+                <div role="row" style="display: table-row">
                     <?php
                     echo ( "\r");
                     for ($i = 0; $i < count($columns); ++$i) {
                         $url = Request::makeURL(Request::get('controller'), Request::get('id'), $sort_renders[$i][1], $this->sort_param, TRUE, 0);
                         $hashpos = $this->id_field . "_" . $i;
-                        echo ('<th' . $sort_renders[$i][0] . '>'
+                        echo ('<div class="th'.$sort_renders[$i][0].'" role="gridcell" style="display: table-cell">'
                         . '<a href="' . $url . '" title="Sort by ' . lcfirst($column_titles[$i]) . ', ' . $sort_renders[$i][2] . '" id="' . $hashpos . '"'
                         . ' onclick="window.location.replace(this.href + (' . "'#$hashpos'||" . 'window.location.hash));return false;">'
-                        . $column_titles[$i] . $sort_renders[$i][3] . '</a></th>' . "\r");
+                        . $column_titles[$i] . $sort_renders[$i][3] . '</a></div>' . "\r");
                     }
                     ?>
-                </tr>
+                </div>
                 <?php
                 foreach ($this->data->data as $row) {
                     echo ( "\r");
@@ -128,7 +128,8 @@ class Table {
                     /* <tr onclick="MK.open(event, '<?= $url ?>')" onkeydown="MK.open(event, '<?= $url ?>')" role="link" tabindex="0">
                      */
                     ?>
-                    <tr onclick="MK.open(event, '<?= $url ?>')" tabindex="0"><?php
+                <a role="row" style="display: table-row" href="<?= $url ?>">
+                    <?php
                         for ($i = 0; $i < count($columns); ++$i) {
                             if ($columns[$i] == 'gender' || $columns[$i] == 'gender_b') {
                                 $cellval = View::renderGender(empty($row[$columns[$i]]) ? NULL : $row[$columns[$i]]) ?: '&nbsp;';
@@ -136,14 +137,14 @@ class Table {
                                 $cellval = empty($row[$columns[$i]]) ? '&nbsp;' : $row[$columns[$i]];
                             }
                             //role="presentation"
-                            echo('<td' . $sort_renders[$i][0] . '><a href="' . $url . '" style="border-bottom-width:0px;display: block;text-decoration: none;">' . $cellval . '</a></td>' . "\r" );
+                            echo('<div class="tr'.$sort_renders[$i][0].'" role="gridcell" style="display: table-cell"' . $sort_renders[$i][0] . '>'. $cellval . '</div>' . "\r" );
                         }
                         echo ( "\r");
                         ?>
-                    </tr><?php
+                    </a><?php
                 }
                 ?>
-            </table>
+            </div>
         </div>   <?php
         echo ($pag);
     }

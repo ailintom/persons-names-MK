@@ -39,8 +39,8 @@ class placesView extends View {
     }
 
     public function echoRender(&$data) {
+        (New Head)->render(Head::HEADERSLIM, 'Places');
         ?>     
-        <h1>Places</h1>
         <p class="info-box">
             <?= icon('info') ?>
             You can use <b>%</b> or <b>*</b> as wildcards.
@@ -50,21 +50,21 @@ class placesView extends View {
             <div class="row">
                 <div class="column">
                     <label for="place">Place name</label>
-                    <input id="place" name="place" list="places" title="Enter the region" placeholder="Region or locality" type="text" <?= $this->oldValue('place') ?>>
+                    <input id="place" name="place" list="places" title="Enter the region" placeholder="Region or locality" type="text" <?= View::oldValue('place') ?>>
                 </div>
                 <div class="column">
                     <label for="macroregion">Macroregion</label>
                     <select id="macroregion" name="macroregion">
-                        <option value=""<?= $this->oldValueSelect('macroregion', '', 'true') ?>>&nbsp;</option>
-                        <option value="Eastern Desert" <?= $this->oldValueSelect('macroregion', 'Eastern Desert') ?>>Eastern Desert</option>
-                        <option value="Levant" <?= $this->oldValueSelect('macroregion', 'Levant') ?>>Levant</option>
-                        <option value="LE" <?= $this->oldValueSelect('macroregion', 'LE') ?>>Lower Egypt</option>
-                        <option value="MFR" <?= $this->oldValueSelect('macroregion', 'MFR') ?>>Memphis-Faiyum Region</option>
-                        <option value="Nile Valley" <?= $this->oldValueSelect('macroregion', 'Nile Valley') ?>>Nile Valley</option>
-                        <option value="NUE" <?= $this->oldValueSelect('macroregion', 'NUE') ?>>Northern Upper Egypt</option>
-                        <option value="Nubia" <?= $this->oldValueSelect('macroregion', 'Nubia') ?>>Nubian Nile Valley</option>
-                        <option value="SUE" <?= $this->oldValueSelect('macroregion', 'SUE') ?>>Southern Upper Egypt</option>
-                        <option value="Western Desert" <?= $this->oldValueSelect('macroregion', 'Western Desert') ?>>Western Desert</option>
+                        <option value=""<?= View::oldValueSelect('macroregion', '', 'true') ?>>&nbsp;</option>
+                        <option value="Eastern Desert" <?= View::oldValueSelect('macroregion', 'Eastern Desert') ?>>Eastern Desert</option>
+                        <option value="Levant" <?= View::oldValueSelect('macroregion', 'Levant') ?>>Levant</option>
+                        <option value="LE" <?= View::oldValueSelect('macroregion', 'LE') ?>>Lower Egypt</option>
+                        <option value="MFR" <?= View::oldValueSelect('macroregion', 'MFR') ?>>Memphis-Faiyum Region</option>
+                        <option value="Nile Valley" <?= View::oldValueSelect('macroregion', 'Nile Valley') ?>>Nile Valley</option>
+                        <option value="NUE" <?= View::oldValueSelect('macroregion', 'NUE') ?>>Northern Upper Egypt</option>
+                        <option value="Nubia" <?= View::oldValueSelect('macroregion', 'Nubia') ?>>Nubian Nile Valley</option>
+                        <option value="SUE" <?= View::oldValueSelect('macroregion', 'SUE') ?>>Southern Upper Egypt</option>
+                        <option value="Western Desert" <?= View::oldValueSelect('macroregion', 'Western Desert') ?>>Western Desert</option>
                     </select>
                 </div>
             </div>
@@ -103,7 +103,7 @@ class placesView extends View {
                     </div>
                     <div class="filter_content">
                         <label for="northof" class="sr-only">Places north of</label>
-                        <input id="northof" list="places" name="northof" placeholder="Region or locality" type="text" <?= $this->oldValue('northof') ?>>
+                        <input id="northof" list="places" name="northof" placeholder="Region or locality" type="text" <?= View::oldValue('northof') ?>>
                     </div>
                 </div>
 
@@ -116,7 +116,7 @@ class placesView extends View {
                     </div>
                     <div class="filter_content">
                         <label for="southof" class="sr-only">Places south of</label>
-                        <input id="southof" list="places" name="southof" placeholder="Region or locality" type="text" <?= $this->oldValue('southof') ?>>
+                        <input id="southof" list="places" name="southof" placeholder="Region or locality" type="text" <?= View::oldValue('southof') ?>>
                     </div>
                 </div>
 
@@ -129,7 +129,7 @@ class placesView extends View {
                     </div>
                     <div class="filter_content">
                         <label for="near" class="sr-only">Places near</label>
-                        <input id="near" list="places" name="near" placeholder="Region or locality" type="text" <?= $this->oldValue('near') ?>>
+                        <input id="near" list="places" name="near" placeholder="Region or locality" type="text" <?= View::oldValue('near') ?>>
                     </div>
                 </div>
 
@@ -142,7 +142,7 @@ class placesView extends View {
                     </div>
                     <div class="filter_content">
                         <label for="tm_geoid" class="sr-only">Trismegistos GEO ID</label>
-                        <input id="tm_geoid" name="tm_geoid" placeholder="Example: 188" type="text" <?= $this->oldValue('tm_geoid') ?>>
+                        <input id="tm_geoid" name="tm_geoid" placeholder="Example: 188" type="text" <?= View::oldValue('tm_geoid') ?>>
                     </div>
                 </div>
 
@@ -155,7 +155,7 @@ class placesView extends View {
                     </div>
                     <div class="filter_content">
                         <label for="topbib_id" class="sr-only">Topographical bibliography place id</label>
-                        <input id="topbib_id" name="topbib_id" placeholder="Example: 501-180" type="text" <?= $this->oldValue('topbib_id') ?>>
+                        <input id="topbib_id" name="topbib_id" placeholder="Example: 501-180" type="text" <?= View::oldValue('topbib_id') ?>>
                     </div>
                 </div>
             </div>  

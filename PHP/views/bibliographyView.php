@@ -33,18 +33,11 @@ namespace PNM;
  */
 class bibliographyView extends View {
 
-    //put your code here
-
-    public function __construct() {
-        
-    }
-
-    public function Render($data) {
-        $res = null;
+    public function echoRender(&$data) {
+        (New Head)->render(Head::HEADERSLIM, 'Bibliography');
         foreach ($data->data as $row) {
-            $res .= '<a href="' . Request::makeURL('publication', $row[$data->getFieldName(1)]) . '">' . $row[$data->getFieldName(0)] . "</a><br>";
+            echo '<a href="' . Request::makeURL('publication', $row[$data->getFieldName(1)]) . '">' . $row[$data->getFieldName(0)] . "</a><br>";
         }
-        return $res;
     }
 
 }

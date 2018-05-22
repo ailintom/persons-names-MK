@@ -30,15 +30,14 @@ class typesController {
 
     public function load() {
 
-        $rules = [New Rule('name_types_id', 'exact', [251658605,251658604], 'i')];
+        $rules = [New Rule('name_types_id', 'exact', [251658605, 251658604], 'i')];
 
         $filter = new Filter($rules);
 
         $model = New types('name_types_id ASC', 0, 0, $filter);
 
 
-        $view = new typesView ();
-        $view->echoRender($model);
+        (new typesView)->echoRender($model);
     }
 
 }

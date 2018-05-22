@@ -70,6 +70,8 @@ class inscription extends EntryModel {
 
     protected function loadChildren() {
         $filterAtt = new Filter([New Rule('inscriptions_id', 'exact', $this->getID(), 'i')]);
+        $objWk = New InscriptionWorkshops(NULL, 0, 0, $filterAtt);
+        $this->data['workshops'] = $objWk;
         $objAtt = New ObjectAttestations(NULL, 0, 0, $filterAtt);
 
         $total = count($objAtt->data);
@@ -81,14 +83,13 @@ class inscription extends EntryModel {
             $objAtt->data[$i]['spellings'] = $objSpellings;
 
             $objTitles = New ObjectTitles(NULL, 0, 0, $filter);
-           // print_r($objTitles->data);
+            // print_r($objTitles->data);
             $objAtt->data[$i]['titles'] = $objTitles;
-            
-            
-            $filterBonds = new Filter([New Rule('attestations_id', 'exact', $objAtt->data[$i]['attestations_id'], 'i'), New Rule('attestations_id', 'exact', $objAtt->data[$i]['attestations_id'], 'i')]);
+
+
+            $filterBonds = new Filter([New Rule('attestations_id', 'exact', $objAtt->data[$i]['attestations_id'], 'i')]);
             $objBonds = New ObjectBonds(NULL, 0, 0, $filterBonds);
             $objAtt->data[$i]['bonds'] = $objBonds;
-
         }
         $this->data['attestations'] = $objAtt;
         // print_r($objAtt);

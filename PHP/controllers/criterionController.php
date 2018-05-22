@@ -38,8 +38,7 @@ class criterionController {
         $record = new criterion; //'Inscription::find(Request::get('id'));
         $record->find(Request::get('id'));
 
-        $view = new criterionView();
-        $view->echoRender($record);
+        (new criterionView)->echoRender($record);
     }
 
 }

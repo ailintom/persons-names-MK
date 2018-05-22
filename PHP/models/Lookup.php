@@ -33,11 +33,35 @@ namespace PNM;
  */
 class Lookup {
 
+    CONST TEXT_CONTENT_THESAURUS = 4;
+    CONST SCRIPT_THESAURUS = 12;
+    CONST OBJECT_TYPES_THESAURUS = 1;
+    CONST RETURN_VAL = 0;
+    CONST RETURN_ASSOC = 1;
+    CONST RETURN_INDEXED = 2;
+
     static function get($SQL, $value, $param = 's') {
+        return self::uniGet($SQL, $value, $param, self::RETURN_VAL);
+    }
+
+    static function getList($SQL, $value, $param = 's') {
+        return self::uniGet($SQL, $value, $param, self::RETURN_ASSOC);
+    }
+
+    static function getColumn($SQL, $value, $param = 's') {
+
+        return array_column(self::uniGet($SQL, $value, $param, self::RETURN_INDEXED), 0);
+    }
+
+    static function uniGet($SQL, $value, $param, $list) {
         $db = Db::getInstance();
 
         try {
-            $stmt = $db->prepare($SQL . ' LIMIT 1');
+            if ($list) {
+                $stmt = $db->prepare($SQL);
+            } else {
+                $stmt = $db->prepare($SQL . ' LIMIT 1');
+            }
             $stmt->bind_param($param, $value);
             $stmt->execute();
         } catch (mysqli_sql_exception $e) {
@@ -45,10 +69,20 @@ class Lookup {
         }
         $result = $stmt->get_result();
         if ($result->num_rows !== 0) {
-            return $result->fetch_row()[0];
+            if ($list == self::RETURN_ASSOC) {
+                return $result->fetch_all(MYSQLI_ASSOC);
+            } elseif ($list == self::RETURN_INDEXED) {
+                return $result->fetch_all(MYSQLI_NUM);
+            } else {
+                return $result->fetch_row()[0];
+            }
         } else {
-           // echo "$SQL**$value**param*$param"; //Comment this line
+            // echo "$SQL**$value**param*$param"; //Comment this line
         }
+    }
+
+    static function getThesaurus($thesaurusID) {
+        return self::getColumn('SELECT item_name FROM thesauri WHERE thesaurus = ? ORDER BY item_name', $thesaurusID, 'i');
     }
 
     static function dateStart($dating) {
@@ -64,8 +98,23 @@ class Lookup {
         return self::get('SELECT latitude FROM places WHERE place_name = ?', $place_name);
     }
 
+    static function findGroupTitle($id) {
+        return self::get('SELECT title FROM find_groups WHERE find_groups_id = ?', $id, 'i');
+    }
+
     static function name_types_idGet($name_type) {
         return self::get('SELECT name_types_id FROM name_types WHERE title = ?', $name_type);
+    }
+
+    static function collectionsGet($collection) {
+        $res = self::get('SELECT collections_id FROM collections WHERE title = ?', $collection);
+        if (empty($res)) {
+            $res = self::get('SELECT collections_id FROM collections WHERE full_name_en = ?', $collection);
+        }
+        if (empty($res)) {
+            $res = self::get('SELECT collections_id FROM collections WHERE full_name_national_language = ?', $collection);
+        }
+        return $res;
     }
 
 }

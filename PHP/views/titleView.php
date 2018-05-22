@@ -39,7 +39,7 @@ class titleView extends View {
       'inscriptions_count']);
      */
 
-    public function EchoRender(&$data) {
+    public function echoRender(&$data) {
         $subtitle = NULL;
         if (!empty($data->get('translation_en'))) {
             $subtitle = '<span class="translation" lang="en">“' . $data->get('translation_en') . '”</span>' . (empty($data->get('translation_de')) ? NULL : ', ');
@@ -47,8 +47,8 @@ class titleView extends View {
         if (!empty($data->get('translation_de'))) {
             $subtitle .= '<span class="translation" lang="de">“' . $data->get('translation_de') . '”</span>';
         }
+        (New Head)->render(Head::HEADERSLIM, $data->get('title'));
         ?>
-        <h1><?php echo( $data->get('title')) ?></h1>
         <p>
             <?= $subtitle ?>
         </p>
@@ -90,54 +90,54 @@ class titleView extends View {
 
             <p>
                 <span id="region-label">Geographic filter:</span>
-                <input id="provenance" name="geo-filter" type="radio" value="provenance" aria-labelledby="region-label"<?= $this->oldValueRadio('geo-filter', 'provenance') ?>>
+                <input id="provenance" name="geo-filter" type="radio" value="provenance" aria-labelledby="region-label"<?= View::oldValueRadio('geo-filter', 'provenance') ?>>
                 <label for="provenance" title="Attestations in sources found in the certain region">
                     Provenance
                 </label>
                 /
-                <input id="installation-place" name="geo-filter" type="radio" value="installation_place" aria-labelledby="region-label"<?= $this->oldValueRadio('geo-filter', 'installation_place') ?>>
+                <input id="installation-place" name="geo-filter" type="radio" value="installation_place" aria-labelledby="region-label"<?= View::oldValueRadio('geo-filter', 'installation_place') ?>>
                 <label for="installation-place" title="Attestations on monuments installed in certain region">
                     installation place
                 </label>
                 /
-                <input id="origin" name="geo-filter" type="radio" value="origin" aria-labelledby="region-label"<?= $this->oldValueRadio('geo-filter', 'origin') ?>>
+                <input id="origin" name="geo-filter" type="radio" value="origin" aria-labelledby="region-label"<?= View::oldValueRadio('geo-filter', 'origin') ?>>
                 <label for="origin" title="Attestations on monuments owned by people from a certain region">
                     origin
                 </label>
                 /
-                <input id="production" name="geo-filter" type="radio" value="production_place" aria-labelledby="region-label"<?= $this->oldValueRadio('geo-filter', 'production_place') ?>>
+                <input id="production" name="geo-filter" type="radio" value="production_place" aria-labelledby="region-label"<?= View::oldValueRadio('geo-filter', 'production_place') ?>>
                 <label for="production" title="Attestations on monuments produced in a certain refino">
                     production
                 </label>
                 /
-                <input id="any" name="geo-filter" type="radio" value="any" aria-labelledby="region-label"<?= $this->oldValueRadio('geo-filter', 'any', TRUE) ?>>
+                <input id="any" name="geo-filter" type="radio" value="any" aria-labelledby="region-label"<?= View::oldValueRadio('geo-filter', 'any', TRUE) ?>>
                 <label for="any" title="Attestations in sources anyhow related to a certain region">
                     any
                 </label>
                 in the region
                 <label for="place" class="sr-only">Region</label>
-                <input id="place" list="places" name="place" placeholder="region or locality" title="Enter the region" type="text" <?= $this->oldValue('place') ?>>
+                <input id="place" list="places" name="place" placeholder="region or locality" title="Enter the region" type="text" <?= View::oldValue('place') ?>>
             </p>
 
             <p>
                 <span id="period-label">Chronological filter:</span>
-                <input id="during" name="chrono-filter" type="radio" value="exact" aria-labelledby="period-label"<?= $this->oldValueRadio('chrono-filter', 'exact', TRUE) ?>>
+                <input id="during" name="chrono-filter" type="radio" value="exact" aria-labelledby="period-label"<?= View::oldValueRadio('chrono-filter', 'exact', TRUE) ?>>
                 <label for="during" title="Attestations in sources beloging to a certain period">
                     During
                 </label>
                 /
-                <input id="not-later" name="chrono-filter" type="radio" value="not-later" aria-labelledby="period-label"<?= $this->oldValueRadio('chrono-filter', 'not-later') ?>>
+                <input id="not-later" name="chrono-filter" type="radio" value="not-later" aria-labelledby="period-label"<?= View::oldValueRadio('chrono-filter', 'not-later') ?>>
                 <label for="not-later" title="Attestations in sources dating not (demonstrably) later than">
                     not later than
                 </label>
                 /
-                <input id="not-earlier" name="chrono-filter" type="radio" value="not-earlier" aria-labelledby="period-label"<?= $this->oldValueRadio('chrono-filter', 'not-earlier') ?>>
+                <input id="not-earlier" name="chrono-filter" type="radio" value="not-earlier" aria-labelledby="period-label"<?= View::oldValueRadio('chrono-filter', 'not-earlier') ?>>
                 <label for="not-earlier" title="Attestations in sources dating not (demonstrably) earlier than">
                     not earlier than
                 </label>
                 the period
                 <label for="period" class="sr-only">Period</label>
-                <input id="period" list="periods" name="period" placeholder="period or reign" title="Enter the period" type="text" <?= $this->oldValue('period') ?>>
+                <input id="period" list="periods" name="period" placeholder="period or reign" title="Enter the period" type="text" <?= View::oldValue('period') ?>>
             </p>
 
             <button type="submit" class="submit">

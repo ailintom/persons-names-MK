@@ -56,6 +56,15 @@ class Datalist {
             case "periods":
                 $strsql = "SELECT item_name FROM thesauri WHERE thesaurus = 5 or thesaurus = 6 ORDER BY item_name";
                 return $this->datalist_from_SQL($strsql, $name);
+            case "materials":
+                $strsql = "SELECT item_name FROM thesauri WHERE thesaurus = 3 ORDER BY item_name";
+                return $this->datalist_from_SQL($strsql, $name);
+            case "object-subtypes":
+                $strsql = "SELECT item_name FROM thesauri WHERE thesaurus = 2 ORDER BY item_name";
+                return $this->datalist_from_SQL($strsql, $name);
+            case "object-types":
+                $strsql = "SELECT item_name FROM thesauri WHERE thesaurus = 1 ORDER BY item_name";
+                return $this->datalist_from_SQL($strsql, $name);
             case "places":
                 $strsql = "SELECT place_name FROM places ORDER BY place_name";
                 return $this->datalist_from_SQL($strsql, $name);
@@ -72,6 +81,7 @@ class Datalist {
             /*
              * $dl->get('name-types-formal');
               echo $dl->get('name-types-semantic');
+             * $  $dl->get('object-types'), $dl->get('object-subtypes'), $dl->get('periods'), $dl->get('places')
              * 
 
              */

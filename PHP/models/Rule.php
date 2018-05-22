@@ -35,10 +35,10 @@ class Rule {
 
     //put your code here
     public $WHERE = NULL;
-    public $param_type = NULL;
-    public $field = NULL;
-    public $compare = NULL;
     public $value = [];
+    public $param_type = NULL;
+    protected $field = NULL;
+    protected $compare = NULL;
 
     public function __construct($field, $compareString, $value, $param_type = 's') {
 
@@ -70,16 +70,16 @@ class Rule {
                 $rendVal = '%' . $value;
                 break;
             case 'not-later':
-                case 'lessorequal':
+            case 'lessorequal':
                 $this->compare = "<=";
                 $rendVal = $value;
-                
+
                 break;
             case 'not-earlier':
             case 'moreorequal':
                 $this->compare = ">=";
                 $rendVal = $value;
-               
+
                 break;
         }
 

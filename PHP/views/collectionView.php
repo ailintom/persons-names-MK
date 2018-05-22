@@ -39,29 +39,39 @@ class collectionView extends View {
       'inscriptions_count']);
      */
 
-    public function EchoRender(&$data) {
+    public function echoRender(&$data) {
+        (New Head)->render(Head::HEADERSLIM, $data->get('title'));
         ?>
-        <h1><?php echo( $data->get('title')) ?></h1>
         <dl>
-        <?php
-        echo( $this->descriptionElement('Full name', $data->get('full_name_en')));
-        echo( $this->descriptionElement('Name in local language', $data->get('full_name_national_language')));
-        echo( $this->descriptionElement('Location', $data->get('location')));
-        echo( $this->descriptionElement('Inscribed objects in the database', $this->inscribedObjects($data->get('collections_id'), $data->get('inscriptions_count'))));
-         echo( $this->descriptionElement('Website', $this->renderURL($data->get('url'))));
-         echo( $this->descriptionElement('Online catalogue', $this->renderURL($data->get('online_collection'))));
-         echo( $this->descriptionElement('Trismegistos collection ID', $this->renderURL($data->get('tm_coll_id'), 'https://www.trismegistos.org/collection/')));
-        //renderURL
-        ?>
-        </dl>
             <?php
-        }
+            echo( $this->descriptionElement('Full name', $data->get('full_name_en')));
+            echo( $this->descriptionElement('Name in local language', $data->get('full_name_national_language')));
+            echo( $this->descriptionElement('Location', $data->get('location')));
+            echo( $this->descriptionElement('Inscribed objects in the database', $this->inscribedObjects($data->get('title'), $data->get('inscriptions_count'))));
+            echo( $this->descriptionElement('Website', $this->renderURL($data->get('url'))));
+            echo( $this->descriptionElement('Online catalogue', $this->renderURL($data->get('online_collection'))));
+            echo( $this->descriptionElement('Trismegistos collection ID', $this->renderURL($data->get('tm_coll_id'), 'https://www.trismegistos.org/collection/')));
+            //renderURL
+            ?>
+        </dl>
+        <h2>Objects in this collection</h2>
 
-        protected function inscribedObjects($id_coll, $count) {
-            if (!empty($count)) {
-                return '<a href="' . Request::makeURL('inscriptions') . '?collection=' . urlencode($id_coll) . '">' . $count . '</a>';
-            }
+        <?php
+        $total = count($data->data['inv_nos']->data);
+        for ($i = 0; $i < $total; $i++) {
+            $data->data['inv_nos']->data[$i]['object_type'] = $this->renderObjectType($data->data['inv_nos']->data[$i]['object_type']);
+            $data->data['inv_nos']->data[$i]['text_content'] = $this->renderTextContent($data->data['inv_nos']->data[$i]['text_content']);
         }
-
+        $tableCo = new Table($data->get('inv_nos'), 'inscriptions_id', 'inscription', 'sort', '#results');
+        $tableCo->render_table(['inv_no', 'object_type', 'title', 'material',
+            'size', 'text_content', 'dating', 'inst_prov_temp', 'orig_prod_temp', 'owner'], ['Inv. no.', 'Type', 'Object', 'Material', 'Size, mm',
+            'Text', 'Date', 'Provenance', 'Origin/Prod. place', 'Owner'], TRUE);
     }
-    
+
+    protected function inscribedObjects($id_coll, $count) {
+        if (!empty($count)) {
+            return '<a href="' . Request::makeURL('inscriptions') . '?collection=' . urlencode($id_coll) . '">' . $count . '</a>';
+        }
+    }
+
+}

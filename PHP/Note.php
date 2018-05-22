@@ -30,7 +30,7 @@ Class Note {
 
     const TITLE_FIELDS = ['thesauri' => 'item_name', 'criteria' => 'title', 'publications' => 'author_year', 'biblio_refs' => 'biblio_refs_id', 'inscriptions' => 'title',
         'find_groups' => 'title', 'workshops' => 'title', 'inscriptions_workshops_xref' => 'inscriptions_workshops_xref_id', 'places' => 'place_name', 'inv_nos' => 'inv_no',
-        'collections' => 'title', 'attestations' => '(title_string & " " & personal_name) as title', 'spellings_attestations_xref' => 'spellings_attestations_xref_id', 'persons_attestations_xref' => 'persons_attestations_xref_id',
+        'collections' => 'title', 'attestations' => 'CONCAT_WS(" ", title_string, personal_name) as title', 'spellings_attestations_xref' => 'spellings_attestations_xref_id', 'persons_attestations_xref' => 'persons_attestations_xref_id',
         'persons' => 'title', 'titles_att' => 'titles_att_id', 'titles' => 'title', 'spellings' => 'spelling', 'alternative_readings' => 'alternative_readings_id',
         'personal_names' => 'personal_name', 'name_types' => 'title', 'names_types_xref' => 'names_types_xref_id', 'bonds' => 'bonds_id', 'persons_bonds' => 'persons_bonds_id'];
 
@@ -44,7 +44,6 @@ Class Note {
             $this->NoteText = $NoteInput;
 
             $this->ParsedNote = $this->Parse($NoteInput);
-            
         }
     }
 
@@ -53,40 +52,25 @@ Class Note {
     }
 
     private function ProcessNoteLink($matches) {
-        $id = new ID(intval($matches[1]));
+
+        return $this->ProcessID($matches[1]);
+    }
+
+    private function ProcessID($idInput) {
+        $id = new ID(intval($idInput));
         if (!($id->getID())) {
-            return $matches[1];
+            return $idInput;
         }
         $TableName = $id->getTableName();
         $ViewClass = 'PNM\\' . $TableName . 'MicroView';
 
-        $Title = $this->GetUniversalTitle($id);
- 
+        $Title = Lookup::get('SELECT ' . self::TITLE_FIELDS[$TableName] . ' FROM ' . $TableName . ' WHERE ' . $TableName . '_id = ?', $id->getID(), 'i'); //$this->GetUniversalTitle($id);
+
         $View = New $ViewClass();
-        $res=$View->render($Title, $id->getID());
-        
+        $res = $View->render($Title, $id->getID());
         return $res;
     }
 
-    private function GetUniversalTitle(ID $id_input) {
-
-
-        $TableName = $id_input->getTableName();
-
-        $db = Db::getInstance();
-        // we make sure $id is an integer
-        $id = $id_input->getID();
-         
-        try {
-            $stmt = $db->prepare('SELECT ' . self::TITLE_FIELDS[$TableName] . ' FROM ' . $TableName . ' WHERE ' . $TableName . '_id = ?');
-            $stmt->bind_param('i', $id);
-            $stmt->execute();
-        } catch (mysqli_sql_exception $e) {
-            CriticalError::Show($e);
-        }
-        $result = $stmt->get_result();
-         
-        return $result->fetch_row()[0];
-    }
+  
 
 }

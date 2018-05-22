@@ -92,8 +92,7 @@ class titleController {
         $objRelations = New title_relations(NULL, 0, 0, $filterRelations);
         $record->data['relations'] = $objRelations;
 
-        $view = new titleView();
-        $view->echoRender($record);
+        (new titleView)->echoRender($record);        
     }
 
 }

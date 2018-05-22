@@ -49,7 +49,7 @@ class Request {
         'form_type' => FILTER_SANITIZE_STRING, 'Aform_type' => FILTER_SANITIZE_STRING, 'Bform_type' => FILTER_SANITIZE_STRING,
         'sem_type' => FILTER_SANITIZE_STRING, 'Asem_type' => FILTER_SANITIZE_STRING, 'Bsem_type' => FILTER_SANITIZE_STRING,
         'gender' => FILTER_SANITIZE_FULL_SPECIAL_CHARS, 'Agender' => FILTER_SANITIZE_FULL_SPECIAL_CHARS, 'Bgender' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-        'length-option' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+        'size-option' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
         'only_persons' => FILTER_SANITIZE_FULL_SPECIAL_CHARS, 'geo-filter' => FILTER_SANITIZE_FULL_SPECIAL_CHARS, 'chrono-filter' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
         'text_content' => FILTER_SANITIZE_FULL_SPECIAL_CHARS, 'script' => FILTER_SANITIZE_FULL_SPECIAL_CHARS, 'relation' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
         'macroregion' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
@@ -154,7 +154,7 @@ class Request {
 
         $ver_element = empty(self::$data['ver']) ? NULL : self::$data['used_ver'] . '/';
         $id_element = empty($id) ? NULL : '/' . $id;
-        return BASE . $ver_element . $controller . $id_element . $requestString;
+        return Config::BASE . $ver_element . $controller . $id_element . $requestString;
     }
 
 }

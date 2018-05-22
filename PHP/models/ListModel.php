@@ -84,14 +84,15 @@ class ListModel {
         if ($start == 0 && $count == 0) {
             $this->total_count = $this->count;
         } else {
-            $strsqlTotal = $this->makeSQLTotal();
+            $strsqlTotal = 'SELECT FOUND_ROWS()'; //$this->makeSQLTotal();
             // echo "<br>$strsqlTotal";
             // if ($this->defaultsort == 'sequence_number'){ echo "<br>$strsql";} // for testing
             try {
                 $stmtTotal = $db->prepare($strsqlTotal);
-                if (!empty($filter)) {
-                    $filter->bind_param($stmtTotal, $this->double_params);
-                }
+                /* if (!empty($filter)) {
+                  $filter->bind_param($stmtTotal, $this->double_params);
+
+                  } */
                 $stmtTotal->execute();
             } catch (mysqli_sql_exception $e) {
                 CriticalError::Show($e);
@@ -135,11 +136,7 @@ class ListModel {
         } else {
             $LIMIT = null;
         }
-        return 'SELECT ' . $this->distinct . $this->field_names->SQL() . ' FROM ' . $this->tablename . $this->WHERE . $ORDER . $LIMIT;
-    }
-
-    protected function makeSQLTotal() {
-        return 'SELECT Count(*) as count FROM ' . $this->tablename . $this->WHERE;
+        return 'SELECT SQL_CALC_FOUND_ROWS ' . $this->distinct . $this->field_names->SQL() . ' FROM ' . $this->tablename . $this->WHERE . $ORDER . $LIMIT;
     }
 
     /*

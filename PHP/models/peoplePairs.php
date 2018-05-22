@@ -68,14 +68,6 @@ class peoplePairs extends ListModel {
         }
     }
 
-    protected function makeSQLTotal() {
-        if ($this->params == 'persons_only') {
-            return 'SELECT Count(id) as count FROM (' . $this->makeSelectFromWherePersons() . ') as sum';
-        } else {
-            return 'SELECT Count(id) as count FROM (' . $this->makeSelectFromWhere() . ') as sum';
-        }
-    }
-
     protected function makeSelectFromWhere() {
         
     }

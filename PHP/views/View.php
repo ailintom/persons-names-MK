@@ -32,23 +32,19 @@ namespace PNM;
  */
 class View {
 
-    //put your code here
+//put your code here
     protected $entry = NULL;
     protected $subEntries = NULL;
 
-    public function EchoRender(&$data) {
-        echo($this->Render($data));
-    }
-
-    public function Render($data) {
-        return null;
+    public function echoRender(&$data) {
+        
     }
 
     protected function descriptionElement($term, $value, $note = NULL, $class = NULL, $noteClass = NULL) {
         if (!empty($value) & !empty($note)) {
             return "\n<dt>" . $term . ":</dt>\n<dd><span" . (empty($class) ? NULL : ' class="' . $class . '"') . '>' . $value . '</span> <span class="' . (empty($noteClass) ? 'note' : $noteClass) . '">(' . $note . ')</span></dd>';
 
-            //<dt>Provenance:</dt><dd><span class="place"><a href="place/184549377.html">Abydos</a></span> <span class="note">(Northern Necropolis)</span></dd>
+//<dt>Provenance:</dt><dd><span class="place"><a href="place/184549377.html">Abydos</a></span> <span class="note">(Northern Necropolis)</span></dd>
         } elseif (!empty($value)) {
             return "\n<dt>" . $term . ":</dt>\n<dd><span" . (empty($class) ? NULL : ' class="' . $class . '"') . '>' . $value . '</span>';
         }
@@ -97,7 +93,7 @@ class View {
      * 
      */
 
-    protected function oldValue($field) {
+    static function oldValue($field) {
 
         if (!empty(Request::get($field))) {
             return ' value = "' . Request::get($field) . '"';
@@ -111,7 +107,7 @@ class View {
      * 
      */
 
-    protected function oldValueRadio($field, $value, $default = FALSE) {
+    static function oldValueRadio($field, $value, $default = FALSE) {
         if (!empty(Request::get($field))) {
             if (Request::get($field) == $value) {
                 return ' checked';
@@ -121,7 +117,7 @@ class View {
         }
     }
 
-    protected function oldValueSelect($field, $value, $default = FALSE) {
+    static function oldValueSelect($field, $value, $default = FALSE) {
         if (!empty(Request::get($field))) {
             if (Request::get($field) == $value) {
                 return ' selected';
@@ -159,10 +155,33 @@ class View {
         switch ($objectType) {
             case 'Scarab, seal, scaraboid, intaglio and similar objects':
                 return 'Seal/sealing';
+            case 'Offering table':
+                return 'Table';
             case 'Sculpture in the round':
                 return 'Statue';
+            case 'Unspecified':
+                return '';
+            case 'Written document':
+                return 'Hieratic text';
             default:
                 return ucfirst($objectType);
+        }
+    }
+
+    static function renderTextContent($textContent) {
+        switch ($textContent) {
+            case 'Royal name and titles':
+                return 'Royal name';
+            case 'Formula htp-di-nsw.t':
+                return 'Formula ḤDN';
+            case 'Name/filiation/title':
+                return 'Name';
+            case 'Letter (to the living)':
+                return 'Letter';
+            case 'Biographical text':
+                return 'Biography';
+            default:
+                return ucfirst($textContent);
         }
     }
 
@@ -170,9 +189,9 @@ class View {
         if (!empty($lat)) {
             if (strlen(strval($lat)) == 4) {
                 return substr(strval($lat), 0, 2) . "." . substr(strval($lat), 2, 2) . " ° N";
-            }else{
+            } else {
                 return $lat;
-            }                
+            }
         }
     }
 
@@ -181,12 +200,25 @@ class View {
      * 
      */
 
+    static function toggleSingleFilter($fieldName, $filterName, $defaultVal) {
+
+        if (is_array($fieldName)) {
+            $res = NULL;
+            foreach ($fieldName as $name) {
+                $res .= static::toggleSingleFilter($name, $filterName, $defaultVal);
+            }
+            return $res;
+        } else {
+            if (!empty(Request::get($fieldName)) && ( empty($defaultVal) ? TRUE : Request::get($fieldName) != $defaultVal)) {
+                return "MK.toggleFilter('" . $filterName . "');";
+            }
+        }
+    }
+
     protected function toggleFilters($input) {
         $res = NULL;
         foreach ((array) $input as $filter) {
-            if (!empty(Request::get($filter[0])) && ( empty($filter[2]) ? TRUE : Request::get($filter[0]) != $filter[2])) {
-                $res .= "MK.toggleFilter('" . $filter[1] . "');";
-            }
+            $res .= static::toggleSingleFilter($filter[0], $filter[1], isset($filter[2]) ? $filter[2] : null);
         }
         if (!empty($res)) {
             ?>            
@@ -226,6 +258,91 @@ class View {
         ?>
         </ul>
         <?php
+    }
+
+    protected function processBondCat($currentcat, $bondsincurrentcat, $attView) {
+        $res = "";
+        if (empty($bondsincurrentcat)) {
+            return NULL;
+        } elseif (count($bondsincurrentcat) == 1) {
+            $gen = $this->genderedDesignations($currentcat, $bondsincurrentcat[0]['gender']);
+            return '<li>' . ($gen ?: ObjectBonds::BOND_TYPES_SING[$currentcat] . ' ')
+                    . (!empty($bondsincurrentcat[0]['wording']) ? '(<span class="wording">' . $bondsincurrentcat[0]['wording'] . '</span>)' : NULL) . ': '
+                    . $attView->render($bondsincurrentcat[0]['title'], $bondsincurrentcat[0]['relative_id'], $bondsincurrentcat[0]['name'])
+                    . '.</li>';
+        } elseif (count($bondsincurrentcat) > 1) {
+            $res = '<li>' . ObjectBonds::BOND_TYPES_PLUR[$currentcat] . '<ul class="children">';
+            foreach ($bondsincurrentcat as $bond) {
+                $res .= '<li>';
+                $res .= $this->genderedDesignations($currentcat, $bond['gender']);
+                $res .= (!empty($bondsincurrentcat[0]['wording']) ? '(<span class="wording">' . $bondsincurrentcat[0]['wording'] . '</span>)' : NULL) . ': '
+                        . $attView->render($bond['title'], $bond['relative_id'], $bond['name'])
+                        . '.</li>';
+            }
+            $res .= '</ul>';
+            return $res;
+        }
+    }
+
+    protected function renderBonds($bonds_data, MicroView $attView) {
+        $currentLoc = '<ul class="bonds">';
+        $currentcat = 0;
+        $bondsincurrentcat = [];
+        foreach ($bonds_data as $bond) {
+            if ($currentcat !== $bond['predic_cat']) {
+                if (!empty($currentcat)) {
+                    $currentLoc .= $this->processBondCat($currentcat, $bondsincurrentcat, $attView);
+                }
+                $currentcat = $bond['predic_cat'];
+                $bondsincurrentcat = [$bond];
+            } else {
+                array_push($bondsincurrentcat, $bond);
+            }
+        }
+        $currentLoc .= $this->processBondCat($currentcat, $bondsincurrentcat, $attView);
+        $currentLoc .= '</ul>';
+        return $currentLoc;
+    }
+
+    protected function genderedDesignations($currentcat, $gender) {
+        if (ObjectBonds::BOND_TYPES_PLUR[$currentcat] == 'Children') {
+            switch ($gender) {
+                case 'm':
+                    return 'Son ';
+
+                case 'f':
+                    return 'Daughter ';
+
+                default:
+                    return 'Child ';
+            }
+        } elseif (ObjectBonds::BOND_TYPES_PLUR[$currentcat] == 'Siblings') {
+            switch ($gender) {
+                case 'm':
+                    return 'Brother ';
+
+                case 'f':
+                    return 'Sister ';
+
+                default:
+                    return 'Sibling ';
+            }
+        } else {
+            return NULL;
+        }
+    }
+
+    protected function processAltReadings($objAltReadings) {
+        if (!empty($objAltReadings->data)) {
+            $res = '(alternative reading' . (count($objAltReadings->data > 0) ? 's' : NULL ) . ': ';
+            $count = 0;
+            $objView = new personal_namesMicroView();
+            foreach ($objAltReadings->data as $altReading) {
+                $res .= ($count++ > 0 ? ', ' : NULL) . $objView->render($altReading['personal_name'], $altReading['personal_names_id']);
+            }
+            $res .= ')';
+            return $res;
+        }
     }
 
 }

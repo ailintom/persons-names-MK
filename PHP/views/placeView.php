@@ -34,7 +34,7 @@ class placeView extends View {
 
 //put your code here
 
-    public function EchoRender(&$data) {
+    public function echoRender(&$data) {
         if (empty($data->get('places_id'))) {
             ?>
             <p class="info-box">
@@ -45,11 +45,7 @@ class placeView extends View {
             return null;
         }
 
-        //   echo(Request::back_button());
-        ?>
-        <h1><?php echo( $data->get('place_name')) ?></h1>
-
-        <?php
+        (New Head)->render(Head::HEADERSLIM, $data->get('place_name'));
         if ($data->get('count_find_groups') + $data->get('count_workshops') > 0) {
             ?>
             <div class="toc">
@@ -83,15 +79,15 @@ class placeView extends View {
         </dl>
         <dl class="-free">
             <dt>Inscribed objects found or purchased at this place:</dt>
-            <dd><a href="./inscriptions?geo-filter=provenance&amp;place=<?php echo( $data->get('place_name')) ?>"><?php echo( $data->get('count_provenance') ?: '0') ?></a></dd>
+            <dd><a href="<?= Request::makeURL('inscriptions')?>?geo-filter=provenance&amp;place=<?php echo( $data->get('place_name')) ?>"><?php echo( $data->get('count_provenance') ?: '0') ?></a></dd>
             <dt>Inscribed objects that should have been installed at this place:</dt>
-            <dd><a href="./inscriptions?geo-filter=installation-place&amp;place=<?php echo( $data->get('place_name')) ?>"><?php echo( $data->get('count_installation_place') ?: '0') ?></a></dd>
+            <dd><a href="<?= Request::makeURL('inscriptions')?>?geo-filter=installation&amp;place=<?php echo( $data->get('place_name')) ?>"><?php echo( $data->get('count_installation_place') ?: '0') ?></a></dd>
             <dt>Inscribed objects owned by people from this place:</dt>
-            <dd><a href="./inscriptions?geo-filter=origin&amp;place=<?php echo( $data->get('place_name')) ?>"><?php echo( $data->get('count_origin') ?: '0') ?></a></dd>
+            <dd><a href="<?= Request::makeURL('inscriptions')?>?geo-filter=origin&amp;place=<?php echo( $data->get('place_name')) ?>"><?php echo( $data->get('count_origin') ?: '0') ?></a></dd>
             <dt>Inscribed objects produced at this place:</dt>
-            <dd><a href="./inscriptions?geo-filter=production-place&amp;place=<?php echo( $data->get('place_name')) ?>"><?php echo( $data->get('count_production_place') ?: '0') ?></a></dd>
+            <dd><a href="<?= Request::makeURL('inscriptions')?>?geo-filter=production&amp;place=<?php echo( $data->get('place_name')) ?>"><?php echo( $data->get('count_production_place') ?: '0') ?></a></dd>
             <dt>All inscribed objects related to this place:</dt>
-            <dd><a href="./inscriptions?geo-filter=all&amp;place=<?php echo( $data->get('place_name')) ?>"><?php echo( $data->get('count_total') ?: '0') ?></a></dd>
+            <dd><a href="<?= Request::makeURL('inscriptions')?>?geo-filter=all&amp;place=<?php echo( $data->get('place_name')) ?>"><?php echo( $data->get('count_total') ?: '0') ?></a></dd>
         </dl>
         <?php
         if (intval($data->get('count_find_groups')) > 0) {
@@ -101,7 +97,7 @@ class placeView extends View {
             <p><?php echo( $data->get('count_find_groups')) ?> in total</p>
 
             <?php
-            $tableFG = new Table($data->get('find_groups'), 'find_groups_id', 'find_group', 'find_groups_sort', '#find_groups');
+            $tableFG = new Table($data->get('find_groups'), 'find_groups_id', 'group', 'find_groups_sort', '#find_groups');
             $tableFG->render_table(['title', 'dating', 'find_group_type', 'inscriptions_count'], ['Find group', 'Date', 'Type', 'Inscribed objects']);
         }
         if (intval($data->get('count_workshops')) > 0) {
@@ -114,8 +110,6 @@ class placeView extends View {
             $tableWk->render_table(['title', 'dating', 'inscriptions_count'], ['Find group', 'Date', 'Inscribed objects']);
         }
     }
-
-    
 
 }
 

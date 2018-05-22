@@ -36,39 +36,41 @@ namespace PNM;
 //inscriptionView
 class inscriptionView extends View {
 
-//put your code here
+    public function echoRender(&$data) {
+        (New Head)->render(Head::HEADERSLIM, $data->get('title'));
+        $placesMV = new placesMicroView;
+        $find_groupMV = new find_groupsMicroView;
+        echo '<p>' . $data->get('inv_no') . '</p>';
+        echo '<dl>';
+        echo $this->descriptionElement('Alternative inv.', $data->get('alternative_inv_no'), NULL, 'alternative_inv_no');
+        echo $this->descriptionElement('Obsolete inv.', $data->get('obsolete_inv_no'), NULL, 'obsolete_inv_no');
+        echo $this->descriptionElement('Erroneusly', $data->get('erroneous_inv_no'), NULL, 'erroneous_inv_no');
 
-    public function Render($data) {
-        return $this->renderMainEntry($data);
-    }
+        echo $this->descriptionElement('Type', $this->renderObjectType($data->get('object_type')), NULL, 'type');
+        echo $this->descriptionElement('Subtype', $data->get('object_subtype'), NULL, 'type');
+        echo $this->descriptionElement('Material', $data->get('material'), NULL, 'type');
+        echo $this->descriptionElement('Size', $this->Size($data), NULL, 'type');
 
-    public function renderMainEntry($data) {
-$placesMV = new placesMicroView;
-        $res = '<h1>' . $data->get('title') . '</h1>';
-        $res .= '<p>' . $data->get('inv_no') . '</p>';
-        $res .= '<dl>';
-        $res .= $this->descriptionElement('Alternative inv.', $data->get('alternative_inv_no'), NULL, 'alternative_inv_no');
-        $res .= $this->descriptionElement('Obsolete inv.', $data->get('obsolete_inv_no'), NULL, 'obsolete_inv_no');
-        $res .= $this->descriptionElement('Erroneusly', $data->get('erroneous_inv_no'), NULL, 'erroneous_inv_no');
+        echo $this->descriptionElement('Text', $this->renderTextContent( $data->get('text_content')), NULL, 'type');
+        echo $this->descriptionElement('Script', $data->get('script'), NULL, 'type');
+        echo $this->descriptionElement('Date', $data->get('dating'), $data->get('dating_note'), 'period');
+        echo $this->descriptionElement('Provenance', $placesMV->render($data->get('provenance')), $data->get('provenance_note'), 'place');
+        if (!empty($data->get('find_groups_id'))) {
+            echo $this->descriptionElement('Find group', $find_groupMV->render(Lookup::findGroupTitle($data->get('find_groups_id')), $data->get('find_groups_id')), NULL, 'find_group');
+        }
+        echo $this->descriptionElement('Intalled at', $placesMV->render($data->get('installation_place')), $data->get('installation_place_note'), 'place');
+        echo $this->descriptionElement('Origin', $placesMV->render($data->get('origin')), $data->get('origin_note'), 'place');
+        echo $this->descriptionElement('Produced at', $placesMV->render($data->get('production_place')), $data->get('production_place_note'), 'place');
+        if (count($data->get('workshops')->data) > 0) {
+            echo $this->descriptionElement('Workshop', $this->renderWorkshop($data->get('workshops')), NULL, 'workshop');
+        }
+//
+        echo $this->descriptionElement('Owner', '');
+        echo $this->descriptionElement('Bibliography', $data->get('bibliography'));
 
-        $res .= $this->descriptionElement('Type', $this->renderObjectType($data->get('object_type')), NULL, 'type');
-        $res .= $this->descriptionElement('Subtype', $data->get('object_subtype'), NULL, 'type');
-        $res .= $this->descriptionElement('Material', $data->get('material'), NULL, 'type');
-        $res .= $this->descriptionElement('Size', $this->Size($data), NULL, 'type');
+        echo '</dl>';
 
-        $res .= $this->descriptionElement('Text', $data->get('text_content'), NULL, 'type');
-        $res .= $this->descriptionElement('Script', $data->get('script'), NULL, 'type');
-        $res .= $this->descriptionElement('Date', $data->get('dating'), $data->get('dating_note'), 'period');
-        $res .= $this->descriptionElement('Provenance', $placesMV->render( $data->get('provenance')), $data->get('provenance_note'), 'place');
-        $res .= $this->descriptionElement('Installation place', $placesMV->render( $data->get('installation_place')), $data->get('installation_place_note'), 'place');
-        $res .= $this->descriptionElement('Origin', $placesMV->render( $data->get('origin')), $data->get('origin_note'), 'place');
-        $res .= $this->descriptionElement('Production place',$placesMV->render(  $data->get('production_place')), $data->get('production_place_note'), 'place');
-        $res .= $this->descriptionElement('Owner', '');
-        $res .= $this->descriptionElement('Bibliography', $data->get('bibliography'));
-
-        $res .= '</dl>';
-
-        $res .= '<h2>People</h2><ul class="locations">';
+        echo '<h2>People</h2><ul class="locations">';
         $objAtt = $data->get('attestations');
         $titlesView = New titlesMicroView();
         $attView = New attestationsMicroView();
@@ -78,7 +80,7 @@ $placesMV = new placesMicroView;
         $currentLoc = NULL;
         foreach ($objAtt->data as $Att) {
             if ($loc !== $Att['location']) {
-                $res .= $this->writeLoc($loc, $currentLoc);
+                echo $this->writeLoc($loc, $currentLoc);
                 $currentLoc = NULL;
                 $loc = $Att['location'];
             }
@@ -125,13 +127,13 @@ $placesMV = new placesMicroView;
                             $currentLoc .= ', ';
                         }
                         $currentLoc .= '<span class="name">';
-                        $currentLoc .= '<a href="' . BASE . 'name/' . $name['personal_names_id'] . '#' . $spelling['spellings_id'] . '">';
+                        $currentLoc .= '<a href="' . Config::BASE . 'name/' . $name['personal_names_id'] . '#' . $spelling['spellings_id'] . '">';
                         if ($spellingPerNameCount++ == 0) {
                             $currentLoc .= $name['personal_name'] . ' ';
                         }
-                        $currentLoc .=  $spellView->render($spelling['spelling'], $spelling['spellings_id'])
+                        $currentLoc .= $spellView->render($spelling['spelling'], $spelling['spellings_id'])
                                 . '</a>';
-                        // . '<img class="spelling" src="' . BASE . 'assets/spellings/' . $spelling['spellings_id'] . '.png" alt="' . $spelling['spelling'] . '"></span>'
+                        // . '<img class="spelling" src="' . Config::BASE . 'assets/spellings/' . $spelling['spellings_id'] . '.png" alt="' . $spelling['spelling'] . '"></span>'
                         $currentLoc .= $this->processAltReadings($spelling['alt_readings']);
                         $currentLoc .= '</span>';
                     }
@@ -145,7 +147,7 @@ $placesMV = new placesMicroView;
              * 
              *                 
 
-              <td><span class="name"><a href="name/184549478.html#243269678">sꜣ.t-jp <span class="spelling-attestation"><img class="spelling" src="<?=BASE?>assets/spellings/243269678.png" alt="zA&amp;t i p:F27"></span></a></span></td>
+              <td><span class="name"><a href="name/184549478.html#243269678">sꜣ.t-jp <span class="spelling-attestation"><img class="spelling" src="<?=Config::BASE?>assets/spellings/243269678.png" alt="zA&amp;t i p:F27"></span></a></span></td>
               </tr></table>
              * 
              * attestations_id', 'wording', 'gender', 'predic', 'person
@@ -163,115 +165,14 @@ $placesMV = new placesMicroView;
              */
             if (!empty($Att['bonds']->data)) {
 
-                $bonds = $Att['bonds']->data;
-
-                $currentLoc .= '<ul class="bonds">';
-                $currentcat = 0;
-                $bondsincurrentcat = [];
-                foreach ($bonds as $bond) {
-                    if ($currentcat !== $bond['predic_cat']) {
-                        if (!empty($currentcat)) {
-                            $currentLoc .= $this->processBondCat($currentcat, $bondsincurrentcat, $attView);
-                        }
-                        $currentcat = $bond['predic_cat'];
-                        $bondsincurrentcat = [$bond];
-                    } else {
-                        array_push($bondsincurrentcat, $bond);
-                    }
-                }
-                $currentLoc .= $this->processBondCat($currentcat, $bondsincurrentcat, $attView);
-                $currentLoc .= '</ul>';
+                $currentLoc .= $this->renderBonds($Att['bonds']->data, $attView);
             }
 
             $currentLoc .= '</li>';
         }
-        $res .= $this->writeLoc($loc, $currentLoc);
+        echo $this->writeLoc($loc, $currentLoc);
 
-        $res .= '</ul>';
-        return $res;
-    }
-
-   
-
-    protected function processBondCat($currentcat, $bondsincurrentcat, $attView) {
-        $res = "";
-        if (empty($bondsincurrentcat)) {
-            return NULL;
-        } elseif (count($bondsincurrentcat) == 1) {
-            $gen = $this->genderedDesignations($currentcat, $bondsincurrentcat[0]['gender']);
-            return '<li>' . ($gen ?: ObjectBonds::BOND_TYPES_SING[$currentcat] . ' ')
-                    . '(<span class="wording">' . $bondsincurrentcat[0]['wording'] . '</span>): '
-                    . $attView->render($bondsincurrentcat[0]['title_string'], $bondsincurrentcat[0]['attestations_id'], $bondsincurrentcat[0]['personal_name'])
-                    . '.</li>';
-
-            // $this->field_names = new FieldList(['attestations_id', 'wording', 'predicate', 'predic', 'title_string', 'personal_name', 'gender', 'predic_cat']);
-            //<li>Mother (<span class="wording">ms.n</span>): <span class="attestation"><a href="inscription/33556283.html#67117489"><span class="tit">nb.t pr</span> <span class="pn">sꜣ.t-jp</span></a></span>.</li>
-        } elseif (count($bondsincurrentcat) > 1) {
-            $res = '<li>' . ObjectBonds::BOND_TYPES_PLUR[$currentcat] . '<ul class="children">';
-            foreach ($bondsincurrentcat as $bond) {
-                $res .= '<li>';
-                $res .= $this->genderedDesignations($currentcat, $bond['gender']);
-                $res .= '(<span class="wording">' . $bond['wording'] . '</span>): '
-                        . $attView->render($bond['title_string'], $bond['attestations_id'], $bond['personal_name'])
-                        . '.</li>';
-            }
-            $res .= '</ul>';
-            return $res;
-
-            /*
-             * 
-             * <li>Children
-              <ul class="children">
-              <li>Daughter (<span class="wording">sꜣ.t⸗f</span>): <span class="attestation"><a href="inscription/33556283.html#67117491"><span class="tit">snb</span></a></span>.</li>
-              <li>Son (<span class="wording">sꜣ.⸗f</span>): <span class="attestation"><a href="inscription/33556283.html#67117495"><span class="tit">ḫtm.w-bj.tj; ḥm-nṯr n jmn</span> <span class="pn">snb⸗f-n⸗j</span></a></span>.</li>
-             * 
-             */
-        }
-
-        //      $currentLoc .= '<li>' . ObjectBonds::BOND_TYPES_SING[$bond['predic_cat']] . ' ' . $bond['predic'] . ' ' . $attView->render($bond['person'], $bond['attestations_id']) . '</li>';
-        //BOND_TYPES_SING
-        // ['attestations_id', 'wording', 'predicate', 'predic', 'person', 'gender', 'predic_cat';
-    }
-
-    protected function genderedDesignations($currentcat, $gender) {
-        if (ObjectBonds::BOND_TYPES_PLUR[$currentcat] == 'Children') {
-            switch ($gender) {
-                case 'm':
-                    return 'Son ';
-
-                case 'f':
-                    return 'Daughter ';
-
-                default:
-                    return 'Child ';
-            }
-        } elseif (ObjectBonds::BOND_TYPES_PLUR[$currentcat] == 'Siblings') {
-            switch ($gender) {
-                case 'm':
-                    return 'Brother ';
-
-                case 'f':
-                    return 'Sister ';
-
-                default:
-                    return 'Sibling ';
-            }
-        } else {
-            return NULL;
-        }
-    }
-
-    protected function processAltReadings($objAltReadings) {
-        if (!empty($objAltReadings->data)) {
-            $res = '(alternative reading' . (count($objAltReadings->data > 0) ? 's' : NULL ) . ': ';
-            $count = 0;
-            $objView = new personal_namesMicroView();
-            foreach ($objAltReadings->data as $altReading) {
-                $res .= ($count++ > 0 ? ', ' : NULL) . $objView->render($altReading['personal_name'], $altReading['personal_names_id']);
-            }
-            $res .= ')';
-            return $res;
-        }
+        echo '</ul>';
     }
 
     protected function writeLoc($loc, $currentLoc) {
@@ -296,6 +197,15 @@ $placesMV = new placesMicroView;
         if (!empty($length)) {
             return $length . (empty($width) ? NULL : '×' . $width . $thicknessProcessed) . ' mm';
         }
+    }
+
+    private function renderWorkshop($data) {
+        return implode(", ", array_map(array($this, 'renderSingleWorkshop'), $data->data));
+    }
+
+    private function renderSingleWorkshop($Wk) {
+        $wkMV = New workshopsMicroView;
+        return $wkMV->render($Wk['title'], $Wk['workshops_id']) . ' (' . $Wk['status'] . (empty($Wk['note']) ? NULL : ', ' . $Wk['note']) . ')';
     }
 
 }

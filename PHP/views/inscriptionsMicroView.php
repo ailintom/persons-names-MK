@@ -33,7 +33,7 @@ class inscriptionsMicroView extends MicroView {
     protected function echoTemplate() {
        
         return <<<EOF
-<b><a href="$this->url">$this->value</a></b>
+<a href="$this->url">$this->value</a>
 EOF;
     }
 

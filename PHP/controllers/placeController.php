@@ -29,7 +29,6 @@ class placeController {
         $record = new place; //'Inscription::find(Request::get('id'));
         $record->find(Request::get('id'));
 
-        $view = new placeView();
-        $view->echoRender($record);
+        (new placeView)->echoRender($record);   
     }
 }

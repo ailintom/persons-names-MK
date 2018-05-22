@@ -35,10 +35,10 @@ class typeView extends View {
 
      */
 
-    public function EchoRender(&$data) {
+    public function echoRender(&$data) {
+        (new Head)->render(Head::HEADERSLIM, $data->get('title'));
         ?>
-        <h1><?= $data->get('title') ?></h1>
-        <p><span class="note"><?= ($data->get('category')=='formal'?'Formal name pattern':'Semantic name class') ?></span></p>
+        <p><span class="note"><?= ($data->get('category') == 'formal' ? 'Formal name pattern' : 'Semantic name class') ?></span></p>
         <dl>
             <?php
             echo( $this->descriptionElement('Superordinate types', $this->superordinate($data->get('parents'))));
@@ -54,26 +54,23 @@ class typeView extends View {
             ?>
         </dl>
         <?php
-        if ($data->get('names')->total_count>0) {
+        if ($data->get('names')->total_count > 0) {
             $tableCo = new Table($data->get('names'), 'personal_names_id', 'name', 'sort');
             $tableCo->render_table(['personal_name', 'gender', 'count_attestations', 'usage_period', 'usage_area', 'ranke', 'translation_en'], ['Personal name', 'Gender', 'Atts.', 'Period', 'Area', 'Ranke no.', 'Translation'], TRUE);
         }
     }
 
     protected function superordinate($data) {
-        if(empty($data)){
+        if (empty($data)) {
             return NULL;
         }
-        $res=NULL;
+        $res = NULL;
         $typesMV = new name_typesMicroView();
-         for ($i = count($data)-1; $i >=0; $i--) {
-             $res.= '<ul><li>' .              $typesMV->render($data[$i][1],$data[$i][0]);
-                     
-         }
-         $res .= str_repeat('</li></ul>',count($data));
-         return $res;
+        for ($i = count($data) - 1; $i >= 0; $i--) {
+            $res .= '<ul><li>' . $typesMV->render($data[$i][1], $data[$i][0]);
+        }
+        $res .= str_repeat('</li></ul>', count($data));
+        return $res;
     }
-
-   
 
 }

@@ -29,8 +29,7 @@ namespace PNM;
 class MicroView {
 
     protected $template = null;
-     
-    protected $secondinput = null;
+         protected $secondinput = null;
     protected $url = null;
     protected $value = null;
     protected $controller = NULL;
@@ -58,7 +57,7 @@ class MicroView {
 
     protected function echoTemplate() {
         return <<<EOF
-<a href="$this->url">$this->value</a>;
+<a href="$this->url">$this->value</a>
 EOF;
     }
 

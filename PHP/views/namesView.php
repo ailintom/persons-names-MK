@@ -39,38 +39,37 @@ class namesView extends View {
     }
 
     public function echoRender(&$data) {
+        (New Head)->render(Head::HEADERSLIM, 'Personal names');
         ?>     
-        <h1>Personal names</h1>
-
         <form action="<?= Request::makeURL("names") ?>" method="get" onreset="MK.removeAllFilters()">
             <div class="row">
                 <div class="column">
                     <label for="personal_name">Personal name</label>
-                    <input id="personal_name" name="name" placeholder="MdC (ra-Htp) or Unicode (rꜥ-ḥtp)" type="text"<?= $this->oldValue('name') ?>>
+                    <input id="personal_name" name="name" placeholder="MdC (ra-Htp) or Unicode (rꜥ-ḥtp)" type="text"<?= View::oldValue('name') ?>>
                 </div>
                 <div class="column">
                     <label for="translation">Translation</label>
-                    <input id="translation" name="translation" placeholder="English or German translation" type="text"<?= $this->oldValue('translation') ?>>
+                    <input id="translation" name="translation" placeholder="English or German translation" type="text"<?= View::oldValue('translation') ?>>
                 </div>
             </div>
             <p>
                 <span id="match-label">Return names</span>
-                <input id="inexact" name="match" type="radio" value="inexact" aria-labelledby="match-label"<?= $this->oldValueRadio('match', 'inexact', TRUE) ?>>
+                <input id="inexact" name="match" type="radio" value="inexact" aria-labelledby="match-label"<?= View::oldValueRadio('match', 'inexact', TRUE) ?>>
                 <label for="inexact" title="Match any name containing the search term">
                     containing
                 </label>
                 /
-                <input id="exact" name="match" type="radio" value="exact" aria-labelledby="match-label"<?= $this->oldValueRadio('match', 'exact') ?>>
+                <input id="exact" name="match" type="radio" value="exact" aria-labelledby="match-label"<?= View::oldValueRadio('match', 'exact') ?>>
                 <label for="exact" title="Match any name equal to the search term">
                     equalling
                 </label>
                 /
-                <input id="startswith" name="match" type="radio" value="startswith" aria-labelledby="match-label"<?= $this->oldValueRadio('match', 'startswith') ?>>
+                <input id="startswith" name="match" type="radio" value="startswith" aria-labelledby="match-label"<?= View::oldValueRadio('match', 'startswith') ?>>
                 <label for="startswith" title="Match any name beginning with the search term">
                     starting with
                 </label>
                 /
-                <input id="endswith" name="match" type="radio" value="endswith" aria-labelledby="match-label"<?= $this->oldValueRadio('match', 'endswith') ?>>
+                <input id="endswith" name="match" type="radio" value="endswith" aria-labelledby="match-label"<?= View::oldValueRadio('match', 'endswith') ?>>
                 <label for="endswith" title="Match any name ending with the search term">
                     ending with
                 </label>
@@ -115,18 +114,18 @@ class namesView extends View {
                         <span id="region-label">Region</span>
                     </div>
                     <div class="filter_content">
-                        <input id="region-attested" name="match-region" type="radio" value="attested" aria-labelledby="region-label"<?= $this->oldValueRadio('match-region', 'attested', TRUE) ?>>
+                        <input id="region-attested" name="match-region" type="radio" value="attested" aria-labelledby="region-label"<?= View::oldValueRadio('match-region', 'attested', TRUE) ?>>
                         <label for="region-attested" title="Match any title attested in the given region">
                             Attested in
                         </label>
                         /
-                        <input id="region-characteristic" name="match-region" type="radio" value="characteristic" aria-labelledby="region-label"<?= $this->oldValueRadio('match-region', 'characteristic') ?>>
+                        <input id="region-characteristic" name="match-region" type="radio" value="characteristic" aria-labelledby="region-label"<?= View::oldValueRadio('match-region', 'characteristic') ?>>
                         <label for="region-characteristic" title="Match any title characteristic of the given region">
                             characteristic of
                         </label>
                         the region
                         <label for="place" class="sr-only">Region</label>
-                        <input id="place" list="places" name="place" placeholder="region or locality" title="Enter the region" type="text"<?= $this->oldValue('place') ?>>
+                        <input id="place" list="places" name="place" placeholder="region or locality" title="Enter the region" type="text"<?= View::oldValue('place') ?>>
                     </div>
                 </div>
 
@@ -138,18 +137,18 @@ class namesView extends View {
                         <span id="period-label">Period</span>
                     </div>
                     <div class="filter_content">
-                        <input id="period-attested" name="match-date" type="radio" value="attested" aria-labelledby="period-label"<?= $this->oldValueRadio('match-date', 'attested', TRUE) ?>>
+                        <input id="period-attested" name="match-date" type="radio" value="attested" aria-labelledby="period-label"<?= View::oldValueRadio('match-date', 'attested', TRUE) ?>>
                         <label for="period-attested" title="Match any title attested in the given period">
                             Attested in
                         </label>
                         /
-                        <input id="period-characteristic" name="match-date" type="radio" value="characteristic" aria-labelledby="period-label"<?= $this->oldValueRadio('match-date', 'characteristic') ?>>
+                        <input id="period-characteristic" name="match-date" type="radio" value="characteristic" aria-labelledby="period-label"<?= View::oldValueRadio('match-date', 'characteristic') ?>>
                         <label for="period-characteristic" title="Match any title characteristic of the given period ">
                             characteristic of
                         </label>
                         the period
                         <label for="period" class="sr-only">Period</label>
-                        <input id="period" list="periods" name="period" placeholder="period or reign" title="Enter the period" type="text"<?= $this->oldValue('period') ?>>
+                        <input id="period" list="periods" name="period" placeholder="period or reign" title="Enter the period" type="text"<?= View::oldValue('period') ?>>
                     </div>
                 </div>
 
@@ -161,27 +160,27 @@ class namesView extends View {
                         <span id="gender-label">Gender</span>
                     </div>
                     <div class="filter_content">
-                        <input type="radio" id="any" name="gender" value="any" aria-labelledby="gender-label"<?= $this->oldValueRadio('gender', 'any', TRUE) ?>>
+                        <input type="radio" id="any" name="gender" value="any" aria-labelledby="gender-label"<?= View::oldValueRadio('gender', 'any', TRUE) ?>>
                         <label for="any" title="Match names regardless of gender">
                             Regardless of gender
                         </label>
                         /
-                        <input type="radio" id="female" name="gender" value="f" aria-labelledby="gender-label"<?= $this->oldValueRadio('gender', 'f') ?>>
+                        <input type="radio" id="female" name="gender" value="f" aria-labelledby="gender-label"<?= View::oldValueRadio('gender', 'f') ?>>
                         <label for="female" title="Match names borne only by women">
                             female 
                         </label>
                         /
-                        <input type="radio" id="male" name="gender" value="m" aria-labelledby="gender-label"<?= $this->oldValueRadio('gender', 'm') ?>>
+                        <input type="radio" id="male" name="gender" value="m" aria-labelledby="gender-label"<?= View::oldValueRadio('gender', 'm') ?>>
                         <label for="male" title="Match names borne only by men ">
                             male 
                         </label>
                         /
-                        <input type="radio" id="both" name="gender" value="both" aria-labelledby="gender-label"<?= $this->oldValueRadio('gender', 'both') ?>>
+                        <input type="radio" id="both" name="gender" value="both" aria-labelledby="gender-label"<?= View::oldValueRadio('gender', 'both') ?>>
                         <label for="both" title="Match names borne by both men and women">
                             unisex names
                         </label>
                         /
-                        <input type="radio" id="animal" name="gender" value="a" aria-labelledby="gender-label"<?= $this->oldValueRadio('gender', 'a') ?>>
+                        <input type="radio" id="animal" name="gender" value="a" aria-labelledby="gender-label"<?= View::oldValueRadio('gender', 'a') ?>>
                         <label for="animal" title="Match names borne by animals">
                             animal names
                         </label>
@@ -197,7 +196,7 @@ class namesView extends View {
                     </div>
                     <div class="filter_content">
                         <label for="ranke" class="sr-only">Ranke number</label>
-                        <input id="ranke" name="ranke" placeholder="Example: I, 139.1" title="Enter the Ranke entry number" type="text"<?= $this->oldValue('ranke') ?>>
+                        <input id="ranke" name="ranke" placeholder="Example: I, 139.1" title="Enter the Ranke entry number" type="text"<?= View::oldValue('ranke') ?>>
                     </div>
                 </div>
 
@@ -210,7 +209,7 @@ class namesView extends View {
                     </div>
                     <div class="filter_content">
                         <label for="form_type" class="sr-only">Name pattern</label>
-                        <input id="form_type" list="name-types-formal" name="form_type" placeholder="Example: DN (m)+ḥtp.w" type="text"<?= $this->oldValue('form_type') ?>>
+                        <input id="form_type" list="name-types-formal" name="form_type" placeholder="Example: DN (m)+ḥtp.w" type="text"<?= View::oldValue('form_type') ?>>
                     </div>
                 </div>
 
@@ -223,7 +222,7 @@ class namesView extends View {
                     </div>
                     <div class="filter_content">
                         <label for="sem_type" class="sr-only">Semantic class</label>
-                        <input id="sem_type" list="name-types-semantic" name="sem_type" placeholder="Example: theophoric names" type="text"<?= $this->oldValue('sem_type') ?>>
+                        <input id="sem_type" list="name-types-semantic" name="sem_type" placeholder="Example: theophoric names" type="text"<?= View::oldValue('sem_type') ?>>
                     </div>
                 </div>
             </div>

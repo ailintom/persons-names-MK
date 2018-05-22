@@ -34,9 +34,9 @@ class criterionView extends View {
 
 //put your code here
 
-    public function EchoRender(&$data) {
-    //  echo(Request::back_button());?>
-        <h1><?php echo( $data->get('title')) ?></h1>
+    public function echoRender(&$data) {
+        (New Head)->render(Head::HEADERSLIM, $data->get('title'));
+        ?>
         <p class="info-box">
             <?php
             echo( icon('info') . $data->get('criterion'));
@@ -45,7 +45,7 @@ class criterionView extends View {
         <dl>
             <?php
             $placesMV = new placesMicroView;
-            echo( $this->descriptionElement('Production place', $placesMV->render( $data->get('production_place')), NULL, 'place'));
+            echo( $this->descriptionElement('Production place', $placesMV->render($data->get('production_place')), NULL, 'place'));
             echo( $this->descriptionElement('Date', $data->get('dating'), NULL, 'date'));
             echo( $this->descriptionElement('Bibliography', $data->get('bibliography')));
             ?>

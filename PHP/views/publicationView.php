@@ -1,5 +1,4 @@
 <?php
-
 /*
  * MIT License
  * 
@@ -31,6 +30,38 @@ namespace PNM;
  *
  * @author Tomich
  */
-class publicationView {
-    //put your code here
+class publicationView extends View {
+
+    public function echoRender(&$data) {
+        (New Head)->render(Head::HEADERSLIM, $data->get('author_year'));
+        ?>
+        <p class="csl-entry">
+            <?= $data->get('html_entry') ?>
+        </p>
+        <dl>
+            <?php
+            $ref = $this->addReference('OEB ID', $data->get('oeb_id'), 'http://oeb.griffith.ox.ac.uk/oeb_entry.aspx?item=');
+            echo( $this->descriptionElement('References', $ref));
+            ?>
+        </dl>
+        <h2>Entities referred to in this publication</h2>
+        <?php
+        foreach ($data->tables as $table) {
+            if (count($data->get($table[0])) > 0) {
+                $ViewClass = 'PNM\\' . $table[0] . 'MicroView';
+
+                $View = New $ViewClass();
+                ?>
+                <h3><?= (empty($table[1]) ? ucfirst($table[0]) : $table[1]) ?></h3>
+                <ul><?php
+                    foreach ($data->get($table[0]) as $record) {
+                        echo '<li>', (empty($record['pages']) ? NULL : $record['pages'] . (empty($record['reference_type'])?NULL:' ['. $record['reference_type']. ']') . ': '),
+                        $View->render($record['title'], $record['object_id']), '</li>';
+                    }
+                    ?></ul>
+                <?php
+            }
+        }
+    }
+
 }

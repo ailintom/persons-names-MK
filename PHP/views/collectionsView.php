@@ -39,9 +39,8 @@ class collectionsView extends View {
     }
 
     public function echoRender(&$data) {
-    
+    (New Head)->render(Head::HEADERSLIM, 'Collections');
         ?>     
-        <h1>Collections</h1>
         <p class="info-box">
             <?= icon('info') ?>
             You can use <b>%</b> or <b>*</b> as wildcards.
@@ -51,21 +50,21 @@ class collectionsView extends View {
             <div class="row">
                 <div class="column">
                     <label for="title">Short name</label>
-                    <input id="title" name="title" list="collections" title="Enter the short name of the museum or its part" type="text" <?= $this->oldValue('title') ?>>
+                    <input id="title" name="title" list="collections" title="Enter the short name of the museum or its part" type="text" <?= View::oldValue('title') ?>>
                 </div>
                 <div class="column">
                     <label for="full_name">Full name</label>
-                    <input id="full_name" name="full_name" list="full-names" title="Enter the full name of the museum or its part" type="text" <?= $this->oldValue('full_name') ?>>
+                    <input id="full_name" name="full_name" list="full-names" title="Enter the full name of the museum or its part" type="text" <?= View::oldValue('full_name') ?>>
                 </div>
             </div>
             <div class="row">
                 <div class="column">
                     <label for="location">Location</label>
-                    <input id="location" name="location" list="locations" title="Enter the city where the collection is located" type="text" <?= $this->oldValue('location') ?>>
+                    <input id="location" name="location" list="locations" title="Enter the city where the collection is located" type="text" <?= View::oldValue('location') ?>>
                 </div>
                 <div class="column">
                     <label for="tm_coll_id">Trismegistos Collections ID</label>
-                    <input id="tm_coll_id" name="tm_coll_id" title="" placeholder="Example: 188" type="text"<?= $this->oldValue('tm_coll_id') ?>>
+                    <input id="tm_coll_id" name="tm_coll_id" title="" placeholder="Example: 188" type="text"<?= View::oldValue('tm_coll_id') ?>>
                 </div>
             </div>
 
@@ -110,7 +109,7 @@ class collectionsView extends View {
       <?php
       //$res = null;
       foreach ($data->data as $row) {
-      echo("<a href='" . BASE . "collection/" . $row[$data->getFieldName(0)] . "'>" . $row[$data->getFieldName(1)] . ' ' .  $row['inscriptions_count'] . '<br>');
+      echo("<a href='" . Config::BASE . "collection/" . $row[$data->getFieldName(0)] . "'>" . $row[$data->getFieldName(1)] . ' ' .  $row['inscriptions_count'] . '<br>');
       }
       //return $res;
       }

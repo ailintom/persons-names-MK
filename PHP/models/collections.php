@@ -48,17 +48,6 @@ class collections extends ListModel {
         return $this->replaceSortField($sortField, ['full_name', 'url',
                     'online_collection'], ['IFNULL(full_name_en, full_name_national_language)', 'IFNULL(url, online_collection)',
                     'IF(online_collection>"", "available", "")']);
-        /* if (substr($sortField, 0, 9) == 'full_name'){
-          $sortField = 'IFNULL(full_name_en, full_name_national_language)' . substr($sortField, 9);
-          }elseif (substr($sortField, 0, 3) == 'url'){
-          $sortField = 'IFNULL(url, online_collection)' . substr($sortField, 3);
-          }elseif (substr($sortField, 0, 16) == 'online_collection'){
-          $sortField = 'IF(online_collection>"", "available", "")' . substr($sortField, 16);
-          }
-          //IF(>"", "available", "")
-          return $sortField;
-         * 
-         */
     }
 
 }

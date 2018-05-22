@@ -67,8 +67,7 @@ class nameController {
         $record->data['persons'] = $objNamePersons;
 
 
-        $view = new nameView();
-        $view->echoRender($record);
+        (new nameView)->echoRender($record);
     }
 
     private function getAttNo($objNameSpellings, $spelling_no, $att_no_in_spelling) {

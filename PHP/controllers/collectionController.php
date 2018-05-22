@@ -33,13 +33,16 @@ namespace PNM;
  */
 class collectionController {
 
-     
     public function load() {
-        $record = new collection; //'Inscription::find(Request::get('id'));
+        $record = new collection;
         $record->find(Request::get('id'));
+        $rules = [New Rule('collections_id', 'exact', $record->get('collections_id'), 'i')];
 
-        $view = new collectionView();
-        $view->echoRender($record);
+        $filter = new Filter($rules);
+        $obj_inv_nos = New inv_nos(Request::get('sort'), (Request::get('start') ?: 0), 50,  $filter);
+        $record->data['inv_nos'] = $obj_inv_nos;
+
+        (new collectionView)->echoRender($record);
     }
 
 }

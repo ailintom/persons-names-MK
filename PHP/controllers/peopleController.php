@@ -52,9 +52,9 @@ class peopleController {
                         . ' FROM (((names_types_xref INNER JOIN name_types_temp ON names_types_xref.name_types_id = name_types_temp.child_id) INNER JOIN personal_names ON names_types_xref.personal_names_id = personal_names.personal_names_id) INNER JOIN spellings ON personal_names.personal_names_id = spellings.personal_names_id) INNER JOIN spellings_attestations_xref ON spellings.spellings_id = spellings_attestations_xref.spellings_id'
                         . ' WHERE spellings_attestations_xref.attestations_id=attestations.attestations_id AND '
                         . ' name_types_temp.parent_id = ' . $nt . ')', 'exact', 1, 'i'));
-            }else{
-                     array_push($Arules, new Rule(1, 'exactlike', 0, 'i'));
-                }
+            } else {
+                array_push($Arules, new Rule(1, 'exactlike', 0, 'i'));
+            }
         }
         if (!empty(Request::get('Asem_type'))) {
             $nt = Lookup::name_types_idGet(Request::get('Asem_type'));
@@ -63,9 +63,9 @@ class peopleController {
                         . ' FROM (((names_types_xref INNER JOIN name_types_temp ON names_types_xref.name_types_id = name_types_temp.child_id) INNER JOIN personal_names ON names_types_xref.personal_names_id = personal_names.personal_names_id) INNER JOIN spellings ON personal_names.personal_names_id = spellings.personal_names_id) INNER JOIN spellings_attestations_xref ON spellings.spellings_id = spellings_attestations_xref.spellings_id'
                         . ' WHERE spellings_attestations_xref.attestations_id=attestations.attestations_id AND '
                         . ' name_types_temp.parent_id = ' . $nt . ')', 'exact', 1, 'i'));
-            }else{
-                     array_push($Arules, new Rule(1, 'exactlike', 0, 'i'));
-                }
+            } else {
+                array_push($Arules, new Rule(1, 'exactlike', 0, 'i'));
+            }
         }
 
         if (!empty(Request::get('period'))) {
@@ -94,9 +94,12 @@ class peopleController {
         }
 
 
-      
+
         $filter = new Filter($Arules);
-        if (empty(Request::get('Bname')) && empty(Request::get('Btitle')) && empty(Request::get('Bform_type')) && empty(Request::get('Bsem_type')) && (empty(Request::get('Bgender')) || Request::get('Bgender') == 'any')) {
+        $Bempty = empty(Request::get('Bname')) && empty(Request::get('Btitle')) && empty(Request::get('Bform_type')) && empty(Request::get('Bsem_type')) && (empty(Request::get('Bgender')) || Request::get('Bgender') == 'any');
+        $pat = '/[^? *%\[\]]+/';
+        $EmptyPair = (Request::get('relation') == 'same_inscription' || Request::get('relation') == 'siblings') && !( preg_match($pat, Request::get('Aname')) || preg_match($pat, Request::get('Atitle')) || preg_match($pat, Request::get('Bname')) || preg_match($pat, Request::get('Btitle')) || !empty(Request::get('Aform_type')) || !empty(Request::get('Asem_type')) || !empty(Request::get('Bform_type')) || !empty(Request::get('Bsem_type')));
+        if ($Bempty || $EmptyPair) {
             // second part of the request is not used
 
 
@@ -120,8 +123,8 @@ class peopleController {
                             . ' FROM (((names_types_xref INNER JOIN name_types_temp ON names_types_xref.name_types_id = name_types_temp.child_id) INNER JOIN personal_names ON names_types_xref.personal_names_id = personal_names.personal_names_id) INNER JOIN spellings ON personal_names.personal_names_id = spellings.personal_names_id) INNER JOIN spellings_attestations_xref ON spellings.spellings_id = spellings_attestations_xref.spellings_id'
                             . ' WHERE spellings_attestations_xref.attestations_id=attestations.attestations_id AND '
                             . ' name_types_temp.parent_id = ' . $nt . ')', 'exact', 1, 'i'));
-                }else{
-                     array_push($Brules, new Rule(1, 'exactlike', 0, 'i'));
+                } else {
+                    array_push($Brules, new Rule(1, 'exactlike', 0, 'i'));
                 }
             }
             if (!empty(Request::get('Bsem_type'))) {
@@ -131,18 +134,14 @@ class peopleController {
                             . ' FROM (((names_types_xref INNER JOIN name_types_temp ON names_types_xref.name_types_id = name_types_temp.child_id) INNER JOIN personal_names ON names_types_xref.personal_names_id = personal_names.personal_names_id) INNER JOIN spellings ON personal_names.personal_names_id = spellings.personal_names_id) INNER JOIN spellings_attestations_xref ON spellings.spellings_id = spellings_attestations_xref.spellings_id'
                             . ' WHERE spellings_attestations_xref.attestations_id=attestations.attestations_id AND '
                             . ' name_types_temp.parent_id = ' . $nt . ')', 'exact', 1, 'i'));
-                }else{
-                     array_push($Brules, new Rule(1, 'exactlike', 0, 'i'));
+                } else {
+                    array_push($Brules, new Rule(1, 'exactlike', 0, 'i'));
                 }
             }
 
             $Bfilter = new Filter($Brules);
             switch (Request::get('relation')) {
-                case 'same_inscription':
-                    $model = New peopleSameInscr(Request::get('sort'), (Request::get('start') ?: 0), 50, $filter, $Bfilter, $persons);
-                    break;
                 case 'child':
-
                     $model = New peopleChild(Request::get('sort'), (Request::get('start') ?: 0), 50, $filter, $Bfilter, $persons);
                     break;
                 case 'parent':
@@ -153,6 +152,10 @@ class peopleController {
                     break;
                 case 'siblings':
                     $model = New peopleSibling(Request::get('sort'), (Request::get('start') ?: 0), 50, $filter, $Bfilter, $persons);
+                    break;
+                case 'same_inscription':
+                default:
+                    $model = New peopleSameInscr(Request::get('sort'), (Request::get('start') ?: 0), 50, $filter, $Bfilter, $persons);
                     break;
             }
         }
