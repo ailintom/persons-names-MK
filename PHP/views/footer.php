@@ -10,11 +10,11 @@ namespace PNM;
                 <p>
                     Copyright 2017 Alexander Ilin-Tomich.
                     Content licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" title="Creative Commons Attribution-ShareAlike 4.0 International">CC BY-SA 4.0</a>, except for logos.
-                    Code <a href="TODO">available on GitHub</a> under MIT license.
+                    Code <a href="https://github.com/ailintom/persons-names-MK">available on GitHub</a> under MIT license.
                 </p>
                 <p>
-                    <a class="footer_link" href="<?=Config::BASE?>impressum.php">Impressum</a>
-                    <a class="footer_link" href="TODO">Privacy policy</a>
+                    <a class="footer_link" href="<?=Request::makeURL('info')?>/impressum">Impressum</a>
+                    <a class="footer_link" href="<?=Request::makeURL('info')?>/privacy">Privacy policy</a>
                 </p>
             </div>
             <div class="column">
@@ -42,5 +42,7 @@ namespace PNM;
 <?php endif; ?>
 
 <script src="<?=Config::BASE?>assets/script/script.js"></script>
+<script src="<?= Config::BASE ?>assets/script/datalist.polyfill.min.js"></script>
+ <!--datalist polyfill for browsers such as Safari-->
 
 </body>

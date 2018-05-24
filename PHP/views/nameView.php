@@ -90,11 +90,13 @@ class nameView extends View {
         <h2>Spellings &amp; Attestations</h2>
         <div class="spellings">
             <?php
+            $j = 0;
             $inscrMV = New inscriptionsMicroView();
             foreach ($data->get("spellings")->data as $spelling) {
-                echo ' <div class="spellings_item" id="', $spelling['spellings_id'], '"><h3>', $spellView->render($spelling['spelling'], $spelling['spellings_id']), '</h3><ol start="', $spelling['first_no'], '">';
+                echo ' <div class="spellings_item" id="', ID::shorten($spelling['spellings_id']), '"><h3>', $spellView->render($spelling['spelling'], $spelling['spellings_id']), '</h3><ol start="', $spelling['first_no'], '">';
                 foreach ($spelling['attestations']->data as $att) {
-                    echo '<li id="', $spelling['spellings_id'], '_', $att['attestations_id'], '"><p>', $this->renderGender($att['gender']), ' ';
+                    
+                   echo '<li id="att', ++$j, '"><p>', $this->renderGender($att['gender']), ' ';
                     $inscrMV->echoRender($this->renderObjectType($att['object_type']) . ' ' . $att['title'], $att['inscriptions_id']);
                     echo '</p><dl class="-inline">';
                     echo $this->descriptionElement('Title', $att['title_string'], NULL, 'title'),
@@ -125,7 +127,7 @@ class nameView extends View {
                 if (!empty($person['attestations'])) {
                     echo ': attestations ';
                     for ($i = 0; $i < count($person['attestations']); $i++) {
-                        echo ($i > 0 ? ', ' : NULL), '<a href="#', $person['attestations'][$i]['attestations_id'], '">', $person['attestations'][$i]['att_no'], '</a>';
+                        echo ($i > 0 ? ', ' : NULL), '<a href="#att', $person['attestations'][$i]['att_no'], '">', $person['attestations'][$i]['att_no'], '</a>';
                     }
                 }
                 echo '</p>';

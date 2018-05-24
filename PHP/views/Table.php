@@ -43,7 +43,7 @@ class Table {
 
     public function __construct(ListModel $data, $id_field, $target_controller, $sort_param = 'sort', $hashpos = NULL) {
         $this->data = $data;
-        $this->id_field = $id_field;
+        $this->id_field = (array) $id_field;
         $this->target_controller = $target_controller;
         $this->sort_param = $sort_param;
         $this->default_field = $data->defaultsort;
@@ -64,7 +64,8 @@ class Table {
             return [NULL, $field . ' ASC', 'ascending', NULL];
         }
     }
-    public function addHeader($header){
+
+    public function addHeader($header) {
         $this->extraHeader = $header;
     }
 
@@ -74,7 +75,7 @@ class Table {
         // print_r($columns);
         // print_r($sort_renders);
         if ($pagination) {
-            $hashpos = $this->id_field . "_nav";
+            $hashpos = $this->id_field[0] . "_nav";
             $onclick_nav = ' onclick="window.location.replace(this.href + (' . "'#$hashpos'" . '));return false;"';
             //echo('<p class="pagination" id="' . $hashpos . '">');
 
@@ -99,14 +100,14 @@ class Table {
         }
         ?>  
         <div class="table-container">
-            <div role="grid" style="display: table"><?=$this->extraHeader?>
+            <div role="grid" style="display: table"><?= $this->extraHeader ?>
                 <div role="row" style="display: table-row">
                     <?php
                     echo ( "\r");
                     for ($i = 0; $i < count($columns); ++$i) {
                         $url = Request::makeURL(Request::get('controller'), Request::get('id'), $sort_renders[$i][1], $this->sort_param, TRUE, 0);
-                        $hashpos = $this->id_field . "_" . $i;
-                        echo ('<div class="th'.$sort_renders[$i][0].'" role="gridcell" style="display: table-cell">'
+                        $hashpos = $this->id_field[0] . "_" . $i;
+                        echo ('<div class="th' . $sort_renders[$i][0] . '" role="gridcell" style="display: table-cell">'
                         . '<a href="' . $url . '" title="Sort by ' . lcfirst($column_titles[$i]) . ', ' . $sort_renders[$i][2] . '" id="' . $hashpos . '"'
                         . ' onclick="window.location.replace(this.href + (' . "'#$hashpos'||" . 'window.location.hash));return false;">'
                         . $column_titles[$i] . $sort_renders[$i][3] . '</a></div>' . "\r");
@@ -118,18 +119,19 @@ class Table {
                     echo ( "\r");
                     if ($this->target_controller == 'auto') {
                         //getDefaultController
-                        $idObj = New ID(intval($row[$this->id_field]));
+                        // print_r (array_filter(array_intersect_key($row, array_flip($this->id_field))));
+                        $arr = array_filter(array_intersect_key($row, array_flip($this->id_field)));
+                        $idObj = New ID(intval(reset($arr)));
                         $controller = $idObj->getDefaultController();
                     } else {
                         $controller = $this->target_controller;
                     }
-
-                    $url = Request::makeURL($controller, $row[$this->id_field]);
+                    $url = Request::makeURL($controller, array_intersect_key($row, array_flip($this->id_field)));
                     /* <tr onclick="MK.open(event, '<?= $url ?>')" onkeydown="MK.open(event, '<?= $url ?>')" role="link" tabindex="0">
                      */
                     ?>
-                <a role="row" style="display: table-row" href="<?= $url ?>">
-                    <?php
+                    <a role="row" style="display: table-row" href="<?= $url ?>">
+                        <?php
                         for ($i = 0; $i < count($columns); ++$i) {
                             if ($columns[$i] == 'gender' || $columns[$i] == 'gender_b') {
                                 $cellval = View::renderGender(empty($row[$columns[$i]]) ? NULL : $row[$columns[$i]]) ?: '&nbsp;';
@@ -137,7 +139,7 @@ class Table {
                                 $cellval = empty($row[$columns[$i]]) ? '&nbsp;' : $row[$columns[$i]];
                             }
                             //role="presentation"
-                            echo('<div class="tr'.$sort_renders[$i][0].'" role="gridcell" style="display: table-cell"' . $sort_renders[$i][0] . '>'. $cellval . '</div>' . "\r" );
+                            echo('<div class="tr' . $sort_renders[$i][0] . '" role="gridcell" style="display: table-cell"' . $sort_renders[$i][0] . '>' . $cellval . '</div>' . "\r" );
                         }
                         echo ( "\r");
                         ?>

@@ -26,13 +26,8 @@
 
 namespace PNM;
 
-class personController {
+class personController extends EntryController {
 
-    public function load() {
-        $record = new person;
-        $record->find(Request::get('id'));
-
-        (new personView)->echoRender($record);
-    }
-
+    const NAME = 'person';
+    
 }

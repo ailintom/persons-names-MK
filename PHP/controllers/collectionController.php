@@ -27,22 +27,19 @@
 namespace PNM;
 
 /**
- * Description of criterionController
+ * Description of collectionController
  *
- * @author Tomich
+ *
  */
-class collectionController {
+class collectionController extends EntryController {
 
-    public function load() {
-        $record = new collection;
-        $record->find(Request::get('id'));
-        $rules = [New Rule('collections_id', 'exact', $record->get('collections_id'), 'i')];
-
+    const NAME = 'collection';
+   
+    protected function loadChildren() {
+        $rules = [New Rule('collections_id', 'exact', $this->record->get('collections_id'), 'i')];
         $filter = new Filter($rules);
-        $obj_inv_nos = New inv_nos(Request::get('sort'), (Request::get('start') ?: 0), 50,  $filter);
-        $record->data['inv_nos'] = $obj_inv_nos;
-
-        (new collectionView)->echoRender($record);
+        $obj_inv_nos = New inv_nos(Request::get('sort'), (Request::get('start') ?: 0), 50, $filter);
+        $this->record->data['inv_nos'] = $obj_inv_nos;
     }
 
 }

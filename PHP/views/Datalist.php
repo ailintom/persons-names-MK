@@ -99,7 +99,7 @@ class Datalist {
     }
 
     private function datalist_from_SQL($strsql, $name) {
-        $html = "<datalist id='$name'><option>";
+        $html = "\n" . '<datalist id="' . $name . '">';
 
         try {
             $stmt = $this->db->prepare($strsql);
@@ -111,9 +111,13 @@ class Datalist {
         $result = $stmt->get_result();
         $arr = $result->fetch_all(MYSQLI_NUM);
 
-        $html .= implode('</option><option>', array_column($arr, 0));
-        $html .= "</option></datalist>";
+        $html .= implode(array_map([$this, 'singleDatalistEntry'], array_column($arr, 0)));
+        $html .= '</datalist>';
         return $html;
+    }
+
+    protected function singleDatalistEntry($entry) {
+        return "\n" . '<option value="' . $entry . '">' . $entry . '</option>';
     }
 
 }

@@ -29,7 +29,7 @@ namespace PNM;
 class MicroView {
 
     protected $template = null;
-         protected $secondinput = null;
+    protected $secondinput = null;
     protected $url = null;
     protected $value = null;
     protected $controller = NULL;
@@ -48,9 +48,10 @@ class MicroView {
         return $res;
     }
 
-    protected function makeURL ($inputid){
-      return Request::makeURL($this->controller, $inputid);
+    protected function makeURL($inputid) {
+        return Request::makeURL($this->controller, $inputid);
     }
+
     public function echoRender($inputvalue, $inputid = null, $secondinput = null) {
         echo ($this->render($inputvalue, $inputid, $secondinput) );
     }

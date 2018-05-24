@@ -45,7 +45,11 @@ require_once('Config.php');
   'db' => 'db'
   ];
   const VERSIONS = [[1, "15.04.2018"], [2, "16.04.2018"]];
-  const Config::BASE = '/subpath/';
+  const BASE = '/subpath/';
+
+const HOST = 'https://pnm.uni-mainz.de';
+const IMPRESSUM = "";
+  const PRIVACY = "";
 
   static function maxVer() {
   return self::VERSIONS[count(self::VERSIONS) - 1][0];
@@ -62,7 +66,7 @@ require_once('Db.php');
 require_once('Request.php');
 require_once ('views/Head.php');
 require_once('functions.php');
-
+require_once('controllers/EntryController.php');
 require_once('controllers/Translit.php');
 
 require_once('models/Filter.php');
@@ -113,6 +117,7 @@ require_once('models/biblio_refs.php');
 require_once('models/find_groups.php');
 
 require_once('models/workshops.php');
+require_once('models/infos.php');
 
 
 require_once('models/placeMicroModel.php');
@@ -144,6 +149,7 @@ require_once('views/Select.php');
 require_once('views/Datalist.php');
 require_once('views/FormFilter.php');
 require_once('views/View.php');
+require_once('views/startView.php');
 
 $ClassName = "PNM\\" . Request::get('controller') . "Controller";
 $controllerClassPath = 'controllers/' . Request::get('controller') . 'Controller.php';

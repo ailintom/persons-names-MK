@@ -99,5 +99,11 @@ Class ID {
             }
         }
     }
+    
+   
+    static function shorten($id){
+        $idObj = new ID((int) $id); 
+        return $idObj->getShortID();
+    }
 
 }

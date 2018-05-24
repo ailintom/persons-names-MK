@@ -32,6 +32,8 @@ namespace PNM;
  */
 class publicationView extends View {
 
+    protected $View;
+
     public function echoRender(&$data) {
         (New Head)->render(Head::HEADERSLIM, $data->get('author_year'));
         ?>
@@ -44,24 +46,28 @@ class publicationView extends View {
             echo( $this->descriptionElement('References', $ref));
             ?>
         </dl>
-        <h2>Entities referred to in this publication</h2>
-        <?php
-        foreach ($data->tables as $table) {
-            if (count($data->get($table[0])) > 0) {
-                $ViewClass = 'PNM\\' . $table[0] . 'MicroView';
 
-                $View = New $ViewClass();
-                ?>
-                <h3><?= (empty($table[1]) ? ucfirst($table[0]) : $table[1]) ?></h3>
-                <ul><?php
-                    foreach ($data->get($table[0]) as $record) {
-                        echo '<li>', (empty($record['pages']) ? NULL : $record['pages'] . (empty($record['reference_type'])?NULL:' ['. $record['reference_type']. ']') . ': '),
-                        $View->render($record['title'], $record['object_id']), '</li>';
-                    }
+        <?php
+        if ($data->get('refs_count') > 0) {
+            ?><h2>Entities referred to in this publication</h2><?php
+            foreach ($data->tables as $table) {
+                if (count($data->get($table[0])) > 0) {
+                    $ViewClass = 'PNM\\' . $table[0] . 'MicroView';
+
+                    $this->View = New $ViewClass();
+                    ?>
+                    <h3><?= (empty($table[1]) ? ucfirst($table[0]) : $table[1]) ?></h3>
+                    <ul><?php array_map([$this, 'renderRef'], $data->get($table[0]));
                     ?></ul>
-                <?php
+                    <?php
+                }
             }
         }
+    }
+
+    protected function renderRef($record) {
+        echo '<li>', (empty($record['pages']) ? NULL : $record['pages'] . (empty($record['reference_type']) ? NULL : ' [' . $record['reference_type'] . ']') . ': '),
+        $this->View->render($record['title'], $record['object_id']), '</li>';
     }
 
 }

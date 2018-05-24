@@ -26,22 +26,19 @@
 
 namespace PNM;
 
-class typeController {
+class typeController extends EntryController {
 
-    public function load() {
+    const NAME = 'type';
 
-        $record = new type; //'Inscription::find(Request::get('id'));
-        $record->find(Request::get('id'));
-   
-        $filterNames = new Filter([New Rule('parent_id', 'exact', $record->get('name_types_id'), 'i')]);
-        $record->data['names'] = New TypeNames(Request::get('sort'), (Request::get('start') ?: 0), 50, $filterNames);
-  
-        $rules = [New Rule('name_types_id', 'exact', $record->get('name_types_id'), 'i')];
+    public function loadChildren() {
+
+
+        $filterNames = new Filter([New Rule('parent_id', 'exact', $this->record->get('name_types_id'), 'i')]);
+        $this->record->data['names'] = New TypeNames(Request::get('sort'), (Request::get('start') ?: 0), 50, $filterNames);
+
+        $rules = [New Rule('name_types_id', 'exact', $this->record->get('name_types_id'), 'i')];
         $filter = new Filter($rules);
-        $record->data['subtypes'] = New types('name_types_id ASC', 0, 0, $filter);
-        
-        (new typeView)->echoRender($record);        
+        $this->record->data['subtypes'] = New types('name_types_id ASC', 0, 0, $filter);
     }
- 
 
 }

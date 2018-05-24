@@ -16,16 +16,17 @@ class Head {
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-                <meta name="description" content="<?php // TODO: A short description of the website for search engines       ?>">
-
+                <meta name="description" content="An online database of ancient Egyptian personal names, titles, and persons from the Middle Kingdom.">
                 <title><?= !empty($title) ? "$title | " : "" ?>Persons and Names of the Middle Kingdom</title>
 
-                                <!--<base href="<?= Config::BASE ?>">-->
-
+                                                                        <!--<base href="<?= Config::BASE ?>">-->
+                <meta property="og:title" content="<?= !empty($title) ? "$title | " : "" ?>Persons and Names of the Middle Kingdom">
+                <meta property="og:url" content="<?= Config::HOST . Request::stableURL() ?>">
+                <meta property="og:type" content="website">
+                <meta property="og:image" content="<?= Config::BASE ?>assets/favicon/favicon-32x32.png">
+                <link rel="canonical" href="<?= Config::HOST . Request::stableURL() ?>">
                 <link rel="stylesheet" href="<?= Config::BASE ?>assets/style/style.css">
-
-                <?php // TODO: Add OpenGraph tags   ?>
-
+                <link rel="stylesheet" href="<?= Config::BASE ?>assets/style/datalist-polyfill-style.css">
                 <link rel="shortcut icon" href="<?= Config::BASE ?>assets/favicon/favicon.ico">
                 <link rel="apple-touch-icon" sizes="180x180" href="<?= Config::BASE ?>assets/favicon/apple-touch-icon.png">
                 <link rel="icon" type="image/png" sizes="32x32" href="<?= Config::BASE ?>assets/favicon/favicon-32x32.png">
@@ -41,6 +42,7 @@ class Head {
                     <script src="<?= Config::BASE ?>assets/script/classlist-polyfill.js"></script>
                     <script src="<?= Config::BASE ?>assets/script/html5shiv.min.js"></script>
                 <![endif]-->
+
             </head>
 
             <body>

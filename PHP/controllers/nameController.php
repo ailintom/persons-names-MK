@@ -26,13 +26,14 @@
 
 namespace PNM;
 
-class nameController {
+class nameController extends EntryController {
 
-    public function load() {
+    const NAME = 'name';
 
-        $record = new name; //'Inscription::find(Request::get('id'));
-        $record->find(Request::get('id'));
-        $rules = [New Rule('personal_names_id', 'exact', $record->get('personal_names_id'), 'i')];
+    protected function loadChildren() {
+
+
+        $rules = [New Rule('personal_names_id', 'exact', $this->record->get('personal_names_id'), 'i')];
 
         $filterNameSpellings = new Filter($rules);
         $objNameSpellings = New NameSpellings(NULL, 0, 0, $filterNameSpellings);
@@ -53,8 +54,7 @@ class nameController {
                         $personId = $attPerson['persons_id'];
                         $personKey = array_search($personId, array_column($objNamePersons->data, 'persons_id'));
                         $persDesc['attestations_id'] = $objNameSpellings->data[$i]['spellings_id'] . '_' . $objNameSpellings->data[$i]['attestations']->data[$j]['attestations_id'];
-                        //$persDesc['spelling_no'] = $i;
-                        $persDesc['att_no'] = $this->getAttNo($objNameSpellings, $i, $j+1);
+                        $persDesc['att_no'] = $this->getAttNo($objNameSpellings, $i, $j + 1);
                         $objNamePersons->data[$personKey]['attestations'][] = $persDesc;
                     }
 
@@ -63,11 +63,8 @@ class nameController {
                 }
             }
         }
-        $record->data['spellings'] = $objNameSpellings;
-        $record->data['persons'] = $objNamePersons;
-
-
-        (new nameView)->echoRender($record);
+        $this->record->data['spellings'] = $objNameSpellings;
+        $this->record->data['persons'] = $objNamePersons;
     }
 
     private function getAttNo($objNameSpellings, $spelling_no, $att_no_in_spelling) {

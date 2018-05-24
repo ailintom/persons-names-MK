@@ -46,9 +46,9 @@ EOT;
 
     protected function makeUrl($inputid) {
         if (empty($this->inscriptionID)) {
-            return "#" . $inputid;
+            return "#" . ID::shorten($inputid);
         } else {
-            return Request::makeURL($this->controller, $this->inscriptionID) . "#" . $inputid;
+            return Request::makeURL($this->controller, [$this->inscriptionID, $inputid]);
         }
     }
 

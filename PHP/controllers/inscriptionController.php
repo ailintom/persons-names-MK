@@ -26,14 +26,9 @@
 
 namespace PNM;
 
-class inscriptionController {
+class inscriptionController extends EntryController {
 
-    public function load() {
-
-        $record = new inscription; //'Inscription::find(Request::get('id'));
-        $record->find(Request::get('id'));
-
-        (new inscriptionView)->echoRender($record);
-    }
+    const NAME = 'inscription';
+      
 
 }

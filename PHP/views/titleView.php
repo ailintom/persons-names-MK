@@ -156,7 +156,7 @@ class titleView extends View {
 
         <h2 class="sr-only">Results</h2>
         <?php
-        $tableAtt = new Table($data->get('attestations'), 'inscriptions_id', 'inscription');
+        $tableAtt = new Table($data->get('attestations'), ['inscriptions_id', 'attestations_id'], 'inscription');
         $tableAtt->render_table(['personal_name', 'gender', 'title_string', 'title', 'dating', 'region', 'persons'], ['Name', 'Gender', 'Titles', 'Object', 'Date', 'Region', 'Person'], TRUE, 'attestations');
 
 

@@ -26,15 +26,13 @@
 
 namespace PNM;
 
-class titleController {
+class titleController extends EntryController {
 
-    public function load() {
+    const NAME = 'title';
 
-        $record = new title; //'Inscription::find(Request::get('id'));
-        $record->find(Request::get('id'));
+    protected function loadChildren() {
 
-
-        $rules = [New Rule('titles_id', 'exact', $record->get('titles_id'), 'i')];
+        $rules = [New Rule('titles_id', 'exact', $this->record->get('titles_id'), 'i')];
         //geo-filter
         if (!empty(Request::get('place'))) {
             if (Request::get('geo-filter') == 'any') {
@@ -86,13 +84,12 @@ class titleController {
         $objTitleAtt = New titleAttestations(Request::get('sort'), (Request::get('start') ?: 0), 50, $filterTitleAtt);
 
 
-        $record->data['attestations'] = $objTitleAtt;
+        $this->record->data['attestations'] = $objTitleAtt;
 
-        $filterRelations = new Filter([New Rule('titles_id', 'exact', $record->get('titles_id'), 'i'), New Rule('titles_id', 'exact', $record->get('titles_id'), 'i')]);
+        $filterRelations = new Filter([New Rule('titles_id', 'exact', $this->record->get('titles_id'), 'i'), New Rule('titles_id', 'exact', $this->record->get('titles_id'), 'i')]);
         $objRelations = New title_relations(NULL, 0, 0, $filterRelations);
-        $record->data['relations'] = $objRelations;
-
-        (new titleView)->echoRender($record);        
+        $this->record->data['relations'] = $objRelations;
+      
     }
 
 }

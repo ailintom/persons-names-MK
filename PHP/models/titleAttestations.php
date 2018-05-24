@@ -36,7 +36,7 @@ class titleAttestations extends ListModel {
     public $defaultsort = 'personal_name';
 
     protected function initFieldNames() {
-        $this->field_names = new FieldList(['CONCAT(attestations.inscriptions_id, "#", attestations.attestations_id)', 'attestations.attestations_id', 'personal_name', 'gender', 'title_string', 'title', 'dating', 
+        $this->field_names = new FieldList(['attestations.inscriptions_id', 'attestations.attestations_id', 'personal_name', 'gender', 'title_string', 'title', 'dating',
             'CASE WHEN origin>"" THEN CONCAT(origin, " (origin)") WHEN production_place>"" THEN CONCAT(production_place, " (production)") WHEN installation_place>"" THEN CONCAT(installation_place, " (installation_place)") WHEN provenance>"" THEN CONCAT(provenance, " (provenance)") END',
             'SELECT count(attestations_id) FROM persons_attestations_xref WHERE status <> "rejected" AND persons_attestations_xref.attestations_id = attestations.attestations_id', 'SELECT GROUP_CONCAT(CONCAT(title, " (", SUBSTR(status, 1,1), ")") SEPARATOR "; ") 
 FROM persons_attestations_xref INNER JOIN persons ON persons_attestations_xref.persons_id = persons.persons_id
@@ -47,7 +47,9 @@ WHERE  persons_attestations_xref.attestations_id = attestations.attestations_id'
         if (empty($sortField)) {
             $sortField = $this->defaultsort;
         }
-        return $this->replaceSortField($sortField, ['title_string','title', 'personal_name',  'persons', 'dating', 'region'], ['title_string_sort', 'title_sort', 'personal_name_sort', 'count_persons', 'dating_sort_start+dating_sort_end', 'COALESCE (inscriptions.origin_sort, inscriptions.production_place_sort, inscriptions.installation_place_sort, inscriptions.provenance_sort)']);
+        return $this->replaceSortField($sortField, ['title_string', 'title', 'personal_name',
+                    'persons', 'dating', 'region'], ['title_string_sort', 'title_sort', 'personal_name_sort',
+                    'count_persons', 'dating_sort_start+dating_sort_end', 'region_temp_sort']);
     }
 
 }

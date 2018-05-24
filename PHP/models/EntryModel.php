@@ -59,17 +59,17 @@ class EntryModel {
         }
     }
 
-   protected function validate($id_input) {
-       return intval($id_input);
-   }
+    protected function validate($id_input) {
+        return intval($id_input);
+    }
 
     public function find($id_input) {
 
         // Check if ID is valid and get table name
-        $id =  $this->validate($id_input);
-         if (empty($id)) {
-             return NULL;
-         }
+        $id = $this->validate($id_input);
+        if (empty($id)) {
+            return NULL;
+        }
         if (empty($this->tablename)) {
             $IDobj = new ID($id);
             $this->tablename = $IDobj->getTableName();
@@ -138,7 +138,6 @@ class EntryModel {
                 $res .= $bibView->render($bib_etry['author_year'], $bib_etry['source_id']);
             } elseif (!empty($bib_etry['source_url'])) {
                 $res .= "<a href='" . htmlspecialchars($bib_etry['source_url'], ENT_HTML5) . "'>" . htmlspecialchars(($bib_etry['source_title'] ?: $bib_etry['source_url']), ENT_HTML5) . "</a>" . $this->getAccessedOn($bib_etry['accessed_on']);
-                
             } elseif (!empty($bib_etry['source_title'])) {
                 $res .= htmlspecialchars($bib_etry['source_title'], ENT_HTML5) . $this->getAccessedOn($bib_etry['accessed_on']);
             }
@@ -159,9 +158,20 @@ class EntryModel {
         }
     }
 
-    protected function getID() {
+    /*
+     * gets the id of the record
+     */
 
+    public function getID() {
         return $this->get($this->idField);
+    }
+
+    /*
+     * gets the name of the table based on the name of the id field
+     */
+
+    public function getTable() {
+        return substr($this->idField, 0, strlen($this->idField) - 3);
     }
 
 }

@@ -281,11 +281,11 @@ class peopleView extends View {
                 $data->data[$i]['title'] = $this->renderObjectType($data->data[$i]['object_type']) . ' ' . $data->data[$i]['title'];
             }
             if ($data->type == "double") {
-                $tableCo = new Table($data, 'id', 'auto', 'sort', '#results');
+                $tableCo = new Table($data, ['inscriptions_id', 'id'], 'auto', 'sort', '#results');
                 $tableCo->addHeader('<div role="row" style="display: table-row" class="-no-border"><div class="th" role="gridcell" style="display: table-cell">Person A</div><div class="th -border" role="gridcell" style="display: table-cell">&nbsp;</div><div class="th -border" role="gridcell" style="display: table-cell">&nbsp;</div><div class="th -border" role="gridcell" style="display: table-cell">Person B</div><div class="th -border" role="gridcell" style="display: table-cell">&nbsp;</div><div class="th -border" role="gridcell" style="display: table-cell">&nbsp;</div><div class="th -border" role="gridcell" style="display: table-cell">Common</div><div class="th -border" role="gridcell" style="display: table-cell">&nbsp;</div><div class="th -border" role="gridcell" style="display: table-cell">&nbsp;</div></div>');
                 $tableCo->render_table(['gender', 'title_string', 'personal_name', 'gender_b', 'title_string_b', 'personal_name_b', 'title', 'dating', 'region'], ['Gender', 'Title', 'Name', 'Gender', 'Title', 'Name', 'Source or dossier', 'Date', 'Region'], TRUE);
             } else {
-                $tableCo = new Table($data, 'id', 'auto', 'sort', '#results');
+                $tableCo = new Table($data, ['inscriptions_id', 'id'], 'auto', 'sort', '#results');
 
                 $tableCo->render_table(['gender', 'title_string', 'personal_name', 'title', 'dating', 'region'], ['Gender', 'Title', 'Name', 'Source or dossier', 'Date', 'Region'], TRUE);
             }

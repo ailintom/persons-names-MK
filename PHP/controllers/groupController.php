@@ -25,10 +25,8 @@
  */
 namespace PNM;
 /* Controls requests for a single find group*/
-class groupController {
-        public function load() {
-        $record = new group; 
-        $record->find(Request::get('id'));
-        (new groupView)->echoRender($record);   
-    }
+class groupController extends EntryController {
+
+    const NAME = 'group';
+
 }

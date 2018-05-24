@@ -31,14 +31,7 @@ namespace PNM;
  *
  * @author Tomich
  */
-class publicationController {
+class publicationController extends EntryController {
 
-     
-    public function load() {
-        $record = new publication;
-        $record->find(Request::get('id'));
-
-        (new publicationView)->echoRender($record);   
-    }
-
+    const NAME = 'publication';
 }

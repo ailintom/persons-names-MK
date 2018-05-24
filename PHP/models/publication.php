@@ -39,14 +39,9 @@ class publication extends EntryModel {
     }
 
     protected function loadChildren() {
-
+        $this->data['refs_count'] = 0;
         foreach ($this->tables as $table) {
-            /*
-             *     public $defaultsort = 'pages_sort';
 
-              protected function initFieldNames() {
-              $this->field_names = new FieldList( ['biblio_refs_id', 'reference_type', 'object_id', 'pages', 'note']);
-             */
             $SQL = 'SELECT biblio_refs.biblio_refs_id as biblio_refs_id, biblio_refs.reference_type as reference_type, '
                     . 'biblio_refs.object_id as object_id, biblio_refs.pages as pages, biblio_refs.note as note, '
                     . $table[0] . '.' . Note::TITLE_FIELDS[$table[0]] . ' as title FROM biblio_refs INNER JOIN ' . $table[0]
@@ -54,6 +49,7 @@ class publication extends EntryModel {
                     . 'ORDER BY pages_sort';
 
             $this->data[$table[0]] = Lookup::getList($SQL, $this->getID(), 'i');
+            $this->data['refs_count'] += count($this->data[$table[0]]);
         }
     }
 

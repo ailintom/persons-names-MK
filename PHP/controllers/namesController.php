@@ -61,7 +61,7 @@ class namesController {
                     . ' (((spellings INNER JOIN spellings_attestations_xref ON spellings.spellings_id = spellings_attestations_xref.spellings_id)'
                     . ' INNER JOIN attestations ON spellings_attestations_xref.attestations_id = attestations.attestations_id) '
                     . ' INNER JOIN inscriptions ON attestations.inscriptions_id = inscriptions.inscriptions_id) '
-                    . ' INNER JOIN places ON COALESCE (inscriptions.origin, inscriptions.production_place, inscriptions.installation_place, inscriptions.provenance) = places.place_name'
+                    . ' INNER JOIN places ON region_temp = places.place_name'
                     . ' WHERE spellings.personal_names_id=personal_names.personal_names_id AND '
                     . ' places.macro_region' . $reg . ')', 'exact', 1, 'i'));
         } elseif (!empty(Request::get('place'))) {
@@ -70,7 +70,7 @@ class namesController {
                     . ' INNER JOIN attestations ON spellings_attestations_xref.attestations_id = attestations.attestations_id) '
                     . ' INNER JOIN inscriptions ON attestations.inscriptions_id = inscriptions.inscriptions_id'
                     . ' WHERE spellings.personal_names_id=personal_names.personal_names_id  AND '
-                    . ' COALESCE (inscriptions.origin, inscriptions.production_place, inscriptions.installation_place, inscriptions.provenance)="' . Request::get('place') . '")', 'exact', 1, 'i'));
+                    . ' region_temp="' . Request::get('place') . '")', 'exact', 1, 'i'));
         }
 
         if (!empty(Request::get('form_type'))) {

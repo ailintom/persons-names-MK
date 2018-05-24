@@ -157,8 +157,7 @@ class titlesView extends View {
                         <span id="gender-label">Gender</span>
                     </div>
                     <div class="filter_content">
-                        <?php // TODO: The first option can probably be removed  ?>
-                        <input type="radio" id="any" name="gender" value="any" aria-labelledby="gender-label"<?= View::oldValueRadio('gender', 'any', TRUE) ?>>
+                                                <input type="radio" id="any" name="gender" value="any" aria-labelledby="gender-label"<?= View::oldValueRadio('gender', 'any', TRUE) ?>>
                         <label for="any" title="Match titles regardless of gender">
                             Regardless of gender
                         </label>

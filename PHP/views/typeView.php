@@ -48,7 +48,7 @@ class typeView extends View {
                 $this->renderChildren($data->get('subtypes')->data[0], 0);
                 echo('</dd>');
             }
-            echo( $this->descriptionElement('Total number of people with names belonging to this type and its sub-types', '<a href="' . Request::makeURL('people') . '?name-type-' . $data->get('category') . '=' . urlencode($data->get('title')) . '">' . $data->get('attestations_count') . '</a>'));
+            echo( $this->descriptionElement('Total number of attestations of names belonging to this type and its sub-types', '<a href="' . Request::makeURL('people') . '?A' . ($data->get('category') == 'formal'?'form':'sem' ). '_type' . '=' . urlencode($data->get('title')) . '">' . $data->get('attestations_count') . '</a>'));
             echo $this->descriptionElement('Bibliography', $data->get('bibliography'), NULL, 'biblio-ref');
             //renderURL
             ?>

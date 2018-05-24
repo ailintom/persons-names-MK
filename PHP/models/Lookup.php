@@ -62,7 +62,10 @@ class Lookup {
             } else {
                 $stmt = $db->prepare($SQL . ' LIMIT 1');
             }
-            $stmt->bind_param($param, $value);
+            if (!empty($param)) {
+                $stmt->bind_param($param, $value);
+            }
+
             $stmt->execute();
         } catch (mysqli_sql_exception $e) {
             CriticalError::Show($e);

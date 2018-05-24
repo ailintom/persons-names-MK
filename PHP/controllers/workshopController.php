@@ -28,12 +28,8 @@ namespace PNM;
 
 /* Controls requests for a single find group */
 
-class workshopController {
+class workshopController extends EntryController {
 
-    public function load() {
-        $record = new workshop;
-        $record->find(Request::get('id'));
-        (new workshopView)->echoRender($record);
-    }
+    const NAME = 'workshop';
 
 }

@@ -51,7 +51,7 @@ class titlesController {
             array_push($rules, new Rule('Exists(SELECT titles_id FROM'
                     . ' ((titles_att INNER JOIN attestations ON titles_att.attestations_id = attestations.attestations_id) '
                     . ' INNER JOIN inscriptions ON attestations.inscriptions_id = inscriptions.inscriptions_id) '
-                    . ' INNER JOIN places ON COALESCE (inscriptions.origin, inscriptions.production_place, inscriptions.installation_place, inscriptions.provenance) = places.place_name'
+                    . ' INNER JOIN places ON region_temp = places.place_name'
                     . ' WHERE titles_att.titles_id=titles.titles_id AND '
                     . ' places.macro_region' . $reg . ')', 'exact', 1, 'i'));
         } elseif (!empty(Request::get('place'))) {
@@ -59,7 +59,7 @@ class titlesController {
                     . ' (titles_att INNER JOIN attestations ON titles_att.attestations_id = attestations.attestations_id) '
                     . ' INNER JOIN inscriptions ON attestations.inscriptions_id = inscriptions.inscriptions_id'
                     . ' WHERE titles_att.titles_id=titles.titles_id AND '
-                    . ' COALESCE (inscriptions.origin, inscriptions.production_place, inscriptions.installation_place, inscriptions.provenance)="' . Request::get('place') . '")', 'exact', 1, 'i'));
+                    . ' region_temp="' . Request::get('place') . '")', 'exact', 1, 'i'));
         }
         /*
           if (!empty(Request::get('period')) && Request::get('match-date') == 'characteristic') {

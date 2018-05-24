@@ -41,7 +41,7 @@ class personView extends View {
         $spellView = New spellingsMicroView();
 
         $titlesView = New titlesMicroView();
-        (New Head)->render(Head::HEADERSLIM, $data->get('title'));
+        (New Head)->render(Head::HEADERSLIM, 'Person ' . $data->get('title'));
         ?><table class="name-box"><tr><th></th>
                 <?= (empty($data->get('title_string')) ? NULL : '<th>Title</th>') ?>
                 <th>Name</th></tr>
@@ -71,7 +71,7 @@ class personView extends View {
             <?php
             foreach ($objAtt->data as $Att) {
                 $attView->setInscription($Att['inscriptions_id']);
-                echo '<li><h3 id="' . $Att['attestations_id'] . '">',
+                echo '<li><h3 id="' . ID::shorten( $Att['attestations_id']) . '">',
                 $insView->render($this->renderObjectType($Att['object_type']) . ' ' . $Att['title'], $Att['inscriptions_id']), ': ',
                 $attView->render($Att['title_string'], $Att['attestations_id'], $Att['personal_name']),
                 ' (', $Att['status'], ')</h3>';

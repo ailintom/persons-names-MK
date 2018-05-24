@@ -51,7 +51,7 @@ class inscriptionView extends View {
         echo $this->descriptionElement('Material', $data->get('material'), NULL, 'type');
         echo $this->descriptionElement('Size', $this->Size($data), NULL, 'type');
 
-        echo $this->descriptionElement('Text', $this->renderTextContent( $data->get('text_content')), NULL, 'type');
+        echo $this->descriptionElement('Text', $this->renderTextContent($data->get('text_content')), NULL, 'type');
         echo $this->descriptionElement('Script', $data->get('script'), NULL, 'type');
         echo $this->descriptionElement('Date', $data->get('dating'), $data->get('dating_note'), 'period');
         echo $this->descriptionElement('Provenance', $placesMV->render($data->get('provenance')), $data->get('provenance_note'), 'place');
@@ -84,8 +84,7 @@ class inscriptionView extends View {
                 $currentLoc = NULL;
                 $loc = $Att['location'];
             }
-            //'attestations_id', 'location', 'gender', 'title_string', 'personal_name', 'status', 'note'
-            $currentLoc .= '<li><h4 id="' . $Att['attestations_id'] . '"><span class="tit">' . $Att['title_string'] . '</span> <span class="pn">' . $Att['personal_name'] . '</span></h4>';
+            $currentLoc .= '<li><h4 id="' . ID::shorten($Att['attestations_id']) . '"><span class="tit">' . $Att['title_string'] . '</span> <span class="pn">' . $Att['personal_name'] . '</span></h4>';
 
             $spellings = $Att['spellings']->getSpellings();
             $titles = $Att['titles']->data;
@@ -127,7 +126,7 @@ class inscriptionView extends View {
                             $currentLoc .= ', ';
                         }
                         $currentLoc .= '<span class="name">';
-                        $currentLoc .= '<a href="' . Config::BASE . 'name/' . $name['personal_names_id'] . '#' . $spelling['spellings_id'] . '">';
+                        $currentLoc .= '<a href="' . Request::makeURL('name', [$name['personal_names_id'], $spelling['spellings_id']]) . '">';
                         if ($spellingPerNameCount++ == 0) {
                             $currentLoc .= $name['personal_name'] . ' ';
                         }
@@ -143,26 +142,7 @@ class inscriptionView extends View {
 
             $currentLoc .= '</tr></table>';
             //spellings
-            /*
-             * 
-             *                 
 
-              <td><span class="name"><a href="name/184549478.html#243269678">sꜣ.t-jp <span class="spelling-attestation"><img class="spelling" src="<?=Config::BASE?>assets/spellings/243269678.png" alt="zA&amp;t i p:F27"></span></a></span></td>
-              </tr></table>
-             * 
-             * attestations_id', 'wording', 'gender', 'predic', 'person
-             * 
-             *                <ul class="bonds">
-              <li>Husband (<span class="wording">implied</span>): <span class="attestation"><a href="inscription/33556283.html#67117487"><span class="tit">jr.j-pꜥ.t; ḥꜣ.tj-ꜥ; jm.j-rꜣ nj.wt; ṯꜣ.tj</span> <span class="pn">sꜣ-mnṯ.w</span></a></span></li>
-              <li>Children
-              <ul class="children">
-              <li>Daughter (<span class="wording">mst.n</span>): <span class="attestation"><a href="inscription/33556283.html#67117491"><span class="tit">snb</span></a></span></li>
-              <li>Son (<span class="wording">ms.n</span>): <span class="attestation"><a href="inscription/33556283.html#67117495"><span class="tit">ḫtm.w-bj.tj; ḥm-nṯr n jmn</span> <span class="pn">snb⸗f-n⸗j</span></a></span></li>
-              </ul>
-              </li>
-              </ul>
-             * 
-             */
             if (!empty($Att['bonds']->data)) {
 
                 $currentLoc .= $this->renderBonds($Att['bonds']->data, $attView);

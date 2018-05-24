@@ -24,11 +24,7 @@
  * SOFTWARE.
  */
 namespace PNM;
-class placeController {
-        public function load() {
-        $record = new place; //'Inscription::find(Request::get('id'));
-        $record->find(Request::get('id'));
+class placeController extends EntryController {
 
-        (new placeView)->echoRender($record);   
-    }
+    const NAME = 'place';
 }

@@ -34,7 +34,7 @@ namespace PNM;
 class Request {
 
 // This constant stores the filter parameteters for each possible value in GET requests
-    const GET_PARAMS = ['id' => FILTER_SANITIZE_NUMBER_INT, 'ver' => FILTER_SANITIZE_NUMBER_INT, 'size' => FILTER_SANITIZE_NUMBER_INT,
+    const GET_PARAMS = ['id' => FILTER_SANITIZE_STRING, 'ver' => FILTER_SANITIZE_NUMBER_INT, 'size' => FILTER_SANITIZE_NUMBER_INT,
         'tm_coll_id' => FILTER_SANITIZE_NUMBER_INT, 'tm_geoid' => FILTER_SANITIZE_NUMBER_INT,
         'controller' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
         'name' => FILTER_SANITIZE_STRING, 'Aname' => FILTER_SANITIZE_STRING, 'Bname' => FILTER_SANITIZE_STRING,
@@ -57,6 +57,9 @@ class Request {
         'match-region' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
         'start' => FILTER_SANITIZE_NUMBER_INT,
         'sort' => FILTER_SANITIZE_FULL_SPECIAL_CHARS, 'find_groups_sort' => FILTER_SANITIZE_FULL_SPECIAL_CHARS, 'workshops_sort' => FILTER_SANITIZE_FULL_SPECIAL_CHARS];
+    const DEFAULTS = ['size-option' => 'greater', 'geo-filter' => 'all', 'chrono-filter' => 'during',
+        'gender' => 'any', 'Agender' => 'any', 'Bgender' => 'any', 'match-date' => 'attested',
+        'match-region' => 'attested', 'match' => 'inexact'];
 
     private static $data = [];
 
@@ -117,7 +120,6 @@ class Request {
             }
         }
         self::$data['used_ver'] = self::get('ver') ?: Config::maxVer();
-        //print_r($_GET);
     }
 
     private static function default_flag($filter) {
@@ -126,11 +128,44 @@ class Request {
         }
     }
 
-    public static function makeURL($controller, $id = NULL, $sort = NULL, $sort_field = 'sort', $useCurrentFilters = FALSE, $start = -1) {
+    /*
+     * checks if the value of the given field is empty or equals the default value for this field
+     */
+
+    public static function emptyOrDefault($field, $value) {
+        if (empty($value)) {
+            return TRUE;
+        }
+        if (array_key_exists($field, self::DEFAULTS)) {
+            if (self::DEFAULTS[$field] == $value) {
+                return TRUE;
+            }
+        }
+        return FALSE;
+    }
+
+    /*
+     * returns a stable url for the current request
+     */
+
+    public static function stableURL() {
+        return self::makeURL(self::get('controller'), self::get('id'), NULL, NULL, TRUE, -1, TRUE);
+    }
+
+    /*
+     * returns a stable url for a different version of the current request
+     */
+
+    public static function changeVer($ver) {
+
+        return self::makeURL(self::get('controller'), self::get('id'), NULL, NULL, TRUE, -1, FALSE, $ver);
+    }
+
+    public static function makeURL($controller, $id = NULL, $sort = NULL, $sort_field = 'sort', $useCurrentFilters = FALSE, $start = -1, $forceVer = FALSE, $ver = NULL) {
         $request = [];
         if ($useCurrentFilters) {
             foreach (self::$data as $key => $value) {
-                if (!in_array($key, ['ver', 'id', 'used_ver', 'controller'])) {
+                if (!in_array($key, ['ver', 'id', 'used_ver', 'controller']) && !self::emptyOrDefault($key, $value)) {
                     $request[$key] = $value;
                 }
             }
@@ -151,9 +186,24 @@ class Request {
         } else {
             $requestString = NULL;
         }
+        if (!empty($ver)) {
+            $ver_element = ($ver == Config::maxVer()) ? NULL : $ver . '/';
+        } else {
+            $ver_element = (!$forceVer && empty(self::get('ver'))) ? NULL : self::get('used_ver') . '/';
+        }
+        if (!empty($id) && !in_array($controller, ['info', 'assets/spellings'])) {
+// short ids are used for all controllers except spelling images (which use long ids) and information pages (which use textual ids)
 
-        $ver_element = empty(self::$data['ver']) ? NULL : self::$data['used_ver'] . '/';
-        $id_element = empty($id) ? NULL : '/' . $id;
+            $idArr = (array) $id;
+            $short = implode('#', array_map('PNM\\ID::shorten', array_filter($idArr)));
+            $id_element = '/' . $short;
+        } elseif (!empty($id)) {
+            $id_element = '/' . $id;
+        } else {
+            $id_element = NULL;
+        }
+
+
         return Config::BASE . $ver_element . $controller . $id_element . $requestString;
     }
 

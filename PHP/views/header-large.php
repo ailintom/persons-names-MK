@@ -1,4 +1,6 @@
-<header class="header -large">
+<?php
+namespace PNM;
+?><header class="header -large">
     <div class="header_content">
         <h1 class="header_title">
             <a href="index.php">

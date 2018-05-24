@@ -29,16 +29,10 @@ namespace PNM;
 /**
  * Description of criterionController
  *
- * @author Tomich
+ *  
  */
-class criterionController {
+class criterionController extends EntryController {
 
-     
-    public function load() {
-        $record = new criterion; //'Inscription::find(Request::get('id'));
-        $record->find(Request::get('id'));
-
-        (new criterionView)->echoRender($record);
-    }
+    const NAME = 'criterion';
 
 }
