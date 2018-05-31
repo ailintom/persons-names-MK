@@ -40,6 +40,7 @@ require_once('Config.php');
   Class Config {
 
   const DB_CONFIG = ['host' => 'host',
+  'port' => '3306',
   'username' => 'user',
   'password' => 'password',
   'db' => 'db'

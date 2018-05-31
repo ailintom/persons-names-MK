@@ -22,7 +22,7 @@ class infoController {
         } elseif (Request::get('id') == 'impressum') {
             (new infoView)->echoRender(['Impressum', Config::IMPRESSUM]);
         } elseif (Request::get('id') == 'privacy') {
-            (new infoView)->echoRender(['Privacy policy', Config::PRIVACY]);
+            (new infoView)->echoRender(['Privacy Policy', Config::PRIVACY]);
         } else {
             $this->record = new info; // an instance of the EntryModel class
             //$this->record->find(Request::get('id'));

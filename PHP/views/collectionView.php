@@ -50,7 +50,13 @@ class collectionView extends View {
             echo( $this->descriptionElement('Inscribed objects in the database', $this->inscribedObjects($data->get('title'), $data->get('inscriptions_count'))));
             echo( $this->descriptionElement('Website', $this->renderURL($data->get('url'))));
             echo( $this->descriptionElement('Online catalogue', $this->renderURL($data->get('online_collection'))));
-            echo( $this->descriptionElement('Trismegistos collection ID', $this->renderURL($data->get('tm_coll_id'), 'https://www.trismegistos.org/collection/')));
+
+            $ref = $this->addReference('Trismegistos collection ID', $data->get('tm_coll_id'), 'https://www.trismegistos.org/collection/');
+            $ref = $this->addReference('THOT ID', $data->get('thot_concept_id'), 'http://thot.philo.ulg.ac.be/concept/', $ref);
+            $ref = $this->addReference('Artefacts of Excavations', $data->get('artefacts_url'), NULL, $ref);
+            echo( $this->descriptionElement('References', $ref));
+
+            // echo( $this->descriptionElement('Trismegistos collection ID', $this->renderURL($data->get('tm_coll_id'), 'https://www.trismegistos.org/collection/')));
             //renderURL
             ?>
         </dl>

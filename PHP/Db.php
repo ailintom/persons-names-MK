@@ -42,7 +42,7 @@ class Db
                         
             mysqli_report(MYSQLI_REPORT_STRICT | MYSQLI_REPORT_ALL ^ MYSQLI_REPORT_INDEX);
             try {
-                $mysqli = new \mysqli(Config::DB_CONFIG['host'], Config::DB_CONFIG['username'], Config::DB_CONFIG['password'], Config::DB_CONFIG['db']);
+                $mysqli = new \mysqli(Config::DB_CONFIG['host'], Config::DB_CONFIG['username'], Config::DB_CONFIG['password'], Config::DB_CONFIG['db'], Config::DB_CONFIG['port']);
                 $mysqli->set_charset('utf8');
             } catch (mysqli_sql_exception $e) {
                 CriticalError::Show($e);
