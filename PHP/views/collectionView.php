@@ -60,7 +60,7 @@ class collectionView extends View {
             //renderURL
             ?>
         </dl>
-        <h2>Objects in this collection</h2>
+        <h2>Inventory numbers in this collection</h2>
 
         <?php
         $total = count($data->data['inv_nos']->data);
@@ -71,7 +71,7 @@ class collectionView extends View {
         $tableCo = new Table($data->get('inv_nos'), 'inscriptions_id', 'inscription', 'sort', '#results');
         $tableCo->render_table(['inv_no', 'object_type', 'title', 'material',
             'size', 'text_content', 'dating', 'inst_prov_temp', 'orig_prod_temp', 'owner'], ['Inv. no.', 'Type', 'Object', 'Material', 'Size, mm',
-            'Text', 'Date', 'Provenance', 'Origin/Prod. place', 'Owner'], TRUE);
+            'Text', 'Date', 'Provenance', 'Origin/Prod. place', 'Owner'], TRUE, 'inv. no.');
     }
 
     protected function inscribedObjects($id_coll, $count) {

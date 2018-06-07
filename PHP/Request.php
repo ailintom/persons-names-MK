@@ -76,7 +76,6 @@ class Request {
         if (empty(self::$data)) {
             self::init();
         }
-
         return self::has($key) ? self::$data[$key] : $default;
     }
 
@@ -88,38 +87,15 @@ class Request {
         return array_key_exists($key, self::$data);
     }
 
-    /* The function returns the html code for the back button based on the referer of the current page
-     * If JavaScript is enabled and the referer is to JavaScript the same as provided by the PHP scipt, then the browser 
-     * navigates back instead of following the link so that the browser history is not filled up with back and forth moves
-     * 
-     */
-
-//
-    //   public static function back_button() {
-//
-    //       if (!empty($_SERVER['HTTP_REFERER'])) {
-    //          $ref = filter_input(INPUT_SERVER, 'HTTP_REFERER', FILTER_SANITIZE_URL);
-    //         $matches = [];
-    //        preg_match('#.*/(.*/.*)#', $ref, $matches);
-    //       $short_ref = $matches[1];
-//
-    //          return '<a class="main_parent-link" href="' . $ref .
-    //                '" onclick="if (document.referrer===this.href){window.history.back();return false;}else{return true;}">'
-    //              . 'Back to ' . $short_ref .
-    //            '</a>';
-    //}
-    //}
-
-
     private static function init() {
         foreach (self::GET_PARAMS as $key => $filter) {
 
             if (array_key_exists($key, $_GET)) {
-
                 self::$data[$key] = trim(filter_input(INPUT_GET, $key, $filter, self::default_flag($filter)));
             }
         }
-        self::$data['used_ver'] = self::get('ver') ?: Config::maxVer();
+        
+        self::$data['used_ver'] = isset(self::$data['ver']) ? self::get('ver')  : Config::maxVer();
     }
 
     private static function default_flag($filter) {
@@ -133,7 +109,7 @@ class Request {
      */
 
     public static function emptyOrDefault($field, $value) {
-        if (empty($value)) {
+        if (!isset($value)) {
             return TRUE;
         }
         if (array_key_exists($field, self::DEFAULTS)) {
@@ -175,7 +151,7 @@ class Request {
             $request['start'] = $start;
         }
 
-        if (!empty($sort)) {
+        if (isset($sort)) {
             $request[$sort_field] = $sort;
         }
         if (!empty($request)) {
@@ -186,18 +162,18 @@ class Request {
         } else {
             $requestString = NULL;
         }
-        if (!empty($ver)) {
+        if (isset($ver)) {
             $ver_element = ($ver == Config::maxVer()) ? NULL : $ver . '/';
         } else {
-            $ver_element = (!$forceVer && empty(self::get('ver'))) ? NULL : self::get('used_ver') . '/';
+            $ver_element = (!$forceVer && !isset(self::$data['ver'])) ? NULL : self::get('used_ver') . '/';
         }
-        if (!empty($id) && !in_array($controller, ['info', 'assets/spellings'])) {
+        if (isset($id) && !in_array($controller, ['info', 'assets/spellings'])) {
 // short ids are used for all controllers except spelling images (which use long ids) and information pages (which use textual ids)
 
             $idArr = (array) $id;
             $short = implode('#', array_map('PNM\\ID::shorten', array_filter($idArr)));
             $id_element = '/' . $short;
-        } elseif (!empty($id)) {
+        } elseif (isset($id)) {
             $id_element = '/' . $id;
         } else {
             $id_element = NULL;

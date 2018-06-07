@@ -43,7 +43,7 @@ require_once('Config.php');
   'port' => '3306',
   'username' => 'user',
   'password' => 'password',
-  'db' => 'db'
+  'db_prefix' => 'db_ver' // version numbers (0, 1, 2, etc.) are added to this prefix
   ];
   const VERSIONS = [[1, "15.04.2018"], [2, "16.04.2018"]];
   const BASE = '/subpath/';
@@ -142,7 +142,7 @@ require_once('views/personsMicroView.php');
 require_once('views/workshopsMicroView.php');
 require_once('views/find_groupsMicroView.php');
 
-
+require_once('views/NotFound.php');
 require_once('views/Table.php');
 require_once('views/RadioGroup.php');
 require_once('views/TextInput.php');

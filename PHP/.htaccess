@@ -9,7 +9,7 @@ RewriteRule ^ %{REQUEST_URI} [R,QSD]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^/?([a-z]*)/([A-Za-z0-9\s]*)/?$ /test3/index.php?controller=$1&id=$2 [QSA,L]
+RewriteRule ^/?([a-z]*)/([A-Za-z0-9'\s]*)/?$ /test3/index.php?controller=$1&id=$2 [QSA,L]
 
 
 RewriteCond %{REQUEST_FILENAME} !-f
@@ -19,7 +19,7 @@ RewriteRule ^/?([a-z]*)/?$ /test3/index.php?controller=$1 [QSA,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^/?([0-9]*)/([a-z]*)/([A-Za-z0-9\s]*)/?$ /test3/index.php?ver=$1&controller=$2&id=$3 [QSA,L]
+RewriteRule ^/?([0-9]*)/([a-z]*)/([A-Za-z0-9'\s]*)/?$ /test3/index.php?ver=$1&controller=$2&id=$3 [QSA,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

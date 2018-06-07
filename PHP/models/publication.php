@@ -49,7 +49,7 @@ class publication extends EntryModel {
                     . 'ORDER BY pages_sort';
 
             $this->data[$table[0]] = Lookup::getList($SQL, $this->getID(), 'i');
-            $this->data['refs_count'] += count($this->data[$table[0]]);
+            if (!empty($this->data[$table[0]])) {$this->data['refs_count'] += count($this->data[$table[0]]);}
         }
     }
 

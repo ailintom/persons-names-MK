@@ -75,7 +75,7 @@ class ListModel {
                 $filter->bind_param($stmt, $this->double_params);
             }
             $stmt->execute();
-        } catch (mysqli_sql_exception $e) {
+        } catch (\mysqli_sql_exception $e) {
             CriticalError::Show($e);
         }
         $result = $stmt->get_result();
@@ -94,7 +94,7 @@ class ListModel {
 
                   } */
                 $stmtTotal->execute();
-            } catch (mysqli_sql_exception $e) {
+            } catch (\mysqli_sql_exception $e) {
                 CriticalError::Show($e);
             }
             $resultTotal = $stmtTotal->get_result();

@@ -35,6 +35,7 @@ class EntryModel {
 
     public $data = null;
     public $subEntries = null;
+    public $noMatch = FALSE;
     protected $hasBiblio = FALSE;
     protected $idField = NULL; // This should be the name of the principal id field in the dataset
     protected $field_names = null;
@@ -82,7 +83,7 @@ class EntryModel {
             $stmt = $db->prepare($SQL);
             $stmt->bind_param($this->bindParam, $id);
             $stmt->execute();
-        } catch (mysqli_sql_exception $e) {
+        } catch (\mysqli_sql_exception $e) {
             CriticalError::Show($e);
         }
         $result = $stmt->get_result();
@@ -94,6 +95,8 @@ class EntryModel {
             }
             $this->loadChildren();
             $this->parse();
+        }else{
+            $this->noMatch = TRUE;
         }
     }
 

@@ -67,7 +67,7 @@ class Lookup {
             }
 
             $stmt->execute();
-        } catch (mysqli_sql_exception $e) {
+        } catch (\mysqli_sql_exception $e) {
             CriticalError::Show($e);
         }
         $result = $stmt->get_result();

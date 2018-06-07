@@ -35,12 +35,12 @@ class MicroView {
     protected $controller = NULL;
 
     public function render($inputvalue, $inputid = null, $secondinput = null) {
-        $this->value = htmlspecialchars($inputvalue, ENT_HTML5);
+        $this->value = htmlspecialchars(strip_tags($inputvalue), ENT_HTML5);
 
-        if (!empty($secondinput)) {
-            $this->secondinput = htmlspecialchars($secondinput, ENT_HTML5);
+        if (isset($secondinput)) {
+            $this->secondinput = htmlspecialchars(strip_tags($secondinput), ENT_HTML5);
         }
-        if (!empty($inputid)) {
+        if (isset($inputid)) {
             $this->url = $this->makeURL($inputid);
         }
         $res = $this->echoTemplate();

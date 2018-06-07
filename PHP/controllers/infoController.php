@@ -16,17 +16,18 @@ namespace PNM;
 class infoController {
 
     public function load() {
-        if (empty(Request::get('id'))) {
+        $id = Request::get('id');
+        if (!isset($id)) {
             $infos = New infos();
             (new startView)->echoRender($infos->data);
-        } elseif (Request::get('id') == 'impressum') {
+        } elseif ($id == 'impressum') {
             (new infoView)->echoRender(['Impressum', Config::IMPRESSUM]);
-        } elseif (Request::get('id') == 'privacy') {
+        } elseif ($id == 'privacy') {
             (new infoView)->echoRender(['Privacy Policy', Config::PRIVACY]);
         } else {
             $this->record = new info; // an instance of the EntryModel class
             //$this->record->find(Request::get('id'));
-            (new infoView)->echoRender($this->record->find(Request::get('id'))[0]);
+            (new infoView)->echoRender($this->record->find($id)[0]);
         }
     }
 

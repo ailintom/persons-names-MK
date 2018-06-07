@@ -10,8 +10,8 @@ namespace PNM;
 
 /**
  * This this is a parent class for controllers displaying a single record, optionally with child records, loaded
- * based on the request by loadChildren
- * 
+ * based on the request by loadChildren.
+ *  
  */
 class EntryController {
 
@@ -42,9 +42,13 @@ class EntryController {
         }
 
         $this->record->find($id->getID());
-        $this->loadChildren();
-        $viewClass = 'PNM\\' . static::NAME . 'View';
-        (new $viewClass)->echoRender($this->record);
+        if ($this->record->noMatch == TRUE) { // the record was not found
+             (new NotFound)->echoRender();
+        } else { // the record was found
+            $this->loadChildren();
+            $viewClass = 'PNM\\' . static::NAME . 'View';
+            (new $viewClass)->echoRender($this->record);
+        }
     }
 
     /*

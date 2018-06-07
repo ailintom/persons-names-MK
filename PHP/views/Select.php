@@ -45,7 +45,7 @@ class Select {
     }
 
     protected function renderOption($option) {
-        if (!empty($this->default)) {
+        if (isset($this->default)) {
             $isDef = $option == $this->default;
         } else {
             $isDef = False;

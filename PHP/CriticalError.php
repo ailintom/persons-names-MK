@@ -25,12 +25,11 @@ copies or substantial portions of the Software.
  */
 namespace PNM;
 Class CriticalError{
-    public static function Show(Throwable $e){
-        ?>
-<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN' 'http://www.w3.org/TR/html4/loose.dtd'> <html> <head>error</head> <body><p>
-             
-           </p><p>Error: <?php
-            echo(get_class ($e)).'<br>'; 
+    public static function Show(\Exception $e){
+           http_response_code(500);
+        (New Head)->render(Head::HEADERSLIM, 'Error');
+        ?><p>Error: <?php
+            echo(get_class($e)).'<br>'; 
             print_r($e);
             ?> 
         </p></body></html>

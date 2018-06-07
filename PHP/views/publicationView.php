@@ -51,7 +51,7 @@ class publicationView extends View {
         if ($data->get('refs_count') > 0) {
             ?><h2>Entities referred to in this publication</h2><?php
             foreach ($data->tables as $table) {
-                if (count($data->get($table[0])) > 0) {
+                if (!empty($data->get($table[0]))) {
                     $ViewClass = 'PNM\\' . $table[0] . 'MicroView';
 
                     $this->View = New $ViewClass();

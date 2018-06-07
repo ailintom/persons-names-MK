@@ -136,7 +136,7 @@ class Table {
                             if ($columns[$i] == 'gender' || $columns[$i] == 'gender_b') {
                                 $cellval = View::renderGender(empty($row[$columns[$i]]) ? NULL : $row[$columns[$i]]) ?: '&nbsp;';
                             } else {
-                                $cellval = empty($row[$columns[$i]]) ? '&nbsp;' : $row[$columns[$i]];
+                                $cellval = !empty($row[$columns[$i]]) && strlen($row[$columns[$i]])>0 ? $row[$columns[$i]]  : '&nbsp;';
                             }
                             //role="presentation"
                             echo('<div class="tr' . $sort_renders[$i][0] . '" role="gridcell" style="display: table-cell"' . $sort_renders[$i][0] . '>' . $cellval . '</div>' . "\r" );

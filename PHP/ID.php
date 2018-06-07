@@ -98,8 +98,7 @@ Class ID {
                 return self::TABLE_NAMES[$TableID];
             }
         }
-    }
-    
+    }    
    
     static function shorten($id){
         $idObj = new ID((int) $id); 
