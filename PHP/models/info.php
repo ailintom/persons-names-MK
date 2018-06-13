@@ -13,9 +13,12 @@ namespace PNM;
  *
  * @author Tomich
  */
-class info {
+class info
+{
+
     //put your code here
-    public function find($id_input) {
+    public function find($id_input)
+    {
         return Lookup::uniGet('select title, text from info WHERE title = ?', $id_input, 's', Lookup::RETURN_INDEXED);
     }
 }

@@ -13,13 +13,14 @@ namespace PNM;
  *
  * @author Tomich
  */
-class infos {
+class infos
+{
 
     public $data;
 
-    public function __construct() {
-        $this->data = Lookup::uniGet('select title from info ORDER BY sort_order', NULL, NULL, Lookup::RETURN_INDEXED);
+    public function __construct()
+    {
+        $this->data = Lookup::uniGet('select title from info ORDER BY sort_order', null, null, Lookup::RETURN_INDEXED);
     }
-
     //put your code here
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace PNM;
 ?><header class="header -large">
     <div class="header_content">
@@ -9,7 +10,6 @@ namespace PNM;
         </h1>
     </div>
 </header>
-
 <main class="main">
     <div class="main_content -centered" id="content">
         <?php // closed in ./footer.php ?>

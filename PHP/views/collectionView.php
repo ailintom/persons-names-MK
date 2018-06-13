@@ -1,19 +1,19 @@
 <?php
 /*
  * MIT License
- * 
+ *
  * Copyright (c) 2017 Alexander Ilin-Tomich (unless specified otherwise for individual source files and documents)
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
   copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,21 +26,23 @@
 namespace PNM;
 
 /*
- * 
- *        
+ *
+ *
  */
 
-class collectionView extends View {
+class collectionView extends View
+{
     /*
-     * 
+     *
      *   $this->field_names = new FieldList(['collections_id', 'title', 'full_name_en', 'full_name_national_language', 'location', 'IFNULL(url, online_collection)', 'IF(online_collection>"", "available", "")', 'tm_coll_id',
       'SELECT COUNT(DISTINCT inscriptions_id) FROM inv_nos WHERE inv_nos.collections_id = collections.collections_id and status<>"erroneous"'],
       ['collections_id', 'title', 'full_name_en', 'full_name_national_language',  'location', 'url', 'online_collection', 'tm_coll_id',
       'inscriptions_count']);
      */
 
-    public function echoRender(&$data) {
-        (New Head)->render(Head::HEADERSLIM, $data->get('title'));
+    public function echoRender(&$data)
+    {
+        (new Head())->render(Head::HEADERSLIM, $data->get('title'));
         ?>
         <dl>
             <?php
@@ -50,18 +52,15 @@ class collectionView extends View {
             echo( $this->descriptionElement('Inscribed objects in the database', $this->inscribedObjects($data->get('title'), $data->get('inscriptions_count'))));
             echo( $this->descriptionElement('Website', $this->renderURL($data->get('url'))));
             echo( $this->descriptionElement('Online catalogue', $this->renderURL($data->get('online_collection'))));
-
             $ref = $this->addReference('Trismegistos collection ID', $data->get('tm_coll_id'), 'https://www.trismegistos.org/collection/');
             $ref = $this->addReference('THOT ID', $data->get('thot_concept_id'), 'http://thot.philo.ulg.ac.be/concept/', $ref);
-            $ref = $this->addReference('Artefacts of Excavations', $data->get('artefacts_url'), NULL, $ref);
+            $ref = $this->addReference('Artefacts of Excavations', $data->get('artefacts_url'), null, $ref);
             echo( $this->descriptionElement('References', $ref));
-
             // echo( $this->descriptionElement('Trismegistos collection ID', $this->renderURL($data->get('tm_coll_id'), 'https://www.trismegistos.org/collection/')));
             //renderURL
             ?>
         </dl>
         <h2>Inventory numbers in this collection</h2>
-
         <?php
         $total = count($data->data['inv_nos']->data);
         for ($i = 0; $i < $total; $i++) {
@@ -69,15 +68,15 @@ class collectionView extends View {
             $data->data['inv_nos']->data[$i]['text_content'] = $this->renderTextContent($data->data['inv_nos']->data[$i]['text_content']);
         }
         $tableCo = new Table($data->get('inv_nos'), 'inscriptions_id', 'inscription', 'sort', '#results');
-        $tableCo->render_table(['inv_no', 'object_type', 'title', 'material',
+        $tableCo->renderTable(['inv_no', 'object_type', 'title', 'material',
             'size', 'text_content', 'dating', 'inst_prov_temp', 'orig_prod_temp', 'owner'], ['Inv. no.', 'Type', 'Object', 'Material', 'Size, mm',
-            'Text', 'Date', 'Provenance', 'Origin/Prod. place', 'Owner'], TRUE, 'inv. no.');
+            'Text', 'Date', 'Provenance', 'Origin/Prod. place', 'Owner'], true, 'inv. no.');
     }
 
-    protected function inscribedObjects($id_coll, $count) {
+    protected function inscribedObjects($id_coll, $count)
+    {
         if (!empty($count)) {
             return '<a href="' . Request::makeURL('inscriptions') . '?collection=' . urlencode($id_coll) . '">' . $count . '</a>';
         }
     }
-
 }

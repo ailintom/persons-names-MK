@@ -13,7 +13,8 @@ namespace PNM;
  *
  * @author Tomich
  */
-class Select {
+class Select
+{
 
     protected $name;
     protected $label;
@@ -24,7 +25,8 @@ class Select {
     protected $values;
     protected $default;
 
-    public function __construct($name, $label, $title, $values, $default, $startWithEmpty = TRUE, $id = NULL) {
+    public function __construct($name, $label, $title, $values, $default, $startWithEmpty = true, $id = null)
+    {
         $this->name = $name;
         $this->label = $label;
         $this->title = $title;
@@ -32,26 +34,26 @@ class Select {
         $this->default = $default;
         $this->values = $values;
         if ($startWithEmpty) {
-              array_unshift($this->values, '');
-        } 
+            array_unshift($this->values, '');
+        }
     }
 
-    public function render() {
-
+    public function render()
+    {
         //$this->oldVal = View::oldValueSelect($name);
         return '<label for="' . $this->id . '">' . $this->label . '</label><select name="' . $this->name . '" id="' . $this->id . '">'
                 . implode(array_map(array($this, 'renderOption'), $this->values))
                 . '</select>';
     }
 
-    protected function renderOption($option) {
+    protected function renderOption($option)
+    {
         if (isset($this->default)) {
             $isDef = $option == $this->default;
         } else {
-            $isDef = False;
+            $isDef = false;
         }
         $selected = View::oldValueSelect($this->name, $option, $isDef);
         return '<option value="' . $option . '"' . $selected . '>' . ($option ?: '&nbsp;') . '</option>';
     }
-
 }

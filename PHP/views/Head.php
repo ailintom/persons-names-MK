@@ -2,25 +2,25 @@
 
 namespace PNM;
 
-class Head {
+class Head
+{
 
     const HEADERFULL = 0;
     const HEADERSLIM = 1;
 
-    public function render($header, $title = NULL) {
-          $strippedTitle = strip_tags($title);
+    public function render($header, $title = null)
+    {
+        $strippedTitle = strip_tags($title);
         ?><!DOCTYPE html>
         <!--[if lte IE 9]><html lang="en" class="old-ie"><![endif]-->
         <!--[if !IE]><!--><html lang="en"><!--<![endif]-->
-
             <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <meta http-equiv="X-UA-Compatible" content="ie=edge">
                 <meta name="description" content="An online database of ancient Egyptian personal names, titles, and persons from the Middle Kingdom.">
                 <title><?= !empty($title) ? "$strippedTitle | " : "" ?>Persons and Names of the Middle Kingdom</title>
-
-                                                                        <!--<base href="<?= Config::BASE ?>">-->
+                                                                                        <!--<base href="<?= Config::BASE ?>">-->
                 <meta property="og:title" content="<?= !empty($title) ? "$strippedTitle | " : "" ?>Persons and Names of the Middle Kingdom">
                 <meta property="og:url" content="<?= Config::HOST . Request::stableURL() ?>">
                 <meta property="og:type" content="website">
@@ -38,14 +38,11 @@ class Head {
                 <meta name="msapplication-TileColor" content="#2b5797">
                 <meta name="msapplication-config" content="<?= Config::BASE ?>assets/favicon/browserconfig.xml">
                 <meta name="theme-color" content="#ffffff">
-
                 <!--[if lte IE 9]>
                     <script src="<?= Config::BASE ?>assets/script/classlist-polyfill.js"></script>
                     <script src="<?= Config::BASE ?>assets/script/html5shiv.min.js"></script>
                 <![endif]-->
-
             </head>
-
             <body>
                 <?php
                 if ($header == self::HEADERFULL) {
@@ -57,6 +54,5 @@ class Head {
                     }
                 }
             }
-
         }
         

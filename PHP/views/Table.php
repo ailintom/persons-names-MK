@@ -1,19 +1,19 @@
 <?php
 /*
  * MIT License
- * 
+ *
  * Copyright (c) 2017 Alexander Ilin-Tomich (unless specified otherwise for individual source files and documents)
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
   copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -30,7 +30,8 @@ namespace PNM;
  *
  * @author Tomich
  */
-class Table {
+class Table
+{
 
     //put your code here
     protected $data;
@@ -41,7 +42,8 @@ class Table {
     protected $hashpos;
     protected $extraHeader;
 
-    public function __construct(ListModel $data, $id_field, $target_controller, $sort_param = 'sort', $hashpos = NULL) {
+    public function __construct(ListModel $data, $id_field, $target_controller, $sort_param = 'sort', $hashpos = null)
+    {
         $this->data = $data;
         $this->id_field = (array) $id_field;
         $this->target_controller = $target_controller;
@@ -52,60 +54,58 @@ class Table {
         }
     }
 
-    protected function render_sort($field) {
+    protected function renderSort($field)
+    {
 //echo ( $this->sort_param . '++' . Request::get($this->sort_param) .';;;'. $field . ' ASC');
         if ((empty(Request::get($this->sort_param)) && $field == $this->default_field) || (Request::get($this->sort_param) == $field . ' ASC')) {
-
-
-            return [' -highlight', $field . ' DESC', 'descending', icon('arrow-up')];
+            return [' -highlight', $field . ' DESC', 'descending', Icon::get('arrow-up')];
         } elseif (Request::get($this->sort_param) == $field . ' DESC') {
-            return [' -highlight', $field . ' ASC', 'ascending', ' ' . icon('arrow-down')];
+            return [' -highlight', $field . ' ASC', 'ascending', ' ' . Icon::get('arrow-down')];
         } else {
-            return [NULL, $field . ' ASC', 'ascending', NULL];
+            return [null, $field . ' ASC', 'ascending', null];
         }
     }
 
-    public function addHeader($header) {
+    public function addHeader($header)
+    {
         $this->extraHeader = $header;
     }
 
-    public function render_table(Array $columns, Array $column_titles, $pagination = FALSE, $items_name = NULL) {
-
-        $sort_renders = array_map(array($this, 'render_sort'), $columns);
+    public function renderTable(array $columns, array $column_titles, $pagination = false, $items_name = null)
+    {
+        $sort_renders = array_map(array($this, 'renderSort'), $columns);
         // print_r($columns);
         // print_r($sort_renders);
         if ($pagination) {
             $hashpos = $this->id_field[0] . "_nav";
             $onclick_nav = ' onclick="window.location.replace(this.href + (' . "'#$hashpos'" . '));return false;"';
             //echo('<p class="pagination" id="' . $hashpos . '">');
-
             echo('<p id="' . $hashpos . '">Displaying ' . ($items_name ?: Request::get('controller') ) . ' ' . $this->data->start . '&ndash;' . ($this->data->start + $this->data->count - 1) . ' out of ' . $this->data->total_count . '</p>');
-
             $pag = '<p class="pagination">';
             if ($this->data->start > 1) {
-                $pag .= '<a class="pagination_link -first" href="' . Request::makeURL(Request::get('controller'), Request::get('id'), NULL, NULL, TRUE, 0) . '"' . $onclick_nav . '>First</a>'
-                        . '<a class="pagination_link -previous" href="' . Request::makeURL(Request::get('controller'), Request::get('id'), NULL, NULL, TRUE, (($this->data->start - 1 - 50) >= 0 ? $this->data->start - 1 - 50 : 0))
-                        . '"' . $onclick_nav . '>' . icon('chevron-left')
+                $pag .= '<a class="pagination_link -first" href="' . Request::makeURL(Request::get('controller'), Request::get('id'), null, null, true, 0) . '"' . $onclick_nav . '>First</a>'
+                        . '<a class="pagination_link -previous" href="' . Request::makeURL(Request::get('controller'), Request::get('id'), null, null, true, (($this->data->start - 1 - 50) >= 0 ? $this->data->start - 1 - 50 : 0))
+                        . '"' . $onclick_nav . '>' . Icon::get('chevron-left')
                         . ' Prev ' . ($this->data->start > 50 ? 50 : $this->data->start - 1) . '</a>';
             }
             if ($this->data->start + $this->data->count - 1 < $this->data->total_count) {
-                $pag .= '<a class="pagination_link -next" href="' . Request::makeURL(Request::get('controller'), Request::get('id'), NULL, NULL, TRUE, (($this->data->start + 49) < $this->data->total_count ? $this->data->start + 49 : $this->data->total_count - 50))
-                        . '"' . $onclick_nav . '>Next ' . (($this->data->start + 99) < $this->data->total_count ? 50 : $this->data->total_count - $this->data->start - 49 ) . ' ' . icon('chevron-right') . '</a>'
-                        . '<a class="pagination_link -last" href="' . Request::makeURL(Request::get('controller'), Request::get('id'), NULL, NULL, TRUE, intdiv($this->data->total_count, 50) * 50) . '"' . $onclick_nav . '>Last</a>';
+                $pag .= '<a class="pagination_link -next" href="' . Request::makeURL(Request::get('controller'), Request::get('id'), null, null, true, (($this->data->start + 49) < $this->data->total_count ? $this->data->start + 49 : $this->data->total_count - 50))
+                        . '"' . $onclick_nav . '>Next ' . (($this->data->start + 99) < $this->data->total_count ? 50 : $this->data->total_count - $this->data->start - 49 ) . ' ' . Icon::get('chevron-right') . '</a>'
+                        . '<a class="pagination_link -last" href="' . Request::makeURL(Request::get('controller'), Request::get('id'), null, null, true, intdiv($this->data->total_count, 50) * 50) . '"' . $onclick_nav . '>Last</a>';
             }
             $pag .= '</p>';
             echo ($pag);
         } else {
-            $pag = NULL;
+            $pag = null;
         }
-        ?>  
+        ?>
         <div class="table-container">
             <div role="grid" style="display: table"><?= $this->extraHeader ?>
                 <div role="row" style="display: table-row">
                     <?php
                     echo ( "\r");
                     for ($i = 0; $i < count($columns); ++$i) {
-                        $url = Request::makeURL(Request::get('controller'), Request::get('id'), $sort_renders[$i][1], $this->sort_param, TRUE, 0);
+                        $url = Request::makeURL(Request::get('controller'), Request::get('id'), $sort_renders[$i][1], $this->sort_param, true, 0);
                         $hashpos = $this->id_field[0] . "_" . $i;
                         echo ('<div class="th' . $sort_renders[$i][0] . '" role="gridcell" style="display: table-cell">'
                         . '<a href="' . $url . '" title="Sort by ' . lcfirst($column_titles[$i]) . ', ' . $sort_renders[$i][2] . '" id="' . $hashpos . '"'
@@ -121,7 +121,7 @@ class Table {
                         //getDefaultController
                         // print_r (array_filter(array_intersect_key($row, array_flip($this->id_field))));
                         $arr = array_filter(array_intersect_key($row, array_flip($this->id_field)));
-                        $idObj = New ID(intval(reset($arr)));
+                        $idObj = new ID(intval(reset($arr)));
                         $controller = $idObj->getDefaultController();
                     } else {
                         $controller = $this->target_controller;
@@ -134,9 +134,9 @@ class Table {
                         <?php
                         for ($i = 0; $i < count($columns); ++$i) {
                             if ($columns[$i] == 'gender' || $columns[$i] == 'gender_b') {
-                                $cellval = View::renderGender(empty($row[$columns[$i]]) ? NULL : $row[$columns[$i]]) ?: '&nbsp;';
+                                $cellval = View::renderGender(empty($row[$columns[$i]]) ? null : $row[$columns[$i]]) ?: '&nbsp;';
                             } else {
-                                $cellval = !empty($row[$columns[$i]]) && strlen($row[$columns[$i]])>0 ? $row[$columns[$i]]  : '&nbsp;';
+                                $cellval = !empty($row[$columns[$i]]) && strlen($row[$columns[$i]]) > 0 ? $row[$columns[$i]] : '&nbsp;';
                             }
                             //role="presentation"
                             echo('<div class="tr' . $sort_renders[$i][0] . '" role="gridcell" style="display: table-cell"' . $sort_renders[$i][0] . '>' . $cellval . '</div>' . "\r" );
@@ -150,5 +150,4 @@ class Table {
         </div>   <?php
         echo ($pag);
     }
-
 }

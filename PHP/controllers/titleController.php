@@ -2,19 +2,19 @@
 
 /*
  * MIT License
- * 
+ *
  * Copyright (c) 2017 Alexander Ilin-Tomich (unless specified otherwise for individual source files and documents)
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
   copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,13 +26,14 @@
 
 namespace PNM;
 
-class titleController extends EntryController {
+class titleController extends EntryController
+{
 
     const NAME = 'title';
 
-    protected function loadChildren() {
-
-        $rules = [New Rule('titles_id', 'exact', $this->record->get('titles_id'), 'i')];
+    protected function loadChildren()
+    {
+        $rules = [new Rule('titles_id', 'exact', $this->record->get('titles_id'), 'i')];
         //geo-filter
         if (!empty(Request::get('place'))) {
             if (Request::get('geo-filter') == 'any') {
@@ -51,13 +52,11 @@ class titleController extends EntryController {
                     $geoField = Request::get('geo-filter');
                 }
             }
-
             if (Request::get('place') == 'NUELE') {
                 $place = ["ME", "MFR", "LE"];
             } else {
                 $place = Request::get('place');
             }
-
             array_push($rules, new Rule($geoField, 'exact', $place));
         }
         if (!empty(Request::get('period')) && Request::get('chrono-filter') == 'not-later') {
@@ -78,18 +77,11 @@ class titleController extends EntryController {
             //       . 'AND dating_temp.parent_item_name="' . Request::get('period') . '")', 'exact', $res, 'i'));
             //array_push($rules, new Rule('dating', 'exact', Request::get('period')));
         }
-
         $filterTitleAtt = new Filter($rules);
-
-        $objTitleAtt = New titleAttestations(Request::get('sort'), (Request::get('start') ?: 0), 50, $filterTitleAtt);
-
-
+        $objTitleAtt = new titleAttestations(Request::get('sort'), (Request::get('start') ?: 0), 50, $filterTitleAtt);
         $this->record->data['attestations'] = $objTitleAtt;
-
-        $filterRelations = new Filter([New Rule('titles_id', 'exact', $this->record->get('titles_id'), 'i'), New Rule('titles_id', 'exact', $this->record->get('titles_id'), 'i')]);
-        $objRelations = New title_relations(NULL, 0, 0, $filterRelations);
+        $filterRelations = new Filter([new Rule('titles_id', 'exact', $this->record->get('titles_id'), 'i'), new Rule('titles_id', 'exact', $this->record->get('titles_id'), 'i')]);
+        $objRelations = new title_relations(null, 0, 0, $filterRelations);
         $this->record->data['relations'] = $objRelations;
-      
     }
-
 }

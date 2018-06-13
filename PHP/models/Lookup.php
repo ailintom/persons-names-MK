@@ -2,19 +2,19 @@
 
 /*
  * MIT License
- * 
+ *
  * Copyright (c) 2017 Alexander Ilin-Tomich (unless specified otherwise for individual source files and documents)
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
   copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -31,31 +31,34 @@ namespace PNM;
  *
  * @author Tomich
  */
-class Lookup {
+class Lookup
+{
 
-    CONST TEXT_CONTENT_THESAURUS = 4;
-    CONST SCRIPT_THESAURUS = 12;
-    CONST OBJECT_TYPES_THESAURUS = 1;
-    CONST RETURN_VAL = 0;
-    CONST RETURN_ASSOC = 1;
-    CONST RETURN_INDEXED = 2;
+    const TEXT_CONTENT_THESAURUS = 4;
+    const SCRIPT_THESAURUS = 12;
+    const OBJECT_TYPES_THESAURUS = 1;
+    const RETURN_VAL = 0;
+    const RETURN_ASSOC = 1;
+    const RETURN_INDEXED = 2;
 
-    static function get($SQL, $value, $param = 's') {
+    public static function get($SQL, $value, $param = 's')
+    {
         return self::uniGet($SQL, $value, $param, self::RETURN_VAL);
     }
 
-    static function getList($SQL, $value, $param = 's') {
+    public static function getList($SQL, $value, $param = 's')
+    {
         return self::uniGet($SQL, $value, $param, self::RETURN_ASSOC);
     }
 
-    static function getColumn($SQL, $value, $param = 's') {
-
+    public static function getColumn($SQL, $value, $param = 's')
+    {
         return array_column(self::uniGet($SQL, $value, $param, self::RETURN_INDEXED), 0);
     }
 
-    static function uniGet($SQL, $value, $param, $list) {
+    public static function uniGet($SQL, $value, $param, $list)
+    {
         $db = Db::getInstance();
-
         try {
             if ($list) {
                 $stmt = $db->prepare($SQL);
@@ -65,10 +68,9 @@ class Lookup {
             if (!empty($param)) {
                 $stmt->bind_param($param, $value);
             }
-
             $stmt->execute();
         } catch (\mysqli_sql_exception $e) {
-            CriticalError::Show($e);
+            CriticalError::show($e);
         }
         $result = $stmt->get_result();
         if ($result->num_rows !== 0) {
@@ -84,32 +86,38 @@ class Lookup {
         }
     }
 
-    static function getThesaurus($thesaurusID) {
+    public static function getThesaurus($thesaurusID)
+    {
         return self::getColumn('SELECT item_name FROM thesauri WHERE thesaurus = ? ORDER BY item_name', $thesaurusID, 'i');
     }
 
-    static function dateStart($dating) {
-
+    public static function dateStart($dating)
+    {
         return self::get('SELECT sort_date_range_start FROM thesauri WHERE item_name = ?', $dating);
     }
 
-    static function dateEnd($dating) {
+    public static function dateEnd($dating)
+    {
         return self::get('SELECT sort_date_range_end FROM thesauri WHERE item_name = ?', $dating);
     }
 
-    static function latitude($place_name) {
+    public static function latitude($place_name)
+    {
         return self::get('SELECT latitude FROM places WHERE place_name = ?', $place_name);
     }
 
-    static function findGroupTitle($id) {
+    public static function findGroupTitle($id)
+    {
         return self::get('SELECT title FROM find_groups WHERE find_groups_id = ?', $id, 'i');
     }
 
-    static function name_types_idGet($name_type) {
+    public static function name_types_idGet($name_type)
+    {
         return self::get('SELECT name_types_id FROM name_types WHERE title = ?', $name_type);
     }
 
-    static function collectionsGet($collection) {
+    public static function collectionsGet($collection)
+    {
         $res = self::get('SELECT collections_id FROM collections WHERE title = ?', $collection);
         if (empty($res)) {
             $res = self::get('SELECT collections_id FROM collections WHERE full_name_en = ?', $collection);
@@ -119,5 +127,4 @@ class Lookup {
         }
         return $res;
     }
-
 }

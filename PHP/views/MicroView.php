@@ -2,19 +2,19 @@
 
 /*
  * MIT License
- * 
+ *
  * Copyright (c) 2017 Alexander Ilin-Tomich (unless specified otherwise for individual source files and documents)
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
   copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,17 +26,18 @@
 
 namespace PNM;
 
-class MicroView {
+class MicroView
+{
 
     protected $template = null;
     protected $secondinput = null;
     protected $url = null;
     protected $value = null;
-    protected $controller = NULL;
+    protected $controller = null;
 
-    public function render($inputvalue, $inputid = null, $secondinput = null) {
+    public function render($inputvalue, $inputid = null, $secondinput = null)
+    {
         $this->value = htmlspecialchars(strip_tags($inputvalue), ENT_HTML5);
-
         if (isset($secondinput)) {
             $this->secondinput = htmlspecialchars(strip_tags($secondinput), ENT_HTML5);
         }
@@ -44,22 +45,23 @@ class MicroView {
             $this->url = $this->makeURL($inputid);
         }
         $res = $this->echoTemplate();
-
         return $res;
     }
 
-    protected function makeURL($inputid) {
+    protected function makeURL($inputid)
+    {
         return Request::makeURL($this->controller, $inputid);
     }
 
-    public function echoRender($inputvalue, $inputid = null, $secondinput = null) {
+    public function echoRender($inputvalue, $inputid = null, $secondinput = null)
+    {
         echo ($this->render($inputvalue, $inputid, $secondinput) );
     }
 
-    protected function echoTemplate() {
+    protected function echoTemplate()
+    {
         return <<<EOF
 <a href="$this->url">$this->value</a>
 EOF;
     }
-
 }

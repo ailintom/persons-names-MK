@@ -2,19 +2,19 @@
 
 /*
  * MIT License
- * 
+ *
  * Copyright (c) 2017 Alexander Ilin-Tomich (unless specified otherwise for individual source files and documents)
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
   copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -31,7 +31,8 @@ namespace PNM;
  *
  * @author Tomich
  */
-class Request {
+class Request
+{
 
 // This constant stores the filter parameteters for each possible value in GET requests
     const GET_PARAMS = ['id' => FILTER_SANITIZE_STRING, 'ver' => FILTER_SANITIZE_NUMBER_INT, 'size' => FILTER_SANITIZE_NUMBER_INT,
@@ -63,81 +64,73 @@ class Request {
 
     private static $data = [];
 
-    private function __construct() {
-        
-    }
-
-    private function __clone() {
-        
-    }
-
-    public static function get($key, $default = null) {
-
+    public static function get($key, $default = null)
+    {
         if (empty(self::$data)) {
             self::init();
         }
         return self::has($key) ? self::$data[$key] : $default;
     }
 
-    public static function has($key) {
+    public static function has($key)
+    {
         if (empty(self::$data)) {
             self::init();
         }
-
         return array_key_exists($key, self::$data);
     }
 
-    private static function init() {
+    private static function init()
+    {
         foreach (self::GET_PARAMS as $key => $filter) {
-
             if (array_key_exists($key, $_GET)) {
-                self::$data[$key] = trim(filter_input(INPUT_GET, $key, $filter, self::default_flag($filter)));
+                self::$data[$key] = trim(filter_input(INPUT_GET, $key, $filter, self::defaultFlag($filter)));
             }
         }
-        
-        self::$data['used_ver'] = isset(self::$data['ver']) ? self::get('ver')  : Config::maxVer();
+        self::$data['used_ver'] = isset(self::$data['ver']) ? self::get('ver') : Config::maxVer();
     }
 
-    private static function default_flag($filter) {
+    private static function defaultFlag($filter)
+    {
         if ($filter == FILTER_SANITIZE_STRING) {
             return FILTER_FLAG_STRIP_LOW;
         }
     }
-
     /*
      * checks if the value of the given field is empty or equals the default value for this field
      */
 
-    public static function emptyOrDefault($field, $value) {
-        if (!isset($value) or !isset($value[0]) ) {
-            return TRUE;
+    public static function emptyOrDefault($field, $value)
+    {
+        if (!isset($value) or ! isset($value[0])) {
+            return true;
         }
         if (array_key_exists($field, self::DEFAULTS)) {
             if (self::DEFAULTS[$field] == $value) {
-                return TRUE;
+                return true;
             }
         }
-        return FALSE;
+        return false;
     }
-
     /*
      * returns a stable url for the current request
      */
 
-    public static function stableURL() {
-        return self::makeURL(self::get('controller'), self::get('id'), NULL, NULL, TRUE, -1, TRUE);
+    public static function stableURL()
+    {
+        return self::makeURL(self::get('controller'), self::get('id'), null, null, true, -1, true);
     }
-
     /*
      * returns a stable url for a different version of the current request
      */
 
-    public static function changeVer($ver) {
-
-        return self::makeURL(self::get('controller'), self::get('id'), NULL, NULL, TRUE, -1, FALSE, $ver);
+    public static function changeVer($ver)
+    {
+        return self::makeURL(self::get('controller'), self::get('id'), null, null, true, -1, false, $ver);
     }
 
-    public static function makeURL($controller, $id = NULL, $sort = NULL, $sort_field = 'sort', $useCurrentFilters = FALSE, $start = -1, $forceVer = FALSE, $ver = NULL) {
+    public static function makeURL($controller, $id = null, $sort = null, $sort_field = 'sort', $useCurrentFilters = false, $start = -1, $forceVer = false, $ver = null)
+    {
         $request = [];
         if ($useCurrentFilters) {
             foreach (self::$data as $key => $value) {
@@ -146,41 +139,35 @@ class Request {
                 }
             }
         }
-
         if ($start > -1) {
             $request['start'] = $start;
         }
-
         if (isset($sort)) {
             $request[$sort_field] = $sort;
         }
         if (!empty($request)) {
             $requestString = "?";
             for ($i = 0; $i < count($request); ++$i) {
-                $requestString .= array_keys($request)[$i] . '=' . urlencode(array_values($request)[$i]) . ($i < count($request) - 1 ? '&' : NULL);
+                $requestString .= array_keys($request)[$i] . '=' . urlencode(array_values($request)[$i]) . ($i < count($request) - 1 ? '&' : null);
             }
         } else {
-            $requestString = NULL;
+            $requestString = null;
         }
         if (isset($ver)) {
-            $ver_element = ($ver == Config::maxVer()) ? NULL : $ver . '/';
+            $ver_element = ($ver == Config::maxVer()) ? null : $ver . '/';
         } else {
-            $ver_element = (!$forceVer && !isset(self::$data['ver'])) ? NULL : self::get('used_ver') . '/';
+            $ver_element = (!$forceVer && !isset(self::$data['ver'])) ? null : self::get('used_ver') . '/';
         }
         if (isset($id) && !in_array($controller, ['info', 'assets/spellings'])) {
 // short ids are used for all controllers except spelling images (which use long ids) and information pages (which use textual ids)
-
             $idArr = (array) $id;
             $short = implode('#', array_map('PNM\\ID::shorten', array_filter($idArr)));
             $id_element = '/' . $short;
         } elseif (isset($id)) {
             $id_element = '/' . $id;
         } else {
-            $id_element = NULL;
+            $id_element = null;
         }
-
-
         return Config::BASE . $ver_element . $controller . $id_element . $requestString;
     }
-
 }

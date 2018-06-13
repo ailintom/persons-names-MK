@@ -2,19 +2,19 @@
 
 /*
  * MIT License
- * 
+ *
  * Copyright (c) 2017 Alexander Ilin-Tomich (unless specified otherwise for individual source files and documents)
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
   copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -31,12 +31,14 @@ namespace PNM;
  *
  * @author Tomich
  */
-class FieldList {
+class FieldList
+{
 
     private $expressions;
     private $names;
 
-    public function __construct(array $inputExpressions, array $inputNames = []) {
+    public function __construct(array $inputExpressions, array $inputNames = [])
+    {
         $this->expressions = $inputExpressions;
         $exprIndex = 0;
         for ($i = 0; $i < count($inputExpressions); ++$i) {
@@ -52,11 +54,13 @@ class FieldList {
         }
     }
 
-    public function SQL() {
+    public function SQL()
+    {
         return implode(", ", array_map(array($this, 'SQLentry'), $this->expressions, $this->names));
     }
 
-    private function SQLentry($expression, $name) {
+    private function SQLentry($expression, $name)
+    {
         if ($expression == $name) {
             return $expression;
         } else {
@@ -64,10 +68,10 @@ class FieldList {
         }
     }
 
-    public function getFieldName($index) {
+    public function getFieldName($index)
+    {
         if (!empty($this->names[$index])) {
             return $this->names[$index];
         }
     }
-
 }

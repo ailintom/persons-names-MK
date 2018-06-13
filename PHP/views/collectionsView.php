@@ -1,19 +1,19 @@
 <?php
 /*
  * MIT License
- * 
+ *
  * Copyright (c) 2017 Alexander Ilin-Tomich (unless specified otherwise for individual source files and documents)
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
   copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -30,19 +30,15 @@ namespace PNM;
  *
  * @author Tomich
  */
-class collectionsView extends View {
+class collectionsView extends View
+{
 
-    //put your code here
-
-    public function __construct() {
-        
-    }
-
-    public function echoRender(&$data) {
-    (New Head)->render(Head::HEADERSLIM, 'Collections');
-        ?>     
+    public function echoRender(&$data)
+    {
+        (new Head())->render(Head::HEADERSLIM, 'Collections');
+        ?>
         <p class="info-box">
-            <?= icon('info') ?>
+            <?= Icon::get('info') ?>
             You can use <b>%</b> or <b>*</b> as wildcards.
             “Mar*” will match “Mariemont” or “Marseille”.
         </p>
@@ -67,14 +63,12 @@ class collectionsView extends View {
                     <input id="tm_coll_id" name="tm_coll_id" title="" placeholder="Example: 188" type="text"<?= View::oldValue('tm_coll_id') ?>>
                 </div>
             </div>
-
             <button type="submit" class="submit">
                 Search
             </button>
             <button type="submit" title="Clear search and display all records" name="action" value="reset">
                 Reset
             </button>
-
             <?php
             $dl = new Datalist();
             echo $dl->get('full-names');
@@ -90,18 +84,15 @@ class collectionsView extends View {
         } else {
             ?>
             <h2 class="sr-only" id="results">Results</h2>
-            
             <?php
             $tableCo = new Table($data, 'collections_id', 'collection', 'sort', '#results');
-            $tableCo->render_table(['title', 'full_name', 'location', 'inscriptions_count', 'url', 'online_collection'], ['Short name', 'Full name', 'Location', 'Objects', 'Website', 'Online catalogue'], TRUE);
-
+            $tableCo->renderTable(['title', 'full_name', 'location', 'inscriptions_count', 'url', 'online_collection'], ['Short name', 'Full name', 'Location', 'Objects', 'Website', 'Online catalogue'], true);
             /*
              * ['collections_id', 'title', 'full_name_en', 'full_name_national_language', 'location', 'url', 'online_collection', 'tm_coll_id',
               'inscriptions_count'])
              */
         }
     }
-
 }
 
 /*
@@ -113,7 +104,6 @@ class collectionsView extends View {
       }
       //return $res;
       }
-
       }
      */
     

@@ -13,16 +13,17 @@ namespace PNM;
  *
  * @author Tomich
  */
-class RuleExists extends Rule {
+class RuleExists extends Rule
+{
 
-    public $WHERE = NULL;
+    public $WHERE = null;
     public $value = [];
-    public $param_type = NULL;
+    public $param_type = null;
 
-    public function __construct($FROMWHERE, $value, $param_type = 's') {
+    public function __construct($FROMWHERE, $value, $param_type = 's')
+    {
         $this->WHERE = 'EXISTS(SELECT inscriptions_id FROM ' . $FROMWHERE . ')=1';
         $this->value = $value;
         $this->param_type = $param_type;
     }
-
 }

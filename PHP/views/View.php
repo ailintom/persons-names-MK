@@ -1,19 +1,19 @@
 <?php
 /*
  * MIT License
- * 
+ *
  * Copyright (c) 2017 Alexander Ilin-Tomich (unless specified otherwise for individual source files and documents)
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
   copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -30,48 +30,49 @@ namespace PNM;
  *
  * @author Tomich
  */
-class View {
+class View
+{
 
 //put your code here
-    protected $entry = NULL;
-    protected $subEntries = NULL;
+    protected $entry = null;
+    protected $subEntries = null;
 
-    public function echoRender(&$data) {
-        
+    public function echoRender(&$data)
+    {
+        //to be used in child classes
     }
 
-    protected function descriptionElement($term, $value, $note = NULL, $class = NULL, $noteClass = NULL) {
+    protected function descriptionElement($term, $value, $note = null, $class = null, $noteClass = null)
+    {
         if (!empty($value) & !empty($note)) {
-            return "\n<dt>" . $term . ":</dt>\n<dd><span" . (empty($class) ? NULL : ' class="' . $class . '"') . '>' . $value . '</span> <span class="' . (empty($noteClass) ? 'note' : $noteClass) . '">(' . $note . ')</span></dd>';
-
+            return "\n<dt>" . $term . ":</dt>\n<dd><span" . (empty($class) ? null : ' class="' . $class . '"') . '>' . $value . '</span> <span class="' . (empty($noteClass) ? 'note' : $noteClass) . '">(' . $note . ')</span></dd>';
 //<dt>Provenance:</dt><dd><span class="place"><a href="place/184549377.html">Abydos</a></span> <span class="note">(Northern Necropolis)</span></dd>
         } elseif (!empty($value)) {
-            return "\n<dt>" . $term . ":</dt>\n<dd><span" . (empty($class) ? NULL : ' class="' . $class . '"') . '>' . $value . '</span></dd>';
+            return "\n<dt>" . $term . ":</dt>\n<dd><span" . (empty($class) ? null : ' class="' . $class . '"') . '>' . $value . '</span></dd>';
         }
     }
 
-    protected function renderURL($url, $prefix = NULL) {
+    protected function renderURL($url, $prefix = null)
+    {
         if (!empty($url)) {
             return '<a href="' . $prefix . $url . '">' . $url . '</a>';
         }
     }
 
-    protected function addReference($title, $value, $prefix = NULL, $string = NULL) {
-
-
+    protected function addReference($title, $value, $prefix = null, $string = null)
+    {
         if (empty($value)) {
             return $string;
         }
-
         if (!empty($string)) {
             $string .= ' / ';
         }
         $string .= $title . ': <span class="biblio-ref-no-author-date">';
         if (strpos($value, ';')) {
             $arr = explode(";", $value);
-            $cumulative = NULL;
+            $cumulative = null;
             foreach ($arr as $singleVal) {
-                $cumulative .= (empty($cumulative) ? NULL : ", ") . $this->renderSingleReference(trim($singleVal), $prefix);
+                $cumulative .= (empty($cumulative) ? null : ", ") . $this->renderSingleReference(trim($singleVal), $prefix);
             }
             $string .= $cumulative;
         } else {
@@ -80,34 +81,34 @@ class View {
         return $string . '</span>';
     }
 
-    protected function renderSingleReference($value, $prefix = NULL) {
+    protected function renderSingleReference($value, $prefix = null)
+    {
         if (substr($value, 0, 4) == 'http' || !empty($prefix)) {
             return $this->renderURL($value, $prefix);
         } else {
             return htmlentities($value);
         }
     }
-
     /*
      * The function returns the value of the given parameter from the current request formatted as a HTML value attribute for input controls
-     * 
+     *
      */
 
-    static function oldValue($field) {
-
+    public static function oldValue($field)
+    {
         if (!empty(Request::get($field))) {
             return ' value = "' . Request::get($field) . '"';
         } else {
-            return NULL;
+            return null;
         }
     }
-
     /*
      * The function returns 'checked' if the given field has the given value
-     * 
+     *
      */
 
-    static function oldValueRadio($field, $value, $default = FALSE) {
+    public static function oldValueRadio($field, $value, $default = false)
+    {
         if (!empty(Request::get($field))) {
             if (Request::get($field) == $value) {
                 return ' checked';
@@ -117,7 +118,8 @@ class View {
         }
     }
 
-    static function oldValueSelect($field, $value, $default = FALSE) {
+    public static function oldValueSelect($field, $value, $default = false)
+    {
         if (!empty(Request::get($field))) {
             if (Request::get($field) == $value) {
                 return ' selected';
@@ -127,7 +129,8 @@ class View {
         }
     }
 
-    static function GenderTitle($gender) {
+    public static function genderTitle($gender)
+    {
         /*
          * "m", "f", "?" gender unknown, or "a" for animals
          */
@@ -143,15 +146,17 @@ class View {
         }
     }
 
-    static function renderGender($gender) {
+    public static function renderGender($gender)
+    {
         if (!empty($gender)) {
-            return '<span class="gender" title="' . self::GenderTitle($gender) . '">' . $gender . '</span>';
+            return '<span class="gender" title="' . self::genderTitle($gender) . '">' . $gender . '</span>';
         } else {
             return '&nbsp;';
         }
     }
 
-    static function renderObjectType($objectType) {
+    public static function renderObjectType($objectType)
+    {
         switch ($objectType) {
             case 'Scarab, seal, scaraboid, intaglio and similar objects':
                 return 'Seal/sealing';
@@ -168,7 +173,8 @@ class View {
         }
     }
 
-    static function renderTextContent($textContent) {
+    public static function renderTextContent($textContent)
+    {
         switch ($textContent) {
             case 'Royal name and titles':
                 return 'Royal name';
@@ -185,7 +191,8 @@ class View {
         }
     }
 
-    protected function renderLat($lat) {
+    protected function renderLat($lat)
+    {
         if (!empty($lat)) {
             if (strlen(strval($lat)) == 4) {
                 return substr(strval($lat), 0, 2) . "." . substr(strval($lat), 2, 2) . " ° N";
@@ -194,34 +201,34 @@ class View {
             }
         }
     }
-
     /*
      * Toggles filters after loading the page based on data in the request
-     * 
+     *
      */
 
-    static function toggleSingleFilter($fieldName, $filterName, $defaultVal) {
-
+    public static function toggleSingleFilter($fieldName, $filterName, $defaultVal)
+    {
         if (is_array($fieldName)) {
-            $res = NULL;
+            $res = null;
             foreach ($fieldName as $name) {
                 $res .= static::toggleSingleFilter($name, $filterName, $defaultVal);
             }
             return $res;
         } else {
-            if (!empty(Request::get($fieldName)) && ( empty($defaultVal) ? TRUE : Request::get($fieldName) != $defaultVal)) {
+            if (!empty(Request::get($fieldName)) && ( empty($defaultVal) ? true : Request::get($fieldName) != $defaultVal)) {
                 return "MK.toggleFilter('" . $filterName . "');";
             }
         }
     }
 
-    protected function toggleFilters($input) {
-        $res = NULL;
+    protected function toggleFilters($input)
+    {
+        $res = null;
         foreach ((array) $input as $filter) {
             $res .= static::toggleSingleFilter($filter[0], $filter[1], isset($filter[2]) ? $filter[2] : null);
         }
         if (!empty($res)) {
-            ?>            
+            ?>
             <script type="text/javascript">
                 function toggleFiltersBasedOnRequest() {<?= $res ?>
                 }
@@ -238,10 +245,11 @@ class View {
         }
     }
 
-    protected function renderChildren($rec, $level) {
+    protected function renderChildren($rec, $level)
+    {
         $typesMV = new name_typesMicroView();
         if (empty($rec['children'])) {
-            return NULL;
+            return null;
         }
         if ($level == 0) {
             echo '<ul>';
@@ -260,14 +268,15 @@ class View {
         <?php
     }
 
-    protected function processBondCat($currentcat, $bondsincurrentcat, $attView) {
+    protected function processBondCat($currentcat, $bondsincurrentcat, $attView)
+    {
         $res = "";
         if (empty($bondsincurrentcat)) {
-            return NULL;
+            return null;
         } elseif (count($bondsincurrentcat) == 1) {
             $gen = $this->genderedDesignations($currentcat, $bondsincurrentcat[0]['gender']);
             return '<li>' . ($gen ?: ObjectBonds::BOND_TYPES_SING[$currentcat] . ' ')
-                    . (!empty($bondsincurrentcat[0]['wording']) ? '(<span class="wording">' . $bondsincurrentcat[0]['wording'] . '</span>)' : NULL) . ': '
+                    . (!empty($bondsincurrentcat[0]['wording']) ? '(<span class="wording">' . $bondsincurrentcat[0]['wording'] . '</span>)' : null) . ': '
                     . $attView->render($bondsincurrentcat[0]['title'], $bondsincurrentcat[0]['relative_id'], $bondsincurrentcat[0]['name'])
                     . '.</li>';
         } elseif (count($bondsincurrentcat) > 1) {
@@ -275,7 +284,7 @@ class View {
             foreach ($bondsincurrentcat as $bond) {
                 $res .= '<li>';
                 $res .= $this->genderedDesignations($currentcat, $bond['gender']);
-                $res .= (!empty($bondsincurrentcat[0]['wording']) ? '(<span class="wording">' . $bondsincurrentcat[0]['wording'] . '</span>)' : NULL) . ': '
+                $res .= (!empty($bondsincurrentcat[0]['wording']) ? '(<span class="wording">' . $bondsincurrentcat[0]['wording'] . '</span>)' : null) . ': '
                         . $attView->render($bond['title'], $bond['relative_id'], $bond['name'])
                         . '.</li>';
             }
@@ -284,7 +293,8 @@ class View {
         }
     }
 
-    protected function renderBonds($bonds_data, MicroView $attView) {
+    protected function renderBonds($bonds_data, MicroView $attView)
+    {
         $currentLoc = '<ul class="bonds">';
         $currentcat = 0;
         $bondsincurrentcat = [];
@@ -304,15 +314,14 @@ class View {
         return $currentLoc;
     }
 
-    protected function genderedDesignations($currentcat, $gender) {
+    protected function genderedDesignations($currentcat, $gender)
+    {
         if (ObjectBonds::BOND_TYPES_PLUR[$currentcat] == 'Children') {
             switch ($gender) {
                 case 'm':
                     return 'Son ';
-
                 case 'f':
                     return 'Daughter ';
-
                 default:
                     return 'Child ';
             }
@@ -320,38 +329,37 @@ class View {
             switch ($gender) {
                 case 'm':
                     return 'Brother ';
-
                 case 'f':
                     return 'Sister ';
-
                 default:
                     return 'Sibling ';
             }
         } else {
-            return NULL;
+            return null;
         }
     }
 
-    protected function processAltReadings($objAltReadings) {
+    protected function processAltReadings($objAltReadings)
+    {
         if (!empty($objAltReadings->data)) {
-            $res = ' (alternative reading' . (count($objAltReadings->data) > 1 ? 's' : NULL ) . ': ';
+            $res = ' (alternative reading' . (count($objAltReadings->data) > 1 ? 's' : null ) . ': ';
             $count = 0;
             $objView = new personal_namesMicroView();
             foreach ($objAltReadings->data as $altReading) {
-                $res .= ($count++ > 0 ? ', ' : NULL) . $objView->render($altReading['personal_name'], $altReading['personal_names_id']);
+                $res .= ($count++ > 0 ? ', ' : null) . $objView->render($altReading['personal_name'], $altReading['personal_names_id']);
             }
             $res .= ')';
             return $res;
         }
     }
-    
-      protected function renderPersons($persons) {
-        $res = NULL;
+
+    protected function renderPersons($persons)
+    {
+        $res = null;
         $personsMV = new personsMicroView();
         foreach ($persons->data as $person) {
-            $res .= (empty($res) ? NULL : ', ') . $personsMV->render($person['title'], $person['persons_id']) . '&nbsp;(' . $person['status'] . ')';
+            $res .= (empty($res) ? null : ', ') . $personsMV->render($person['title'], $person['persons_id']) . '&nbsp;(' . $person['status'] . ')';
         }
         return $res;
     }
-
 }

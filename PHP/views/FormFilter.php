@@ -12,7 +12,8 @@ namespace PNM;
  *
  * @author Tomich
  */
-class FormFilter {
+class FormFilter
+{
 
     public $name;
     protected $label;
@@ -20,8 +21,8 @@ class FormFilter {
     public $mainFieldName;
     protected $fullLabel;
 
-    public
-            function __construct($name, $label, $content, $mainFieldName, $fullLabel = NULL) {
+    public function __construct($name, $label, $content, $mainFieldName, $fullLabel = null)
+    {
         $this->name = $name;
         $this->label = $label;
         $this->content = $content;
@@ -29,19 +30,21 @@ class FormFilter {
         $this->fullLabel = $fullLabel ?: $label;
     }
 
-    public function renderSelection() {
+    public function renderSelection()
+    {
         ?><button class="filters_button" aria-controls="<?= $this->name ?>" aria-expanded="false" onclick="MK.toggleFilter('<?= $this->name ?>')" title="Toggle <?= lcfirst($this->label) ?> filter" type="button">
-        <?= icon('plus') . icon('minus') ?>
+        <?= Icon::get('plus') . Icon::get('minus') ?>
         <?= $this->label ?>
         </button>
         <?php
     }
 
-    public function renderFilter() {
+    public function renderFilter()
+    {
         ?><div class="filter" id="<?= $this->name ?>">
             <div class="filter_label">
                 <button class="filter_remove" onclick="MK.toggleFilter('<?= $this->name ?>')" title="Remove <?= lcfirst($this->label) ?> filter" type="button">
-                    <span id="<?= $this->name ?>-label"><?= icon('minus', 'Remove ' . lcfirst($this->label) . ' filter') ?></span>
+                    <span id="<?= $this->name ?>-label"><?= Icon::get('minus', 'Remove ' . lcfirst($this->label) . ' filter') ?></span>
                 </button>
                 <?= $this->fullLabel ?>
             </div>
@@ -62,19 +65,21 @@ class FormFilter {
         <?php
     }
 
-    static function getTogglePair(FormFilter $filter) {
+    public static function getTogglePair(FormFilter $filter)
+    {
         return [$filter->mainFieldName, $filter->name];
     }
 
-    static function renderToggle(array $filters) {
+    public static function renderToggle(array $filters)
+    {
         return array_map('self::getTogglePair', $filters);
     }
 
-    static function renderFilters(array $filters) {
+    public static function renderFilters(array $filters)
+    {
         ?>
         <div class="filters">
             <h3 class="sr-only">Filters</h3>
-
             <div class="filters_selection"><?php
                 foreach ($filters as $filter) {
                     $filter->renderSelection();
@@ -85,5 +90,4 @@ class FormFilter {
             }
             ?></div><?php
     }
-
 }

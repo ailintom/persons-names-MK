@@ -1,19 +1,19 @@
 <?php
 /*
  * MIT License
- * 
+ *
  * Copyright (c) 2017 Alexander Ilin-Tomich (unless specified otherwise for individual source files and documents)
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
   copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -30,19 +30,15 @@ namespace PNM;
  *
  * @author Tomich
  */
-class peopleView extends View {
+class peopleView extends View
+{
 
-    //put your code here
-
-    public function __construct() {
-        
-    }
-
-    public function echoRender(&$data) {
-        (New Head)->render(Head::HEADERSLIM, 'People');
-        ?>     
+    public function echoRender(&$data)
+    {
+        (new Head())->render(Head::HEADERSLIM, 'People');
+        ?>
         <p class="info-box">
-            <?= icon('info') ?>
+            <?= Icon::get('info') ?>
             You can use <b>%</b> or <b>*</b> as wildcards.
             “nfr*” will match “nfr.wj” or “nfr-ḥtp”. “*nfr*” will also match “snfr.wj”.
         </p>
@@ -55,7 +51,7 @@ class peopleView extends View {
                             <label id="gender-label-a">Gender:</label>
                         </div>
                         <div class="column -wide">
-                            <input id="Aany" name="Agender" value="any" type="radio" aria-labelledby="gender-label-a"<?= View::oldValueRadio('Agender', 'any', TRUE) ?>>
+                            <input id="Aany" name="Agender" value="any" type="radio" aria-labelledby="gender-label-a"<?= View::oldValueRadio('Agender', 'any', true) ?>>
                             <label for="Aany" title="Match people regardless of gender">any</label>
                             /
                             <input id="Afemale" name="Agender" value="f" type="radio" aria-labelledby="gender-label-a"<?= View::oldValueRadio('Agender', 'f') ?>>
@@ -108,7 +104,7 @@ class peopleView extends View {
                             <label id="gender-label-b">Gender:</label>
                         </div>
                         <div class="column -wide">
-                            <input id="Bany" name="Bgender" value="any" type="radio" aria-labelledby="gender-label-b"<?= View::oldValueRadio('Bgender', 'any', TRUE) ?>>
+                            <input id="Bany" name="Bgender" value="any" type="radio" aria-labelledby="gender-label-b"<?= View::oldValueRadio('Bgender', 'any', true) ?>>
                             <label for="Bany" title="Match names regardless of gender">any</label>
                             /
                             <input id="Bfemale" name="Bgender" value="f" type="radio" aria-labelledby="gender-label-b"<?= View::oldValueRadio('Bgender', 'f') ?>>
@@ -152,41 +148,36 @@ class peopleView extends View {
                     </div>
                 </div>
             </div>
-
             <p>
                 <label for="relation">Relation between A and B:</label>
                 <select name="relation" id="relation">
-                    <option value="same_inscription"<?= View::oldValueSelect('relation', 'same_inscription', TRUE) ?>>A and B appear in the same source</option>
+                    <option value="same_inscription"<?= View::oldValueSelect('relation', 'same_inscription', true) ?>>A and B appear in the same source</option>
                     <option value="child"<?= View::oldValueSelect('relation', 'child') ?>>A is a child of B</option>
                     <option value="parent"<?= View::oldValueSelect('relation', 'parent') ?>>A is a parent of B</option>
                     <option value="spouses"<?= View::oldValueSelect('relation', 'spouses') ?>>A and B are spouses</option>
                     <option value="siblings"<?= View::oldValueSelect('relation', 'siblings') ?>>A and B are siblings</option>
                 </select>
             </p>
-
             <p>
                 <input id="only_persons" name="only_persons" value="true" type="checkbox" <?= View::oldValueRadio('only_persons', 'true') ?>>
                 <label for="only_persons" title="Only show dossiers of persons with multiple attestations">Only dossiers of persons with multiple attestations</label>
             </p>
-
             <div class="filters">
                 <h3 class="sr-only">Filters</h3>
-
                 <div class="filters_selection">
                     <button class="filters_button" aria-controls="region-filter" aria-expanded="false" onclick="MK.toggleFilter('region-filter')" title="Toggle region filter" type="button">
-                        <?= icon('plus') . icon('minus') ?>
+                        <?= Icon::get('plus') . Icon::get('minus') ?>
                         Region or locality
                     </button>
                     <button class="filters_button" aria-controls="period-filter" aria-expanded="false" onclick="MK.toggleFilter('period-filter')" title="Toggle period filter" type="button">
-                        <?= icon('plus') . icon('minus') ?>
+                        <?= Icon::get('plus') . Icon::get('minus') ?>
                         Period or reign
                     </button>
                 </div>
-
                 <div class="filter" id="region-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('region-filter')" title="Remove region filter" type="button">
-                            <?= icon('minus', 'Remove region filter') ?>
+                            <?= Icon::get('minus', 'Remove region filter') ?>
                         </button>
                         <span id="region-label">Region or locality</span>
                     </div>
@@ -211,7 +202,7 @@ class peopleView extends View {
                             production
                         </label>
                         /
-                        <input id="all" name="geo-filter" type="radio" value="all" aria-labelledby="region-label" <?= View::oldValueRadio('geo-filter', 'all', TRUE) ?>>
+                        <input id="all" name="geo-filter" type="radio" value="all" aria-labelledby="region-label" <?= View::oldValueRadio('geo-filter', 'all', true) ?>>
                         <label for="all" title="Attestations in sources anyhow related to a certain region">
                             all
                         </label>
@@ -220,16 +211,15 @@ class peopleView extends View {
                         <input id="place" list="places" name="place" placeholder="region or locality" title="Enter the region" type="text" <?= View::oldValue('place') ?>>
                     </div>
                 </div>
-
                 <div class="filter" id="period-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('period-filter')" title="Remove period filter" type="button">
-                            <?= icon('minus', 'Remove period filter') ?>
+                            <?= Icon::get('minus', 'Remove period filter') ?>
                         </button>
                         <span id="period-label">Period or reign</span>
                     </div>
                     <div class="filter_content">
-                        <input id="during" name="chrono-filter" type="radio" value="during" aria-labelledby="period-label"<?= View::oldValueRadio('chrono-filter', 'during', TRUE) ?>>
+                        <input id="during" name="chrono-filter" type="radio" value="during" aria-labelledby="period-label"<?= View::oldValueRadio('chrono-filter', 'during', true) ?>>
                         <label for="during" title="Attestations in sources beloging to a certain period">
                             During
                         </label>
@@ -249,14 +239,12 @@ class peopleView extends View {
                     </div>
                 </div>
             </div>
-
             <button type="submit" class="submit">
                 Search
             </button>
             <button type="submit" title="Clear search and display all records" name="action" value="reset">
                 Reset
             </button>
-
             <?php
             $dl = new Datalist();
             echo $dl->get('name-types-formal'),
@@ -273,7 +261,6 @@ class peopleView extends View {
         } else {
             ?>
             <h2 class="sr-only" id="results">Results</h2>
-
             <?php
             //$this->renderObjectType($att['object_type']) . ' ' . $att['title']
             $total = $data->count;
@@ -283,19 +270,17 @@ class peopleView extends View {
             if ($data->type == "double") {
                 $tableCo = new Table($data, ['inscriptions_id', 'id'], 'auto', 'sort', '#results');
                 $tableCo->addHeader('<div role="row" style="display: table-row" class="-no-border"><div class="th" role="gridcell" style="display: table-cell">Person A</div><div class="th -border" role="gridcell" style="display: table-cell">&nbsp;</div><div class="th -border" role="gridcell" style="display: table-cell">&nbsp;</div><div class="th -border" role="gridcell" style="display: table-cell">Person B</div><div class="th -border" role="gridcell" style="display: table-cell">&nbsp;</div><div class="th -border" role="gridcell" style="display: table-cell">&nbsp;</div><div class="th -border" role="gridcell" style="display: table-cell">Common</div><div class="th -border" role="gridcell" style="display: table-cell">&nbsp;</div><div class="th -border" role="gridcell" style="display: table-cell">&nbsp;</div></div>');
-                $tableCo->render_table(['gender', 'title_string', 'personal_name', 'gender_b', 'title_string_b', 'personal_name_b', 'title', 'dating', 'region'], ['Gender', 'Title', 'Name', 'Gender', 'Title', 'Name', 'Source or dossier', 'Date', 'Region'], TRUE);
+                $tableCo->renderTable(['gender', 'title_string', 'personal_name', 'gender_b', 'title_string_b', 'personal_name_b', 'title', 'dating', 'region'], ['Gender', 'Title', 'Name', 'Gender', 'Title', 'Name', 'Source or dossier', 'Date', 'Region'], true);
             } else {
                 $tableCo = new Table($data, ['inscriptions_id', 'id'], 'auto', 'sort', '#results');
-
-                $tableCo->render_table(['gender', 'title_string', 'personal_name', 'title', 'dating', 'region'], ['Gender', 'Title', 'Name', 'Source or dossier', 'Date', 'Region'], TRUE);
+                $tableCo->renderTable(['gender', 'title_string', 'personal_name', 'title', 'dating', 'region'], ['Gender', 'Title', 'Name', 'Source or dossier', 'Date', 'Region'], true);
             }
             /*
              * ['id', 'inscriptions_id', 'gender', 'title_string', 'title_string_sort', 'personal_name', 'personal_name_sort', 'title', 'title_sort', 'dating', 'dating_sort', 'region']
              */
         }
-         $this->toggleFilters([['period', 'period-filter'], ['place', 'region-filter']]);
+        $this->toggleFilters([['period', 'period-filter'], ['place', 'region-filter']]);
     }
-
 }
 
 /*
@@ -307,7 +292,6 @@ class peopleView extends View {
       }
       //return $res;
       }
-
       }
      */
     

@@ -13,7 +13,8 @@ namespace PNM;
  *
  * @author Tomich
  */
-class TextInput {
+class TextInput
+{
 
     protected $name;
     protected $label;
@@ -21,10 +22,11 @@ class TextInput {
     protected $list;
     protected $id;
     protected $oldVal;
-    protected $placeholder = NULL;
+    protected $placeholder = null;
     protected $class;
 
-    public function __construct($name, $label, $title, $placeholderInput = NULL, $listInput = NULL, $srOnly = FALSE, $id = NULL) {
+    public function __construct($name, $label, $title, $placeholderInput = null, $listInput = null, $srOnly = false, $id = null)
+    {
         $this->name = $name;
         $this->label = $label;
         $this->title = $title;
@@ -39,17 +41,16 @@ class TextInput {
         if ($srOnly) {
             $this->class = ' class="sr-only"';
         } else {
-            $this->class = NULL;
+            $this->class = null;
         }
-
-        //list="object-types" 
+        //list="object-types"
     }
 
-    public function render() {
+    public function render()
+    {
         return <<<EOF
 <label for="$this->id"$this->class>$this->label</label>
 <input name="$this->name" id="$this->id"$this->placeholder$this->list type="text" title="$this->title"$this->oldVal>
 EOF;
     }
-
 }

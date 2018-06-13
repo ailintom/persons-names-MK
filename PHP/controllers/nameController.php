@@ -2,19 +2,19 @@
 
 /*
  * MIT License
- * 
+ *
  * Copyright (c) 2017 Alexander Ilin-Tomich (unless specified otherwise for individual source files and documents)
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
   copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,30 +26,27 @@
 
 namespace PNM;
 
-class nameController extends EntryController {
+class nameController extends EntryController
+{
 
     const NAME = 'name';
 
-    protected function loadChildren() {
-
-
-        $rules = [New Rule('personal_names_id', 'exact', $this->record->get('personal_names_id'), 'i')];
-
+    protected function loadChildren()
+    {
+        $rules = [new Rule('personal_names_id', 'exact', $this->record->get('personal_names_id'), 'i')];
         $filterNameSpellings = new Filter($rules);
-        $objNameSpellings = New NameSpellings(NULL, 0, 0, $filterNameSpellings);
-
+        $objNameSpellings = new NameSpellings(null, 0, 0, $filterNameSpellings);
         $filterPersons = new Filter($rules);
-        $objNamePersons = New NamePersons(NULL, 0, 0, $filterPersons);
-
+        $objNamePersons = new NamePersons(null, 0, 0, $filterPersons);
         $totalSpells = count($objNameSpellings->data);
         for ($i = 0; $i < $totalSpells; $i++) {
             $totalAtts = count($objNameSpellings->data[$i]['attestations']->data);
             for ($j = 0; $j < $totalAtts; $j++) {
                 if ($objNameSpellings->data[$i]['attestations']->data[$j]['persons_count'] > 0) {
-                    $rulesAttPersons = [New Rule('attestations_id', 'exact', $objNameSpellings->data[$i]['attestations']->data[$j]['attestations_id'], 'i'),
-                        New Rule('status', 'not', 'rejected', 's')];
+                    $rulesAttPersons = [new Rule('attestations_id', 'exact', $objNameSpellings->data[$i]['attestations']->data[$j]['attestations_id'], 'i'),
+                        new Rule('status', 'not', 'rejected', 's')];
                     $filterAttPersons = new Filter($rulesAttPersons);
-                    $objAttPersons = New AttestationPersons(NULL, 0, 0, $filterAttPersons);
+                    $objAttPersons = new AttestationPersons(null, 0, 0, $filterAttPersons);
                     foreach ($objAttPersons->data as $attPerson) {
                         $personId = $attPerson['persons_id'];
                         $personKey = array_search($personId, array_column($objNamePersons->data, 'persons_id'));
@@ -57,7 +54,6 @@ class nameController extends EntryController {
                         $persDesc['att_no'] = $this->getAttNo($objNameSpellings, $i, $j + 1);
                         $objNamePersons->data[$personKey]['attestations'][] = $persDesc;
                     }
-
                     $objNameSpellings->data[$i]['attestations']->data[$j]['persons'] = $objAttPersons;
                     $objNameSpellings->data[$i]['first_no'] = $this->getAttNo($objNameSpellings, $i, 1);
                 }
@@ -67,12 +63,12 @@ class nameController extends EntryController {
         $this->record->data['persons'] = $objNamePersons;
     }
 
-    private function getAttNo($objNameSpellings, $spelling_no, $att_no_in_spelling) {
+    private function getAttNo($objNameSpellings, $spelling_no, $att_no_in_spelling)
+    {
         $cnt = 0;
         for ($i = 0; $i < $spelling_no; $i++) {
             $cnt += $objNameSpellings->data[$i]['attestations']->count;
         }
         return $cnt + $att_no_in_spelling;
     }
-
 }

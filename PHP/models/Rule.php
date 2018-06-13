@@ -2,19 +2,19 @@
 
 /*
  * MIT License
- * 
+ *
  * Copyright (c) 2017 Alexander Ilin-Tomich (unless specified otherwise for individual source files and documents)
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
   copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -31,19 +31,19 @@ namespace PNM;
  *
  * @author Tomich
  */
-class Rule {
+class Rule
+{
 
     //put your code here
-    public $WHERE = NULL;
+    public $WHERE = null;
     public $value = [];
-    public $param_type = NULL;
-    protected $field = NULL;
-    protected $compare = NULL;
+    public $param_type = null;
+    protected $field = null;
+    protected $compare = null;
 
-    public function __construct($field, $compareString, $value, $param_type = 's') {
-
+    public function __construct($field, $compareString, $value, $param_type = 's')
+    {
         $this->field = (array) $field;
-
         switch ($compareString) {
             case 'exact':
                 $this->compare = "=";
@@ -73,19 +73,16 @@ class Rule {
             case 'lessorequal':
                 $this->compare = "<=";
                 $rendVal = $value;
-
                 break;
             case 'not-earlier':
             case 'moreorequal':
                 $this->compare = ">=";
                 $rendVal = $value;
-
                 break;
         }
-
         $total = count($this->field);
         //
-        $this->WHERE = NULL;
+        $this->WHERE = null;
         for ($i = 0; $i < $total; $i++) {
             if (is_array($rendVal)) {
                 if ($this->compare == "=") {
@@ -93,8 +90,7 @@ class Rule {
                 } elseif ($this->compare == "=") {
                     $arrcomp = ' NOT IN ';
                 }
-
-                $this->WHERE .= $this->field[$i] . $arrcomp . '(' . implode(array_map(function($val) {
+                $this->WHERE .= $this->field[$i] . $arrcomp . '(' . implode(array_map(function ($val) {
                                     return '?';
                                 }, $rendVal), ', ') . ') ';
                 $this->param_type .= str_repeat($param_type, count($rendVal));
@@ -104,8 +100,7 @@ class Rule {
                 $this->param_type .= $param_type;
                 array_push($this->value, $rendVal);
             }
-            $this->WHERE .= ($i < ($total - 1) ? ' OR ' : NULL);
+            $this->WHERE .= ($i < ($total - 1) ? ' OR ' : null);
         }
     }
-
 }

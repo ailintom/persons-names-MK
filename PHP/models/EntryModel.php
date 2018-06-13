@@ -2,19 +2,19 @@
 
 /*
  * MIT License
- * 
+ *
  * Copyright (c) 2017 Alexander Ilin-Tomich (unless specified otherwise for individual source files and documents)
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
   copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -31,45 +31,51 @@ namespace PNM;
  *
  * @author Tomich
  */
-class EntryModel {
+class EntryModel
+{
 
     public $data = null;
     public $subEntries = null;
-    public $noMatch = FALSE;
-    protected $hasBiblio = FALSE;
-    protected $idField = NULL; // This should be the name of the principal id field in the dataset
+    public $noMatch = false;
+    protected $hasBiblio = false;
+    protected $idField = null; // This should be the name of the principal id field in the dataset
     protected $field_names = null;
     protected $tablename = null; //This should be implemented in child classes to set the list of fields retrieved from the database
     protected $bindParam = 'i';
 
-    protected function initFieldNames() {
+    protected function initFieldNames()
+    {
 //This should be implemented in child classes to set the list of fields retrieved from the database
     }
 
-    protected function parse() {
+    protected function parse()
+    {
         //This should be implemented in child classes to parse data after retrieving from the database
     }
 
-    protected function loadChildren() {
+    protected function loadChildren()
+    {
 //This should be implemented in child classes to set the list of fields retrieved from the database
     }
 
-    public function __construct(array $data = NULL) {
+    public function __construct(array $data = null)
+    {
         if (!empty($data)) {
             $this->data = $data;
         }
     }
 
-    protected function validate($id_input) {
+    protected function validate($id_input)
+    {
         return intval($id_input);
     }
 
-    public function find($id_input) {
-
+    public function find($id_input)
+    {
         // Check if ID is valid and get table name
         $id = $this->validate($id_input);
         if (empty($id)) {
-            return NULL;
+            return null;
         }
         if (empty($this->tablename)) {
             $IDobj = new ID($id);
@@ -77,34 +83,35 @@ class EntryModel {
         }
         $this->initFieldNames();
         $db = Db::getInstance();
-        $SQL = $this->sql_string();
+        $SQL = $this->sqlString();
         //  echo ($SQL . ';;;' . $this->bindParam . ';;;' . $id) ;
         try {
             $stmt = $db->prepare($SQL);
             $stmt->bind_param($this->bindParam, $id);
             $stmt->execute();
         } catch (\mysqli_sql_exception $e) {
-            CriticalError::Show($e);
+            CriticalError::show($e);
         }
         $result = $stmt->get_result();
         if ($result->num_rows !== 0) {
             $this->data = $result->fetch_assoc();
-
             if ($this->hasBiblio) {
                 $this->setBiblio();
             }
             $this->loadChildren();
             $this->parse();
-        }else{
-            $this->noMatch = TRUE;
+        } else {
+            $this->noMatch = true;
         }
     }
 
-    protected function sql_string() {
+    protected function sqlString()
+    {
         return 'SELECT ' . $this->field_names->SQL() . ' FROM ' . $this->tablename . ' WHERE ' . $this->idField . ' = ?;';
     }
 
-    public function get($field) {
+    public function get($field)
+    {
         if (is_int($field)) {
             $field_name = $this->field_names->getFieldName($field);
         } else {
@@ -117,7 +124,8 @@ class EntryModel {
         }
     }
 
-    protected function parseNote($fieldName) {
+    protected function parseNote($fieldName)
+    {
         if (is_array($fieldName)) {
             foreach ($fieldName as $name) {
                 $this->parseNote($name);
@@ -128,15 +136,15 @@ class EntryModel {
         }
     }
 
-    protected function setBiblio() {
+    protected function setBiblio()
+    {
         $filter = new Filter([new Rule('object_id', 'exact', $this->getID(), 'i')]);
-        $objbibliography = New ObjectBibliography(NULL, 0, 0, $filter); //$sort = null, $start = 0, $count = 0, Filter $filter = null
-
+        $objbibliography = new ObjectBibliography(null, 0, 0, $filter); //$sort = null, $start = 0, $count = 0, Filter $filter = null
         $res = null;
-        $bibView = New publicationsMicroView();
+        $bibView = new publicationsMicroView();
         foreach ($objbibliography->data as $bib_etry) {
             //    print_r ( $bib_etry);
-            $res .= (empty($res) ? NULL : '; ');
+            $res .= (empty($res) ? null : '; ');
             if (!empty($bib_etry['author_year'])) {
                 $res .= $bibView->render($bib_etry['author_year'], $bib_etry['source_id']);
             } elseif (!empty($bib_etry['source_url'])) {
@@ -151,30 +159,29 @@ class EntryModel {
                 $res .= " [" . $bib_etry['reference_type'] . "]";
             }
         }
-
         $this->data['bibliography'] = $res;
     }
 
-    protected function getAccessedOn($accessedOn) {
+    protected function getAccessedOn($accessedOn)
+    {
         if (!empty($accessedOn)) {
             return " (accessed on " . htmlspecialchars($accessedOn, ENT_HTML5) . ")";
         }
     }
-
     /*
      * gets the id of the record
      */
 
-    public function getID() {
+    public function getID()
+    {
         return $this->get($this->idField);
     }
-
     /*
      * gets the name of the table based on the name of the id field
      */
 
-    public function getTable() {
+    public function getTable()
+    {
         return substr($this->idField, 0, strlen($this->idField) - 3);
     }
-
 }

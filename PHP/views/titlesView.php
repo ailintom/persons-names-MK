@@ -1,19 +1,19 @@
 <?php
 /*
  * MIT License
- * 
+ *
  * Copyright (c) 2017 Alexander Ilin-Tomich (unless specified otherwise for individual source files and documents)
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
   copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -30,17 +30,13 @@ namespace PNM;
  *
  * @author Tomich
  */
-class titlesView extends View {
+class titlesView extends View
+{
 
-    //put your code here
-
-    public function __construct() {
-        
-    }
-
-    public function echoRender(&$data) {
-        (New Head)->render(Head::HEADERSLIM, "Titles");
-        ?>     
+    public function echoRender(&$data)
+    {
+        (new Head())->render(Head::HEADERSLIM, "Titles");
+        ?>
         <form action="<?= Request::makeURL('titles') ?>" method="get">
             <div class="row">
                 <div class="column">
@@ -52,10 +48,9 @@ class titlesView extends View {
                     <input id="translation" name="translation" placeholder="English or German translation" type="text" <?= View::oldValue('personal_name') ?>>
                 </div>
             </div>
-
             <p>
                 <span id="match-label">Return titles</span>
-                <input type="radio" id="inexact" name="match" value="inexact" aria-labelledby="match-label"<?= View::oldValueRadio('match', 'inexact', TRUE) ?>>
+                <input type="radio" id="inexact" name="match" value="inexact" aria-labelledby="match-label"<?= View::oldValueRadio('match', 'inexact', true) ?>>
                 <label for="inexact" title="Match any title containing the search term">
                     containing
                 </label>
@@ -76,42 +71,39 @@ class titlesView extends View {
                 </label>
                 the search term.
             </p>
-
             <div class="filters">
                 <h2 class="sr-only">Filters</h2>
-
                 <div class="filters_selection">
                     <button class="filters_button" aria-controls="region-filter" aria-expanded="false" onclick="MK.toggleFilter('region-filter')" title="Toggle region filter" type="button">
-                        <?= icon('plus') . icon('minus') ?>
+                        <?= Icon::get('plus') . Icon::get('minus') ?>
                         Region
                     </button>
                     <button class="filters_button" aria-controls="period-filter" aria-expanded="false" onclick="MK.toggleFilter('period-filter')" title="Toggle period filter" type="button">
-                        <?= icon('plus') . icon('minus') ?>
+                        <?= Icon::get('plus') . Icon::get('minus') ?>
                         Period
                     </button>
                     <button class="filters_button" aria-controls="gender-filter" aria-expanded="false" onclick="MK.toggleFilter('gender-filter')" title="Toggle gender filter" type="button">
-                        <?= icon('plus') . icon('minus') ?>
+                        <?= Icon::get('plus') . Icon::get('minus') ?>
                         Gender
                     </button>
                     <button class="filters_button" aria-controls="ward-filter" aria-expanded="false" onclick="MK.toggleFilter('ward-filter')" title="Toggle Ward/Fischer number filter" type="button">
-                        <?= icon('plus') . icon('minus') ?>
+                        <?= Icon::get('plus') . Icon::get('minus') ?>
                         Ward/Fischer number
                     </button>
                     <button class="filters_button" aria-controls="hannig-filter" aria-expanded="false" onclick="MK.toggleFilter('hannig-filter')" title="Toggle Hannig number filter" type="button">
-                        <?= icon('plus') . icon('minus') ?>
+                        <?= Icon::get('plus') . Icon::get('minus') ?>
                         Hannig number
                     </button>
                 </div>
-
                 <div class="filter" id="region-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('region-filter')" title="Remove region filter" type="button">
-                            <?= icon('minus', 'Remove region filter') ?>
+                            <?= Icon::get('minus', 'Remove region filter') ?>
                         </button>
                         <span id="region-label">Region</span>
                     </div>
                     <div class="filter_content">
-                        <input id="region-attested" name="match-region" type="radio" value="attested" aria-labelledby="region-label"<?= View::oldValueRadio('match-region', 'attested', TRUE) ?>>
+                        <input id="region-attested" name="match-region" type="radio" value="attested" aria-labelledby="region-label"<?= View::oldValueRadio('match-region', 'attested', true) ?>>
                         <label for="region-attested" title="Match any title attested in the given region">
                             Attested in
                         </label>
@@ -125,16 +117,15 @@ class titlesView extends View {
                         <input id="place" list="places" name="place" placeholder="region or locality" title="Enter the region" type="text"<?= View::oldValue('place') ?>>
                     </div>
                 </div>
-
                 <div class="filter" id="period-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('period-filter')" title="Remove period filter" type="button">
-                            <?= icon('minus', 'Remove period filter') ?>
+                            <?= Icon::get('minus', 'Remove period filter') ?>
                         </button>
                         <span id="period-label">Period</span>
                     </div>
                     <div class="filter_content">
-                        <input id="period-attested" name="match-date" type="radio" value="attested" aria-labelledby="period-label"<?= View::oldValueRadio('match-date', 'attested', TRUE) ?>>
+                        <input id="period-attested" name="match-date" type="radio" value="attested" aria-labelledby="period-label"<?= View::oldValueRadio('match-date', 'attested', true) ?>>
                         <label for="period-attested" title="Match any title attested in the given period">
                             Attested in
                         </label>
@@ -148,16 +139,15 @@ class titlesView extends View {
                         <input id="period" list="periods" name="period" placeholder="period or reign" title="Enter the period" type="text"<?= View::oldValue('period') ?>>
                     </div>
                 </div>
-
                 <div class="filter" id="gender-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('gender-filter')" title="Remove gender filter" type="button">
-                            <?= icon('minus', 'Remove gender filter') ?>
+                            <?= Icon::get('minus', 'Remove gender filter') ?>
                         </button>
                         <span id="gender-label">Gender</span>
                     </div>
                     <div class="filter_content">
-                                                <input type="radio" id="any" name="gender" value="any" aria-labelledby="gender-label"<?= View::oldValueRadio('gender', 'any', TRUE) ?>>
+                        <input type="radio" id="any" name="gender" value="any" aria-labelledby="gender-label"<?= View::oldValueRadio('gender', 'any', true) ?>>
                         <label for="any" title="Match titles regardless of gender">
                             Regardless of gender
                         </label>
@@ -178,11 +168,10 @@ class titlesView extends View {
                         </label>
                     </div>
                 </div>
-
                 <div class="filter" id="ward-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('ward-filter')" title="Remove Ward/Fischer number filter" type="button">
-                            <?= icon('minus', 'Remove Ward/Fischer number filter') ?>
+                            <?= Icon::get('minus', 'Remove Ward/Fischer number filter') ?>
                         </button>
                         Ward/Fischer number
                     </div>
@@ -191,11 +180,10 @@ class titlesView extends View {
                         <input id="ward" name="ward" placeholder="Example: 1346" title="Enter the entry number in Ward, Index of Egyptian Administrative and Religious Titles of the Middle Kingdom, or Fischer, Egyptian Titles of the Middle Kingdom. A Supplement to Wm. Ward's Index" type="text"<?= View::oldValue('ward') ?>>
                     </div>
                 </div>
-
                 <div class="filter" id="hannig-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('hannig-filter')" title="Remove Hannig number filter" type="button">
-                            <?= icon('minus', 'Remove Hannig number filter') ?>
+                            <?= Icon::get('minus', 'Remove Hannig number filter') ?>
                         </button>
                         Hannig number
                     </div>
@@ -205,21 +193,18 @@ class titlesView extends View {
                     </div>
                 </div>
             </div>
-
             <button type="submit" class="submit">
                 Search
             </button>
             <button type="submit" title="Clear search and display all records" name="action" value="reset">
                 Reset
             </button>
-
             <?php
             $dl = new Datalist();
             echo $dl->get('periods');
             echo $dl->get('places');
             ?>
         </form>
-
         <?php
         if (empty($data) || $data->count == 0) {
             ?>
@@ -228,24 +213,20 @@ class titlesView extends View {
         } else {
             ?>
             <h2 class="sr-only" id="results">Results</h2>
-            
             <?php
             $tableCo = new Table($data, 'titles_id', 'title', 'sort');
-            $tableCo->render_table(['title', 'gender', 'count_attestations', 'usage_period', 'usage_area', 'ward_fischer', 'hannig', 'translation_en'], ['Title','Gender', 'Atts.', 'Period', 'Area', 'Ward/Fischer no.', 'Hannig no.', 'Translation'], TRUE);
-
+            $tableCo->renderTable(['title', 'gender', 'count_attestations', 'usage_period', 'usage_area', 'ward_fischer', 'hannig', 'translation_en'], ['Title', 'Gender', 'Atts.', 'Period', 'Area', 'Ward/Fischer no.', 'Hannig no.', 'Translation'], true);
             /*
               ['titles_id', 'title', 'gender', 'count_attestations', 'usage_period', 'usage_area', 'ward_fischer', 'hannig', 'translation_en']
              */
         }
-        
         /*
-         * 
+         *
          * Process filters
-         * 
+         *
          */
-        $this->toggleFilters([['place', 'region-filter'], ['period', 'period-filter'], ['gender','gender-filter', 'any'], ['ward','ward-filter'], ['hannig','hannig-filter']]);
+        $this->toggleFilters([['place', 'region-filter'], ['period', 'period-filter'], ['gender', 'gender-filter', 'any'], ['ward', 'ward-filter'], ['hannig', 'hannig-filter']]);
     }
-
 }
 
 /*
@@ -257,7 +238,6 @@ class titlesView extends View {
       }
       //return $res;
       }
-
       }
      */
     

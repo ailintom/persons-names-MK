@@ -13,13 +13,13 @@ namespace PNM;
  *
  * @author Tomich
  */
-class infoView {
+class infoView
+{
 
-    public function echoRender($data) {
-        (New Head)->render(Head::HEADERSLIM, $data[0]);
-
+    public function echoRender($data)
+    {
+        (new Head())->render(Head::HEADERSLIM, $data[0]);
         $dnoteobj = new Note($data[1]);
         echo $dnoteobj->ParsedNote;
     }
-
 }
