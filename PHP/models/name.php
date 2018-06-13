@@ -40,13 +40,14 @@ class name extends EntryModel {
     protected function parse() {
         //This should be implemented in child classes to parse data after retrieving from the database
         $this->parseNote(['usage_period_note', 'usage_area_note', 'note']);
-       
-    }
-    protected function loadChildren() {
-         $filter = new Filter([New Rule('personal_names_id', 'exact', $this->data['personal_names_id'], 'i')]);
-         $this->data['name_types'] = New NameTypes(NULL, 0,0, $filter);
     }
 
-    
+    protected function loadChildren() {
+        $filterTypes = new Filter([New Rule('personal_names_id', 'exact', $this->data['personal_names_id'], 'i')]);
+        $this->data['name_types'] = New NameTypes(NULL, 0, 0, $filterTypes);
+        $filterAlt = new Filter([New Rule('alternative_readings.personal_names_id', 'exact', $this->data['personal_names_id'], 'i')]);
+        $this->data['alt_readings'] = New NameReadings(NULL, 0, 0, $filterAlt);
+        //
+    }
 
 }

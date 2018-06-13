@@ -109,7 +109,7 @@ class Request {
      */
 
     public static function emptyOrDefault($field, $value) {
-        if (!isset($value)) {
+        if (!isset($value) or !isset($value[0]) ) {
             return TRUE;
         }
         if (array_key_exists($field, self::DEFAULTS)) {

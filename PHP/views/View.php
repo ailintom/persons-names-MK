@@ -46,7 +46,7 @@ class View {
 
 //<dt>Provenance:</dt><dd><span class="place"><a href="place/184549377.html">Abydos</a></span> <span class="note">(Northern Necropolis)</span></dd>
         } elseif (!empty($value)) {
-            return "\n<dt>" . $term . ":</dt>\n<dd><span" . (empty($class) ? NULL : ' class="' . $class . '"') . '>' . $value . '</span>';
+            return "\n<dt>" . $term . ":</dt>\n<dd><span" . (empty($class) ? NULL : ' class="' . $class . '"') . '>' . $value . '</span></dd>';
         }
     }
 
@@ -334,7 +334,7 @@ class View {
 
     protected function processAltReadings($objAltReadings) {
         if (!empty($objAltReadings->data)) {
-            $res = '(alternative reading' . (count($objAltReadings->data > 0) ? 's' : NULL ) . ': ';
+            $res = ' (alternative reading' . (count($objAltReadings->data) > 1 ? 's' : NULL ) . ': ';
             $count = 0;
             $objView = new personal_namesMicroView();
             foreach ($objAltReadings->data as $altReading) {
@@ -343,6 +343,15 @@ class View {
             $res .= ')';
             return $res;
         }
+    }
+    
+      protected function renderPersons($persons) {
+        $res = NULL;
+        $personsMV = new personsMicroView();
+        foreach ($persons->data as $person) {
+            $res .= (empty($res) ? NULL : ', ') . $personsMV->render($person['title'], $person['persons_id']) . '&nbsp;(' . $person['status'] . ')';
+        }
+        return $res;
     }
 
 }

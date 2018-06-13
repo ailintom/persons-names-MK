@@ -121,7 +121,7 @@ class ListModel {
 
     protected function makeSQL($inputsort, $start, $count) {
 
-        if ($inputsort == $this->defaultsort) {
+        if (empty($inputsort) || $inputsort == $this->defaultsort ) {
             $sort = NULL;
         } else {
             $sort = $this->getSortField($inputsort);
@@ -131,6 +131,7 @@ class ListModel {
         } else {
             $ORDER = null;
         }
+        
         if ($start > 0 || $count > 0) {
             $LIMIT = ' LIMIT ' . $start . ', ' . ($count > 0 ? $count : self::MAX_RECORD_COUNT);
         } else {

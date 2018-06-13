@@ -45,7 +45,7 @@ class peoplePairs extends ListModel {
 
     protected function makeSQL($inputsort, $start, $count) {
 
-        if ($inputsort == $this->defaultsort) {
+        if (empty($inputsort) || $inputsort == $this->defaultsort) {
             $sort = NULL;
         } else {
             $sort = $this->getSortField($inputsort);

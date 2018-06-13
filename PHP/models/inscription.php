@@ -86,6 +86,10 @@ class inscription extends EntryModel {
             // print_r($objTitles->data);
             $objAtt->data[$i]['titles'] = $objTitles;
 
+            $rulesAttPersons = [New Rule('attestations_id', 'exact', $objAtt->data[$i]['attestations_id'], 'i')];
+            $filterAttPersons = new Filter($rulesAttPersons);
+            $objAttPersons = New AttestationPersons(NULL, 0, 0, $filterAttPersons);
+            $objAtt->data[$i]['persons'] = $objAttPersons;
 
             $filterBonds = new Filter([New Rule('attestations_id', 'exact', $objAtt->data[$i]['attestations_id'], 'i')]);
             $objBonds = New ObjectBonds(NULL, 0, 0, $filterBonds);

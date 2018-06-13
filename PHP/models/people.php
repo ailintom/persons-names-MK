@@ -46,7 +46,7 @@ class people extends ListModel {
 //'gender_b', 'title_string_b', 'personal_name_b', 
     protected function makeSQL($inputsort, $start, $count) {
         
-        if ($inputsort == $this->defaultsort) {
+        if (empty($inputsort) ||$inputsort == $this->defaultsort) {
             $sort = NULL;
         } else {
             $sort = $this->getSortField($inputsort);

@@ -116,6 +116,7 @@ require_once('models/peopleSibling.php');
 require_once('models/peopleSpouse.php');
 require_once('models/biblio_refs.php');
 require_once('models/find_groups.php');
+require_once('models/NameReadings.php');
 
 require_once('models/workshops.php');
 require_once('models/infos.php');

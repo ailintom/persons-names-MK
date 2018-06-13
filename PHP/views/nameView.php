@@ -39,6 +39,8 @@ class nameView extends View {
       'inscriptions_count']);
      */
 
+    protected $spellView;
+
     public function echoRender(&$data) {
         $placesMV = new placesMicroView;
         $subtitle = NULL;
@@ -53,9 +55,9 @@ class nameView extends View {
             <h2>Spellings</h2>
             <ul class="toc_list">
                 <?php
-                $spellView = New spellingsMicroView();
+                $this->spellView = New spellingsMicroView();
                 foreach ($data->get("spellings")->data as $spelling) {
-                    echo '<li><a href = "#', $spelling['spellings_id'], '">', $spellView->render($spelling['spelling'], $spelling['spellings_id']), ' (', $spelling['count_attestations'], ')</a></li>';
+                    echo '<li><a href = "#', $spelling['spellings_id'], '">', $this->spellView->render($spelling['spelling'], $spelling['spellings_id']), ' (', $spelling['count_attestations'], ')</a></li>';
                 }
                 if ($data->get("persons")->count > 0) {
                     echo '<li><a href = "#persons">Dossiers (', $data->get("persons")->count, ')</a></li>';
@@ -75,8 +77,8 @@ class nameView extends View {
             $this->descriptionElement('Usage area', $placesMV->render($data->get('usage_area')), $data->get('usage_area_note'), 'place'),
             $this->descriptionElement('Usage period', $data->get('usage_period'), $data->get('usage_period_note'), 'period'),
             $this->descriptionElement('Gender', $data->get('gender'), NULL, 'gender');
-
-
+            $altReadings = implode(', ', array_map([$this, 'renderAltReading'], $data->get('alt_readings')->data));
+            echo $this->descriptionElement('Is a possible reading of', $altReadings);
             echo $this->descriptionElement('Bibliography', $data->get('bibliography'), NULL, 'biblio-ref');
             $ref = $this->addReference('Ranke no.', $data->get('ranke'));
             $ref = $this->addReference('TLA no.', $data->get('tla'), 'http://aaew.bbaw.de/tla/servlet/GetWcnDetails?wn=', $ref);
@@ -93,10 +95,10 @@ class nameView extends View {
             $j = 0;
             $inscrMV = New inscriptionsMicroView();
             foreach ($data->get("spellings")->data as $spelling) {
-                echo ' <div class="spellings_item" id="', ID::shorten($spelling['spellings_id']), '"><h3>', $spellView->render($spelling['spelling'], $spelling['spellings_id']), '</h3><ol start="', $spelling['first_no'], '">';
+                echo ' <div class="spellings_item" id="', ID::shorten($spelling['spellings_id']), '"><h3>', $this->spellView->render($spelling['spelling'], $spelling['spellings_id']), $this->processAltReadings($spelling['alt_readings']), '</h3><ol start="', $spelling['first_no'], '">';
                 foreach ($spelling['attestations']->data as $att) {
-                    
-                   echo '<li id="att', ++$j, '"><p>', $this->renderGender($att['gender']), ' ';
+
+                    echo '<li id="att', ++$j, '"><p>', $this->renderGender($att['gender']), ' ';
                     $inscrMV->echoRender($this->renderObjectType($att['object_type']) . ' ' . $att['title'], $att['inscriptions_id']);
                     echo '</p><dl class="-inline">';
                     echo $this->descriptionElement('Title', $att['title_string'], NULL, 'title'),
@@ -106,7 +108,7 @@ class nameView extends View {
                     $this->descriptionElement('Production place', $placesMV->render($att['production_place']), NULL, 'place'),
                     $this->descriptionElement('Date', $att['dating'], NULL, 'period');
                     if (!empty($att['persons'])) {
-                        echo $this->descriptionElement('Person', $this->renderPersons($att['persons']), NULL, NULL);
+                        echo $this->descriptionElement('Dossier', $this->renderPersons($att['persons']), NULL, NULL);
                     }
                     echo '</dl></li>';
                 }
@@ -137,12 +139,22 @@ class nameView extends View {
         // ['inscriptions_id', 'attestations_id', 'personal_name', 'gender', 'title_string', 'title', 'dating', 'origin', 'count_persons']
     }
 
-    protected function renderPersons($persons) {
-        $res = NULL;
-        $personsMV = new personsMicroView();
-        foreach ($persons->data as $person) {
-            $res .= (empty($res) ? NULL : ', ') . $personsMV->render($person['title'], $person['persons_id']) . '&nbsp;(' . $person['status'] . ')';
-        }
+  
+
+    protected function renderAltReading($altReading) {
+        return $this->renderSpelling($altReading['personal_names_id'], $altReading['personal_name'], $altReading['spellings_id'], $altReading['spelling']);
+    }
+
+    protected function renderSpelling($personal_names_id, $personal_name, $spellings_id, $spelling) {
+        $res = '<span class="name">';
+        $res .= '<a href="' . Request::makeURL('name', [$personal_names_id, $spellings_id]) . '">';
+
+        $res .= $personal_name . ' ';
+
+        $res .= $this->spellView->render($spelling, $spellings_id)
+                . '</a>';
+        $res .= '</span>';
+
         return $res;
     }
 

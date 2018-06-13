@@ -30,16 +30,19 @@ namespace PNM;
  * 
  *
  */
-class AttestationPersons extends ListModel {
+class NameReadings extends ListModel {
 
-    protected $tablename = 'persons_attestations_xref INNER JOIN persons ON persons_attestations_xref.persons_id = persons.persons_id';
-    public $defaultsort = 'FIELD(persons_attestations_xref.status, "accepted", "weak", "rejected"), title';
+    protected $tablename = ' (alternative_readings INNER JOIN spellings ON alternative_readings.spellings_id = spellings.spellings_id) INNER JOIN personal_names ON spellings.personal_names_id = personal_names.personal_names_id';
+    public $defaultsort = 'personal_names.personal_name_sort';
 
     protected function initFieldNames() {
-        $this->field_names = new FieldList(['IF(persons.title>"", persons.title, CONCAT(persons.personal_name, "##"))', 'persons.persons_id', 'status'], ['title', 'persons_id', 'status']);
+        $this->field_names = new FieldList(['spellings.spelling', 'spellings.spellings_id', 'personal_names.personal_names_id', 'personal_names.personal_name'],
+                ['spellings.spelling', 'spellings_id', 'personal_names_id', 'personal_name']);
+    }
+//'alternative_readings.personal_names_id', 
+    
+    protected function loadChildren() {
+        
     }
 
-
-
 }
-

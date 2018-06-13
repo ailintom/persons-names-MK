@@ -84,7 +84,12 @@ class inscriptionView extends View {
                 $currentLoc = NULL;
                 $loc = $Att['location'];
             }
-            $currentLoc .= '<li><h4 id="' . ID::shorten($Att['attestations_id']) . '"><span class="tit">' . $Att['title_string'] . '</span> <span class="pn">' . $Att['personal_name'] . '</span></h4>';
+            if (count($Att['persons']->data) > 0) {
+                $doss = ', dossier' . (count($Att['persons']->data) > 1 ? 's' : NULL) . ': ' . $this->renderPersons($Att['persons']) ;
+            } else {
+                $doss = NULL;
+            }
+            $currentLoc .= '<li><h4 id="' . ID::shorten($Att['attestations_id']) . '"><span class="tit">' . $Att['title_string'] . '</span> <span class="pn">' . $Att['personal_name'] . '</span>' . $doss . '</h4>';
 
             $spellings = $Att['spellings']->getSpellings();
             $titles = $Att['titles']->data;
