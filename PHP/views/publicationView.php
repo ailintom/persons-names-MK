@@ -39,9 +39,7 @@ class publicationView extends View
     {
         (new Head())->render(Head::HEADERSLIM, $data->get('author_year'));
         ?>
-        <p class="csl-entry">
-            <?= $data->get('html_entry') ?>
-        </p>
+        <?= $data->get('html_entry') ?>
         <dl>
             <?php
             $ref = $this->addReference('OEB ID', $data->get('oeb_id'), 'http://oeb.griffith.ox.ac.uk/oeb_entry.aspx?item=');

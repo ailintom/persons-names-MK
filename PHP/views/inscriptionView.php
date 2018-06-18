@@ -151,7 +151,7 @@ class inscriptionView extends View
     protected function writeLoc($loc, $currentLoc)
     {
         if (!empty($currentLoc)) {
-            return '<li><h3>' . $loc . '</h3><ul class="attestations">' . $currentLoc . ' </ul></li>';
+            return '<li><h3>' . ($loc ?: '&nbsp;') . '</h3><ul class="attestations">' . $currentLoc . ' </ul></li>';
         }
     }
 

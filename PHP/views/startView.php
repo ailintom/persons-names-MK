@@ -34,7 +34,7 @@ class startView extends View
         <ul>
             <?php
             foreach ($data as $entry) {
-                echo '<li><h3><a href="' . Request::makeURL('info') . '/' . urldecode($entry[0]) . '">', $entry[0], '</h3></li>';
+                echo '<li><h3><a href="' . Request::makeURL('info') . '/' . urlencode($entry[0]) . '">', $entry[0], '</a></h3></li>';
             }
             ?></ul><?php
     }

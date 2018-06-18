@@ -23,7 +23,7 @@ namespace PNM;
                     <?php
                     $vers = Config::VERSIONS;
 
-                    $curver = $vers[array_keys(array_column($vers, array_shift(array_keys($vers))), Request::get('used_ver'))[0]];
+                    $curver = $vers[array_search(Request::get('used_ver'), array_column($vers, 0))];                           
                     foreach ($vers as $version) {
                         echo '<option value="' . ($version[0] == Request::get('used_ver') ? '#' : Request::changeVer($version[0])) . '" ' . ($version[0] == Request::get('used_ver') ? 'selected' : null) . '>' . $version[0] . ' (' . $version[1] . ')' . '</option>';
                     }

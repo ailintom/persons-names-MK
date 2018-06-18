@@ -55,7 +55,7 @@ class nameController extends EntryController
                         $objNamePersons->data[$personKey]['attestations'][] = $persDesc;
                     }
                     $objNameSpellings->data[$i]['attestations']->data[$j]['persons'] = $objAttPersons;
-                    $objNameSpellings->data[$i]['first_no'] = $this->getAttNo($objNameSpellings, $i, 1);
+                   // $objNameSpellings->data[$i]['first_no'] = $this->getAttNo($objNameSpellings, $i, 1);
                 }
             }
         }

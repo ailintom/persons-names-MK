@@ -54,6 +54,6 @@ class Select
             $isDef = false;
         }
         $selected = View::oldValueSelect($this->name, $option, $isDef);
-        return '<option value="' . $option . '"' . $selected . '>' . ($option ?: '&nbsp;') . '</option>';
+        return '<option value="' . htmlspecialchars(trim($option), ENT_QUOTES, 'UTF-8') . '"' . $selected . '>' . (htmlspecialchars(trim($option), ENT_QUOTES, 'UTF-8') ?: '&nbsp;') . '</option>';
     }
 }

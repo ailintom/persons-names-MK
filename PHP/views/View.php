@@ -48,7 +48,7 @@ class View
             return "\n<dt>" . $term . ":</dt>\n<dd><span" . (empty($class) ? null : ' class="' . $class . '"') . '>' . $value . '</span> <span class="' . (empty($noteClass) ? 'note' : $noteClass) . '">(' . $note . ')</span></dd>';
 //<dt>Provenance:</dt><dd><span class="place"><a href="place/184549377.html">Abydos</a></span> <span class="note">(Northern Necropolis)</span></dd>
         } elseif (!empty($value)) {
-            return "\n<dt>" . $term . ":</dt>\n<dd><span" . (empty($class) ? null : ' class="' . $class . '"') . '>' . $value . '</span></dd>';
+            return "\n<dt>" . $term . ":</dt>\n<dd" . (empty($class) ? null : ' class="' . $class . '"') . '>' . $value . '</dd>';
         }
     }
 

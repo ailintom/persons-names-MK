@@ -96,7 +96,7 @@ class nameView extends View
             $j = 0;
             $inscrMV = new inscriptionsMicroView();
             foreach ($data->get("spellings")->data as $spelling) {
-                echo ' <div class="spellings_item" id="', ID::shorten($spelling['spellings_id']), '"><h3>', $this->spellView->render($spelling['spelling'], $spelling['spellings_id']), $this->processAltReadings($spelling['alt_readings']), '</h3><ol start="', $spelling['first_no'], '">';
+                echo ' <div class="spellings_item" id="', ID::shorten($spelling['spellings_id']), '"><h3>', $this->spellView->render($spelling['spelling'], $spelling['spellings_id']), $this->processAltReadings($spelling['alt_readings']), '</h3><ol>';
                 foreach ($spelling['attestations']->data as $att) {
                     echo '<li id="att', ++$j, '"><p>', $this->renderGender($att['gender']), ' ';
                     $inscrMV->echoRender($this->renderObjectType($att['object_type']) . ' ' . $att['title'], $att['inscriptions_id']);

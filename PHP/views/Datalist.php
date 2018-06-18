@@ -88,7 +88,7 @@ class Datalist
                 $html = "<datalist id='$name'>";
                 $items = file(dirname(__DIR__) . "/assets/data/$name.txt");
                 foreach ($items as $item) {
-                    $html .= "<option>" . trim($item) . "</option>";
+                    $html .= "<option>" . htmlspecialchars(trim($item),ENT_QUOTES,'UTF-8') . "</option>";
                 }
                 $html .= "</datalist>";
                 return $html;
@@ -113,6 +113,6 @@ class Datalist
 
     protected function singleDatalistEntry($entry)
     {
-        return "\n" . '<option value="' . $entry . '">' . $entry . '</option>';
+        return "\n" . '<option value="' . htmlspecialchars(trim($entry),ENT_QUOTES,'UTF-8') . '">' . htmlspecialchars(trim($entry),ENT_QUOTES,'UTF-8') . '</option>';
     }
 }
