@@ -42,6 +42,11 @@ class Table
     protected $hashpos;
     protected $extraHeader;
 
+    const SORT_HIGHLIGHT = 0;
+    const SORT_PARAM = 1;
+    const SORT_TITLE = 2;
+    const SORT_ICON = 3;
+
     public function __construct(ListModel $data, $id_field, $target_controller, $sort_param = 'sort', $hashpos = null)
     {
         $this->data = $data;
@@ -105,12 +110,12 @@ class Table
                     <?php
                     echo ( "\r");
                     for ($i = 0; $i < count($columns); ++$i) {
-                        $url = Request::makeURL(Request::get('controller'), Request::get('id'), $sort_renders[$i][1], $this->sort_param, true, 0);
+                        $url = Request::makeURL(Request::get('controller'), Request::get('id'), $sort_renders[$i][self::SORT_PARAM], $this->sort_param, true, 0);
                         $hashpos = $this->id_field[0] . "_" . $i;
-                        echo ('<div class="th' . $sort_renders[$i][0] . '" role="gridcell" style="display: table-cell">'
-                        . '<a href="' . $url . '" title="Sort by ' . lcfirst($column_titles[$i]) . ', ' . $sort_renders[$i][2] . '" id="' . $hashpos . '"'
+                        echo ('<div class="th' . $sort_renders[$i][self::SORT_HIGHLIGHT] . '" role="gridcell" style="display: table-cell">'
+                        . '<a href="' . $url . '" title="Sort by ' . lcfirst($column_titles[$i]) . ', ' . $sort_renders[$i][self::SORT_TITLE] . '" id="' . $hashpos . '"'
                         . ' onclick="window.location.replace(this.href + (' . "'#$hashpos'||" . 'window.location.hash));return false;">'
-                        . $column_titles[$i] . $sort_renders[$i][3] . '</a></div>' . "\r");
+                        . $column_titles[$i] . $sort_renders[$i][self::SORT_ICON] . '</a></div>' . "\r");
                     }
                     ?>
                 </div>
@@ -139,7 +144,7 @@ class Table
                                 $cellval = !empty($row[$columns[$i]]) && strlen($row[$columns[$i]]) > 0 ? $row[$columns[$i]] : '&nbsp;';
                             }
                             //role="presentation"
-                            echo('<div class="tr' . $sort_renders[$i][0] . '" role="gridcell" style="display: table-cell"' . $sort_renders[$i][0] . '>' . $cellval . '</div>' . "\r" );
+                            echo('<div class="tr' . $sort_renders[$i][self::SORT_HIGHLIGHT] . '" role="gridcell" style="display: table-cell">' . $cellval . '</div>' . "\r" );
                         }
                         echo ( "\r");
                         ?>
