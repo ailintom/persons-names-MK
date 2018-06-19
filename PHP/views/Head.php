@@ -27,7 +27,6 @@ class Head
                 <meta property="og:image" content="<?= Config::BASE ?>assets/favicon/favicon-32x32.png">
                 <link rel="canonical" href="<?= Config::HOST . Request::stableURL() ?>">
                 <link rel="stylesheet" href="<?= Config::BASE ?>assets/style/style.css">
-                <link rel="stylesheet" href="<?= Config::BASE ?>assets/style/datalist-polyfill-style.css">
                 <link rel="shortcut icon" href="<?= Config::BASE ?>assets/favicon/favicon.ico">
                 <link rel="apple-touch-icon" sizes="180x180" href="<?= Config::BASE ?>assets/favicon/apple-touch-icon.png">
                 <link rel="icon" type="image/png" sizes="32x32" href="<?= Config::BASE ?>assets/favicon/favicon-32x32.png">

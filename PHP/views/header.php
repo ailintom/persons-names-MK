@@ -15,7 +15,7 @@ namespace PNM;
         <div class="header_aside">
             <?php if (!empty(Request::stableURL())) : ?>
                 <p>
-                    <a href="<?= Request::stableURL() ?>">Stable URL<span class="print-only">: <?= Config::HOST . Request::stableURL() ?></span></a>
+                    <a href="<?= Request::stableURL() ?>">Stable URL<span class="print_only">: <?= Config::HOST . Request::stableURL() ?></span></a>
                 </p>
             <?php endif; ?>
             <p>
@@ -28,7 +28,7 @@ namespace PNM;
                         echo '<option value="' . ($version[0] == Request::get('used_ver') ? '#' : Request::changeVer($version[0])) . '" ' . ($version[0] == Request::get('used_ver') ? 'selected' : null) . '>' . $version[0] . ' (' . $version[1] . ')' . '</option>';
                     }
                     ?>
-                </select><span class="print-only"><?= $curver[0] . ' (' . $curver[1] . ')' ?></span>
+                </select><span class="print_only"><?= $curver[0] . ' (' . $curver[1] . ')' ?></span>
             </p>
         </div>
     </div>

@@ -113,6 +113,7 @@ class Datalist
 
     protected function singleDatalistEntry($entry)
     {
-        return "\n" . '<option value="' . htmlspecialchars(trim($entry),ENT_QUOTES,'UTF-8') . '">' . htmlspecialchars(trim($entry),ENT_QUOTES,'UTF-8') . '</option>';
+       // return "\n" . '<option value="' . htmlspecialchars(trim($entry),ENT_QUOTES,'UTF-8') . '">' . htmlspecialchars(trim($entry),ENT_QUOTES,'UTF-8') . '</option>';
+         return "\n" . '<option value="' . htmlspecialchars(trim($entry),ENT_QUOTES,'UTF-8') . '">' ;
     }
 }

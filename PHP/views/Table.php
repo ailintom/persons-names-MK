@@ -105,14 +105,14 @@ class Table
         }
         ?>
         <div class="table-container">
-            <div role="grid" style="display: table"><?= $this->extraHeader ?>
-                <div role="row" style="display: table-row">
+            <div class="table" role="grid"><?= $this->extraHeader ?>
+                <div class="tr" role="row">
                     <?php
                     echo ( "\r");
                     for ($i = 0; $i < count($columns); ++$i) {
                         $url = Request::makeURL(Request::get('controller'), Request::get('id'), $sort_renders[$i][self::SORT_PARAM], $this->sort_param, true, 0);
                         $hashpos = $this->id_field[0] . "_" . $i;
-                        echo ('<div class="th' . $sort_renders[$i][self::SORT_HIGHLIGHT] . '" role="gridcell" style="display: table-cell">'
+                        echo ('<div class="th' . $sort_renders[$i][self::SORT_HIGHLIGHT] . '" role="gridcell">'
                         . '<a href="' . $url . '" title="Sort by ' . lcfirst($column_titles[$i]) . ', ' . $sort_renders[$i][self::SORT_TITLE] . '" id="' . $hashpos . '"'
                         . ' onclick="window.location.replace(this.href + (' . "'#$hashpos'||" . 'window.location.hash));return false;">'
                         . $column_titles[$i] . $sort_renders[$i][self::SORT_ICON] . '</a></div>' . "\r");
@@ -135,7 +135,7 @@ class Table
                     /* <tr onclick="MK.open(event, '<?= $url ?>')" onkeydown="MK.open(event, '<?= $url ?>')" role="link" tabindex="0">
                      */
                     ?>
-                    <a role="row" style="display: table-row" href="<?= $url ?>">
+                    <a class="tr" role="row" href="<?= $url ?>">
                         <?php
                         for ($i = 0; $i < count($columns); ++$i) {
                             if ($columns[$i] == 'gender' || $columns[$i] == 'gender_b') {
@@ -144,7 +144,7 @@ class Table
                                 $cellval = !empty($row[$columns[$i]]) && strlen($row[$columns[$i]]) > 0 ? $row[$columns[$i]] : '&nbsp;';
                             }
                             //role="presentation"
-                            echo('<div class="tr' . $sort_renders[$i][self::SORT_HIGHLIGHT] . '" role="gridcell" style="display: table-cell">' . $cellval . '</div>' . "\r" );
+                            echo('<div class="td' . $sort_renders[$i][self::SORT_HIGHLIGHT] . '" role="gridcell">' . $cellval . '</div>' . "\r" );
                         }
                         echo ( "\r");
                         ?>
