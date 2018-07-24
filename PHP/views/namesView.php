@@ -23,7 +23,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\views;
 
 /**
  * Description of bibliographyView
@@ -35,9 +35,9 @@ class namesView extends View
 
     public function echoRender(&$data)
     {
-        (new Head())->render(Head::HEADERSLIM, 'Personal names');
+        (new HeadView())->render(HeadView::HEADERSLIM, 'Personal names');
         ?>
-        <form action="<?= Request::makeURL("names") ?>" method="get" onreset="MK.removeAllFilters()">
+        <form action="<?= \PNM\Request::makeURL("names") ?>" method="get" onreset="MK.removeAllFilters()">
             <div class="row">
                 <div class="column">
                     <label for="personal_name">Personal name</label>
@@ -75,34 +75,34 @@ class namesView extends View
                 <h2 class="sr-only">Filters</h2>
                 <div class="filters_selection">
                     <button class="filters_button" aria-controls="region-filter" aria-expanded="false" onclick="MK.toggleFilter('region-filter')" title="Toggle region filter" type="button">
-                        <?= Icon::get('plus') . Icon::get('minus') ?>
+                        <?= IconView::get('plus') . IconView::get('minus') ?>
                         Region
                     </button>
                     <button class="filters_button" aria-controls="period-filter" aria-expanded="false" onclick="MK.toggleFilter('period-filter')" title="Toggle period filter" type="button">
-                        <?= Icon::get('plus') . Icon::get('minus') ?>
+                        <?= IconView::get('plus') . IconView::get('minus') ?>
                         Period
                     </button>
                     <button class="filters_button" aria-controls="gender-filter" aria-expanded="false" onclick="MK.toggleFilter('gender-filter')" title="Toggle gender filter" type="button">
-                        <?= Icon::get('plus') . Icon::get('minus') ?>
+                        <?= IconView::get('plus') . IconView::get('minus') ?>
                         Gender
                     </button>
                     <button class="filters_button" aria-controls="ranke-filter" aria-expanded="false" onclick="MK.toggleFilter('ranke-filter')" title="Toggle Ranke number filter" type="button">
-                        <?= Icon::get('plus') . Icon::get('minus') ?>
+                        <?= IconView::get('plus') . IconView::get('minus') ?>
                         Ranke number
                     </button>
                     <button class="filters_button" aria-controls="pattern-filter" aria-expanded="false" onclick="MK.toggleFilter('pattern-filter')" title="Toggle name pattern filter" type="button">
-                        <?= Icon::get('plus') . Icon::get('minus') ?>
+                        <?= IconView::get('plus') . IconView::get('minus') ?>
                         Name pattern
                     </button>
                     <button class="filters_button" aria-controls="class-filter" aria-expanded="false" onclick="MK.toggleFilter('class-filter')" title="Toggle name pattern filter" type="button">
-                        <?= Icon::get('plus') . Icon::get('minus') ?>
+                        <?= IconView::get('plus') . IconView::get('minus') ?>
                         Semantic class
                     </button>
                 </div>
                 <div class="filter" id="region-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('region-filter')" title="Remove region filter" type="button">
-                            <?= Icon::get('minus', 'Remove region filter') ?>
+                            <?= IconView::get('minus', 'Remove region filter') ?>
                         </button>
                         <span id="region-label">Region</span>
                     </div>
@@ -124,7 +124,7 @@ class namesView extends View
                 <div class="filter" id="period-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('period-filter')" title="Remove period filter" type="button">
-                            <?= Icon::get('minus', 'Remove period filter') ?>
+                            <?= IconView::get('minus', 'Remove period filter') ?>
                         </button>
                         <span id="period-label">Period</span>
                     </div>
@@ -146,7 +146,7 @@ class namesView extends View
                 <div class="filter" id="gender-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('gender-filter')" title="Remove gender filter" type="button">
-                            <?= Icon::get('minus', 'Remove gender filter') ?>
+                            <?= IconView::get('minus', 'Remove gender filter') ?>
                         </button>
                         <span id="gender-label">Gender</span>
                     </div>
@@ -180,7 +180,7 @@ class namesView extends View
                 <div class="filter" id="ranke-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('ranke-filter')" title="Remove Ranke number filter" type="button">
-                            <?= Icon::get('minus', 'Remove Ranke number filter') ?>
+                            <?= IconView::get('minus', 'Remove Ranke number filter') ?>
                         </button>
                         Ranke number
                     </div>
@@ -192,7 +192,7 @@ class namesView extends View
                 <div class="filter" id="pattern-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('pattern-filter')" title="Remove name pattern filter" type="button">
-                            <?= Icon::get('minus', 'Remove name pattern filter') ?>
+                            <?= IconView::get('minus', 'Remove name pattern filter') ?>
                         </button>
                         Name pattern
                     </div>
@@ -204,7 +204,7 @@ class namesView extends View
                 <div class="filter" id="class-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('class-filter')" title="Remove semantic class filter" type="button">
-                            <?= Icon::get('minus', 'Remove semantic class filter') ?>
+                            <?= IconView::get('minus', 'Remove semantic class filter') ?>
                         </button>
                         Semantic class
                     </div>
@@ -222,7 +222,7 @@ class namesView extends View
             </button>
         </form>
         <?php
-        $dl = new Datalist();
+        $dl = new DatalistView();
         echo $dl->get('name-types-formal');
         echo $dl->get('name-types-semantic');
         echo $dl->get('periods');
@@ -235,7 +235,7 @@ class namesView extends View
             ?>
             <h2 class="sr-only" id="results">Results</h2>
             <?php
-            $tableCo = new Table($data, 'personal_names_id', 'name', 'sort');
+            $tableCo = new TableView($data, 'personal_names_id', 'name', 'sort');
             $tableCo->renderTable(['personal_name', 'gender', 'count_attestations', 'usage_period', 'usage_area', 'ranke', 'translation_en'], ['Personal name', 'Gender', 'Atts.', 'Period', 'Area', 'Ranke no.', 'Translation'], true);
         }
         /*

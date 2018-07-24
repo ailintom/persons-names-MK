@@ -24,7 +24,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\views;
 
 class find_groupsMicroView extends MicroView
 {

@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace PNM;
+namespace PNM\models;
 
 /**
  * Description of peopleParent

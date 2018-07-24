@@ -24,7 +24,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\views;
 
 class publicationsMicroView extends MicroView
 {
@@ -39,7 +39,7 @@ EOF;
     }
     /*
       protected function makeURL($inputid) {
-      return Request::makeURL($this->controller) . '#' . $inputid;
+      return \PNM\Request::makeURL($this->controller) . '#' . $inputid;
       }
      *
      */

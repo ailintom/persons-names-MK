@@ -24,7 +24,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\models;
 
 /**
  * Description of Date
@@ -58,7 +58,7 @@ class Lookup
 
     public static function uniGet($SQL, $value, $param, $list)
     {
-        $db = Db::getInstance();
+        $db = \PNM\Db::getInstance();
         try {
             if ($list) {
                 $stmt = $db->prepare($SQL);
@@ -70,7 +70,7 @@ class Lookup
             }
             $stmt->execute();
         } catch (\mysqli_sql_exception $e) {
-            CriticalError::show($e);
+            \PNM\CriticalError::show($e);
         }
         $result = $stmt->get_result();
         if ($result->num_rows !== 0) {

@@ -24,7 +24,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\models;
 
 /**
  * Description of Rule

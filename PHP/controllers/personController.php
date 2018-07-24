@@ -24,7 +24,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\controllers;
 
 class personController extends EntryController
 {

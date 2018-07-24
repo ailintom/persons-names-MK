@@ -23,7 +23,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\views;
 
 /*
  *
@@ -36,11 +36,11 @@ class criterionView extends View
 //put your code here
     public function echoRender(&$data)
     {
-        (new Head())->render(Head::HEADERSLIM, $data->get('title'));
+        (new HeadView())->render(HeadView::HEADERSLIM, $data->get('title'));
         ?>
         <p class="info-box">
             <?php
-            echo( Icon::get('info') . $data->get('criterion'));
+            echo( IconView::get('info') . $data->get('criterion'));
             ?>
         </p>
         <dl>

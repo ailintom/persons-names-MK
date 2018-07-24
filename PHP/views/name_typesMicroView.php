@@ -24,7 +24,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\views;
 
 class name_typesMicroView extends MicroView
 {

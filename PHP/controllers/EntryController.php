@@ -1,6 +1,6 @@
 <?php
 
-namespace PNM;
+namespace PNM\controllers;
 
 /**
  * This this is a parent class for controllers displaying a single record, optionally with child records, loaded
@@ -18,7 +18,7 @@ class EntryController
 
     public function load()
     {
-        $this->loadID((int) Request::get('id'));
+        $this->loadID((int) \PNM\Request::get('id'));
     }
     /*
      * This function loads the record into the EntryModel and sends it to the view
@@ -26,20 +26,20 @@ class EntryController
 
     protected function loadID($id)
     {
-        $modelClass = 'PNM\\' . static::NAME;
+        $modelClass = 'PNM\\models\\' . static::NAME;
         $this->record = new $modelClass(); // an instance of the EntryModel class
         $tableName = $this->record->getTable();
-        if ((new ID((int) $id))->getTableName() != $tableName) {
-            $id = new ID((int) $id, $tableName);
+        if ((new \PNM\ID((int) $id))->getTableName() != $tableName) {
+            $id = new \PNM\ID((int) $id, $tableName);
         } else {
-            $id = new ID((int) $id);
+            $id = new \PNM\ID((int) $id);
         }
         $this->record->find($id->getID());
         if ($this->record->noMatch == true) { // the record was not found
-            (new NotFound())->echoRender();
+            (new NotFoundView())->echoRender();
         } else { // the record was found
             $this->loadChildren();
-            $viewClass = 'PNM\\' . static::NAME . 'View';
+            $viewClass = 'PNM\\views\\' . static::NAME . 'View';
             (new $viewClass())->echoRender($this->record);
         }
     }

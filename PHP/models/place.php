@@ -24,7 +24,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\models;
 
 class place extends EntryModel
 {
@@ -53,18 +53,5 @@ class place extends EntryModel
         //$this->parseNote(['provenance_note', 'installation_place_note', 'origin_note', 'production_place_note', 'dating_note', 'note']);
     }
 
-    protected function loadChildren()
-    {
-        $filterFG = new Filter([new Rule('site', 'exact', $this->get('place_name'), 's')]);
-        $objFG = new find_groups(Request::get('find_groups_sort'), 0, 0, $filterFG);
-        $totalFG = count($objFG->data);
-        $this->data['count_find_groups'] = $totalFG;
-        $this->data['find_groups'] = $objFG;
-        $filterWk = new Filter([new Rule('production_place', 'exact', $this->get('place_name'), 's')]);
-        $objWk = new workshops(Request::get('workshops_sort'), 0, 0, $filterWk);
-        $totalWk = count($objWk->data);
-        $this->data['count_workshops'] = $totalWk;
-        $this->data['workshops'] = $objWk;
-        // print_r($objAtt);
-    }
+   
 }

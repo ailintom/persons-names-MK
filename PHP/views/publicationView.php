@@ -23,7 +23,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\views;
 
 /**
  * Description of publicationView
@@ -37,12 +37,12 @@ class publicationView extends View
 
     public function echoRender(&$data)
     {
-        (new Head())->render(Head::HEADERSLIM, $data->get('author_year'));
+        (new HeadView())->render(HeadView::HEADERSLIM, $data->get('author_year'));
         ?>
         <?= $data->get('html_entry') ?>
         <dl>
             <?php
-            $ref = $this->addReference('OEB ID', $data->get('oeb_id'), ExternalLinks::OEB);
+            $ref = $this->addReference('OEB ID', $data->get('oeb_id'), \PNM\ExternalLinks::OEB);
             echo( $this->descriptionElement('References', $ref));
             ?>
         </dl>
@@ -51,7 +51,7 @@ class publicationView extends View
             ?><h2>Entities referred to in this publication</h2><?php
             foreach ($data->tables as $table) {
                 if (!empty($data->get($table[0]))) {
-                    $ViewClass = 'PNM\\' . $table[0] . 'MicroView';
+                    $ViewClass = 'PNM\\views\\' . $table[0] . 'MicroView';
                     $this->view = new $ViewClass();
                     ?>
                     <h3><?= (empty($table[1]) ? ucfirst($table[0]) : $table[1]) ?></h3>

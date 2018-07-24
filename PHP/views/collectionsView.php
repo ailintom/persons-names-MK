@@ -23,7 +23,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\views;
 
 /**
  * Description of bibliographyView
@@ -35,14 +35,14 @@ class collectionsView extends View
 
     public function echoRender(&$data)
     {
-        (new Head())->render(Head::HEADERSLIM, 'Collections');
+        (new HeadView())->render(HeadView::HEADERSLIM, 'Collections');
         ?>
         <p class="info-box">
-            <?= Icon::get('info') ?>
+            <?= IconView::get('info') ?>
             You can use <b>%</b> or <b>*</b> as wildcards.
             “Mar*” will match “Mariemont” or “Marseille”.
         </p>
-        <form action="<?= Request::makeURL('collections') ?>" method="get">
+        <form action="<?= \PNM\Request::makeURL('collections') ?>" method="get">
             <div class="row">
                 <div class="column">
                     <label for="title">Short name</label>
@@ -70,7 +70,7 @@ class collectionsView extends View
                 Reset
             </button>
             <?php
-            $dl = new Datalist();
+            $dl = new DatalistView();
             echo $dl->get('full-names');
             echo $dl->get('locations');
             echo $dl->get('collections');
@@ -85,7 +85,7 @@ class collectionsView extends View
             ?>
             <h2 class="sr-only" id="results">Results</h2>
             <?php
-            $tableCo = new Table($data, 'collections_id', 'collection', 'sort', '#results');
+            $tableCo = new TableView($data, 'collections_id', 'collection', 'sort', '#results');
             $tableCo->renderTable(['title', 'full_name', 'location', 'inscriptions_count', 'url', 'online_collection'], ['Short name', 'Full name', 'Location', 'Objects', 'Website', 'Online catalogue'], true);
             /*
              * ['collections_id', 'title', 'full_name_en', 'full_name_national_language', 'location', 'url', 'online_collection', 'tm_coll_id',
@@ -100,7 +100,7 @@ class collectionsView extends View
       <?php
       //$res = null;
       foreach ($data->data as $row) {
-      echo("<a href='" . Config::BASE . "collection/" . $row[$data->getFieldName(0)] . "'>" . $row[$data->getFieldName(1)] . ' ' .  $row['inscriptions_count'] . '<br>');
+      echo("<a href='" . \PNM\Config::BASE . "collection/" . $row[$data->getFieldName(0)] . "'>" . $row[$data->getFieldName(1)] . ' ' .  $row['inscriptions_count'] . '<br>');
       }
       //return $res;
       }

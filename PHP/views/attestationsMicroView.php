@@ -24,7 +24,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\views;
 
 class attestationsMicroView extends MicroView
 {
@@ -50,9 +50,9 @@ EOT;
     protected function makeUrl($inputid)
     {
         if (empty($this->inscriptionID)) {
-            return "#" . ID::shorten($inputid);
+            return "#" . \PNM\ID::shorten($inputid);
         } else {
-            return Request::makeURL($this->controller, [$this->inscriptionID, $inputid]);
+            return \PNM\Request::makeURL($this->controller, [$this->inscriptionID, $inputid]);
         }
     }
 }

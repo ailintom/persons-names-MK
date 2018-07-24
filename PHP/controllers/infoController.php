@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace PNM;
+namespace PNM\controllers;
 
 /**
  * Description of infoController
@@ -18,18 +18,18 @@ class infoController
 
     public function load()
     {
-        $id = Request::get('id');
+        $id = \PNM\Request::get('id');
         if (!isset($id)) {
-            $infos = new infos();
-            (new startView())->echoRender($infos->data);
+            $infos = new \PNM\models\infos();
+            (new \PNM\views\startView())->echoRender($infos->data);
         } elseif ($id == 'impressum') {
-            (new infoView())->echoRender(['Impressum', Config::IMPRESSUM]);
+            (new \PNM\views\infoView())->echoRender(['Impressum', \PNM\Config::IMPRESSUM]);
         } elseif ($id == 'privacy') {
-            (new infoView())->echoRender(['Privacy Policy', Config::PRIVACY]);
+            (new \PNM\views\infoView())->echoRender(['Privacy Policy', \PNM\Config::PRIVACY]);
         } else {
-            $this->record = new info(); // an instance of the EntryModel class
-            //$this->record->find(Request::get('id'));
-            (new infoView())->echoRender($this->record->find($id)[0]);
+            $this->record = new \PNM\models\info(); // an instance of the EntryModel class
+            //$this->record->find(\PNM\Request::get('id'));
+            (new \PNM\views\infoView())->echoRender($this->record->find($id)[0]);
         }
     }
 }

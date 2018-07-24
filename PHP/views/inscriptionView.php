@@ -24,7 +24,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\views;
 
 /*
  *
@@ -39,7 +39,7 @@ class inscriptionView extends View
 
     public function echoRender(&$data)
     {
-        (new Head())->render(Head::HEADERSLIM, $data->get('title'));
+        (new HeadView())->render(HeadView::HEADERSLIM, $data->get('title'));
         $placesMV = new placesMicroView();
         $find_groupMV = new find_groupsMicroView();
         echo '<p>' . $data->get('inv_no') . '</p>';
@@ -56,7 +56,7 @@ class inscriptionView extends View
         echo $this->descriptionElement('Date', $data->get('dating'), $data->get('dating_note'), 'period');
         echo $this->descriptionElement('Provenance', $placesMV->render($data->get('provenance')), $data->get('provenance_note'), 'place');
         if (!empty($data->get('find_groups_id'))) {
-            echo $this->descriptionElement('Find group', $find_groupMV->render(Lookup::findGroupTitle($data->get('find_groups_id')), $data->get('find_groups_id')), null, 'find_group');
+            echo $this->descriptionElement('Find group', $find_groupMV->render(\PNM\models\Lookup::findGroupTitle($data->get('find_groups_id')), $data->get('find_groups_id')), null, 'find_group');
         }
         echo $this->descriptionElement('Intalled at', $placesMV->render($data->get('installation_place')), $data->get('installation_place_note'), 'place');
         echo $this->descriptionElement('Origin', $placesMV->render($data->get('origin')), $data->get('origin_note'), 'place');
@@ -88,7 +88,7 @@ class inscriptionView extends View
             }
             $status = (empty($Att['status']) ? null : ' (' . $Att['status'] . ')');
             $tit = empty($Att['title_string']) ? null : '<span class="tit">' . $Att['title_string'] . '</span> ';
-            $currentLoc .= '<li><h4 id="' . ID::shorten($Att['attestations_id']) . '"><i>' . $tit . '<span class="pn">' . $Att['personal_name'] . '</span></i>' . $doss . $status . '</h4>';
+            $currentLoc .= '<li><h4 id="' . \PNM\ID::shorten($Att['attestations_id']) . '"><i>' . $tit . '<span class="pn">' . $Att['personal_name'] . '</span></i>' . $doss . $status . '</h4>';
             $spellings = $Att['spellings']->getSpellings();
             $titles = $Att['titles']->data;
             $currentLoc .= '<table class="name-box"><tr><th></th>';
@@ -124,13 +124,13 @@ class inscriptionView extends View
                             $currentLoc .= ', ';
                         }
                         $currentLoc .= '<span class="name">';
-                        $currentLoc .= '<a href="' . Request::makeURL('name', [$name['personal_names_id'], $spelling['spellings_id']]) . '">';
+                        $currentLoc .= '<a href="' . \PNM\Request::makeURL('name', [$name['personal_names_id'], $spelling['spellings_id']]) . '">';
                         if ($spellingPerNameCount++ == 0) {
                             $currentLoc .= $name['personal_name'] . ' ';
                         }
                         $currentLoc .= $spellView->render($spelling['spelling'], $spelling['spellings_id'])
                                 . '</a>';
-                        // . '<img class="spelling" src="' . Config::BASE . 'assets/spellings/' . $spelling['spellings_id'] . '.png" alt="' . $spelling['spelling'] . '"></span>'
+                        // . '<img class="spelling" src="' . \PNM\Config::BASE . 'assets/spellings/' . $spelling['spellings_id'] . '.png" alt="' . $spelling['spelling'] . '"></span>'
                         $currentLoc .= $this->processAltReadings($spelling['alt_readings']);
                         $currentLoc .= '</span>';
                     }

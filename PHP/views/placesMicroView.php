@@ -24,7 +24,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\views;
 
 class placesMicroView extends MicroView
 {
@@ -34,7 +34,7 @@ class placesMicroView extends MicroView
     protected function echoTemplate()
     {
         if (!empty($this->value)) {
-            $model = new placeMicroModel();
+            $model = new \PNM\models\placeMicroModel();
             $model->find($this->value);
             // print_r($model);
             $this->url = $this->makeURL($model->get('places_id'));

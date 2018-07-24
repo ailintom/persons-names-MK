@@ -24,7 +24,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\models;
 
 /**
  * Description of ListModel
@@ -56,7 +56,7 @@ class ListModel
 
     public function __construct($sort = null, $start = 0, $count = 0, Filter $filter = null, Filter $Bfilter = null, $params = null)
     {
-        $db = Db::getInstance();
+        $db = \PNM\Db::getInstance();
         $this->initFieldNames();
         $this->start = $start + 1;
         $this->params = $params;
@@ -78,7 +78,7 @@ class ListModel
             }
             $stmt->execute();
         } catch (\mysqli_sql_exception $e) {
-            CriticalError::show($e);
+            \PNM\CriticalError::show($e);
         }
         $result = $stmt->get_result();
         $this->count = $result->num_rows;
@@ -96,7 +96,7 @@ class ListModel
                   } */
                 $stmtTotal->execute();
             } catch (\mysqli_sql_exception $e) {
-                CriticalError::show($e);
+                \PNM\CriticalError::show($e);
             }
             $resultTotal = $stmtTotal->get_result();
             $this->total_count = $resultTotal->fetch_array(MYSQLI_NUM)[0];

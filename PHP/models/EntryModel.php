@@ -24,7 +24,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\models;
 
 /**
  * Description of EntryModel
@@ -78,11 +78,11 @@ class EntryModel
             return null;
         }
         if (empty($this->tablename)) {
-            $IDobj = new ID($id);
+            $IDobj = new \PNM\ID($id);
             $this->tablename = $IDobj->getTableName();
         }
         $this->initFieldNames();
-        $db = Db::getInstance();
+        $db = \PNM\Db::getInstance();
         $SQL = $this->sqlString();
         //  echo ($SQL . ';;;' . $this->bindParam . ';;;' . $id) ;
         try {
@@ -90,7 +90,7 @@ class EntryModel
             $stmt->bind_param($this->bindParam, $id);
             $stmt->execute();
         } catch (\mysqli_sql_exception $e) {
-            CriticalError::show($e);
+            \PNM\CriticalError::show($e);
         }
         $result = $stmt->get_result();
         if ($result->num_rows !== 0) {
@@ -131,7 +131,7 @@ class EntryModel
                 $this->parseNote($name);
             }
         } elseif (!empty($this->data[$fieldName])) {
-            $dnoteobj = new Note($this->data[$fieldName]);
+            $dnoteobj = new \PNM\Note($this->data[$fieldName]);
             $this->data[$fieldName] = $dnoteobj->ParsedNote;
         }
     }
@@ -141,7 +141,7 @@ class EntryModel
         $filter = new Filter([new Rule('object_id', 'exact', $this->getID(), 'i')]);
         $objbibliography = new ObjectBibliography(null, 0, 0, $filter); //$sort = null, $start = 0, $count = 0, Filter $filter = null
         $res = null;
-        $bibView = new publicationsMicroView();
+        $bibView = new \PNM\views\publicationsMicroView();
         foreach ($objbibliography->data as $bib_etry) {
             //    print_r ( $bib_etry);
             $res .= (empty($res) ? null : '; ');

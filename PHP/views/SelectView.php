@@ -6,14 +6,14 @@
  * and open the template in the editor.
  */
 
-namespace PNM;
+namespace PNM\views;
 
 /**
- * Description of TextInput
+ * Description of TextInputView
  *
  * @author Tomich
  */
-class Select
+class SelectView
 {
 
     protected $name;

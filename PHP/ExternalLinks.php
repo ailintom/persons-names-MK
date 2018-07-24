@@ -9,7 +9,7 @@
 namespace PNM;
 
 /**
- * Description of ExternalLinks
+ * Description of \PNM\ExternalLinks
  * This class defines the URL elements for external links. Constants should be changed when the URIs on linked websites change.
  * @author Tomich
  */

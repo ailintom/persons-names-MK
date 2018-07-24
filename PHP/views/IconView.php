@@ -5,14 +5,14 @@
  * and open the template in the editor.
  */
 
-namespace PNM;
+namespace PNM\views;
 
 /**
- * Description of Icon
+ * Description of IconView
  *
  * @author Tomich
  */
-class Icon
+class IconView
 {
 
     private static $svgSymbols = null;

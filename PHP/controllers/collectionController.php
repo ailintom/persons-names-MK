@@ -24,7 +24,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\controllers;
 
 /**
  * Description of collectionController
@@ -38,9 +38,9 @@ class collectionController extends EntryController
 
     protected function loadChildren()
     {
-        $rules = [new Rule('collections_id', 'exact', $this->record->get('collections_id'), 'i')];
-        $filter = new Filter($rules);
-        $obj_inv_nos = new inv_nos(Request::get('sort'), (Request::get('start') ?: 0), 50, $filter);
+        $rules = [new \PNM\models\Rule('collections_id', 'exact', $this->record->get('collections_id'), 'i')];
+        $filter = new \PNM\models\Filter($rules);
+        $obj_inv_nos = new \PNM\models\inv_nos(\PNM\Request::get('sort'), (\PNM\Request::get('start') ?: 0), 50, $filter);
         $this->record->data['inv_nos'] = $obj_inv_nos;
     }
 }

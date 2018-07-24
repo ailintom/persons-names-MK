@@ -23,7 +23,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\views;
 
 /**
  * Description of bibliographyView
@@ -35,9 +35,9 @@ class titlesView extends View
 
     public function echoRender(&$data)
     {
-        (new Head())->render(Head::HEADERSLIM, "Titles");
+        (new HeadView())->render(HeadView::HEADERSLIM, "Titles");
         ?>
-        <form action="<?= Request::makeURL('titles') ?>" method="get">
+        <form action="<?= \PNM\Request::makeURL('titles') ?>" method="get">
             <div class="row">
                 <div class="column">
                     <label for="title">Title</label>
@@ -75,30 +75,30 @@ class titlesView extends View
                 <h2 class="sr-only">Filters</h2>
                 <div class="filters_selection">
                     <button class="filters_button" aria-controls="region-filter" aria-expanded="false" onclick="MK.toggleFilter('region-filter')" title="Toggle region filter" type="button">
-                        <?= Icon::get('plus') . Icon::get('minus') ?>
+                        <?= IconView::get('plus') . IconView::get('minus') ?>
                         Region
                     </button>
                     <button class="filters_button" aria-controls="period-filter" aria-expanded="false" onclick="MK.toggleFilter('period-filter')" title="Toggle period filter" type="button">
-                        <?= Icon::get('plus') . Icon::get('minus') ?>
+                        <?= IconView::get('plus') . IconView::get('minus') ?>
                         Period
                     </button>
                     <button class="filters_button" aria-controls="gender-filter" aria-expanded="false" onclick="MK.toggleFilter('gender-filter')" title="Toggle gender filter" type="button">
-                        <?= Icon::get('plus') . Icon::get('minus') ?>
+                        <?= IconView::get('plus') . IconView::get('minus') ?>
                         Gender
                     </button>
                     <button class="filters_button" aria-controls="ward-filter" aria-expanded="false" onclick="MK.toggleFilter('ward-filter')" title="Toggle Ward/Fischer number filter" type="button">
-                        <?= Icon::get('plus') . Icon::get('minus') ?>
+                        <?= IconView::get('plus') . IconView::get('minus') ?>
                         Ward/Fischer number
                     </button>
                     <button class="filters_button" aria-controls="hannig-filter" aria-expanded="false" onclick="MK.toggleFilter('hannig-filter')" title="Toggle Hannig number filter" type="button">
-                        <?= Icon::get('plus') . Icon::get('minus') ?>
+                        <?= IconView::get('plus') . IconView::get('minus') ?>
                         Hannig number
                     </button>
                 </div>
                 <div class="filter" id="region-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('region-filter')" title="Remove region filter" type="button">
-                            <?= Icon::get('minus', 'Remove region filter') ?>
+                            <?= IconView::get('minus', 'Remove region filter') ?>
                         </button>
                         <span id="region-label">Region</span>
                     </div>
@@ -120,7 +120,7 @@ class titlesView extends View
                 <div class="filter" id="period-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('period-filter')" title="Remove period filter" type="button">
-                            <?= Icon::get('minus', 'Remove period filter') ?>
+                            <?= IconView::get('minus', 'Remove period filter') ?>
                         </button>
                         <span id="period-label">Period</span>
                     </div>
@@ -142,7 +142,7 @@ class titlesView extends View
                 <div class="filter" id="gender-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('gender-filter')" title="Remove gender filter" type="button">
-                            <?= Icon::get('minus', 'Remove gender filter') ?>
+                            <?= IconView::get('minus', 'Remove gender filter') ?>
                         </button>
                         <span id="gender-label">Gender</span>
                     </div>
@@ -171,7 +171,7 @@ class titlesView extends View
                 <div class="filter" id="ward-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('ward-filter')" title="Remove Ward/Fischer number filter" type="button">
-                            <?= Icon::get('minus', 'Remove Ward/Fischer number filter') ?>
+                            <?= IconView::get('minus', 'Remove Ward/Fischer number filter') ?>
                         </button>
                         Ward/Fischer number
                     </div>
@@ -183,7 +183,7 @@ class titlesView extends View
                 <div class="filter" id="hannig-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('hannig-filter')" title="Remove Hannig number filter" type="button">
-                            <?= Icon::get('minus', 'Remove Hannig number filter') ?>
+                            <?= IconView::get('minus', 'Remove Hannig number filter') ?>
                         </button>
                         Hannig number
                     </div>
@@ -200,7 +200,7 @@ class titlesView extends View
                 Reset
             </button>
             <?php
-            $dl = new Datalist();
+            $dl = new DatalistView();
             echo $dl->get('periods');
             echo $dl->get('places');
             ?>
@@ -214,7 +214,7 @@ class titlesView extends View
             ?>
             <h2 class="sr-only" id="results">Results</h2>
             <?php
-            $tableCo = new Table($data, 'titles_id', 'title', 'sort');
+            $tableCo = new TableView($data, 'titles_id', 'title', 'sort');
             $tableCo->renderTable(['title', 'gender', 'count_attestations', 'usage_period', 'usage_area', 'ward_fischer', 'hannig', 'translation_en'], ['Title', 'Gender', 'Atts.', 'Period', 'Area', 'Ward/Fischer no.', 'Hannig no.', 'Translation'], true);
             /*
               ['titles_id', 'title', 'gender', 'count_attestations', 'usage_period', 'usage_area', 'ward_fischer', 'hannig', 'translation_en']
@@ -234,7 +234,7 @@ class titlesView extends View
       <?php
       //$res = null;
       foreach ($data->data as $row) {
-      echo("<a href='" . Config::BASE . "collection/" . $row[$data->getFieldName(0)] . "'>" . $row[$data->getFieldName(1)] . ' ' .  $row['inscriptions_count'] . '<br>');
+      echo("<a href='" . \PNM\Config::BASE . "collection/" . $row[$data->getFieldName(0)] . "'>" . $row[$data->getFieldName(1)] . ' ' .  $row['inscriptions_count'] . '<br>');
       }
       //return $res;
       }

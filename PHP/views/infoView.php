@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace PNM;
+namespace PNM\views;
 
 /**
  * Description of infoView
@@ -18,8 +18,8 @@ class infoView
 
     public function echoRender($data)
     {
-        (new Head())->render(Head::HEADERSLIM, $data[0]);
-        $dnoteobj = new Note($data[1]);
+        (new HeadView())->render(HeadView::HEADERSLIM, $data[0]);
+        $dnoteobj = new \PNM\Note($data[1]);
         echo $dnoteobj->ParsedNote;
     }
 }

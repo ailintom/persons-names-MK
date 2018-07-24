@@ -23,7 +23,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\views;
 
 /**
  * Description of bibliographyView
@@ -35,7 +35,7 @@ class typesView extends View
 
     public function echoRender(&$data)
     {
-        (new Head())->render(Head::HEADERSLIM, "Name types");
+        (new HeadView())->render(HeadView::HEADERSLIM, "Name types");
         $typesMV = new name_typesMicroView();
         //     print_r($data);
         ?>

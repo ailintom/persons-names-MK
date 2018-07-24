@@ -24,10 +24,10 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\models;
 
 /**
- * Description of Bibliography
+ * Description of bibliography
  *
  */
 class bibliography extends ListModel

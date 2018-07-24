@@ -24,7 +24,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\controllers;
 
 /* Controls requests for a single find group */
 

@@ -24,7 +24,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\views;
 
 /*
  *
@@ -49,6 +49,6 @@ EOF;
 
     protected function makeURL($inputid)
     {
-        return Request::makeURL('assets/spellings', $inputid, null, null, true, -1, true) . '.png';
+        return \PNM\Request::makeURL('assets/spellings', $inputid, null, null, true, -1, true) . '.png';
     }
 }

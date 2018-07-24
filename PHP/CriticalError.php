@@ -31,7 +31,7 @@ class CriticalError
     public static function show(\Exception $e)
     {
         http_response_code(500);
-        (new Head())->render(Head::HEADERSLIM, 'Error');
+        (new HeadView())->render(HeadView::HEADERSLIM, 'Error');
         ?><p>Error: <?php
             echo(get_class($e)) . '<br>';
             print_r($e);

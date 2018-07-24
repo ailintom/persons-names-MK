@@ -5,14 +5,14 @@
  * and open the template in the editor.
  */
 
-namespace PNM;
+namespace PNM\views;
 
 /**
- * Description of FormFilter
+ * Description of FormFilterView
  *
  * @author Tomich
  */
-class FormFilter
+class FormFilterView
 {
 
     public $name;
@@ -33,7 +33,7 @@ class FormFilter
     public function renderSelection()
     {
         ?><button class="filters_button" aria-controls="<?= $this->name ?>" aria-expanded="false" onclick="MK.toggleFilter('<?= $this->name ?>')" title="Toggle <?= lcfirst($this->label) ?> filter" type="button">
-        <?= Icon::get('plus') . Icon::get('minus') ?>
+        <?= IconView::get('plus') . IconView::get('minus') ?>
         <?= $this->label ?>
         </button>
         <?php
@@ -44,7 +44,7 @@ class FormFilter
         ?><div class="filter" id="<?= $this->name ?>">
             <div class="filter_label">
                 <button class="filter_remove" onclick="MK.toggleFilter('<?= $this->name ?>')" title="Remove <?= lcfirst($this->label) ?> filter" type="button">
-                    <span id="<?= $this->name ?>-label"><?= Icon::get('minus', 'Remove ' . lcfirst($this->label) . ' filter') ?></span>
+                    <span id="<?= $this->name ?>-label"><?= IconView::get('minus', 'Remove ' . lcfirst($this->label) . ' filter') ?></span>
                 </button>
                 <?= $this->fullLabel ?>
             </div>
@@ -65,7 +65,7 @@ class FormFilter
         <?php
     }
 
-    public static function getTogglePair(FormFilter $filter)
+    public static function getTogglePair(FormFilterView $filter)
     {
         return [$filter->mainFieldName, $filter->name];
     }

@@ -23,7 +23,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\views;
 
 /*
  *
@@ -49,7 +49,7 @@ class titleView extends View
         if (!empty($data->get('translation_de'))) {
             $subtitle .= '<span class="translation" lang="de">“' . $data->get('translation_de') . '”</span>';
         }
-        (new Head())->render(Head::HEADERSLIM, $data->get('title'));
+        (new HeadView())->render(HeadView::HEADERSLIM, $data->get('title'));
         ?>
         <p>
             <?= $subtitle ?>
@@ -74,14 +74,14 @@ class titleView extends View
             $this->echoRelation($predicate, $pred_string);
             echo $this->descriptionElement('Bibliography', $data->get('bibliography'), null, 'biblio-ref');
             $ref = $this->addReference('Ward and Fischer no.', $data->get('ward_fischer'));
-            $ref = $this->addReference('TLA no.', $data->get('tla'), ExternalLinks::TLA, $ref);
+            $ref = $this->addReference('TLA no.', $data->get('tla'), \PNM\ExternalLinks::TLA, $ref);
             $ref = $this->addReference('Hannig no.', $data->get('hannig'), null, $ref);
             echo( $this->descriptionElement('References', $ref));
             //  ['titles_id', 'title', 'gender', 'count_attestations', 'usage_period', 'usage_area', 'usage_period_note', 'usage_area_note', 'note', 'ward_fischer', 'hannig', 'tla', 'translation_en', 'translation_de']
             ?>
         </dl>
         <h2 id="attestations">Attestations</h2>
-        <form action="<?= Request::makeURL('title', Request::get('id')) ?>" method="get" onreset="MK.removeAllFilters()">
+        <form action="<?= \PNM\Request::makeURL('title', \PNM\Request::get('id')) ?>" method="get" onreset="MK.removeAllFilters()">
             <h3 class="sr-only">Filters</h3>
             <p>
                 <span id="region-label">Geographic filter:</span>
@@ -140,14 +140,14 @@ class titleView extends View
                 Reset
             </button>
             <?php
-            $dl = new Datalist();
+            $dl = new DatalistView();
             echo $dl->get('periods');
             echo $dl->get('places');
             ?>
         </form>
         <h2 class="sr-only">Results</h2>
         <?php
-        $tableAtt = new Table($data->get('attestations'), ['inscriptions_id', 'attestations_id'], 'inscription');
+        $tableAtt = new TableView($data->get('attestations'), ['inscriptions_id', 'attestations_id'], 'inscription');
         $tableAtt->renderTable(['personal_name', 'gender', 'title_string', 'title', 'dating', 'region', 'persons'], ['Name', 'Gender', 'Titles', 'Object', 'Date', 'Region', 'Person'], true, 'attestations');
         // ['inscriptions_id', 'attestations_id', 'personal_name', 'gender', 'title_string', 'title', 'dating', 'origin', 'count_persons']
     }

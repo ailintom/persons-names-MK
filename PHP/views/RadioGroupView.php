@@ -6,14 +6,14 @@
  * and open the template in the editor.
  */
 
-namespace PNM;
+namespace PNM\views;
 
 /**
- * Description of RadioGroup
+ * Description of RadioGroupView
  *
  * @author Tomich
  */
-class RadioGroup
+class RadioGroupView
 {
 
 //put your code here

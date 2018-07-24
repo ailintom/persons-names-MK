@@ -24,7 +24,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\models;
 
 class publication extends EntryModel
 {
@@ -45,7 +45,7 @@ class publication extends EntryModel
         foreach ($this->tables as $table) {
             $SQL = 'SELECT biblio_refs.biblio_refs_id as biblio_refs_id, biblio_refs.reference_type as reference_type, '
                     . 'biblio_refs.object_id as object_id, biblio_refs.pages as pages, biblio_refs.note as note, '
-                    . $table[0] . '.' . Note::TITLE_FIELDS[$table[0]] . ' as title FROM biblio_refs INNER JOIN ' . $table[0]
+                    . $table[0] . '.' . \PNM\Note::TITLE_FIELDS[$table[0]] . ' as title FROM biblio_refs INNER JOIN ' . $table[0]
                     . ' ON biblio_refs.object_id = ' . $table[0] . '.' . $table[0] . '_id WHERE biblio_refs.source_id = ? '
                     . 'ORDER BY pages_sort';
             $this->data[$table[0]] = Lookup::getList($SQL, $this->getID(), 'i');

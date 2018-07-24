@@ -24,7 +24,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\controllers;
 
 class placesController
 {
@@ -32,39 +32,39 @@ class placesController
     public function load()
     {
         $rules = [];
-        if (!empty(Request::get('place'))) {
-            array_push($rules, new Rule('place_name', 'exactlike', Request::get('place')));
+        if (!empty(\PNM\Request::get('place'))) {
+            array_push($rules, new \PNM\models\Rule('place_name', 'exactlike', \PNM\Request::get('place')));
         }
-        if (!empty(Request::get('macroregion'))) {
-            if (in_array(Request::get('macroregion'), ["Eastern Desert", "Nile Valley", "Western Desert", "Levant"])) {
-                array_push($rules, new Rule('relative_location', 'exact', Request::get('macroregion')));
+        if (!empty(\PNM\Request::get('macroregion'))) {
+            if (in_array(\PNM\Request::get('macroregion'), ["Eastern Desert", "Nile Valley", "Western Desert", "Levant"])) {
+                array_push($rules, new \PNM\models\Rule('relative_location', 'exact', \PNM\Request::get('macroregion')));
             } else {
-                array_push($rules, new Rule('macro_region', 'exact', Request::get('macroregion')));
+                array_push($rules, new \PNM\models\Rule('macro_region', 'exact', \PNM\Request::get('macroregion')));
             }
         }
-        if (!empty(Request::get('northof'))) {
-            $northofLat = Lookup::latitude(Request::get('northof'));
-            array_push($rules, new Rule('latitude', 'moreorequal', $northofLat));
+        if (!empty(\PNM\Request::get('northof'))) {
+            $northofLat = Lookup::latitude(\PNM\Request::get('northof'));
+            array_push($rules, new \PNM\models\Rule('latitude', 'moreorequal', $northofLat));
         }
-        if (!empty(Request::get('southof'))) {
-            $southofLat = Lookup::latitude(Request::get('southof'));
-            array_push($rules, new Rule('latitude', 'lessorequal', $southofLat));
+        if (!empty(\PNM\Request::get('southof'))) {
+            $southofLat = Lookup::latitude(\PNM\Request::get('southof'));
+            array_push($rules, new \PNM\models\Rule('latitude', 'lessorequal', $southofLat));
         }
-        if (!empty(Request::get('near'))) {
-            $southofLat = Lookup::latitude(Request::get('near')) + 30;
-            array_push($rules, new Rule('latitude', 'lessorequal', $southofLat));
-            $northofLat = Lookup::latitude(Request::get('near')) - 30;
-            array_push($rules, new Rule('latitude', 'moreorequal', $northofLat));
+        if (!empty(\PNM\Request::get('near'))) {
+            $southofLat = Lookup::latitude(\PNM\Request::get('near')) + 30;
+            array_push($rules, new \PNM\models\Rule('latitude', 'lessorequal', $southofLat));
+            $northofLat = Lookup::latitude(\PNM\Request::get('near')) - 30;
+            array_push($rules, new \PNM\models\Rule('latitude', 'moreorequal', $northofLat));
         }
-        if (!empty(Request::get('topbib_id'))) {
-            array_push($rules, new Rule('topbib_id', 'exact', Request::get('topbib_id'), 's'));
+        if (!empty(\PNM\Request::get('topbib_id'))) {
+            array_push($rules, new \PNM\models\Rule('topbib_id', 'exact', \PNM\Request::get('topbib_id'), 's'));
         }
-        if (!empty(Request::get('tm_geoid'))) {
-            array_push($rules, new Rule('tm_geoid', 'exact', Request::get('tm_geoid'), 'i'));
+        if (!empty(\PNM\Request::get('tm_geoid'))) {
+            array_push($rules, new \PNM\models\Rule('tm_geoid', 'exact', \PNM\Request::get('tm_geoid'), 'i'));
         }
-        $filter = new Filter($rules);
-        $model = new places(Request::get('sort'), (Request::get('start') ?: 0), 50, $filter);
-        $view = new placesView();
+        $filter = new \PNM\models\Filter($rules);
+        $model = new \PNM\models\places(\PNM\Request::get('sort'), (\PNM\Request::get('start') ?: 0), 50, $filter);
+        $view = new \PNM\views\placesView();
         $view->echoRender($model);
     }
 }

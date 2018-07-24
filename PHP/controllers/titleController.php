@@ -24,7 +24,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\controllers;
 
 class titleController extends EntryController
 {
@@ -33,11 +33,11 @@ class titleController extends EntryController
 
     protected function loadChildren()
     {
-        $rules = [new Rule('titles_id', 'exact', $this->record->get('titles_id'), 'i')];
+        $rules = [new \PNM\models\Rule('titles_id', 'exact', $this->record->get('titles_id'), 'i')];
         //geo-filter
-        if (!empty(Request::get('place'))) {
-            if (Request::get('geo-filter') == 'any') {
-                if (in_array(Request::get('place'), ['Nubia', 'SUE', 'ME', 'MFR', 'LE', 'NUELE'])) {
+        if (!empty(\PNM\Request::get('place'))) {
+            if (\PNM\Request::get('geo-filter') == 'any') {
+                if (in_array(\PNM\Request::get('place'), ['Nubia', 'SUE', 'ME', 'MFR', 'LE', 'NUELE'])) {
                     $geoField = ['(SELECT macro_region FROM places WHERE places.place_name = inscriptions.provenance)',
                         '(SELECT macro_region FROM places WHERE places.place_name = inscriptions.installation_place)',
                         '(SELECT macro_region FROM places WHERE places.place_name = inscriptions.origin)',
@@ -46,42 +46,42 @@ class titleController extends EntryController
                     $geoField = ['provenance', 'installation_place', 'origin', 'production_place'];
                 }
             } else {
-                if (in_array(Request::get('place'), ['Nubia', 'SUE', 'ME', 'MFR', 'LE', 'NUELE'])) {
-                    $geoField = '(SELECT macro_region FROM places WHERE places.place_name = inscriptions.' . Request::get('geo-filter') . ')';
+                if (in_array(\PNM\Request::get('place'), ['Nubia', 'SUE', 'ME', 'MFR', 'LE', 'NUELE'])) {
+                    $geoField = '(SELECT macro_region FROM places WHERE places.place_name = inscriptions.' . \PNM\Request::get('geo-filter') . ')';
                 } else {
-                    $geoField = Request::get('geo-filter');
+                    $geoField = \PNM\Request::get('geo-filter');
                 }
             }
-            if (Request::get('place') == 'NUELE') {
+            if (\PNM\Request::get('place') == 'NUELE') {
                 $place = ["ME", "MFR", "LE"];
             } else {
-                $place = Request::get('place');
+                $place = \PNM\Request::get('place');
             }
-            array_push($rules, new Rule($geoField, 'exact', $place));
+            array_push($rules, new \PNM\models\Rule($geoField, 'exact', $place));
         }
-        if (!empty(Request::get('period')) && Request::get('chrono-filter') == 'not-later') {
-            array_push($rules, new Rule('dating_sort_start', Request::get('chrono-filter'), Lookup::dateEnd(Request::get('period')), 'i'));
-        } elseif (!empty(Request::get('period')) && Request::get('chrono-filter') == 'not-earlier') {
-            array_push($rules, new Rule('dating_sort_end', Request::get('chrono-filter'), Lookup::dateStart(Request::get('period')), 'i'));
-        } elseif (!empty(Request::get('period'))) {
-            $periodEnd = Lookup::dateEnd(Request::get('period'));
-            $periodStart = Lookup::dateStart(Request::get('period'));
+        if (!empty(\PNM\Request::get('period')) && \PNM\Request::get('chrono-filter') == 'not-later') {
+            array_push($rules, new \PNM\models\Rule('dating_sort_start', \PNM\Request::get('chrono-filter'), Lookup::dateEnd(\PNM\Request::get('period')), 'i'));
+        } elseif (!empty(\PNM\Request::get('period')) && \PNM\Request::get('chrono-filter') == 'not-earlier') {
+            array_push($rules, new \PNM\models\Rule('dating_sort_end', \PNM\Request::get('chrono-filter'), Lookup::dateStart(\PNM\Request::get('period')), 'i'));
+        } elseif (!empty(\PNM\Request::get('period'))) {
+            $periodEnd = Lookup::dateEnd(\PNM\Request::get('period'));
+            $periodStart = Lookup::dateStart(\PNM\Request::get('period'));
             if (empty($periodStart) || empty($periodEnd)) {
-                array_push($rules, new Rule('0', 'exact', 1, 'i'));
+                array_push($rules, new \PNM\models\Rule('0', 'exact', 1, 'i'));
             } else {
-                array_push($rules, new Rule('dating_sort_start', 'not-later', $periodEnd, 'i'));
-                array_push($rules, new Rule('dating_sort_end', 'not-earlier', $periodStart, 'i'));
+                array_push($rules, new \PNM\models\Rule('dating_sort_start', 'not-later', $periodEnd, 'i'));
+                array_push($rules, new \PNM\models\Rule('dating_sort_end', 'not-earlier', $periodStart, 'i'));
             }
-            // array_push($rules, new Rule('Exists(SELECT child_item_name FROM dating_temp '
+            // array_push($rules, new \PNM\models\Rule('Exists(SELECT child_item_name FROM dating_temp '
             //        . 'WHERE dating_temp.child_item_name = inscriptions.dating '
-            //       . 'AND dating_temp.parent_item_name="' . Request::get('period') . '")', 'exact', $res, 'i'));
-            //array_push($rules, new Rule('dating', 'exact', Request::get('period')));
+            //       . 'AND dating_temp.parent_item_name="' . \PNM\Request::get('period') . '")', 'exact', $res, 'i'));
+            //array_push($rules, new \PNM\models\Rule('dating', 'exact', \PNM\Request::get('period')));
         }
-        $filterTitleAtt = new Filter($rules);
-        $objTitleAtt = new titleAttestations(Request::get('sort'), (Request::get('start') ?: 0), 50, $filterTitleAtt);
+        $filterTitleAtt = new \PNM\models\Filter($rules);
+        $objTitleAtt = new \PNM\models\titleAttestations(\PNM\Request::get('sort'), (\PNM\Request::get('start') ?: 0), 50, $filterTitleAtt);
         $this->record->data['attestations'] = $objTitleAtt;
-        $filterRelations = new Filter([new Rule('titles_id', 'exact', $this->record->get('titles_id'), 'i'), new Rule('titles_id', 'exact', $this->record->get('titles_id'), 'i')]);
-        $objRelations = new title_relations(null, 0, 0, $filterRelations);
+        $filterRelations = new \PNM\models\Filter([new \PNM\models\Rule('titles_id', 'exact', $this->record->get('titles_id'), 'i'), new \PNM\models\Rule('titles_id', 'exact', $this->record->get('titles_id'), 'i')]);
+        $objRelations = new \PNM\models\title_relations(null, 0, 0, $filterRelations);
         $this->record->data['relations'] = $objRelations;
     }
 }

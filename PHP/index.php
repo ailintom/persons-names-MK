@@ -29,10 +29,44 @@ namespace PNM;
 error_reporting(E_ALL);
 error_reporting(E_ALL | E_STRICT);
 ini_set('display_errors', 1);
-// define('Config::BASE', '/test3/');
-//mb_internal_encoding('UTF-8');
-//mb_http_output('UTF-8');
-require_once('Config.php');
+spl_autoload_register(function ($class) {
+    /* 
+     * based on https://www.php-fig.org/psr/psr-4/examples/
+     * 
+     */
+
+    // project-specific namespace prefix
+    $prefix = 'PNM\\';
+
+    // base directory for the namespace prefix
+    $base_dir = __DIR__;
+
+
+    // does the class use the namespace prefix?
+    $len = strlen($prefix);
+    if (strncmp($prefix, $class, $len) !== 0) {
+        return;
+    }
+
+    // get the relative class name
+    $relative_class = substr($class, $len);
+
+    // replace the namespace prefix with the base directory, replace namespace
+    // separators with directory separators in the relative class name, append
+    // with .php
+    $file = $base_dir . '/' . str_replace('\\', '/', $relative_class) . '.php';
+  $file;
+    // if the file exists, require it
+    if (file_exists($file)) {
+        require $file;
+    }
+});
+
+$ClassName = "PNM\\controllers\\" . Request::get('controller') . "Controller";
+$controllerObj = new $ClassName();
+$controllerObj->load();
+require 'views/footer.php';
+
 /*
  * Config.php is not included in the source code for security reasons
  * It should look as follows:
@@ -53,94 +87,4 @@ require_once('Config.php');
   }
   }
  *
- *
- *
  */
-require_once('CriticalError.php');
-require_once('Db.php');
-require_once('ExternalLinks.php');
-require_once('Request.php');
-require_once('views/Icon.php');
-require_once('views/Head.php');
-require_once('controllers/EntryController.php');
-require_once('controllers/Translit.php');
-require_once('models/Filter.php');
-require_once('models/Rule.php');
-require_once('models/RuleExists.php');
-require_once('models/FieldList.php');
-require_once('ID.php');
-require_once('models/Lookup.php');
-require_once('models/EntryModel.php');
-require_once('models/ListModel.php');
-require_once('models/ListModelTitleSort.php');
-require_once('models/ObjectBibliography.php');
-require_once('models/ObjectInv_nos.php');
-require_once('models/ObjectAttestations.php');
-require_once('models/ObjectBonds.php');
-require_once('models/title_relations.php');
-require_once('models/PersonBonds.php');
-require_once('models/PersonAttestations.php');
-require_once('models/inv_nos.php');
-require_once('models/inscriptions.php');
-require_once('models/WorkshopInscriptions.php');
-require_once('models/InscriptionWorkshops.php');
-require_once('models/ObjectSpellings.php');
-require_once('models/ObjectTitles.php');
-require_once('models/ObjectAltReadings.php');
-require_once('models/titleAttestations.php');
-require_once('models/NameSpellings.php');
-require_once('models/SpellingAttestations.php');
-require_once('models/NamePersons.php');
-require_once('models/AttestationPersons.php');
-require_once('models/NameTypes.php');
-require_once('models/types.php');
-require_once('models/names.php');
-require_once('models/TypeNames.php');
-require_once('models/peoplePairs.php');
-require_once('models/peopleChild.php');
-require_once('models/peopleParent.php');
-require_once('models/peopleSameInscr.php');
-require_once('models/peopleSibling.php');
-require_once('models/peopleSpouse.php');
-require_once('models/biblio_refs.php');
-require_once('models/find_groups.php');
-require_once('models/NameReadings.php');
-require_once('models/workshops.php');
-require_once('models/infos.php');
-require_once('models/placeMicroModel.php');
-require_once('Note.php');
-require_once('views/MicroView.php');
-require_once('views/attestationsMicroView.php');
-require_once('views/inscriptionsMicroView.php');
-require_once('views/collectionsMicroView.php');
-require_once('views/personal_namesMicroView.php');
-require_once('views/spellingsMicroView.php');
-require_once('views/titlesMicroView.php');
-require_once('views/criteriaMicroView.php');
-require_once('views/publicationsMicroView.php');
-require_once('views/inv_nosMicroView.php');
-require_once('views/placesMicroView.php');
-require_once('views/name_typesMicroView.php');
-require_once('views/personsMicroView.php');
-require_once('views/workshopsMicroView.php');
-require_once('views/find_groupsMicroView.php');
-require_once('views/NotFound.php');
-require_once('views/Table.php');
-require_once('views/RadioGroup.php');
-require_once('views/TextInput.php');
-require_once('views/Select.php');
-require_once('views/Datalist.php');
-require_once('views/FormFilter.php');
-require_once('views/View.php');
-require_once('views/startView.php');
-$ClassName = "PNM\\" . Request::get('controller') . "Controller";
-$controllerClassPath = 'controllers/' . Request::get('controller') . 'Controller.php';
-require_once($controllerClassPath);
-$modelClassPath = 'models/' . Request::get('controller') . '.php';
-require_once($modelClassPath);
-$viewClassPath = 'views/' . Request::get('controller') . 'View.php';
-require_once($viewClassPath);
-$controllerobj = new $ClassName();
-// call the action
-$controllerobj->load();
-require 'views/footer.php';

@@ -24,7 +24,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\controllers;
 
 class titlesController
 {
@@ -32,61 +32,61 @@ class titlesController
     public function load()
     {
         $rules = [];
-        if (!empty(Request::get('title'))) {
-            array_push($rules, new Rule('title_search', Request::get('match') ?: 'exactlike', Translit::searchVal(Request::get('title'))));
+        if (!empty(\PNM\Request::get('title'))) {
+            array_push($rules, new \PNM\models\Rule('title_search', \PNM\Request::get('match') ?: 'exactlike', Translit::searchVal(\PNM\Request::get('title'))));
         }
-        if (!empty(Request::get('translation'))) {
-            array_push($rules, new Rule(['translation_en', 'translation_de'], Request::get('match') ?: 'exactlike', Request::get('translation')));
+        if (!empty(\PNM\Request::get('translation'))) {
+            array_push($rules, new \PNM\models\Rule(['translation_en', 'translation_de'], \PNM\Request::get('match') ?: 'exactlike', \PNM\Request::get('translation')));
         }
-        if (!empty(Request::get('gender')) && Request::get('gender') != 'any') {
-            array_push($rules, new Rule('(CASE 2*EXISTS (SELECT gender FROM titles_att '
+        if (!empty(\PNM\Request::get('gender')) && \PNM\Request::get('gender') != 'any') {
+            array_push($rules, new \PNM\models\Rule('(CASE 2*EXISTS (SELECT gender FROM titles_att '
                     . 'INNER JOIN attestations ON titles_att.attestations_id = attestations.attestations_id '
                     . 'WHERE titles_att.titles_id = titles.titles_id AND gender="f") + EXISTS (SELECT gender FROM titles_att '
                     . 'INNER JOIN attestations ON titles_att.attestations_id = attestations.attestations_id '
-                    . 'WHERE titles_att.titles_id = titles.titles_id AND gender="m") WHEN 3 THEN "both" WHEN 2 THEN "f" WHEN 1 THEN "m" END)', 'exact', Request::get('gender')));
+                    . 'WHERE titles_att.titles_id = titles.titles_id AND gender="m") WHEN 3 THEN "both" WHEN 2 THEN "f" WHEN 1 THEN "m" END)', 'exact', \PNM\Request::get('gender')));
         }
-        if (!empty(Request::get('place')) && Request::get('match-region') == 'characteristic') {
-            array_push($rules, new Rule('usage_area', 'exact', Request::get('place')));
-        } elseif (in_array(Request::get('place'), ['Nubia', 'SUE', 'ME', 'MFR', 'LE', 'NUELE'])) {
-            if (Request::get('place') == 'NUELE') {
+        if (!empty(\PNM\Request::get('place')) && \PNM\Request::get('match-region') == 'characteristic') {
+            array_push($rules, new \PNM\models\Rule('usage_area', 'exact', \PNM\Request::get('place')));
+        } elseif (in_array(\PNM\Request::get('place'), ['Nubia', 'SUE', 'ME', 'MFR', 'LE', 'NUELE'])) {
+            if (\PNM\Request::get('place') == 'NUELE') {
                 $reg = ' IN("ME", "MFR", "LE") ';
             } else {
-                $reg = '="' . Request::get('place') . '"';
+                $reg = '="' . \PNM\Request::get('place') . '"';
             }
-            array_push($rules, new Rule('Exists(SELECT titles_id FROM'
+            array_push($rules, new \PNM\models\Rule('Exists(SELECT titles_id FROM'
                     . ' ((titles_att INNER JOIN attestations ON titles_att.attestations_id = attestations.attestations_id) '
                     . ' INNER JOIN inscriptions ON attestations.inscriptions_id = inscriptions.inscriptions_id) '
                     . ' INNER JOIN places ON region_temp = places.place_name'
                     . ' WHERE titles_att.titles_id=titles.titles_id AND '
                     . ' places.macro_region' . $reg . ')', 'exact', 1, 'i'));
-        } elseif (!empty(Request::get('place'))) {
-            array_push($rules, new Rule('Exists(SELECT titles_id FROM'
+        } elseif (!empty(\PNM\Request::get('place'))) {
+            array_push($rules, new \PNM\models\Rule('Exists(SELECT titles_id FROM'
                     . ' (titles_att INNER JOIN attestations ON titles_att.attestations_id = attestations.attestations_id) '
                     . ' INNER JOIN inscriptions ON attestations.inscriptions_id = inscriptions.inscriptions_id'
                     . ' WHERE titles_att.titles_id=titles.titles_id AND '
-                    . ' region_temp="' . Request::get('place') . '")', 'exact', 1, 'i'));
+                    . ' region_temp="' . \PNM\Request::get('place') . '")', 'exact', 1, 'i'));
         }
         /*
-          if (!empty(Request::get('period')) && Request::get('match-date') == 'characteristic') {
-          array_push($rules, new Rule('usage_period', 'exact', Request::get('period')));
-          } elseif (!empty(Request::get('period'))) {
-          array_push($rules, new Rule('Exists(SELECT titles_id FROM ((titles_att INNER JOIN attestations ON titles_att.attestations_id = attestations.attestations_id) '
+          if (!empty(\PNM\Request::get('period')) && \PNM\Request::get('match-date') == 'characteristic') {
+          array_push($rules, new \PNM\models\Rule('usage_period', 'exact', \PNM\Request::get('period')));
+          } elseif (!empty(\PNM\Request::get('period'))) {
+          array_push($rules, new \PNM\models\Rule('Exists(SELECT titles_id FROM ((titles_att INNER JOIN attestations ON titles_att.attestations_id = attestations.attestations_id) '
           . ' INNER JOIN inscriptions ON attestations.inscriptions_id = inscriptions.inscriptions_id) '
           . ' INNER JOIN dating_temp ON inscriptions.dating = dating_temp.child_item_name'
           . ' WHERE titles_att.titles_id=titles.titles_id AND '
-          . ' dating_temp.parent_item_name="' . Request::get('period') . '")', 'exact', 1, 'i'));
+          . ' dating_temp.parent_item_name="' . \PNM\Request::get('period') . '")', 'exact', 1, 'i'));
           }
          *
          */
-        if (!empty(Request::get('period')) && Request::get('match-date') == 'characteristic') {
-            array_push($rules, new Rule('usage_period', 'exact', Request::get('period')));
-        } elseif (!empty(Request::get('period'))) {
-            $periodEnd = Lookup::dateEnd(Request::get('period'));
-            $periodStart = Lookup::dateStart(Request::get('period'));
+        if (!empty(\PNM\Request::get('period')) && \PNM\Request::get('match-date') == 'characteristic') {
+            array_push($rules, new \PNM\models\Rule('usage_period', 'exact', \PNM\Request::get('period')));
+        } elseif (!empty(\PNM\Request::get('period'))) {
+            $periodEnd = Lookup::dateEnd(\PNM\Request::get('period'));
+            $periodStart = Lookup::dateStart(\PNM\Request::get('period'));
             if (empty($periodStart) || empty($periodEnd)) {
-                array_push($rules, new Rule('0', 'exact', 1, 'i'));
+                array_push($rules, new \PNM\models\Rule('0', 'exact', 1, 'i'));
             } else {
-                array_push($rules, new Rule('Exists(SELECT titles_id FROM ((titles_att '
+                array_push($rules, new \PNM\models\Rule('Exists(SELECT titles_id FROM ((titles_att '
                         . 'INNER JOIN attestations ON titles_att.attestations_id = attestations.attestations_id) '
                         . ' INNER JOIN inscriptions ON attestations.inscriptions_id = inscriptions.inscriptions_id) '
                         . ' WHERE titles_att.titles_id=titles.titles_id AND '
@@ -94,15 +94,15 @@ class titlesController
                         . ' inscriptions.dating_sort_start <= ' . $periodEnd . ')', 'exact', 1, 'i'));
             }
         }
-        if (!empty(Request::get('ward'))) {
-            array_push($rules, new Rule('ward_fischer', 'exact', Request::get('ward')));
+        if (!empty(\PNM\Request::get('ward'))) {
+            array_push($rules, new \PNM\models\Rule('ward_fischer', 'exact', \PNM\Request::get('ward')));
         }
-        if (!empty(Request::get('hannig'))) {
-            array_push($rules, new Rule('hannig', 'exact', Request::get('hannig')));
+        if (!empty(\PNM\Request::get('hannig'))) {
+            array_push($rules, new \PNM\models\Rule('hannig', 'exact', \PNM\Request::get('hannig')));
         }
-        $filter = new Filter($rules);
-        $model = new titles(Request::get('sort'), (Request::get('start') ?: 0), 50, $filter);
-        $view = new titlesView();
+        $filter = new \PNM\models\Filter($rules);
+        $model = new \PNM\models\titles(\PNM\Request::get('sort'), (\PNM\Request::get('start') ?: 0), 50, $filter);
+        $view = new \PNM\views\titlesView();
         $view->echoRender($model);
     }
 }

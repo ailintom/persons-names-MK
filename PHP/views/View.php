@@ -23,7 +23,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\views;
 
 /**
  * Description of View
@@ -96,8 +96,8 @@ class View
 
     public static function oldValue($field)
     {
-        if (!empty(Request::get($field))) {
-            return ' value = "' . Request::get($field) . '"';
+        if (!empty(\PNM\Request::get($field))) {
+            return ' value = "' . \PNM\Request::get($field) . '"';
         } else {
             return null;
         }
@@ -109,8 +109,8 @@ class View
 
     public static function oldValueRadio($field, $value, $default = false)
     {
-        if (!empty(Request::get($field))) {
-            if (Request::get($field) == $value) {
+        if (!empty(\PNM\Request::get($field))) {
+            if (\PNM\Request::get($field) == $value) {
                 return ' checked';
             }
         } elseif ($default) {
@@ -120,8 +120,8 @@ class View
 
     public static function oldValueSelect($field, $value, $default = false)
     {
-        if (!empty(Request::get($field))) {
-            if (Request::get($field) == $value) {
+        if (!empty(\PNM\Request::get($field))) {
+            if (\PNM\Request::get($field) == $value) {
                 return ' selected';
             }
         } elseif ($default) {
@@ -161,7 +161,7 @@ class View
             case 'Scarab, seal, scaraboid, intaglio and similar objects':
                 return 'Seal/sealing';
             case 'Offering table':
-                return 'Table';
+                return 'TableView';
             case 'Sculpture in the round':
                 return 'Statue';
             case 'Unspecified':
@@ -215,7 +215,7 @@ class View
             }
             return $res;
         } else {
-            if (!empty(Request::get($fieldName)) && ( empty($defaultVal) ? true : Request::get($fieldName) != $defaultVal)) {
+            if (!empty(\PNM\Request::get($fieldName)) && ( empty($defaultVal) ? true : \PNM\Request::get($fieldName) != $defaultVal)) {
                 return "MK.toggleFilter('" . $filterName . "');";
             }
         }
@@ -275,12 +275,12 @@ class View
             return null;
         } elseif (count($bondsincurrentcat) == 1) {
             $gen = $this->genderedDesignations($currentcat, $bondsincurrentcat[0]['gender']);
-            return '<li>' . ($gen ?: ObjectBonds::BOND_TYPES_SING[$currentcat] . ' ')
+            return '<li>' . ($gen ?: \PNM\models\ObjectBonds::BOND_TYPES_SING[$currentcat] . ' ')
                     . (!empty($bondsincurrentcat[0]['wording']) ? '(<span class="wording">' . $bondsincurrentcat[0]['wording'] . '</span>)' : null) . ': '
                     . $attView->render($bondsincurrentcat[0]['title'], $bondsincurrentcat[0]['relative_id'], $bondsincurrentcat[0]['name'])
                     . '.</li>';
         } elseif (count($bondsincurrentcat) > 1) {
-            $res = '<li>' . ObjectBonds::BOND_TYPES_PLUR[$currentcat] . '<ul class="children">';
+            $res = '<li>' . \PNM\models\ObjectBonds::BOND_TYPES_PLUR[$currentcat] . '<ul class="children">';
             foreach ($bondsincurrentcat as $bond) {
                 $res .= '<li>';
                 $res .= $this->genderedDesignations($currentcat, $bond['gender']);
@@ -316,7 +316,7 @@ class View
 
     protected function genderedDesignations($currentcat, $gender)
     {
-        if (ObjectBonds::BOND_TYPES_PLUR[$currentcat] == 'Children') {
+        if (\PNM\models\ObjectBonds::BOND_TYPES_PLUR[$currentcat] == 'Children') {
             switch ($gender) {
                 case 'm':
                     return 'Son ';
@@ -325,7 +325,7 @@ class View
                 default:
                     return 'Child ';
             }
-        } elseif (ObjectBonds::BOND_TYPES_PLUR[$currentcat] == 'Siblings') {
+        } elseif (\PNM\models\ObjectBonds::BOND_TYPES_PLUR[$currentcat] == 'Siblings') {
             switch ($gender) {
                 case 'm':
                     return 'Brother ';

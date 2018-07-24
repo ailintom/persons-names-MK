@@ -23,7 +23,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\views;
 
 /*
  *
@@ -39,7 +39,7 @@ class workshopView extends View
 
     public function echoRender(&$data)
     {
-        (new Head())->render(Head::HEADERSLIM, $data->get('title'));
+        (new HeadView())->render(HeadView::HEADERSLIM, $data->get('title'));
         ?>
         <dl>
             <?php
@@ -61,7 +61,7 @@ class workshopView extends View
                 $data->data['inscriptions']->data[$i]['status'] .= ' (' . $data->data['inscriptions']->data[$i]['note'] . ')';
             }
         }
-        $tableCo = new Table($data->get('inscriptions'), 'inscriptions_id', 'inscription', 'sort', '#results');
+        $tableCo = new TableView($data->get('inscriptions'), 'inscriptions_id', 'inscription', 'sort', '#results');
         $tableCo->renderTable(['status', 'title', 'material',
             'size', 'text_content', 'dating', 'inst_prov_temp', 'orig_prod_temp', 'owner'], ['Type', 'Object', 'Material', 'Size, mm',
             'Text', 'Date', 'Provenance', 'Origin/Prod. place', 'Owner'], true);
@@ -70,7 +70,7 @@ class workshopView extends View
     protected function inscribedObjects($id_coll, $count)
     {
         if (!empty($count)) {
-            return '<a href="' . Request::makeURL('inscriptions') . '?collection=' . urlencode($id_coll) . '">' . $count . '</a>';
+            return '<a href="' . \PNM\Request::makeURL('inscriptions') . '?collection=' . urlencode($id_coll) . '">' . $count . '</a>';
         }
     }
 }

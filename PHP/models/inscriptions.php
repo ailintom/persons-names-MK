@@ -24,7 +24,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\models;
 
 /**
  * Description of Bibliography
@@ -61,7 +61,7 @@ class inscriptions extends ListModel
     /*       case 'Scarab, seal, scaraboid, intaglio and similar objects':
       return 'Seal/sealing';
       case 'Offering table':
-      return 'Table';
+      return 'TableView';
       case 'Sculpture in the round':
       return 'Statue';
       case 'Unspecified':

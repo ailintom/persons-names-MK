@@ -24,7 +24,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\controllers;
 
 class nameController extends EntryController
 {
@@ -33,20 +33,20 @@ class nameController extends EntryController
 
     protected function loadChildren()
     {
-        $rules = [new Rule('personal_names_id', 'exact', $this->record->get('personal_names_id'), 'i')];
-        $filterNameSpellings = new Filter($rules);
-        $objNameSpellings = new NameSpellings(null, 0, 0, $filterNameSpellings);
-        $filterPersons = new Filter($rules);
-        $objNamePersons = new NamePersons(null, 0, 0, $filterPersons);
+        $rules = [new \PNM\models\Rule('personal_names_id', 'exact', $this->record->get('personal_names_id'), 'i')];
+        $filterNameSpellings = new \PNM\models\Filter($rules);
+        $objNameSpellings = new \PNM\models\NameSpellings(null, 0, 0, $filterNameSpellings);
+        $filterPersons = new \PNM\models\Filter($rules);
+        $objNamePersons = new \PNM\models\NamePersons(null, 0, 0, $filterPersons);
         $totalSpells = count($objNameSpellings->data);
         for ($i = 0; $i < $totalSpells; $i++) {
             $totalAtts = count($objNameSpellings->data[$i]['attestations']->data);
             for ($j = 0; $j < $totalAtts; $j++) {
                 if ($objNameSpellings->data[$i]['attestations']->data[$j]['persons_count'] > 0) {
-                    $rulesAttPersons = [new Rule('attestations_id', 'exact', $objNameSpellings->data[$i]['attestations']->data[$j]['attestations_id'], 'i'),
-                        new Rule('status', 'not', 'rejected', 's')];
-                    $filterAttPersons = new Filter($rulesAttPersons);
-                    $objAttPersons = new AttestationPersons(null, 0, 0, $filterAttPersons);
+                    $rulesAttPersons = [new \PNM\models\Rule('attestations_id', 'exact', $objNameSpellings->data[$i]['attestations']->data[$j]['attestations_id'], 'i'),
+                        new \PNM\models\Rule('status', 'not', 'rejected', 's')];
+                    $filterAttPersons = new \PNM\models\Filter($rulesAttPersons);
+                    $objAttPersons = new \PNM\models\AttestationPersons(null, 0, 0, $filterAttPersons);
                     foreach ($objAttPersons->data as $attPerson) {
                         $personId = $attPerson['persons_id'];
                         $personKey = array_search($personId, array_column($objNamePersons->data, 'persons_id'));

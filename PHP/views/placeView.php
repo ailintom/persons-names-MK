@@ -23,7 +23,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\views;
 
 /*
  *
@@ -39,13 +39,13 @@ class placeView extends View
         if (empty($data->get('places_id'))) {
             ?>
             <p class="info-box">
-                <?= Icon::get('info') ?>
+                <?= IconView::get('info') ?>
                 Not found in the selected version of the database.
             </p>
             <?php
             return null;
         }
-        (new Head())->render(Head::HEADERSLIM, $data->get('place_name'));
+        (new HeadView())->render(HeadView::HEADERSLIM, $data->get('place_name'));
         if ($data->get('count_find_groups') + $data->get('count_workshops') > 0) {
             ?>
             <div class="toc">
@@ -71,23 +71,23 @@ class placeView extends View
             echo( $this->descriptionElement('Location', $data->get('relative_location'), null, 'place'));
             echo( $this->descriptionElement('Macro-region', $placesMV->render($data->get('macro_region')), null, 'place'));
             echo( $this->descriptionElement('Latitude', $this->renderLat($data->get('latitude')), null, 'latitude'));
-            $ref = $this->addReference('Topographical Bibliography ID', $data->get('topbib_id'), ExternalLinks::TOP_BIB);
-            $ref = $this->addReference('Trismegistos Geo ID', $data->get('tm_geoid'), ExternalLinks::TRISMEGISTOS_GEO, $ref);
+            $ref = $this->addReference('Topographical Bibliography ID', $data->get('topbib_id'), \PNM\ExternalLinks::TOP_BIB);
+            $ref = $this->addReference('Trismegistos Geo ID', $data->get('tm_geoid'), \PNM\ExternalLinks::TRISMEGISTOS_GEO, $ref);
             $ref = $this->addReference('Artefacts of Excavations', $data->get('artefacts_url'), null, $ref);
             echo( $this->descriptionElement('References', $ref));
             ?>
         </dl>
         <dl class="-free">
             <dt>Inscribed objects found or purchased at this place:</dt>
-            <dd><a href="<?= Request::makeURL('inscriptions') ?>?geo-filter=provenance&amp;place=<?php echo( $data->get('place_name')) ?>"><?php echo( $data->get('count_provenance') ?: '0') ?></a></dd>
+            <dd><a href="<?= \PNM\Request::makeURL('inscriptions') ?>?geo-filter=provenance&amp;place=<?php echo( $data->get('place_name')) ?>"><?php echo( $data->get('count_provenance') ?: '0') ?></a></dd>
             <dt>Inscribed objects that should have been installed at this place:</dt>
-            <dd><a href="<?= Request::makeURL('inscriptions') ?>?geo-filter=installation&amp;place=<?php echo( $data->get('place_name')) ?>"><?php echo( $data->get('count_installation_place') ?: '0') ?></a></dd>
+            <dd><a href="<?= \PNM\Request::makeURL('inscriptions') ?>?geo-filter=installation&amp;place=<?php echo( $data->get('place_name')) ?>"><?php echo( $data->get('count_installation_place') ?: '0') ?></a></dd>
             <dt>Inscribed objects owned by people from this place:</dt>
-            <dd><a href="<?= Request::makeURL('inscriptions') ?>?geo-filter=origin&amp;place=<?php echo( $data->get('place_name')) ?>"><?php echo( $data->get('count_origin') ?: '0') ?></a></dd>
+            <dd><a href="<?= \PNM\Request::makeURL('inscriptions') ?>?geo-filter=origin&amp;place=<?php echo( $data->get('place_name')) ?>"><?php echo( $data->get('count_origin') ?: '0') ?></a></dd>
             <dt>Inscribed objects produced at this place:</dt>
-            <dd><a href="<?= Request::makeURL('inscriptions') ?>?geo-filter=production&amp;place=<?php echo( $data->get('place_name')) ?>"><?php echo( $data->get('count_production_place') ?: '0') ?></a></dd>
+            <dd><a href="<?= \PNM\Request::makeURL('inscriptions') ?>?geo-filter=production&amp;place=<?php echo( $data->get('place_name')) ?>"><?php echo( $data->get('count_production_place') ?: '0') ?></a></dd>
             <dt>All inscribed objects related to this place:</dt>
-            <dd><a href="<?= Request::makeURL('inscriptions') ?>?geo-filter=all&amp;place=<?php echo( $data->get('place_name')) ?>"><?php echo( $data->get('count_total') ?: '0') ?></a></dd>
+            <dd><a href="<?= \PNM\Request::makeURL('inscriptions') ?>?geo-filter=all&amp;place=<?php echo( $data->get('place_name')) ?>"><?php echo( $data->get('count_total') ?: '0') ?></a></dd>
         </dl>
         <?php
         if (intval($data->get('count_find_groups')) > 0) {
@@ -95,7 +95,7 @@ class placeView extends View
             <h2 id="find-groups">Find-groups with inscribed objects</h2>
             <p><?php echo( $data->get('count_find_groups')) ?> in total</p>
             <?php
-            $tableFG = new Table($data->get('find_groups'), 'find_groups_id', 'group', 'find_groups_sort', '#find_groups');
+            $tableFG = new TableView($data->get('find_groups'), 'find_groups_id', 'group', 'find_groups_sort', '#find_groups');
             $tableFG->renderTable(['title', 'dating', 'find_group_type', 'inscriptions_count'], ['Find group', 'Date', 'Type', 'Inscribed objects']);
         }
         if (intval($data->get('count_workshops')) > 0) {
@@ -103,7 +103,7 @@ class placeView extends View
             <h2 id="workshops">Workshops</h2>
             <p><?php echo( $data->get('count_workshops')) ?> in total</p>
             <?php
-            $tableWk = new Table($data->get('workshops'), 'workshops_id', 'workshop', 'workshops_sort', '#workshops');
+            $tableWk = new TableView($data->get('workshops'), 'workshops_id', 'workshop', 'workshops_sort', '#workshops');
             $tableWk->renderTable(['title', 'dating', 'inscriptions_count'], ['Find group', 'Date', 'Inscribed objects']);
         }
     }

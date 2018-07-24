@@ -24,22 +24,22 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\views;
 
 /**
  * Description of Datalist
  *
  * @author Tomich
  */
-class Datalist
+class DatalistView
 {
 
-    private $Db;
+    private $db;
 
     //put your code here
     public function __construct()
     {
-        $this->db = Db::getInstance();
+        $this->db = \PNM\Db::getInstance();
     }
 
     public function get($name)

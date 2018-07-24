@@ -24,7 +24,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\views;
 
 /**
  * Description of bibliographyView
@@ -36,9 +36,9 @@ class bibliographyView extends View
 
     public function echoRender(&$data)
     {
-        (new Head())->render(Head::HEADERSLIM, 'Bibliography');
+        (new HeadView())->render(HeadView::HEADERSLIM, 'Bibliography');
         foreach ($data->data as $row) {
-            echo '<a href="' . Request::makeURL('publication', $row[$data->getFieldName(1)]) . '">' . $row[$data->getFieldName(0)] . "</a><br>";
+            echo '<a href="' . \PNM\Request::makeURL('publication', $row[$data->getFieldName(1)]) . '">' . $row[$data->getFieldName(0)] . "</a><br>";
         }
     }
 }

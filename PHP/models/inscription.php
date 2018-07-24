@@ -24,7 +24,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\models;
 
 class inscription extends EntryModel
 {
@@ -106,8 +106,8 @@ class inscription extends EntryModel
         $invs = null;
         $res = null;
         $concat = ($field == 'inv_no' ? '+' : ', ');
-        $colView = new collectionsMicroView();
-        $invView = new inv_nosMicroView();
+        $colView = new \PNM\views\collectionsMicroView();
+        $invView = new \PNM\views\inv_nosMicroView();
         foreach ($sortedData as $row) {
             if ($title !== $row['title']) {
                 if (!empty($invs)) {

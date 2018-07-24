@@ -63,8 +63,8 @@ class Note
             return $idInput;
         }
         $TableName = $id->getTableName();
-        $ViewClass = 'PNM\\' . $TableName . 'MicroView';
-        $Title = Lookup::get('SELECT ' . self::TITLE_FIELDS[$TableName] . ' FROM ' . $TableName . ' WHERE ' . $TableName . '_id = ?', $id->getID(), 'i'); //$this->GetUniversalTitle($id);
+        $ViewClass = 'PNM\\views\\' . $TableName . 'MicroView';
+        $Title = models\Lookup::get('SELECT ' . self::TITLE_FIELDS[$TableName] . ' FROM ' . $TableName . ' WHERE ' . $TableName . '_id = ?', $id->getID(), 'i'); //$this->GetUniversalTitle($id);
         $View = new $ViewClass();
         $res = $View->render($Title, $id->getID());
         return $res;

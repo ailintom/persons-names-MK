@@ -23,7 +23,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\views;
 
 /*
  *
@@ -52,7 +52,7 @@ class nameView extends View
         if (!empty($data->get('translation_de'))) {
             $subtitle .= '<span class="translation" lang="de">“' . $data->get('translation_de') . '”</span>';
         }
-        (new Head())->render(Head::HEADERSLIM, $data->get('personal_name'));
+        (new HeadView())->render(HeadView::HEADERSLIM, $data->get('personal_name'));
         ?><div class="toc">
             <h2>Spellings</h2>
             <ul class="toc_list">
@@ -83,8 +83,8 @@ class nameView extends View
             echo $this->descriptionElement('Is a possible reading of', $altReadings);
             echo $this->descriptionElement('Bibliography', $data->get('bibliography'), null, 'biblio-ref');
             $ref = $this->addReference('Ranke no.', $data->get('ranke'));
-            $ref = $this->addReference('TLA no.', $data->get('tla'), ExternalLinks::TLA, $ref);
-            $ref = $this->addReference('AGÉA no.', $data->get('agea'), ExternalLinks::AGEA, $ref);
+            $ref = $this->addReference('TLA no.', $data->get('tla'), \PNM\ExternalLinks::TLA, $ref);
+            $ref = $this->addReference('AGÉA no.', $data->get('agea'), \PNM\ExternalLinks::AGEA, $ref);
             $ref = $this->addReference('Scheele-Schweitzer no.', $data->get('scheele-schweitzer'), null, $ref);
             echo( $this->descriptionElement('References', $ref));
             //  ['titles_id', 'title', 'gender', 'count_attestations', 'usage_period', 'usage_area', 'usage_period_note', 'usage_area_note', 'note', 'ward_fischer', 'hannig', 'tla', 'translation_en', 'translation_de']
@@ -96,7 +96,7 @@ class nameView extends View
             $j = 0;
             $inscrMV = new inscriptionsMicroView();
             foreach ($data->get("spellings")->data as $spelling) {
-                echo ' <div class="spellings_item" id="', ID::shorten($spelling['spellings_id']), '"><h3>', $this->spellView->render($spelling['spelling'], $spelling['spellings_id']), $this->processAltReadings($spelling['alt_readings']), '</h3><ol start="', $spelling['first_no'], '">';
+                echo ' <div class="spellings_item" id="', \PNM\ID::shorten($spelling['spellings_id']), '"><h3>', $this->spellView->render($spelling['spelling'], $spelling['spellings_id']), $this->processAltReadings($spelling['alt_readings']), '</h3><ol start="', $spelling['first_no'], '">';
                 foreach ($spelling['attestations']->data as $att) {
                     echo '<li id="att', ++$j, '"><p>', $this->renderGender($att['gender']), ' ';
                     $inscrMV->echoRender($this->renderObjectType($att['object_type']) . ' ' . $att['title'], $att['inscriptions_id']);
@@ -143,7 +143,7 @@ class nameView extends View
     protected function renderSpelling($personal_names_id, $personal_name, $spellings_id, $spelling)
     {
         $res = '<span class="name">';
-        $res .= '<a href="' . Request::makeURL('name', [$personal_names_id, $spellings_id]) . '">';
+        $res .= '<a href="' . \PNM\Request::makeURL('name', [$personal_names_id, $spellings_id]) . '">';
         $res .= $personal_name . ' ';
         $res .= $this->spellView->render($spelling, $spellings_id)
                 . '</a>';

@@ -23,7 +23,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\views;
 
 /*
  *
@@ -42,7 +42,7 @@ class collectionView extends View
 
     public function echoRender(&$data)
     {
-        (new Head())->render(Head::HEADERSLIM, $data->get('title'));
+        (new HeadView())->render(HeadView::HEADERSLIM, $data->get('title'));
         ?>
         <dl>
             <?php
@@ -52,8 +52,8 @@ class collectionView extends View
             echo( $this->descriptionElement('Inscribed objects in the database', $this->inscribedObjects($data->get('title'), $data->get('inscriptions_count'))));
             echo( $this->descriptionElement('Website', $this->renderURL($data->get('url'))));
             echo( $this->descriptionElement('Online catalogue', $this->renderURL($data->get('online_collection'))));
-            $ref = $this->addReference('Trismegistos collection ID', $data->get('tm_coll_id'), ExternalLinks::TRISMEGISTOS_COLLECTION);
-            $ref = $this->addReference('THOT ID', $data->get('thot_concept_id'), ExternalLinks::THOTH_CONCEPT, $ref);
+            $ref = $this->addReference('Trismegistos collection ID', $data->get('tm_coll_id'), \PNM\ExternalLinks::TRISMEGISTOS_COLLECTION);
+            $ref = $this->addReference('THOT ID', $data->get('thot_concept_id'), \PNM\ExternalLinks::THOTH_CONCEPT, $ref);
             $ref = $this->addReference('Artefacts of Excavations', $data->get('artefacts_url'), null, $ref);
             echo( $this->descriptionElement('References', $ref));
             ?>
@@ -65,7 +65,7 @@ class collectionView extends View
             $data->data['inv_nos']->data[$i]['object_type'] = $this->renderObjectType($data->data['inv_nos']->data[$i]['object_type']);
             $data->data['inv_nos']->data[$i]['text_content'] = $this->renderTextContent($data->data['inv_nos']->data[$i]['text_content']);
         }
-        $tableCo = new Table($data->get('inv_nos'), 'inscriptions_id', 'inscription', 'sort', '#results');
+        $tableCo = new TableView($data->get('inv_nos'), 'inscriptions_id', 'inscription', 'sort', '#results');
         $tableCo->renderTable(['inv_no', 'object_type', 'title', 'material',
             'size', 'text_content', 'dating', 'inst_prov_temp', 'orig_prod_temp', 'owner'], ['Inv. no.', 'Type', 'Object', 'Material', 'Size, mm',
             'Text', 'Date', 'Provenance', 'Origin/Prod. place', 'Owner'], true, 'inv. no.');
@@ -74,7 +74,7 @@ class collectionView extends View
     protected function inscribedObjects($id_coll, $count)
     {
         if (!empty($count)) {
-            return '<a href="' . Request::makeURL('inscriptions') . '?collection=' . urlencode($id_coll) . '">' . $count . '</a>';
+            return '<a href="' . \PNM\Request::makeURL('inscriptions') . '?collection=' . urlencode($id_coll) . '">' . $count . '</a>';
         }
     }
 }

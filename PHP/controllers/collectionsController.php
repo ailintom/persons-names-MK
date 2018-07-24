@@ -24,7 +24,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\controllers;
 
 class collectionsController
 {
@@ -32,22 +32,22 @@ class collectionsController
     public function load()
     {
         $rules = [];
-        if (!empty(Request::get('title'))) {
-            array_push($rules, new Rule('title', 'exactlike', Request::get('title')));
+        if (!empty(\PNM\Request::get('title'))) {
+            array_push($rules, new \PNM\models\Rule('title', 'exactlike', \PNM\Request::get('title')));
         }
-        if (!empty(Request::get('full_name'))) {
-            array_push($rules, new Rule(['full_name_en', 'full_name_national_language'], 'exactlike', Request::get('full_name')));
+        if (!empty(\PNM\Request::get('full_name'))) {
+            array_push($rules, new \PNM\models\Rule(['full_name_en', 'full_name_national_language'], 'exactlike', \PNM\Request::get('full_name')));
         }
-        if (!empty(Request::get('location'))) {
-            array_push($rules, new Rule('location', 'exactlike', Request::get('location')));
+        if (!empty(\PNM\Request::get('location'))) {
+            array_push($rules, new \PNM\models\Rule('location', 'exactlike', \PNM\Request::get('location')));
         }
-        if (!empty(Request::get('tm_coll_id'))) {
-            array_push($rules, new Rule('tm_coll_id', 'exact', Request::get('tm_coll_id')));
+        if (!empty(\PNM\Request::get('tm_coll_id'))) {
+            array_push($rules, new \PNM\models\Rule('tm_coll_id', 'exact', \PNM\Request::get('tm_coll_id')));
         }
-        $filter = new Filter($rules); //([new Rule('title', 'not', '', 's')]);
+        $filter = new \PNM\models\Filter($rules); //([new \PNM\models\Rule('title', 'not', '', 's')]);
         // $inscriptions = new inscriptions('natural_sort_format(title,7, "")', 0, 0, $filter); //$sort = null, $start = 0, $count = 0, Filter $filter = null
-        $model = new collections(Request::get('sort'), (Request::get('start') ?: 0), 50, $filter); //$sort = null, $start = 0, $count = 0, Filter $filter = null
-        $view = new collectionsView();
+        $model = new \PNM\models\collections(\PNM\Request::get('sort'), (\PNM\Request::get('start') ?: 0), 50, $filter); //$sort = null, $start = 0, $count = 0, Filter $filter = null
+        $view = new \PNM\views\collectionsView();
         $view->echoRender($model);
     }
 }

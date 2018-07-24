@@ -1,6 +1,6 @@
 <?php
 
-namespace PNM;
+namespace PNM\views;
 ?><header class="header -large">
     <div class="header_content">
         <h1 class="header_title">

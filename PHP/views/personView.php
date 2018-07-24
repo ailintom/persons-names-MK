@@ -23,7 +23,7 @@
  * SOFTWARE.
  */
 
-namespace PNM;
+namespace PNM\views;
 
 /*
  *
@@ -41,7 +41,7 @@ class personView extends View
         $insView = new inscriptionsMicroView();
         $spellView = new spellingsMicroView();
         $titlesView = new titlesMicroView();
-        (new Head())->render(Head::HEADERSLIM, 'Person ' . $data->get('title'));
+        (new HeadView())->render(HeadView::HEADERSLIM, 'Person ' . $data->get('title'));
         ?><table class="name-box"><tr><th></th>
         <?= (empty($data->get('title_string')) ? null : '<th>Title</th>') ?>
                 <th>Name</th></tr>
@@ -68,7 +68,7 @@ class personView extends View
         <ul><?php
             foreach ($objAtt->data as $Att) {
                 $attView->setInscription($Att['inscriptions_id']);
-                echo '<li><h3 id="' . ID::shorten($Att['attestations_id']) . '">',
+                echo '<li><h3 id="' . \PNM\ID::shorten($Att['attestations_id']) . '">',
                 $insView->render($this->renderObjectType($Att['object_type']) . ' ' . $Att['title'], $Att['inscriptions_id']), ': ',
                 $attView->render($Att['title_string'], $Att['attestations_id'], $Att['personal_name']),
                 ' (', $Att['status'], ')</h3>';
@@ -107,7 +107,7 @@ class personView extends View
                                 echo', ';
                             }
                             echo'<span class="name">';
-                            echo'<a href="' . Config::BASE . 'name/' . $name['personal_names_id'] . '#' . $spelling['spellings_id'] . '">';
+                            echo'<a href="' . \PNM\Config::BASE . 'name/' . $name['personal_names_id'] . '#' . $spelling['spellings_id'] . '">';
                             if ($spellingPerNameCount++ == 0) {
                                 echo $name['personal_name'] . ' ';
                             }
