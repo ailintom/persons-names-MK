@@ -269,7 +269,18 @@ class peopleView extends View
             }
             if ($data->type == "double") {
                 $tableCo = new Table($data, ['inscriptions_id', 'id'], 'auto', 'sort', '#results');
-                $tableCo->addHeader('<div class="tr" role="row" class="-no-border"><div class="th" role="gridcell">Person A</div><div class="th -border" role="gridcell">&nbsp;</div><div class="th -border" role="gridcell">&nbsp;</div><div class="th -border" role="gridcell">Person B</div><div class="th -border" role="gridcell">&nbsp;</div><div class="th -border" role="gridcell">&nbsp;</div><div class="th -border" role="gridcell">Common</div><div class="th -border" role="gridcell">&nbsp;</div><div class="th -border" role="gridcell">&nbsp;</div></div>');
+                $tableCo->addHeader('        <div class="tr -no-border" role="row">
+            <div class="th" role="gridcell">Person A</div>
+            <div role="gridcell" class="th">&nbsp;</div>
+            <div role="gridcell" class="th">&nbsp;</div>
+            <div class="th -border-left" role="gridcell">Person B</div>
+            <div class="th" role="gridcell">&nbsp;</div>
+            <div class="th" role="gridcell">&nbsp;</div>
+            <div class="th -border-left" role="gridcell">Common</div>
+            <div class="th" role="gridcell">&nbsp;</div>
+            <div class="th" role="gridcell">&nbsp;</div>
+        </div>');
+                $tableCo->addLeftBorder([3, 6]);
                 $tableCo->renderTable(['gender', 'title_string', 'personal_name', 'gender_b', 'title_string_b', 'personal_name_b', 'title', 'dating', 'region'], ['Gender', 'Title', 'Name', 'Gender', 'Title', 'Name', 'Source or dossier', 'Date', 'Region'], true);
             } else {
                 $tableCo = new Table($data, ['inscriptions_id', 'id'], 'auto', 'sort', '#results');

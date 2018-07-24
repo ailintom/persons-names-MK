@@ -41,6 +41,7 @@ class Table
     protected $target_controller;
     protected $hashpos;
     protected $extraHeader;
+    protected $leftBorderColIds = [];
 
     const SORT_HIGHLIGHT = 0;
     const SORT_PARAM = 1;
@@ -71,6 +72,18 @@ class Table
         }
     }
 
+    public function addLeftBorder($colIds)
+    {
+        $this->leftBorderColIds = (array) $colIds;
+    }
+
+    protected function getLeftBorder($id)
+    {
+        if (in_array($id, $this->leftBorderColIds)) {
+            return " -border-left";
+        }
+    }
+
     public function addHeader($header)
     {
         $this->extraHeader = $header;
@@ -92,6 +105,9 @@ class Table
                         . '<a class="pagination_link -previous" href="' . Request::makeURL(Request::get('controller'), Request::get('id'), null, null, true, (($this->data->start - 1 - 50) >= 0 ? $this->data->start - 1 - 50 : 0))
                         . '"' . $onclick_nav . '>' . Icon::get('chevron-left')
                         . ' Prev ' . ($this->data->start > 50 ? 50 : $this->data->start - 1) . '</a>';
+            } else {
+                $pag .= '<span class="pagination_link -first -disabled">First</span><span class="pagination_link -previous -disabled">' . Icon::get('chevron-left') .
+                        'Prev 50</span>';
             }
             if ($this->data->start + $this->data->count - 1 < $this->data->total_count) {
                 $pag .= '<a class="pagination_link -next" href="' . Request::makeURL(Request::get('controller'), Request::get('id'), null, null, true, (($this->data->start + 49) < $this->data->total_count ? $this->data->start + 49 : $this->data->total_count - 50))
@@ -112,7 +128,7 @@ class Table
                     for ($i = 0; $i < count($columns); ++$i) {
                         $url = Request::makeURL(Request::get('controller'), Request::get('id'), $sort_renders[$i][self::SORT_PARAM], $this->sort_param, true, 0);
                         $hashpos = $this->id_field[0] . "_" . $i;
-                        echo ('<div class="th' . $sort_renders[$i][self::SORT_HIGHLIGHT] . '" role="gridcell">'
+                        echo ('<div class="th' . $this->getLeftBorder($i) . $sort_renders[$i][self::SORT_HIGHLIGHT] . '" role="gridcell">'
                         . '<a href="' . $url . '" title="Sort by ' . lcfirst($column_titles[$i]) . ', ' . $sort_renders[$i][self::SORT_TITLE] . '" id="' . $hashpos . '"'
                         . ' onclick="window.location.replace(this.href + (' . "'#$hashpos'||" . 'window.location.hash));return false;">'
                         . $column_titles[$i] . $sort_renders[$i][self::SORT_ICON] . '</a></div>' . "\r");
@@ -144,7 +160,7 @@ class Table
                                 $cellval = !empty($row[$columns[$i]]) && strlen($row[$columns[$i]]) > 0 ? $row[$columns[$i]] : '&nbsp;';
                             }
                             //role="presentation"
-                            echo('<div class="td' . $sort_renders[$i][self::SORT_HIGHLIGHT] . '" role="gridcell">' . $cellval . '</div>' . "\r" );
+                            echo('<div class="td' . $this->getLeftBorder($i) . $sort_renders[$i][self::SORT_HIGHLIGHT] . '" role="gridcell">' . $cellval . '</div>' . "\r" );
                         }
                         echo ( "\r");
                         ?>

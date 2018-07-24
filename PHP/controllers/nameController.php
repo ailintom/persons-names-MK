@@ -55,19 +55,21 @@ class nameController extends EntryController
                         $objNamePersons->data[$personKey]['attestations'][] = $persDesc;
                     }
                     $objNameSpellings->data[$i]['attestations']->data[$j]['persons'] = $objAttPersons;
-                   // $objNameSpellings->data[$i]['first_no'] = $this->getAttNo($objNameSpellings, $i, 1);
                 }
+                $objNameSpellings->data[$i]['first_no'] = $this->getAttNo($objNameSpellings, $i, 1); //Calculate the first number for the section of the numbered list
             }
         }
         $this->record->data['spellings'] = $objNameSpellings;
         $this->record->data['persons'] = $objNamePersons;
     }
 
+    // Caclulated the number of a particular attestation in the numbered list of attestations divided into spellings
     private function getAttNo($objNameSpellings, $spelling_no, $att_no_in_spelling)
     {
-        $cnt = 0;
-        for ($i = 0; $i < $spelling_no; $i++) {
-            $cnt += $objNameSpellings->data[$i]['attestations']->count;
+        if ($spelling_no > 0) {
+            $cnt = $objNameSpellings->data[$spelling_no - 1]['first_no'] + $objNameSpellings->data[$spelling_no - 1]['attestations']->count;
+        } else {
+            $cnt = 0;
         }
         return $cnt + $att_no_in_spelling;
     }

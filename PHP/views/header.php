@@ -14,22 +14,19 @@ namespace PNM;
         </button>
         <div class="header_aside">
             <?php if (!empty(Request::stableURL())) : ?>
-                <p>
-                    <a href="<?= Request::stableURL() ?>">Stable URL<span class="print_only">: <?= Config::HOST . Request::stableURL() ?></span></a>
-                </p>
+                <a href="<?= Request::stableURL() ?>">Stable URL<span class="print_only">: <?= Config::HOST . Request::stableURL() ?></span></a>
             <?php endif; ?>
-            <p>
-                <label for="version">Version:</label> <select id="version" onchange ="window.location.href = this.value;">
-                    <?php
-                    $vers = Config::VERSIONS;
+            <label for="version" class="sr-only">Change version:</label>
+            <select id="version" onchange ="window.location.href = this.value;" class="header_version">
+                <?php
+                $vers = Config::VERSIONS;
 
-                    $curver = $vers[array_search(Request::get('used_ver'), array_column($vers, 0))];                           
-                    foreach ($vers as $version) {
-                        echo '<option value="' . ($version[0] == Request::get('used_ver') ? '#' : Request::changeVer($version[0])) . '" ' . ($version[0] == Request::get('used_ver') ? 'selected' : null) . '>' . $version[0] . ' (' . $version[1] . ')' . '</option>';
-                    }
-                    ?>
-                </select><span class="print_only"><?= $curver[0] . ' (' . $curver[1] . ')' ?></span>
-            </p>
+                $curver = $vers[array_search(Request::get('used_ver'), array_column($vers, 0))];
+                foreach ($vers as $version) {
+                    echo '<option value="' . ($version[0] == Request::get('used_ver') ? '#' : Request::changeVer($version[0])) . '" ' . ($version[0] == Request::get('used_ver') ? 'selected' : null) . '>Version ' . $version[0] . ' (' . $version[1] . ')' . '</option>';
+                }
+                ?>
+            </select>
         </div>
     </div>
 </header>

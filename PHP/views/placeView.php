@@ -71,8 +71,8 @@ class placeView extends View
             echo( $this->descriptionElement('Location', $data->get('relative_location'), null, 'place'));
             echo( $this->descriptionElement('Macro-region', $placesMV->render($data->get('macro_region')), null, 'place'));
             echo( $this->descriptionElement('Latitude', $this->renderLat($data->get('latitude')), null, 'latitude'));
-            $ref = $this->addReference('Topographical Bibliography ID', $data->get('topbib_id'), 'http://topbib.griffith.ox.ac.uk//dtb.html?topbib=');
-            $ref = $this->addReference('Trismegistos Geo ID', $data->get('tm_geoid'), 'http://www.trismegistos.org/place/', $ref);
+            $ref = $this->addReference('Topographical Bibliography ID', $data->get('topbib_id'), ExternalLinks::TOP_BIB);
+            $ref = $this->addReference('Trismegistos Geo ID', $data->get('tm_geoid'), ExternalLinks::TRISMEGISTOS_GEO, $ref);
             $ref = $this->addReference('Artefacts of Excavations', $data->get('artefacts_url'), null, $ref);
             echo( $this->descriptionElement('References', $ref));
             ?>

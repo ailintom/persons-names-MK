@@ -42,7 +42,7 @@ class publicationView extends View
         <?= $data->get('html_entry') ?>
         <dl>
             <?php
-            $ref = $this->addReference('OEB ID', $data->get('oeb_id'), 'http://oeb.griffith.ox.ac.uk/oeb_entry.aspx?item=');
+            $ref = $this->addReference('OEB ID', $data->get('oeb_id'), ExternalLinks::OEB);
             echo( $this->descriptionElement('References', $ref));
             ?>
         </dl>

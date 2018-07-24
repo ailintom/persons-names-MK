@@ -9,7 +9,7 @@ namespace PNM;
             <div class="column">
                 <p>
                     Copyright 2017 Alexander Ilin-Tomich.
-                    Content licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" title="Creative Commons Attribution-ShareAlike 4.0 International">CC BY-SA 4.0</a>, except for logos.
+                    Content licensed under <a href="https://creativecommons.org/licenses/by/4.0/" title="Creative Commons Attribution 4.0 International">CC BY 4.0</a>, except for logos.
                     Code <a href="https://github.com/ailintom/persons-names-MK">available on GitHub</a> under MIT license.
                 </p>
                 <p>

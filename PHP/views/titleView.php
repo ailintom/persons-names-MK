@@ -74,7 +74,7 @@ class titleView extends View
             $this->echoRelation($predicate, $pred_string);
             echo $this->descriptionElement('Bibliography', $data->get('bibliography'), null, 'biblio-ref');
             $ref = $this->addReference('Ward and Fischer no.', $data->get('ward_fischer'));
-            $ref = $this->addReference('TLA no.', $data->get('tla'), 'http://aaew.bbaw.de/tla/servlet/GetWcnDetails?wn=', $ref);
+            $ref = $this->addReference('TLA no.', $data->get('tla'), ExternalLinks::TLA, $ref);
             $ref = $this->addReference('Hannig no.', $data->get('hannig'), null, $ref);
             echo( $this->descriptionElement('References', $ref));
             //  ['titles_id', 'title', 'gender', 'count_attestations', 'usage_period', 'usage_area', 'usage_period_note', 'usage_area_note', 'note', 'ward_fischer', 'hannig', 'tla', 'translation_en', 'translation_de']

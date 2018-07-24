@@ -58,6 +58,7 @@ require_once('Config.php');
  */
 require_once('CriticalError.php');
 require_once('Db.php');
+require_once('ExternalLinks.php');
 require_once('Request.php');
 require_once('views/Icon.php');
 require_once('views/Head.php');
