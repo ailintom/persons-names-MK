@@ -81,8 +81,8 @@ class titlesController
         if (!empty(\PNM\Request::get('period')) && \PNM\Request::get('match-date') == 'characteristic') {
             array_push($rules, new \PNM\models\Rule('usage_period', 'exact', \PNM\Request::get('period')));
         } elseif (!empty(\PNM\Request::get('period'))) {
-            $periodEnd = Lookup::dateEnd(\PNM\Request::get('period'));
-            $periodStart = Lookup::dateStart(\PNM\Request::get('period'));
+            $periodEnd = \PNM\models\Lookup::dateEnd(\PNM\Request::get('period'));
+            $periodStart = \PNM\models\Lookup::dateStart(\PNM\Request::get('period'));
             if (empty($periodStart) || empty($periodEnd)) {
                 array_push($rules, new \PNM\models\Rule('0', 'exact', 1, 'i'));
             } else {

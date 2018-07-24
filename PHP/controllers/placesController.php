@@ -43,17 +43,17 @@ class placesController
             }
         }
         if (!empty(\PNM\Request::get('northof'))) {
-            $northofLat = Lookup::latitude(\PNM\Request::get('northof'));
+            $northofLat = \PNM\models\Lookup::latitude(\PNM\Request::get('northof'));
             array_push($rules, new \PNM\models\Rule('latitude', 'moreorequal', $northofLat));
         }
         if (!empty(\PNM\Request::get('southof'))) {
-            $southofLat = Lookup::latitude(\PNM\Request::get('southof'));
+            $southofLat = \PNM\models\Lookup::latitude(\PNM\Request::get('southof'));
             array_push($rules, new \PNM\models\Rule('latitude', 'lessorequal', $southofLat));
         }
         if (!empty(\PNM\Request::get('near'))) {
-            $southofLat = Lookup::latitude(\PNM\Request::get('near')) + 30;
+            $southofLat = \PNM\models\Lookup::latitude(\PNM\Request::get('near')) + 30;
             array_push($rules, new \PNM\models\Rule('latitude', 'lessorequal', $southofLat));
-            $northofLat = Lookup::latitude(\PNM\Request::get('near')) - 30;
+            $northofLat = \PNM\models\Lookup::latitude(\PNM\Request::get('near')) - 30;
             array_push($rules, new \PNM\models\Rule('latitude', 'moreorequal', $northofLat));
         }
         if (!empty(\PNM\Request::get('topbib_id'))) {

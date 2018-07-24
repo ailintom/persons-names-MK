@@ -74,7 +74,7 @@ class namesController
                     . ' region_temp="' . \PNM\Request::get('place') . '")', 'exact', 1, 'i'));
         }
         if (!empty(\PNM\Request::get('form_type'))) {
-            $nt = Lookup::name_types_idGet(\PNM\Request::get('form_type'));
+            $nt = \PNM\models\Lookup::name_types_idGet(\PNM\Request::get('form_type'));
             if (!empty($nt)) {
                 array_push($rules, new \PNM\models\Rule('Exists(SELECT name_types_temp.parent_id '
                         . ' FROM names_types_xref INNER JOIN name_types_temp ON names_types_xref.name_types_id = name_types_temp.child_id'
@@ -83,7 +83,7 @@ class namesController
             }
         }
         if (!empty(\PNM\Request::get('sem_type'))) {
-            $nt = Lookup::name_types_idGet(\PNM\Request::get('sem_type'));
+            $nt = \PNM\models\Lookup::name_types_idGet(\PNM\Request::get('sem_type'));
             if (!empty($nt)) {
                 array_push($rules, new \PNM\models\Rule('Exists(SELECT name_types_temp.parent_id '
                         . ' FROM names_types_xref INNER JOIN name_types_temp ON names_types_xref.name_types_id = name_types_temp.child_id'

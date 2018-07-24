@@ -33,7 +33,7 @@ class inscriptionsController
     {
         $rules = [];
         if (!empty(\PNM\Request::get('collection'))) {
-            $collID = Lookup::collectionsGet(\PNM\Request::get('collection'));
+            $collID = \PNM\models\Lookup::collectionsGet(\PNM\Request::get('collection'));
             if (empty($collID)) {
                 array_push($rules, new \PNM\models\Rule('0', 'exact', 1, 'i'));
             } elseif (!empty(\PNM\Request::get('title'))) {
@@ -88,8 +88,8 @@ class inscriptionsController
             }
         }
         if (!empty(\PNM\Request::get('period'))) {
-            $periodEnd = Lookup::dateEnd(\PNM\Request::get('period'));
-            $periodStart = Lookup::dateStart(\PNM\Request::get('period'));
+            $periodEnd = \PNM\models\Lookup::dateEnd(\PNM\Request::get('period'));
+            $periodStart = \PNM\models\Lookup::dateStart(\PNM\Request::get('period'));
             if (empty($periodStart) || empty($periodEnd)) {
                 array_push($rules, new \PNM\models\Rule('0', 'exact', 1, 'i'));
             } else {

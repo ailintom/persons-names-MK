@@ -47,7 +47,7 @@ class peopleController
             $persons = null;
         }
         if (!empty(\PNM\Request::get('Aform_type'))) {
-            $nt = Lookup::name_types_idGet(\PNM\Request::get('Aform_type'));
+            $nt = \PNM\models\Lookup::name_types_idGet(\PNM\Request::get('Aform_type'));
             if (!empty($nt)) {
                 array_push($Arules, new \PNM\models\Rule('Exists(SELECT name_types_temp.parent_id '
                         . ' FROM (((names_types_xref INNER JOIN name_types_temp ON names_types_xref.name_types_id = name_types_temp.child_id) '
@@ -61,7 +61,7 @@ class peopleController
             }
         }
         if (!empty(\PNM\Request::get('Asem_type'))) {
-            $nt = Lookup::name_types_idGet(\PNM\Request::get('Asem_type'));
+            $nt = \PNM\models\Lookup::name_types_idGet(\PNM\Request::get('Asem_type'));
             if (!empty($nt)) {
                 array_push($Arules, new \PNM\models\Rule('Exists(SELECT name_types_temp.parent_id '
                         . ' FROM (((names_types_xref INNER JOIN name_types_temp ON names_types_xref.name_types_id = name_types_temp.child_id) '
@@ -75,8 +75,8 @@ class peopleController
             }
         }
         if (!empty(\PNM\Request::get('period'))) {
-            $periodEnd = Lookup::dateEnd(\PNM\Request::get('period'));
-            $periodStart = Lookup::dateStart(\PNM\Request::get('period'));
+            $periodEnd = \PNM\models\Lookup::dateEnd(\PNM\Request::get('period'));
+            $periodStart = \PNM\models\Lookup::dateStart(\PNM\Request::get('period'));
             if (empty($periodStart) || empty($periodEnd)) {
                 array_push($Arules, new \PNM\models\Rule('0', 'exact', 1, 'i'));
             } else {
@@ -117,7 +117,7 @@ class peopleController
                 array_push($Brules, new \PNM\models\Rule('personal_name_search', 'exactlike', Translit::searchVal(\PNM\Request::get('Bname'))));
             }
             if (!empty(\PNM\Request::get('Bform_type'))) {
-                $nt = Lookup::name_types_idGet(\PNM\Request::get('Bform_type'));
+                $nt = \PNM\models\Lookup::name_types_idGet(\PNM\Request::get('Bform_type'));
                 if (!empty($nt)) {
                     array_push($Brules, new \PNM\models\Rule('Exists(SELECT name_types_temp.parent_id '
                             . ' FROM (((names_types_xref INNER JOIN name_types_temp ON names_types_xref.name_types_id = name_types_temp.child_id) '
@@ -131,7 +131,7 @@ class peopleController
                 }
             }
             if (!empty(\PNM\Request::get('Bsem_type'))) {
-                $nt = Lookup::name_types_idGet(\PNM\Request::get('Bsem_type'));
+                $nt = \PNM\models\Lookup::name_types_idGet(\PNM\Request::get('Bsem_type'));
                 if (!empty($nt)) {
                     array_push($Brules, new \PNM\models\Rule('Exists(SELECT name_types_temp.parent_id '
                             . ' FROM (((names_types_xref INNER JOIN name_types_temp ON names_types_xref.name_types_id = name_types_temp.child_id) '

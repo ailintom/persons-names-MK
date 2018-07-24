@@ -60,12 +60,12 @@ class titleController extends EntryController
             array_push($rules, new \PNM\models\Rule($geoField, 'exact', $place));
         }
         if (!empty(\PNM\Request::get('period')) && \PNM\Request::get('chrono-filter') == 'not-later') {
-            array_push($rules, new \PNM\models\Rule('dating_sort_start', \PNM\Request::get('chrono-filter'), Lookup::dateEnd(\PNM\Request::get('period')), 'i'));
+            array_push($rules, new \PNM\models\Rule('dating_sort_start', \PNM\Request::get('chrono-filter'), \PNM\models\Lookup::dateEnd(\PNM\Request::get('period')), 'i'));
         } elseif (!empty(\PNM\Request::get('period')) && \PNM\Request::get('chrono-filter') == 'not-earlier') {
-            array_push($rules, new \PNM\models\Rule('dating_sort_end', \PNM\Request::get('chrono-filter'), Lookup::dateStart(\PNM\Request::get('period')), 'i'));
+            array_push($rules, new \PNM\models\Rule('dating_sort_end', \PNM\Request::get('chrono-filter'), \PNM\models\Lookup::dateStart(\PNM\Request::get('period')), 'i'));
         } elseif (!empty(\PNM\Request::get('period'))) {
-            $periodEnd = Lookup::dateEnd(\PNM\Request::get('period'));
-            $periodStart = Lookup::dateStart(\PNM\Request::get('period'));
+            $periodEnd = \PNM\models\Lookup::dateEnd(\PNM\Request::get('period'));
+            $periodStart = \PNM\models\Lookup::dateStart(\PNM\Request::get('period'));
             if (empty($periodStart) || empty($periodEnd)) {
                 array_push($rules, new \PNM\models\Rule('0', 'exact', 1, 'i'));
             } else {
