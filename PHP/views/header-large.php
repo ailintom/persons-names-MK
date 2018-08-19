@@ -1,4 +1,7 @@
 <?php
+/*
+ * This script renders the page header with a large title image
+ */
 
 namespace PNM\views;
 ?><header class="header -large">

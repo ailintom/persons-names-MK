@@ -1,39 +1,12 @@
 <?php
 
 /*
- * MIT License
- *
- * Copyright (c) 2017 Alexander Ilin-Tomich (unless specified otherwise for individual source files and documents)
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
-  copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * Description of inscriptionView
+ * Class used to render a page representing a single inscription with all attestations of personal names on it
  */
 
 namespace PNM\views;
 
-/*
- *
- *       $this->field_names = new FieldList(['title', 'object_type', 'object_subtype', 'material', 'length', 'height', 'width', 'thickness', 'find_groups_id', 'text_content',
-  'script', 'provenance', 'provenance_note', 'installation_place', 'installation_place_note', 'origin', 'origin_note', 'production_place', 'production_place_note',
-  'dating', 'dating_note', 'last_king_id', 'note']);
- */
-
-//inscriptionView
 class inscriptionView extends View
 {
 
@@ -41,12 +14,11 @@ class inscriptionView extends View
     {
         (new HeadView())->render(HeadView::HEADERSLIM, $data->get('title'));
         $placesMV = new placesMicroView();
-        $find_groupMV = new find_groupsMicroView();
-        echo '<p>' . $data->get('inv_no') . '</p>';
+        echo '<p>' . $this->renderInvNos($data->get('inv_no'), true) . '</p>';
         echo '<dl>';
-        echo $this->descriptionElement('Alternative inv.', $data->get('alternative_inv_no'), null, 'alternative_inv_no');
-        echo $this->descriptionElement('Obsolete inv.', $data->get('obsolete_inv_no'), null, 'obsolete_inv_no');
-        echo $this->descriptionElement('Erroneusly', $data->get('erroneous_inv_no'), null, 'erroneous_inv_no');
+        echo $this->descriptionElement('Alternative inv.', $this->renderInvNos($data->get('alternative_inv_no')), null, 'alternative_inv_no');
+        echo $this->descriptionElement('Obsolete inv.', $this->renderInvNos($data->get('obsolete_inv_no')), null, 'obsolete_inv_no');
+        echo $this->descriptionElement('Erroneous inv.', $this->renderInvNos($data->get('erroneous_inv_no')), null, 'erroneous_inv_no');
         echo $this->descriptionElement('Type', $this->renderObjectType($data->get('object_type')), null, 'type');
         echo $this->descriptionElement('Subtype', $data->get('object_subtype'), null, 'type');
         echo $this->descriptionElement('Material', $data->get('material'), null, 'type');
@@ -56,7 +28,7 @@ class inscriptionView extends View
         echo $this->descriptionElement('Date', $data->get('dating'), $data->get('dating_note'), 'period');
         echo $this->descriptionElement('Provenance', $placesMV->render($data->get('provenance')), $data->get('provenance_note'), 'place');
         if (!empty($data->get('find_groups_id'))) {
-            echo $this->descriptionElement('Find group', $find_groupMV->render(\PNM\models\Lookup::findGroupTitle($data->get('find_groups_id')), $data->get('find_groups_id')), null, 'find_group');
+            echo $this->descriptionElement('Find group', \PNM\Note::processID($data->get('find_groups_id')), null, 'find_group');
         }
         echo $this->descriptionElement('Intalled at', $placesMV->render($data->get('installation_place')), $data->get('installation_place_note'), 'place');
         echo $this->descriptionElement('Origin', $placesMV->render($data->get('origin')), $data->get('origin_note'), 'place');
@@ -66,7 +38,7 @@ class inscriptionView extends View
         }
 //
         echo $this->descriptionElement('Owner', '');
-        echo $this->descriptionElement('Bibliography', $data->get('bibliography'));
+        echo $this->descriptionElement('Bibliography', $this->renderBiblio($data->get('bibliography')));
         echo '</dl>';
         echo '<h2>People</h2><ul class="locations">';
         $objAtt = $data->get('attestations');
@@ -154,8 +126,11 @@ class inscriptionView extends View
             return '<li><h3>' . ($loc ?: '&nbsp;') . '</h3><ul class="attestations">' . $currentLoc . ' </ul></li>';
         }
     }
+    /*
+     * renders the size data
+     */
 
-    private function size($data)
+    private function size(&$data)
     {
         // 'length', 'height', 'width', 'thickness',
         $length = $data->get('length');
@@ -173,15 +148,64 @@ class inscriptionView extends View
             return $length . (empty($width) ? null : '×' . $width . $thicknessProcessed) . ' mm';
         }
     }
+    /*
+     * Renders workshops associated with a particular inscription
+     */
 
     private function renderWorkshop($data)
     {
         return implode(", ", array_map(array($this, 'renderSingleWorkshop'), $data->data));
     }
+    /*
+     * Renders a single workshop; used in the previous function
+     */
 
     private function renderSingleWorkshop($Wk)
     {
         $wkMV = new workshopsMicroView();
         return $wkMV->render($Wk['title'], $Wk['workshops_id']) . ' (' . $Wk['status'] . (empty($Wk['note']) ? null : ', ' . $Wk['note']) . ')';
+    }
+    /*
+     * Renders inventory numbers of a certain type
+     */
+
+    protected function renderInvNos($data, $isMain = false)
+    {
+        if (empty($data->data)) {
+            return null;
+        }
+        $sortedData = $data->data;
+        usort($sortedData, function ($a, $b) {
+            return strnatcasecmp($a['title'], $b['title']) == 0 ? strnatcasecmp($a['inv_no'], $b['inv_no']) : strnatcasecmp($a['title'], $b['title']);
+        });
+        $title = null;
+        $id = null;
+        $invs = null;
+        $res = null;
+        $concat = ($isMain ? '+' : ', '); //if several main inv_nos are present, they refer to separate parts of the object listed as a+b+c; otherwise inv_nos are treated as alternative numbers of the same object
+        $colView = new collectionsMicroView();
+        $invView = new inv_nosMicroView();
+        foreach ($sortedData as $row) {
+            if ($title !== $row['title']) {
+                $res .= $this->renderSingleInvNo($colView, $res, $concat, $invs, $title, $id);
+                $title = $row['title'];
+                $id = $row['collections_id'];
+                $invs = $invView->render($row['inv_no']);
+            } else {
+                $invs .= (empty($invs) ? null : $concat) . $invView->render($row['inv_no']);
+            }
+        }
+        $res .= $this->renderSingleInvNo($colView, $res, $concat, $invs, $title, $id);
+        return $res;
+    }
+    /*
+     * Renders a single inv_no; is used in the previous function
+     */
+
+    protected function renderSingleInvNo(&$colView, $res, $concat, $invs, $title, $id)
+    {
+        if (!empty($invs)) {
+            return (empty($res) ? null : $concat) . $colView->render($title, $id) . ' ' . $invs;
+        }
     }
 }

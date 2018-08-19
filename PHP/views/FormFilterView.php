@@ -1,17 +1,11 @@
 <?php
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Description of FormFilterView
+ * This class is used to generate the HTML code for a collapsible filter group (a group of controls for setting a less important search criterion) on a search page
  */
 
 namespace PNM\views;
 
-/**
- * Description of FormFilterView
- *
- * @author Tomich
- */
 class FormFilterView
 {
 

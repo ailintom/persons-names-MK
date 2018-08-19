@@ -1,18 +1,13 @@
 <?php
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Description of RuleExists
+ * 
+ * This class represents a rule that corresponds to an EXISTS() clause in the SQL query
  */
 
 namespace PNM\models;
 
-/**
- * Description of RuleExists
- *
- * @author Tomich
- */
 class RuleExists extends Rule
 {
 

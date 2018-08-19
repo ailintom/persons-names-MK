@@ -1,17 +1,11 @@
 <?php
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Description of startView
+ * Class used to render the project start page
  */
 
 namespace PNM\views;
 
-/**
- * Description of startView
- *
- * @author Tomich
- */
 class startView extends View
 {
 

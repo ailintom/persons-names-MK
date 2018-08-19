@@ -1,18 +1,12 @@
 <?php
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Description of SelectView
+ * This class renders the HTML code for a select control on a search page
  */
 
 namespace PNM\views;
 
-/**
- * Description of TextInputView
- *
- * @author Tomich
- */
 class SelectView
 {
 

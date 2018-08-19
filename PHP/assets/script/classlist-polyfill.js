@@ -4,7 +4,7 @@
  *
  * By Eli Grey, http://eligrey.com
  * License: Dedicated to the public domain.
- * See https://github.com/eligrey/classList.js/blob/master/LICENSE.md
+ *   See https://github.com/eligrey/classList.js/blob/master/LICENSE.md
  */
 
 /*global self, document, DOMException */

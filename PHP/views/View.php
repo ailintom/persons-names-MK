@@ -1,39 +1,15 @@
 <?php
-/*
- * MIT License
- *
- * Copyright (c) 2017 Alexander Ilin-Tomich (unless specified otherwise for individual source files and documents)
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
-  copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
 
 namespace PNM\views;
 
-/**
+/*
  * Description of View
- *
- * @author Tomich
+ * This is parent class for View pages, including all the functions used by two or more views
  */
+
 class View
 {
 
-//put your code here
     protected $entry = null;
     protected $subEntries = null;
 
@@ -56,6 +32,44 @@ class View
     {
         if (!empty($url)) {
             return '<a href="' . $prefix . $url . '">' . $url . '</a>';
+        }
+    }
+    /*
+     * formats the bibliograhy associated with an entry
+     * 
+     */
+
+    protected function renderBiblio($objbibliography)
+    {
+        $res = null;
+        $bibView = new publicationsMicroView();
+        foreach ($objbibliography->data as $bib_etry) {
+
+            $res .= (empty($res) ? null : '; ');
+            if (!empty($bib_etry['author_year'])) {
+                $res .= $bibView->render($bib_etry['author_year'], $bib_etry['source_id']);
+            } elseif (!empty($bib_etry['source_url'])) {
+                $res .= "<a href='" . htmlspecialchars($bib_etry['source_url'], ENT_HTML5) . "'>" . htmlspecialchars(($bib_etry['source_title'] ?: $bib_etry['source_url']), ENT_HTML5) . "</a>" . $this->getAccessedOn($bib_etry['accessed_on']);
+            } elseif (!empty($bib_etry['source_title'])) {
+                $res .= htmlspecialchars($bib_etry['source_title'], ENT_HTML5) . $this->getAccessedOn($bib_etry['accessed_on']);
+            }
+            if (!empty($bib_etry['pages'])) {
+                $res .= ", " . $bib_etry['pages'];
+            }
+            if (!empty($bib_etry['reference_type'])) {
+                $res .= " [" . $bib_etry['reference_type'] . "]";
+            }
+        }
+        return $res;
+    }
+    /*
+     * Formats the "accessed on" clause
+     */
+
+    protected function getAccessedOn($accessedOn)
+    {
+        if (!empty($accessedOn)) {
+            return " (accessed on " . htmlspecialchars($accessedOn, ENT_HTML5) . ")";
         }
     }
 
@@ -275,12 +289,12 @@ class View
             return null;
         } elseif (count($bondsincurrentcat) == 1) {
             $gen = $this->genderedDesignations($currentcat, $bondsincurrentcat[0]['gender']);
-            return '<li>' . ($gen ?: \PNM\models\ObjectBonds::BOND_TYPES_SING[$currentcat] . ' ')
+            return '<li>' . ($gen ?: \PNM\models\bonds::BOND_TYPES_SING[$currentcat] . ' ')
                     . (!empty($bondsincurrentcat[0]['wording']) ? '(<span class="wording">' . $bondsincurrentcat[0]['wording'] . '</span>)' : null) . ': '
                     . $attView->render($bondsincurrentcat[0]['title'], $bondsincurrentcat[0]['relative_id'], $bondsincurrentcat[0]['name'])
                     . '.</li>';
         } elseif (count($bondsincurrentcat) > 1) {
-            $res = '<li>' . \PNM\models\ObjectBonds::BOND_TYPES_PLUR[$currentcat] . '<ul class="children">';
+            $res = '<li>' . \PNM\models\bonds::BOND_TYPES_PLUR[$currentcat] . '<ul class="children">';
             foreach ($bondsincurrentcat as $bond) {
                 $res .= '<li>';
                 $res .= $this->genderedDesignations($currentcat, $bond['gender']);
@@ -316,7 +330,7 @@ class View
 
     protected function genderedDesignations($currentcat, $gender)
     {
-        if (\PNM\models\ObjectBonds::BOND_TYPES_PLUR[$currentcat] == 'Children') {
+        if (\PNM\models\bonds::BOND_TYPES_PLUR[$currentcat] == 'Children') {
             switch ($gender) {
                 case 'm':
                     return 'Son ';
@@ -325,7 +339,7 @@ class View
                 default:
                     return 'Child ';
             }
-        } elseif (\PNM\models\ObjectBonds::BOND_TYPES_PLUR[$currentcat] == 'Siblings') {
+        } elseif (\PNM\models\bonds::BOND_TYPES_PLUR[$currentcat] == 'Siblings') {
             switch ($gender) {
                 case 'm':
                     return 'Brother ';

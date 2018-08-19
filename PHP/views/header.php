@@ -1,4 +1,7 @@
 <?php
+/*
+ * This script renders the page header with a narrow title image
+ */
 
 namespace PNM\views;
 ?><header class="header">
@@ -33,4 +36,4 @@ namespace PNM\views;
 <main class="main">
     <?php require 'views/nav.php'; ?>
     <div class="main_content" id="content">
-        <?php // closed in ./footer.php  ?>
+        <?php // closed in footer.php  ?>

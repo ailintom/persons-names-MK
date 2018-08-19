@@ -1,15 +1,11 @@
 <?php
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Description of NotFoundView
+ * This class renders the not found page (when an EntryModel returns no records to the EntryController)
  */
 
 namespace PNM\views;
 
-/**
- * This class is used to display the "Not found" message when an EntryController requests a record that is not existent.
- */
 class NotFoundView
 {
 

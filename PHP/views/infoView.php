@@ -1,18 +1,12 @@
 <?php
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Description of infoView
+ * Class used to render a page representing a single information page
  */
 
 namespace PNM\views;
 
-/**
- * Description of infoView
- *
- * @author Tomich
- */
 class infoView
 {
 

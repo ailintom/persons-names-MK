@@ -1,21 +1,20 @@
 <?php
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Description of IconView
+ * This class handles the svg icons
+ *
  */
 
 namespace PNM\views;
 
-/**
- * Description of IconView
- *
- * @author Tomich
- */
 class IconView
 {
 
     private static $svgSymbols = null;
+    /*
+     * This function returns the HTML code for a particular svg icon
+     * @param $name icon name
+     */
 
     public static function get($name, $screenReaderText = '')
     {
@@ -39,6 +38,9 @@ class IconView
         ];
         return $html;
     }
+    /*
+     * This function returns the HTML code a section in the page footer containing all svg icons used on a page
+     */
 
     public static function echoSvgFooter()
     {

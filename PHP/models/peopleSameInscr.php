@@ -1,18 +1,14 @@
 <?php
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Description of peopleSameInscr
+ * A model for people
+ * This is the model used when a person mentioned in the same inscription as another person is being searched for
+ *
  */
 
 namespace PNM\models;
 
-/**
- * Description of peopleSameInscr
- *
- * @author Tomich
- */
 class peopleSameInscr extends peoplePairs
 {
 

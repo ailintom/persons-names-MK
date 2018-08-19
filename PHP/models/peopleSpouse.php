@@ -1,18 +1,14 @@
 <?php
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Description of peopleSpouse
+ * A model for people
+ * This is the model used when a person being a spouse of another person is being searched for
+ *
  */
 
 namespace PNM\models;
 
-/**
- * Description of peopleSpouses
- *
- * @author Tomich
- */
 class peopleSpouse extends peoplePairs
 {
 

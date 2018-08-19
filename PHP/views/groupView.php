@@ -1,42 +1,13 @@
 <?php
 /*
- * MIT License
- *
- * Copyright (c) 2017 Alexander Ilin-Tomich (unless specified otherwise for individual source files and documents)
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
-  copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * Description of groupView
+ * Class used to render a page representing a single find group
  */
 
 namespace PNM\views;
 
-/*
- *
- *
- */
-
 class groupView extends View
 {
-    /*
-     *
-     *    $this->field_names = new FieldList(['find_groups_id', 'site', 'site_area', 'exact_location', 'title', 'find_group_type', 'architecture', 'human_remains',
-      'finds', 'disturbance', 'dating', 'dating_note', 'note']);
-     */
 
     public function echoRender(&$data)
     {
@@ -55,7 +26,7 @@ class groupView extends View
             echo( $this->descriptionElement('Disturbance', $data->get('disturbance')));
             echo $this->descriptionElement('Date', $data->get('dating'), $data->get('dating_note'), 'period');
             echo( $this->descriptionElement('Note', $data->get('note'), null, 'note'));
-            echo $this->descriptionElement('Bibliography', $data->get('bibliography'));
+            echo $this->descriptionElement('Bibliography', $this->renderBiblio($data->get('bibliography')));
             //renderURL
             ?>
         </dl>
@@ -63,6 +34,7 @@ class groupView extends View
         <?php
         $total = count($data->data['inscriptions']->data);
         for ($i = 0; $i < $total; $i++) {
+
             $data->data['inscriptions']->data[$i]['object_type'] = $this->renderObjectType($data->data['inscriptions']->data[$i]['object_type']);
             $data->data['inscriptions']->data[$i]['text_content'] = $this->renderTextContent($data->data['inscriptions']->data[$i]['text_content']);
         }

@@ -1,44 +1,20 @@
 <?php
 
 /*
- * MIT License
+ * Description of Rule
  *
- * Copyright (c) 2017 Alexander Ilin-Tomich (unless specified otherwise for individual source files and documents)
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
-  copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * This class represents a query rule set by the user corresponing to a single WHERE clause in the SQL query
  */
 
 namespace PNM\models;
 
-/**
- * Description of Rule
- *
- * @author Tomich
- */
 class Rule
 {
 
-    //put your code here
-    public $WHERE = null;
-    public $value = [];
-    public $param_type = null;
-    protected $field = null;
+    public $WHERE = null; // The resulting clause to be added to the WHERE string used to prepare the statement
+    public $value = []; // The value to be passed to mysqli_stmt::bind_param
+    public $param_type = null; // The type of the parameter to be passed to mysqli_stmt::bind_param
+    protected $field = null; // the array with fields used to make a rule
     protected $compare = null;
 
     public function __construct($field, $compareString, $value, $param_type = 's')

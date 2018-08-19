@@ -1,34 +1,10 @@
 <?php
 /*
- * MIT License
- *
- * Copyright (c) 2017 Alexander Ilin-Tomich (unless specified otherwise for individual source files and documents)
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
-  copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * Description of workshopView
+ * Class used to render a page representing a single workshop
  */
 
 namespace PNM\views;
-
-/*
- *
- *
- */
 
 class workshopView extends View
 {
@@ -47,11 +23,11 @@ class workshopView extends View
             echo( $this->descriptionElement('Production place', $placesMV->render($data->get('production_place')), $data->get('production_place_note')));
             echo $this->descriptionElement('Date', $data->get('dating'), $data->get('dating_note'), 'period');
             echo( $this->descriptionElement('Note', $data->get('note'), null, 'note'));
-            echo $this->descriptionElement('Bibliography', $data->get('bibliography'));
+            echo $this->descriptionElement('Bibliography', $this->renderBiblio($data->get('bibliography')));
             //renderURL
             ?>
         </dl>
-        <h2>Inscribed objects in this find group</h2>
+        <h2>Inscribed objects attributed to this workshop</h2>
         <?php
         $total = count($data->data['inscriptions']->data);
         for ($i = 0; $i < $total; $i++) {

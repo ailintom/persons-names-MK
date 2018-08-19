@@ -1,18 +1,13 @@
 <?php
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Description of infoController
+ * This controller is used to load a single information page; Impressum and Privacy Policy hardcoded in the PHP, other pages are loaded from the database
+ *
  */
 
 namespace PNM\controllers;
 
-/**
- * Description of infoController
- *
- *
- */
 class infoController
 {
 

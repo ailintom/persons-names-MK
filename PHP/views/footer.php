@@ -1,7 +1,10 @@
 <?php
+/*
+ * This script renders the page footer
+ */
 
 namespace PNM\views;
-?></div><?php // .main_content   ?>
+?></div><?php // .main_content    ?>
 </main>
 <footer class="footer">
     <div class="footer_content">

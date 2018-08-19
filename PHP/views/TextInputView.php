@@ -1,18 +1,12 @@
 <?php
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Description of TextInputView
+ * This class renders the HTML code for an input control on a search page
  */
 
 namespace PNM\views;
 
-/**
- * Description of TextInputView
- *
- * @author Tomich
- */
 class TextInputView
 {
 

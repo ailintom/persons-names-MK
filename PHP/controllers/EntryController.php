@@ -1,18 +1,19 @@
 <?php
 
+/* Description of EntryController
+ * This is a parent class for controllers requesting a single record, optionally with child records (loaded
+ * based on the request data by loadChildren; if children are loaded without using request data, loadChildren in the respective model can be used).
+ */
+
 namespace PNM\controllers;
 
-/**
- * This this is a parent class for controllers displaying a single record, optionally with child records, loaded
- * based on the request by loadChildren.
- */
 class EntryController
 {
 
-    const NAME = null; // the name of the controller to be defined in child classes
+    const NAME = null; // the name of the controller to be defined in child classes 
 
-    protected $record;
-    /*
+    protected $record; // the variable holding the data
+    /* load
      * This function gets the id from the request and passes it to the loadID function
      */
 
@@ -20,7 +21,7 @@ class EntryController
     {
         $this->loadID((int) \PNM\Request::get('id'));
     }
-    /*
+    /* loadID
      * This function loads the record into the EntryModel and sends it to the view
      */
 
@@ -36,15 +37,15 @@ class EntryController
         }
         $this->record->find($id->getID());
         if ($this->record->noMatch == true) { // the record was not found
-            (new NotFoundView())->echoRender();
+            (new \PNM\views\NotFoundView())->echoRender();
         } else { // the record was found
             $this->loadChildren();
             $viewClass = 'PNM\\views\\' . static::NAME . 'View';
             (new $viewClass())->echoRender($this->record);
         }
     }
-    /*
-     * This optional function loads children of the main record from other tables, based on user input in the request
+    /* loadChildren
+     * This optional function loads children of the main record from other tables, based on user input in the request data
      *
      */
 

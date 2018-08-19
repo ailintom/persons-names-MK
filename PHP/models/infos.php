@@ -1,18 +1,12 @@
 <?php
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Description of infos
+ * A model representing database records with information pages   
  */
 
 namespace PNM\models;
 
-/**
- * Description of infos
- *
- * @author Tomich
- */
 class infos
 {
 
@@ -22,5 +16,4 @@ class infos
     {
         $this->data = Lookup::uniGet('select title from info ORDER BY sort_order', null, null, Lookup::RETURN_INDEXED);
     }
-    //put your code here
 }

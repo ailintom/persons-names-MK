@@ -1,4 +1,8 @@
 <?php
+/*
+ * Description of HeadView
+ * This class is used to generate the HTML code for page head
+ */
 
 namespace PNM\views;
 

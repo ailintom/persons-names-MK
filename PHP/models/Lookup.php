@@ -1,60 +1,31 @@
 <?php
 
-/*
- * MIT License
- *
- * Copyright (c) 2017 Alexander Ilin-Tomich (unless specified otherwise for individual source files and documents)
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
-  copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
 namespace PNM\models;
 
-/**
- * Description of Date
+/*
+ * Description of Lookup
+ * 
+ * A static class used to perform simple queries to the database
  *
- * @author Tomich
  */
+
 class Lookup
 {
 
     const TEXT_CONTENT_THESAURUS = 4;
     const SCRIPT_THESAURUS = 12;
     const OBJECT_TYPES_THESAURUS = 1;
-    const RETURN_VAL = 0;
-    const RETURN_ASSOC = 1;
-    const RETURN_INDEXED = 2;
-
-    public static function get($SQL, $value, $param = 's')
-    {
-        return self::uniGet($SQL, $value, $param, self::RETURN_VAL);
-    }
-
-    public static function getList($SQL, $value, $param = 's')
-    {
-        return self::uniGet($SQL, $value, $param, self::RETURN_ASSOC);
-    }
-
-    public static function getColumn($SQL, $value, $param = 's')
-    {
-        return array_column(self::uniGet($SQL, $value, $param, self::RETURN_INDEXED), 0);
-    }
+    const RETURN_VAL = 0; //return a single value
+    const RETURN_ASSOC = 1; //return an associated array representing the results
+    const RETURN_INDEXED = 2;  //return an indexed array
+    /*
+     * the main function used to retrieve results and return them as an array or a single value
+     * @param $SQL The SQL query to retrieve
+     * @param $value the value used to lookip the record
+     * @param $param the type of the $value (i for integer, s for string)
+     * @param $list The output format; 
+     * 
+     *  */
 
     public static function uniGet($SQL, $value, $param, $list)
     {
@@ -62,7 +33,7 @@ class Lookup
         try {
             if ($list) {
                 $stmt = $db->prepare($SQL);
-            } else {
+            } else { // RETURN_VAL get a single row
                 $stmt = $db->prepare($SQL . ' LIMIT 1');
             }
             if (!empty($param)) {
@@ -78,12 +49,30 @@ class Lookup
                 return $result->fetch_all(MYSQLI_ASSOC);
             } elseif ($list == self::RETURN_INDEXED) {
                 return $result->fetch_all(MYSQLI_NUM);
-            } else {
+            } else { // RETURN_VAL = return a value from  a single row
                 return $result->fetch_row()[0];
             }
         } else {
             // echo "$SQL**$value**param*$param"; //Comment this line
         }
+    }
+
+    public static function get($SQL, $value, $param = 's')
+    {
+        return self::uniGet($SQL, $value, $param, self::RETURN_VAL);
+    }
+
+    public static function getList($SQL, $value, $param = 's')
+    {
+        return self::uniGet($SQL, $value, $param, self::RETURN_ASSOC);
+    }
+    /*
+     * returns a column of values from a certain field as an indexed array
+     */
+
+    public static function getColumn($SQL, $value, $param = 's')
+    {
+        return array_column(self::uniGet($SQL, $value, $param, self::RETURN_INDEXED), 0);
     }
 
     public static function getThesaurus($thesaurusID)

@@ -1,18 +1,12 @@
 <?php
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Description of ExternalLinks
+ * This class defines the URL elements for external links. Constants should be changed when the URIs on linked websites change.
  */
 
 namespace PNM;
 
-/**
- * Description of \PNM\ExternalLinks
- * This class defines the URL elements for external links. Constants should be changed when the URIs on linked websites change.
- * @author Tomich
- */
 class ExternalLinks
 {
 
