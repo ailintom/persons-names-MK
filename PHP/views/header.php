@@ -16,8 +16,12 @@ namespace PNM\views;
             Menu
         </button>
         <div class="header_aside">
-            <?php if (!empty(\PNM\Request::stableURL())) : ?>
-                <a href="<?= \PNM\Request::stableURL() ?>">Stable URL<span class="print_only">: <?= \PNM\Config::HOST . \PNM\Request::stableURL() ?></span></a>
+            <?php
+            $stableURL = \PNM\Request::stableURL();
+            if (!empty($stableURL)) :
+                $stableURLDisplayed = \PNM\Config::HOST . ( strlen($stableURL) < 35 ? $stableURL : substr($stableURL, 0, 32) . '...')
+                ?>
+                <a href="<?= $stableURL ?>">Stable URL<span class="print_only">: <?= $stableURLDisplayed ?></span></a>
             <?php endif; ?>
             <label for="version" class="sr-only">Change version:</label>
             <select id="version" onchange ="window.location.href = this.value;" class="header_version">
@@ -36,4 +40,4 @@ namespace PNM\views;
 <main class="main">
     <?php require 'views/nav.php'; ?>
     <div class="main_content" id="content">
-        <?php // closed in footer.php  ?>
+        <?php // closed in footer.php   ?>

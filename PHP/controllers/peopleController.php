@@ -31,13 +31,12 @@ class peopleController
         if (!empty(\PNM\Request::get('Aform_type'))) {
             $nt = \PNM\models\Lookup::name_types_idGet(\PNM\Request::get('Aform_type'));
             if (!empty($nt)) {
-                array_push($Arules, new \PNM\models\Rule('Exists(SELECT name_types_temp.parent_id '
-                        . ' FROM (((names_types_xref INNER JOIN name_types_temp ON names_types_xref.name_types_id = name_types_temp.child_id) '
+                array_push($Arules, new \PNM\models\RuleExists('(((names_types_xref INNER JOIN name_types_temp ON names_types_xref.name_types_id = name_types_temp.child_id) '
                         . 'INNER JOIN personal_names ON names_types_xref.personal_names_id = personal_names.personal_names_id) '
                         . 'INNER JOIN spellings ON personal_names.personal_names_id = spellings.personal_names_id) '
                         . 'INNER JOIN spellings_attestations_xref ON spellings.spellings_id = spellings_attestations_xref.spellings_id'
                         . ' WHERE spellings_attestations_xref.attestations_id=attestations.attestations_id AND '
-                        . ' name_types_temp.parent_id = ' . $nt . ')', 'exact', 1, 'i'));
+                        . ' name_types_temp.parent_id = ?', $nt, 'i'));
             } else {
                 array_push($Arules, new \PNM\models\Rule(1, 'exactlike', 0, 'i'));
             }
@@ -45,13 +44,12 @@ class peopleController
         if (!empty(\PNM\Request::get('Asem_type'))) {
             $nt = \PNM\models\Lookup::name_types_idGet(\PNM\Request::get('Asem_type'));
             if (!empty($nt)) {
-                array_push($Arules, new \PNM\models\Rule('Exists(SELECT name_types_temp.parent_id '
-                        . ' FROM (((names_types_xref INNER JOIN name_types_temp ON names_types_xref.name_types_id = name_types_temp.child_id) '
+                array_push($Arules, new \PNM\models\RuleExists('(((names_types_xref INNER JOIN name_types_temp ON names_types_xref.name_types_id = name_types_temp.child_id) '
                         . 'INNER JOIN personal_names ON names_types_xref.personal_names_id = personal_names.personal_names_id) '
                         . 'INNER JOIN spellings ON personal_names.personal_names_id = spellings.personal_names_id) '
                         . 'INNER JOIN spellings_attestations_xref ON spellings.spellings_id = spellings_attestations_xref.spellings_id'
                         . ' WHERE spellings_attestations_xref.attestations_id=attestations.attestations_id AND '
-                        . ' name_types_temp.parent_id = ' . $nt . ')', 'exact', 1, 'i'));
+                        . ' name_types_temp.parent_id = ?', $nt, 'i'));
             } else {
                 array_push($Arules, new \PNM\models\Rule(1, 'exactlike', 0, 'i'));
             }
@@ -64,19 +62,20 @@ class peopleController
             } else {
                 switch (\PNM\Request::get('chrono-filter')) {
                     case 'during':
-                        $where = ' inscriptions.dating_sort_end >= ' . $periodStart . ' AND inscriptions.dating_sort_start <= ' . $periodEnd;
+                          array_push($Arules, new \PNM\models\RuleExists('inscriptions '
+                                . ' WHERE attestations.inscriptions_id=inscriptions.inscriptions_id AND inscriptions.dating_sort_end >= ?'
+                                . ' AND inscriptions.dating_sort_start <= ?', [$periodStart, $periodEnd], 'ii'));
                         break;
                     case 'not-later':
-                        $where = ' inscriptions.dating_sort_start <= ' . $periodEnd;
+                        array_push($Arules, new \PNM\models\RuleExists('inscriptions '
+                                . ' WHERE attestations.inscriptions_id=inscriptions.inscriptions_id AND inscriptions.dating_sort_start <= ?', $periodEnd, 'i'));
                         break;
                     case 'not-earlier':
-                        $where = ' inscriptions.dating_sort_end >= ' . $periodStart;
+                        array_push($Arules, new \PNM\models\RuleExists('inscriptions '
+                                . ' WHERE attestations.inscriptions_id=inscriptions.inscriptions_id AND inscriptions.dating_sort_end >= ?', $periodStart, 'i'));
                         break;
                 }
-                array_push($Arules, new \PNM\models\Rule('Exists(SELECT inscriptions.inscriptions_id FROM  '
-                        . ' inscriptions '
-                        . ' WHERE attestations.inscriptions_id=inscriptions.inscriptions_id AND '
-                        . $where . ')', 'exact', 1, 'i'));
+             
             }
         }
         $filter = new \PNM\models\Filter($Arules);
@@ -101,13 +100,13 @@ class peopleController
             if (!empty(\PNM\Request::get('Bform_type'))) {
                 $nt = \PNM\models\Lookup::name_types_idGet(\PNM\Request::get('Bform_type'));
                 if (!empty($nt)) {
-                    array_push($Brules, new \PNM\models\Rule('Exists(SELECT name_types_temp.parent_id '
-                            . ' FROM (((names_types_xref INNER JOIN name_types_temp ON names_types_xref.name_types_id = name_types_temp.child_id) '
+                 
+                    array_push($Brules, new \PNM\models\RuleExists('(((names_types_xref INNER JOIN name_types_temp ON names_types_xref.name_types_id = name_types_temp.child_id) '
                             . 'INNER JOIN personal_names ON names_types_xref.personal_names_id = personal_names.personal_names_id) '
                             . 'INNER JOIN spellings ON personal_names.personal_names_id = spellings.personal_names_id) '
                             . 'INNER JOIN spellings_attestations_xref ON spellings.spellings_id = spellings_attestations_xref.spellings_id'
                             . ' WHERE spellings_attestations_xref.attestations_id=attestations.attestations_id AND '
-                            . ' name_types_temp.parent_id = ' . $nt . ')', 'exact', 1, 'i'));
+                            . ' name_types_temp.parent_id = ?', $nt, 'i'));
                 } else {
                     array_push($Brules, new \PNM\models\Rule(1, 'exactlike', 0, 'i'));
                 }
@@ -115,13 +114,12 @@ class peopleController
             if (!empty(\PNM\Request::get('Bsem_type'))) {
                 $nt = \PNM\models\Lookup::name_types_idGet(\PNM\Request::get('Bsem_type'));
                 if (!empty($nt)) {
-                    array_push($Brules, new \PNM\models\Rule('Exists(SELECT name_types_temp.parent_id '
-                            . ' FROM (((names_types_xref INNER JOIN name_types_temp ON names_types_xref.name_types_id = name_types_temp.child_id) '
+                               array_push($Brules, new \PNM\models\RuleExists('(((names_types_xref INNER JOIN name_types_temp ON names_types_xref.name_types_id = name_types_temp.child_id) '
                             . 'INNER JOIN personal_names ON names_types_xref.personal_names_id = personal_names.personal_names_id) '
                             . 'INNER JOIN spellings ON personal_names.personal_names_id = spellings.personal_names_id) '
                             . 'INNER JOIN spellings_attestations_xref ON spellings.spellings_id = spellings_attestations_xref.spellings_id'
                             . ' WHERE spellings_attestations_xref.attestations_id=attestations.attestations_id AND '
-                            . ' name_types_temp.parent_id = ' . $nt . ')', 'exact', 1, 'i'));
+                            . ' name_types_temp.parent_id = ?', $nt, 'i'));
                 } else {
                     array_push($Brules, new \PNM\models\Rule(1, 'exactlike', 0, 'i'));
                 }

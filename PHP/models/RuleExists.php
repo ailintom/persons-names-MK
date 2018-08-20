@@ -17,7 +17,7 @@ class RuleExists extends Rule
 
     public function __construct($FROMWHERE, $value, $param_type = 's')
     {
-        $this->WHERE = 'EXISTS(SELECT inscriptions_id FROM ' . $FROMWHERE . ')=1';
+        $this->WHERE = 'EXISTS(SELECT * FROM ' . $FROMWHERE . ')=1';
         $this->value = $value;
         $this->param_type = $param_type;
     }

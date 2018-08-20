@@ -17,6 +17,12 @@ class Rule
     protected $field = null; // the array with fields used to make a rule
     protected $compare = null;
 
+    /*
+     * constructs the rule
+     * @param $field The name of the field (or an SQL expression)
+     * @param $value The value
+     * @param $param_type The type of the $value to pass to mysqli::bindParam
+     */
     public function __construct($field, $compareString, $value, $param_type = 's')
     {
         $this->field = (array) $field;
