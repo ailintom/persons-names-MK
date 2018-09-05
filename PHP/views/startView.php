@@ -12,16 +12,17 @@ class startView extends View
     public function echoRender(&$data)
     {
         (new HeadView())->render(HeadView::HEADERFULL);
+        echo \PNM\Config::START_PAGE_TEXT;
         ?>
-        <p>The online database “Persons and Names of the Middle Kingdom” (PNM) is developed as part of the project <a href="https://www.aegyptologie.uni-mainz.de/umformung-und-variabilitaet-1/">“Umformung und Variabilität im Korpus altägyptischer Personennamen 2055–1550 v.&nbsp;Chr.”</a>, funded by the <a href="http://www.fritz-thyssen-stiftung.de">Fritz Thyssen Foundation</a>. The database is currently under development and will include data on Egyptian Middle Kingdom personal names, people, written sources, titles, and dossiers of persons attested in different sources.</p>
+
         <h2>Start your search</h2>
         <div class="cards">
-            <a class="cards_link" href="<?= \PNM\Request::makeURL('names') ?>"><?= IconView::get('name', '') ?> Personal Names</a>
-            <a class="cards_link" href="<?= \PNM\Request::makeURL('titles') ?>"><?= IconView::get('title', '') ?> Titles</a>
-            <a class="cards_link" href="<?= \PNM\Request::makeURL('people') ?>"><?= IconView::get('people', '') ?> People</a>
-            <a class="cards_link" href="<?= \PNM\Request::makeURL('inscriptions') ?>"><?= IconView::get('object', '') ?> Inscribed Objects</a>
-            <a class="cards_link" href="<?= \PNM\Request::makeURL('places') ?>"><?= IconView::get('place', '') ?> Places</a>
-            <a class="cards_link" href="<?= \PNM\Request::makeURL('collections') ?>"><?= IconView::get('collection', '') ?> Collections</a>
+            <a class="cards_link" href="<?= \PNM\Request::makeURL('names') ?>"><?= Icon::get('name', '') ?> Personal Names</a>
+            <a class="cards_link" href="<?= \PNM\Request::makeURL('titles') ?>"><?= Icon::get('title', '') ?> Titles</a>
+            <a class="cards_link" href="<?= \PNM\Request::makeURL('people') ?>"><?= Icon::get('people', '') ?> People</a>
+            <a class="cards_link" href="<?= \PNM\Request::makeURL('inscriptions') ?>"><?= Icon::get('object', '') ?> Inscribed Objects</a>
+            <a class="cards_link" href="<?= \PNM\Request::makeURL('places') ?>"><?= Icon::get('place', '') ?> Places</a>
+            <a class="cards_link" href="<?= \PNM\Request::makeURL('collections') ?>"><?= Icon::get('collection', '') ?> Collections</a>
         </div>
         <p>Additionally, have a look at <a href="types.php">the list of all name types</a> the <a href="bibliography.php">the bibliography</a>.</p>
         <h2>Information about the database</h2>

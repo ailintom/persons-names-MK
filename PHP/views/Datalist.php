@@ -8,7 +8,7 @@
 
 namespace PNM\views;
 
-class DatalistView
+class Datalist
 {
 
     private $db;
@@ -49,10 +49,10 @@ class DatalistView
                 $strsql = "SELECT place_name FROM places ORDER BY place_name";
                 return $this->datalistFromSQL($strsql, $name);
             case "name-types-semantic":
-                $strsql = "SELECT title FROM name_types_temp INNER JOIN name_types ON name_types_temp.child_id = name_types.name_types_id WHERE name_types_temp.parent_id=251658604 ORDER BY name_types.title;";
+                $strsql = "SELECT title FROM name_types_temp INNER JOIN name_types ON name_types_temp.child_id = name_types.name_types_id WHERE name_types_temp.parent_id=" . \PNM\Config::SEMANTIC_CLASSES_ID . " ORDER BY name_types.title;";
                 return $this->datalistFromSQL($strsql, $name);
             case "name-types-formal":
-                $strsql = "SELECT title FROM name_types_temp INNER JOIN name_types ON name_types_temp.child_id = name_types.name_types_id WHERE name_types_temp.parent_id=251658605 ORDER BY name_types.title;";
+                $strsql = "SELECT title FROM name_types_temp INNER JOIN name_types ON name_types_temp.child_id = name_types.name_types_id WHERE name_types_temp.parent_id=" . \PNM\Config::FORMAL_PATTERNS_ID . " ORDER BY name_types.title;";
                 return $this->datalistFromSQL($strsql, $name);
         }
     }

@@ -23,7 +23,6 @@ class infoController
             (new \PNM\views\infoView())->echoRender(['Privacy Policy', \PNM\Config::PRIVACY]);
         } else {
             $this->record = new \PNM\models\info(); // an instance of the EntryModel class
-            //$this->record->find(\PNM\Request::get('id'));
             (new \PNM\views\infoView())->echoRender($this->record->find($id)[0]);
         }
     }

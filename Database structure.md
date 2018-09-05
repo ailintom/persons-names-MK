@@ -265,7 +265,7 @@ Equvalent property: <http://lawd.info/ontology/hasAttestation>
 | date_changed| DATE | Date when the last change to the record was published |
 | attestations_id   | INT   | ID of the attestation  |
 | persons_id        | INT   | ID of the person's dossier  |
-| reasoning         | VARCHAR(255)   | List of `item_name` values in the dossier_reasoning thesaurus (thesaurus 10) separated by semicolons; *example: "same name; related title; same mother's name"* |
+| reasoning         | VARCHAR(255)   | Reasons for accepting or rejecting the attestation as a part of a dossier. Iteally. a list of `item_name` values in the dossier_reasoning thesaurus (thesaurus 10) separated by semicolons (not yet implemented); *example: "same name; related title; same mother's name"* |
 | status            | CHAR(8)   | Status of the statement ("accepted", "weak", or "rejected")  |
 | note              | TEXT| General notes related to the statement |
 

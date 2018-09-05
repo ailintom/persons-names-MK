@@ -16,12 +16,10 @@ class titlesView extends View
         <form action="<?= \PNM\Request::makeURL('titles') ?>" method="get">
             <div class="row">
                 <div class="column">
-                    <label for="title">Title</label>
-                    <input id="title" name="title" placeholder="MdC (jmj-rA pr) or Unicode (jmj-rꜣ pr)" type="text" <?= View::oldValue('title') ?>>
+                    <?= (new TextInput('title', 'Title', 'MdC (jmj-rA pr) or Unicode (jmj-rꜣ pr)'))->render() ?>
                 </div>
                 <div class="column">
-                    <label for="translation">Translation</label>
-                    <input id="translation" name="translation" placeholder="English or German translation" type="text" <?= View::oldValue('personal_name') ?>>
+                    <?= (new TextInput('translation', 'Translation', 'English or German translation'))->render() ?>
                 </div>
             </div>
             <p>
@@ -51,30 +49,30 @@ class titlesView extends View
                 <h2 class="sr-only">Filters</h2>
                 <div class="filters_selection">
                     <button class="filters_button" aria-controls="region-filter" aria-expanded="false" onclick="MK.toggleFilter('region-filter')" title="Toggle region filter" type="button">
-                        <?= IconView::get('plus') . IconView::get('minus') ?>
+                        <?= Icon::get('plus') . Icon::get('minus') ?>
                         Region
                     </button>
                     <button class="filters_button" aria-controls="period-filter" aria-expanded="false" onclick="MK.toggleFilter('period-filter')" title="Toggle period filter" type="button">
-                        <?= IconView::get('plus') . IconView::get('minus') ?>
+                        <?= Icon::get('plus') . Icon::get('minus') ?>
                         Period
                     </button>
                     <button class="filters_button" aria-controls="gender-filter" aria-expanded="false" onclick="MK.toggleFilter('gender-filter')" title="Toggle gender filter" type="button">
-                        <?= IconView::get('plus') . IconView::get('minus') ?>
+                        <?= Icon::get('plus') . Icon::get('minus') ?>
                         Gender
                     </button>
                     <button class="filters_button" aria-controls="ward-filter" aria-expanded="false" onclick="MK.toggleFilter('ward-filter')" title="Toggle Ward/Fischer number filter" type="button">
-                        <?= IconView::get('plus') . IconView::get('minus') ?>
+                        <?= Icon::get('plus') . Icon::get('minus') ?>
                         Ward/Fischer number
                     </button>
                     <button class="filters_button" aria-controls="hannig-filter" aria-expanded="false" onclick="MK.toggleFilter('hannig-filter')" title="Toggle Hannig number filter" type="button">
-                        <?= IconView::get('plus') . IconView::get('minus') ?>
+                        <?= Icon::get('plus') . Icon::get('minus') ?>
                         Hannig number
                     </button>
                 </div>
                 <div class="filter" id="region-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('region-filter')" title="Remove region filter" type="button">
-                            <?= IconView::get('minus', 'Remove region filter') ?>
+                            <?= Icon::get('minus', 'Remove region filter') ?>
                         </button>
                         <span id="region-label">Region</span>
                     </div>
@@ -96,7 +94,7 @@ class titlesView extends View
                 <div class="filter" id="period-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('period-filter')" title="Remove period filter" type="button">
-                            <?= IconView::get('minus', 'Remove period filter') ?>
+                            <?= Icon::get('minus', 'Remove period filter') ?>
                         </button>
                         <span id="period-label">Period</span>
                     </div>
@@ -118,7 +116,7 @@ class titlesView extends View
                 <div class="filter" id="gender-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('gender-filter')" title="Remove gender filter" type="button">
-                            <?= IconView::get('minus', 'Remove gender filter') ?>
+                            <?= Icon::get('minus', 'Remove gender filter') ?>
                         </button>
                         <span id="gender-label">Gender</span>
                     </div>
@@ -147,7 +145,7 @@ class titlesView extends View
                 <div class="filter" id="ward-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('ward-filter')" title="Remove Ward/Fischer number filter" type="button">
-                            <?= IconView::get('minus', 'Remove Ward/Fischer number filter') ?>
+                            <?= Icon::get('minus', 'Remove Ward/Fischer number filter') ?>
                         </button>
                         Ward/Fischer number
                     </div>
@@ -159,7 +157,7 @@ class titlesView extends View
                 <div class="filter" id="hannig-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('hannig-filter')" title="Remove Hannig number filter" type="button">
-                            <?= IconView::get('minus', 'Remove Hannig number filter') ?>
+                            <?= Icon::get('minus', 'Remove Hannig number filter') ?>
                         </button>
                         Hannig number
                     </div>
@@ -176,7 +174,7 @@ class titlesView extends View
                 Reset
             </button>
             <?php
-            $dl = new DatalistView();
+            $dl = new Datalist();
             echo $dl->get('periods');
             echo $dl->get('places');
             ?>

@@ -1,13 +1,13 @@
 <?php
 
 /*
- * Description of SelectView
+ * Description of Select
  * This class renders the HTML code for a select control on a search page
  */
 
 namespace PNM\views;
 
-class SelectView
+class Select
 {
 
     protected $name;

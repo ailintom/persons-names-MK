@@ -15,7 +15,7 @@ class criterionView extends View
         ?>
         <p class="info-box">
             <?php
-            echo( IconView::get('info') . $data->get('criterion'));
+            echo( Icon::get('info') . $data->get('criterion'));
             ?>
         </p>
         <dl>

@@ -13,8 +13,7 @@ class bibliographyController
 
     public function load()
     {
-        //  $filter = new \PNM\models\Filter ([new \PNM\models\Rule('author_year', 'startswith', 'c', 's'), new \PNM\models\Rule('author_year', 'inexact', '20')]);
-        $bibliography = new \PNM\models\bibliography(); //$sort = null, $start = 0, $count = 0, Filter $filter = null
+        $bibliography = new \PNM\models\bibliography();
         $view = new \PNM\views\bibliographyView();
         $view->echoRender($bibliography);
     }

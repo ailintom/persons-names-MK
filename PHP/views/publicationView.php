@@ -41,7 +41,8 @@ class publicationView extends View
 
     protected function renderRef($record)
     {
-        echo '<li>', (empty($record['pages']) ? null : $record['pages'] . (empty($record['reference_type']) ? null : ' [' . $record['reference_type'] . ']') . ': '),
-        $this->view->render($record['title'], $record['object_id']), '</li>';
+        echo '<li>', (empty($record['pages']) ? null : $record['pages'] . ': '),
+        $this->view->render($record['title'], $record['object_id']),
+        (empty($record['reference_type']) ? null : ' [' . $record['reference_type'] . ']'), '</li>';
     }
 }

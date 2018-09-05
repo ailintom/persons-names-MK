@@ -14,29 +14,25 @@ class collectionsView extends View
         (new HeadView())->render(HeadView::HEADERSLIM, 'Collections');
         ?>
         <p class="info-box">
-            <?= IconView::get('info') ?>
+            <?= Icon::get('info') ?>
             You can use <b>%</b> or <b>*</b> as wildcards.
             “Mar*” will match “Mariemont” or “Marseille”.
         </p>
         <form action="<?= \PNM\Request::makeURL('collections') ?>" method="get">
             <div class="row">
                 <div class="column">
-                    <label for="title">Short name</label>
-                    <input id="title" name="title" list="collections" title="Enter the short name of the museum or its part" type="text" <?= View::oldValue('title') ?>>
+                    <?= (new TextInput('title', 'Short name', 'Enter the short name of the museum or its part', 'Example: Bruxelles', 'collections'))->render() ?>
                 </div>
                 <div class="column">
-                    <label for="full_name">Full name</label>
-                    <input id="full_name" name="full_name" list="full-names" title="Enter the full name of the museum or its part" type="text" <?= View::oldValue('full_name') ?>>
+                    <?= (new TextInput('full_name', 'Full name', 'Enter the full name of the museum or its part','','full-names'))->render() ?>
                 </div>
             </div>
             <div class="row">
                 <div class="column">
-                    <label for="location">Location</label>
-                    <input id="location" name="location" list="locations" title="Enter the city where the collection is located" type="text" <?= View::oldValue('location') ?>>
+                    <?= (new TextInput('location', 'Location', 'Enter the city where the collection is located', '', 'locations'))->render() ?>
                 </div>
                 <div class="column">
-                    <label for="tm_coll_id">Trismegistos Collections ID</label>
-                    <input id="tm_coll_id" name="tm_coll_id" title="" placeholder="Example: 188" type="text"<?= View::oldValue('tm_coll_id') ?>>
+                  <?= (new TextInput('tm_coll_id', 'Trismegistos Collections ID', 'Enter the Trismegistos Collections ID', 'Example: 188'))->render() ?>  
                 </div>
             </div>
             <button type="submit" class="submit">
@@ -46,7 +42,7 @@ class collectionsView extends View
                 Reset
             </button>
             <?php
-            $dl = new DatalistView();
+            $dl = new Datalist();
             echo $dl->get('full-names');
             echo $dl->get('locations');
             echo $dl->get('collections');
@@ -70,16 +66,3 @@ class collectionsView extends View
         }
     }
 }
-
-/*
-      <p>Displaying titles <?= $data->start ?>&ndash;<?= ($data->start + $data->count - 1) ?> out of <?= ($data->start + $data->total_count ) ?></p>
-      <?php
-      //$res = null;
-      foreach ($data->data as $row) {
-      echo("<a href='" . \PNM\Config::BASE . "collection/" . $row[$data->getFieldName(0)] . "'>" . $row[$data->getFieldName(1)] . ' ' .  $row['inscriptions_count'] . '<br>');
-      }
-      //return $res;
-      }
-      }
-     */
-    

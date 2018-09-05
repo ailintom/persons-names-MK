@@ -11,7 +11,7 @@ namespace PNM\views;
         <div class="row -fluid -centered-on-small">
             <div class="column">
                 <p>
-                    Copyright 2017 Alexander Ilin-Tomich.
+                    Copyright 2018 Alexander Ilin-Tomich.
                     Content licensed under <a href="https://creativecommons.org/licenses/by/4.0/" title="Creative Commons Attribution 4.0 International">CC BY 4.0</a>, except for logos.
                     Code <a href="https://github.com/ailintom/persons-names-MK">available on GitHub</a> under MIT license.
                 </p>
@@ -33,7 +33,7 @@ namespace PNM\views;
         </div>
     </div>
 </footer>
-<?= IconView::echoSvgFooter() ?>
+<?= Icon::echoSvgFooter() ?>
 <script src="<?= \PNM\Config::BASE ?>assets/script/script.js"></script>
 <script src="<?= \PNM\Config::BASE ?>assets/script/datalist.polyfill.min.js"></script>
 <!--datalist polyfill for browsers such as Safari-->

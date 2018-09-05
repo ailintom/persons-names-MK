@@ -1,13 +1,13 @@
 <?php
 
 /*
- * Description of TextInputView
+ * Description of TextInput
  * This class renders the HTML code for an input control on a search page
  */
 
 namespace PNM\views;
 
-class TextInputView
+class TextInput
 {
 
     protected $name;

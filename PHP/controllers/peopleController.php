@@ -84,7 +84,7 @@ class peopleController
         $EmptyPair = (\PNM\Request::get('relation') == 'same_inscription' || \PNM\Request::get('relation') == 'siblings') && !( preg_match($pat, \PNM\Request::get('Aname')) || preg_match($pat, \PNM\Request::get('Atitle')) || preg_match($pat, \PNM\Request::get('Bname')) || preg_match($pat, \PNM\Request::get('Btitle')) || !empty(\PNM\Request::get('Aform_type')) || !empty(\PNM\Request::get('Asem_type')) || !empty(\PNM\Request::get('Bform_type')) || !empty(\PNM\Request::get('Bsem_type')));
         if ($Bempty || $EmptyPair) {
             // second part of the request is not used
-            $model = new \PNM\models\people(\PNM\Request::get('sort'), (\PNM\Request::get('start') ?: 0), 50, $filter, null, $persons);
+            $model = new \PNM\models\people(\PNM\Request::get('sort'), (\PNM\Request::get('start') ?: 0), \PNM\Config::ROWS_ON_PAGE, $filter, null, $persons);
         } else {
             // second part of the request is used
             $Brules = [];
@@ -127,20 +127,20 @@ class peopleController
             $Bfilter = new \PNM\models\Filter($Brules);
             switch (\PNM\Request::get('relation')) {
                 case 'child':
-                    $model = new \PNM\models\peopleChild(\PNM\Request::get('sort'), (\PNM\Request::get('start') ?: 0), 50, $filter, $Bfilter, $persons);
+                    $model = new \PNM\models\peopleChild(\PNM\Request::get('sort'), (\PNM\Request::get('start') ?: 0), \PNM\Config::ROWS_ON_PAGE, $filter, $Bfilter, $persons);
                     break;
                 case 'parent':
-                    $model = new \PNM\models\peopleParent(\PNM\Request::get('sort'), (\PNM\Request::get('start') ?: 0), 50, $filter, $Bfilter, $persons);
+                    $model = new \PNM\models\peopleParent(\PNM\Request::get('sort'), (\PNM\Request::get('start') ?: 0), \PNM\Config::ROWS_ON_PAGE, $filter, $Bfilter, $persons);
                     break;
                 case 'spouses':
-                    $model = new \PNM\models\peopleSpouse(\PNM\Request::get('sort'), (\PNM\Request::get('start') ?: 0), 50, $filter, $Bfilter, $persons);
+                    $model = new \PNM\models\peopleSpouse(\PNM\Request::get('sort'), (\PNM\Request::get('start') ?: 0), \PNM\Config::ROWS_ON_PAGE, $filter, $Bfilter, $persons);
                     break;
                 case 'siblings':
-                    $model = new \PNM\models\peopleSibling(\PNM\Request::get('sort'), (\PNM\Request::get('start') ?: 0), 50, $filter, $Bfilter, $persons);
+                    $model = new \PNM\models\peopleSibling(\PNM\Request::get('sort'), (\PNM\Request::get('start') ?: 0), \PNM\Config::ROWS_ON_PAGE, $filter, $Bfilter, $persons);
                     break;
                 case 'same_inscription':
                 default:
-                    $model = new \PNM\models\peopleSameInscr(\PNM\Request::get('sort'), (\PNM\Request::get('start') ?: 0), 50, $filter, $Bfilter, $persons);
+                    $model = new \PNM\models\peopleSameInscr(\PNM\Request::get('sort'), (\PNM\Request::get('start') ?: 0), \PNM\Config::ROWS_ON_PAGE, $filter, $Bfilter, $persons);
                     break;
             }
         }

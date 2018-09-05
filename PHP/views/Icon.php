@@ -1,13 +1,13 @@
 <?php
 /*
- * Description of IconView
+ * Description of Icon
  * This class handles the svg icons
  *
  */
 
 namespace PNM\views;
 
-class IconView
+class Icon
 {
 
     private static $svgSymbols = null;

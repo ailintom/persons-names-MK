@@ -37,7 +37,8 @@ class collectionView extends View
         $tableCo = new TableView($data->get('inv_nos'), 'inscriptions_id', 'inscription', 'sort', '#results');
         $tableCo->renderTable(['inv_no', 'object_type', 'title', 'material',
             'size', 'text_content', 'dating', 'inst_prov_temp', 'orig_prod_temp', 'owner'], ['Inv. no.', 'Type', 'Object', 'Material', 'Size, mm',
-            'Text', 'Date', 'Provenance', 'Origin/Prod. place', 'Owner'], true, 'inv. no.');
+            'Text', 'Date', 'Provenance', 'Origin/Prod.', 'Owner'], true, 'inv. no.', ['Inventory no.', 'Type', 'Object', 'Material', 'Size in mm',
+            'Text type', 'Date', 'Provenance or installation place', 'the origin of the owner or the place of production', 'Owner’s name']);
     }
 
     protected function inscribedObjects($id_coll, $count)

@@ -4,7 +4,7 @@ namespace PNM\controllers;
 
 class placesController
 {
-
+const DISTANCE_BETWEEN_NEARBY_PLACES = 30;
     public function load()
     {
         $rules = [];
@@ -27,9 +27,9 @@ class placesController
             array_push($rules, new \PNM\models\Rule('latitude', 'lessorequal', $southofLat));
         }
         if (!empty(\PNM\Request::get('near'))) {
-            $southofLat = \PNM\models\Lookup::latitude(\PNM\Request::get('near')) + 30;
+            $southofLat = \PNM\models\Lookup::latitude(\PNM\Request::get('near')) + self::DISTANCE_BETWEEN_NEARBY_PLACES;
             array_push($rules, new \PNM\models\Rule('latitude', 'lessorequal', $southofLat));
-            $northofLat = \PNM\models\Lookup::latitude(\PNM\Request::get('near')) - 30;
+            $northofLat = \PNM\models\Lookup::latitude(\PNM\Request::get('near')) - self::DISTANCE_BETWEEN_NEARBY_PLACES;
             array_push($rules, new \PNM\models\Rule('latitude', 'moreorequal', $northofLat));
         }
         if (!empty(\PNM\Request::get('topbib_id'))) {
@@ -39,7 +39,7 @@ class placesController
             array_push($rules, new \PNM\models\Rule('tm_geoid', 'exact', \PNM\Request::get('tm_geoid'), 'i'));
         }
         $filter = new \PNM\models\Filter($rules);
-        $model = new \PNM\models\places(\PNM\Request::get('sort'), (\PNM\Request::get('start') ?: 0), 50, $filter);
+        $model = new \PNM\models\places(\PNM\Request::get('sort'), (\PNM\Request::get('start') ?: 0), \PNM\Config::ROWS_ON_PAGE, $filter);
         $view = new \PNM\views\placesView();
         $view->echoRender($model);
     }

@@ -32,16 +32,5 @@ class inv_nos extends ListModel
                     'inst_prov_temp_sort', 'orig_prod_temp_sort',
                     '(SELECT personal_name_sort FROM attestations WHERE attestations.inscriptions_id  = inscriptions.inscriptions_id LIMIT 1)', ' GREATEST(IFNULL(length,0), IFNULL(height,0), IFNULL(width,0), IFNULL(thickness,0))']);
     }
-    /*       case 'Scarab, seal, scaraboid, intaglio and similar objects':
-      return 'Seal/sealing';
-      case 'Offering table':
-      return 'TableView';
-      case 'Sculpture in the round':
-      return 'Statue';
-      case 'Unspecified':
-      return '';
-      case 'Written document':
-      return 'Hieratic text';
-     *
-     */
+    
 }

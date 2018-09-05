@@ -111,7 +111,7 @@ class titleView extends View
                 Reset
             </button>
             <?php
-            $dl = new DatalistView();
+            $dl = new Datalist();
             echo $dl->get('periods');
             echo $dl->get('places');
             ?>

@@ -14,60 +14,47 @@ class placesView extends View
         (new HeadView())->render(HeadView::HEADERSLIM, 'Places');
         ?>
         <p class="info-box">
-            <?= IconView::get('info') ?>
+            <?= Icon::get('info') ?>
             You can use <b>%</b> or <b>*</b> as wildcards.
             “Ab*” will match “Abydos” and “Abusir”.
         </p>
         <form action="<?= \PNM\Request::makeURL('places') ?>" method="get">
             <div class="row">
                 <div class="column">
-                    <label for="place">Place name</label>
-                    <input id="place" name="place" list="places" title="Enter the region" placeholder="Region or locality" type="text" <?= View::oldValue('place') ?>>
+                    <?= (new TextInput('place', 'Place name', 'Enter the name region', 'Example: Abydos', 'places'))->render() ?>
                 </div>
                 <div class="column">
-                    <label for="macroregion">Macroregion</label>
-                    <select id="macroregion" name="macroregion">
-                        <option value=""<?= View::oldValueSelect('macroregion', '', 'true') ?>>&nbsp;</option>
-                        <option value="Eastern Desert" <?= View::oldValueSelect('macroregion', 'Eastern Desert') ?>>Eastern Desert</option>
-                        <option value="Levant" <?= View::oldValueSelect('macroregion', 'Levant') ?>>Levant</option>
-                        <option value="LE" <?= View::oldValueSelect('macroregion', 'LE') ?>>Lower Egypt</option>
-                        <option value="MFR" <?= View::oldValueSelect('macroregion', 'MFR') ?>>Memphis-Faiyum Region</option>
-                        <option value="Nile Valley" <?= View::oldValueSelect('macroregion', 'Nile Valley') ?>>Nile Valley</option>
-                        <option value="NUE" <?= View::oldValueSelect('macroregion', 'NUE') ?>>Northern Upper Egypt</option>
-                        <option value="Nubia" <?= View::oldValueSelect('macroregion', 'Nubia') ?>>Nubian Nile Valley</option>
-                        <option value="SUE" <?= View::oldValueSelect('macroregion', 'SUE') ?>>Southern Upper Egypt</option>
-                        <option value="Western Desert" <?= View::oldValueSelect('macroregion', 'Western Desert') ?>>Western Desert</option>
-                    </select>
+                    <?= (new Select('macroregion', 'Macroregion:', 'Select the macroregion', ['Eastern Desert', 'Levant', 'LE', 'MFR', 'Nile Valley', 'NUE', 'Nubia', 'SUE', 'Western Desert'], ''))->render() ?>
                 </div>
             </div>
             <div class="filters">
                 <h2 class="sr-only">Filters</h2>
                 <div class="filters_selection">
                     <button class="filters_button" aria-controls="northof-filter" aria-expanded="false" onclick="MK.toggleFilter('northof-filter')" title="Toggle 'north of' filter" type="button">
-                        <?= IconView::get('plus') . IconView::get('minus') ?>
+                        <?= Icon::get('plus') . Icon::get('minus') ?>
                         Places north of
                     </button>
                     <button class="filters_button" aria-controls="southof-filter" aria-expanded="false" onclick="MK.toggleFilter('southof-filter')" title="Toggle 'south of' filter" type="button">
-                        <?= IconView::get('plus') . IconView::get('minus') ?>
+                        <?= Icon::get('plus') . Icon::get('minus') ?>
                         Places south of
                     </button>
                     <button class="filters_button" aria-controls="near-filter" aria-expanded="false" onclick="MK.toggleFilter('near-filter')" title="Toggle 'near' filter" type="button">
-                        <?= IconView::get('plus') . IconView::get('minus') ?>
+                        <?= Icon::get('plus') . Icon::get('minus') ?>
                         Places near
                     </button>
                     <button class="filters_button" aria-controls="tm_geoid-filter" aria-expanded="false" onclick="MK.toggleFilter('tm_geoid-filter')" title="Toggle Trismegistos GEO ID filter" type="button">
-                        <?= IconView::get('plus') . IconView::get('minus') ?>
+                        <?= Icon::get('plus') . Icon::get('minus') ?>
                         Trismegistos GEO ID
                     </button>
                     <button class="filters_button" aria-controls="topbib_id-filter" aria-expanded="false" onclick="MK.toggleFilter('topbib_id-filter')" title="Toggle TopBib ID filter" type="button">
-                        <?= IconView::get('plus') . IconView::get('minus') ?>
+                        <?= Icon::get('plus') . Icon::get('minus') ?>
                         TopBib ID
                     </button>
                 </div>
                 <div class="filter" id="northof-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('northof-filter')" title="Remove 'north of' filter" type="button">
-                            <?= IconView::get('minus', 'Remove "north of" filter') ?>
+                            <?= Icon::get('minus', 'Remove "north of" filter') ?>
                         </button>
                         Places north of
                     </div>
@@ -79,7 +66,7 @@ class placesView extends View
                 <div class="filter" id="southof-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('southof-filter')" title="Remove 'south of' filter" type="button">
-                            <?= IconView::get('minus', 'Remove "south of" filter') ?>
+                            <?= Icon::get('minus', 'Remove "south of" filter') ?>
                         </button>
                         Places south of
                     </div>
@@ -91,7 +78,7 @@ class placesView extends View
                 <div class="filter" id="near-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('near-filter')" title="Remove 'near' filter" type="button">
-                            <?= IconView::get('minus', 'Remove "near" filter') ?>
+                            <?= Icon::get('minus', 'Remove "near" filter') ?>
                         </button>
                         Places near
                     </div>
@@ -103,7 +90,7 @@ class placesView extends View
                 <div class="filter" id="tm_geoid-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('tm_geoid-filter')" title="Remove Trismegistos GEO ID filter" type="button">
-                            <?= IconView::get('minus', 'Remove Trismegistos GEO ID filter') ?>
+                            <?= Icon::get('minus', 'Remove Trismegistos GEO ID filter') ?>
                         </button>
                         Trismegistos GEO ID
                     </div>
@@ -115,7 +102,7 @@ class placesView extends View
                 <div class="filter" id="topbib_id-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('topbib_id-filter')" title="Remove TopBib ID filter" type="button">
-                            <?= IconView::get('minus', 'Remove TopBib ID filter') ?>
+                            <?= Icon::get('minus', 'Remove TopBib ID filter') ?>
                         </button>
                         TopBib ID
                     </div>
@@ -132,7 +119,7 @@ class placesView extends View
                 Reset
             </button>
             <?php
-            $dl = new DatalistView();
+            $dl = new Datalist();
             echo $dl->get('places');
             ?>
         </form>

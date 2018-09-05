@@ -24,6 +24,7 @@ class typeView extends View
                 echo('</dd>');
             }
             echo( $this->descriptionElement('Total number of attestations of names belonging to this type and its sub-types', '<a href="' . \PNM\Request::makeURL('people') . '?A' . ($data->get('category') == 'formal' ? 'form' : 'sem' ) . '_type' . '=' . urlencode($data->get('title')) . '">' . $data->get('attestations_count') . '</a>'));
+            echo $this->descriptionElement('Note', $data->get('note'), null, 'note');
             echo $this->descriptionElement('Bibliography', $this->renderBiblio($data->get('bibliography')), null, 'biblio-ref');
             //renderURL
             ?>

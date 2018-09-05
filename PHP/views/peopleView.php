@@ -14,7 +14,7 @@ class peopleView extends View
         (new HeadView())->render(HeadView::HEADERSLIM, 'People');
         ?>
         <p class="info-box">
-            <?= IconView::get('info') ?>
+            <?= Icon::get('info') ?>
             You can use <b>%</b> or <b>*</b> as wildcards.
             “nfr*” will match “nfr.wj” or “nfr-ḥtp”. “*nfr*” will also match “snfr.wj”.
         </p>
@@ -56,22 +56,6 @@ class peopleView extends View
                             <input name="Aname" id="Aname" placeholder="MdC (ra-Htp) or Unicode (rꜥ-ḥtp)" type="text" <?= View::oldValue('Aname') ?>>
                         </div>
                     </div>
-                    <div class="row -small">
-                        <div class="column">
-                            <label for="Aform_type">Name pattern:</label>
-                        </div>
-                        <div class="column -wide">
-                            <input id="Aform_type" name="Aform_type" title="" placeholder="Example: DN (m)+ḥtp.w" list="name-types-formal" type="text" <?= View::oldValue('Aform_type') ?>>
-                        </div>
-                    </div>
-                    <div class="row -small">
-                        <div class="column">
-                            <label for="Asem_type">Semantic class:</label>
-                        </div>
-                        <div class="column -wide">
-                            <input id="Asem_type" name="Asem_type" title="" placeholder="Example: theophoric names" list="name-types-semantic" type="text" <?= View::oldValue('Asem_type') ?>>
-                        </div>
-                    </div>
                 </div>
                 <div class="column -border">
                     <h2>Person B</h2>
@@ -106,22 +90,7 @@ class peopleView extends View
                             <input name="Bname" id="Bname" placeholder="MdC (ra-Htp) or Unicode (rꜥ-ḥtp)" type="text" <?= View::oldValue('Bname') ?>>
                         </div>
                     </div>
-                    <div class="row -small">
-                        <div class="column">
-                            <label for="Bform_type">Name pattern:</label>
-                        </div>
-                        <div class="column -wide">
-                            <input id="Bform_type" name="Bform_type" title="" placeholder="Example: DN (m)+ḥtp.w" list="name-types-formal" type="text" <?= View::oldValue('Bform_type') ?>>
-                        </div>
-                    </div>
-                    <div class="row -small">
-                        <div class="column">
-                            <label for="Bsem_type">Semantic class:</label>
-                        </div>
-                        <div class="column -wide">
-                            <input id="Bsem_type" name="Bsem_type" title="" placeholder="Example: theophoric names" list="name-types-semantic" type="text" <?= View::oldValue('Bsem_type') ?>>
-                        </div>
-                    </div>
+
                 </div>
             </div>
             <p>
@@ -142,18 +111,18 @@ class peopleView extends View
                 <h3 class="sr-only">Filters</h3>
                 <div class="filters_selection">
                     <button class="filters_button" aria-controls="region-filter" aria-expanded="false" onclick="MK.toggleFilter('region-filter')" title="Toggle region filter" type="button">
-                        <?= IconView::get('plus') . IconView::get('minus') ?>
+                        <?= Icon::get('plus') . Icon::get('minus') ?>
                         Region or locality
                     </button>
                     <button class="filters_button" aria-controls="period-filter" aria-expanded="false" onclick="MK.toggleFilter('period-filter')" title="Toggle period filter" type="button">
-                        <?= IconView::get('plus') . IconView::get('minus') ?>
+                        <?= Icon::get('plus') . Icon::get('minus') ?>
                         Period or reign
                     </button>
                 </div>
                 <div class="filter" id="region-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('region-filter')" title="Remove region filter" type="button">
-                            <?= IconView::get('minus', 'Remove region filter') ?>
+                            <?= Icon::get('minus', 'Remove region filter') ?>
                         </button>
                         <span id="region-label">Region or locality</span>
                     </div>
@@ -190,7 +159,7 @@ class peopleView extends View
                 <div class="filter" id="period-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('period-filter')" title="Remove period filter" type="button">
-                            <?= IconView::get('minus', 'Remove period filter') ?>
+                            <?= Icon::get('minus', 'Remove period filter') ?>
                         </button>
                         <span id="period-label">Period or reign</span>
                     </div>
@@ -222,7 +191,7 @@ class peopleView extends View
                 Reset
             </button>
             <?php
-            $dl = new DatalistView();
+            $dl = new Datalist();
             echo $dl->get('name-types-formal'),
             $dl->get('name-types-semantic'),
             $dl->get('periods'),

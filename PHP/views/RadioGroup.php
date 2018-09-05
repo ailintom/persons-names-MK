@@ -1,13 +1,13 @@
 <?php
 
 /*
- * Description of RadioGroupView
+ * Description of RadioGroup
  * This class renders the HTML code for a radio group on a search page
  */
 
 namespace PNM\views;
 
-class RadioGroupView
+class RadioGroup
 {
 
     protected $name;

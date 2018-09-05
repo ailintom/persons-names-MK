@@ -38,6 +38,7 @@ class inscriptionView extends View
         }
 //
         echo $this->descriptionElement('Owner', '');
+        echo $this->descriptionElement('Note', $data->get('note'), null, 'note');
         echo $this->descriptionElement('Bibliography', $this->renderBiblio($data->get('bibliography')));
         echo '</dl>';
         echo '<h2>People</h2><ul class="locations">';

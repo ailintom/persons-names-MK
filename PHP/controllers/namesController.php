@@ -69,7 +69,7 @@ class namesController
         }
 
         $filter = new \PNM\models\Filter($rules);
-        $model = new \PNM\models\names(\PNM\Request::get('sort'), (\PNM\Request::get('start') ?: 0), 50, $filter);
+        $model = new \PNM\models\names(\PNM\Request::get('sort'), (\PNM\Request::get('start') ?: 0), \PNM\Config::ROWS_ON_PAGE, $filter);
         $view = new \PNM\views\namesView();
         $view->echoRender($model);
     }

@@ -39,9 +39,9 @@ class TableView
     {
 //echo ( $this->sort_param . '++' . \PNM\Request::get($this->sort_param) .';;;'. $field . ' ASC');
         if ((empty(\PNM\Request::get($this->sort_param)) && $field == $this->default_field) || (\PNM\Request::get($this->sort_param) == $field . ' ASC')) {
-            return [' -highlight', $field . ' DESC', 'descending', IconView::get('arrow-up')];
+            return [' -highlight', $field . ' DESC', 'descending', Icon::get('arrow-up')];
         } elseif (\PNM\Request::get($this->sort_param) == $field . ' DESC') {
-            return [' -highlight', $field . ' ASC', 'ascending', ' ' . IconView::get('arrow-down')];
+            return [' -highlight', $field . ' ASC', 'ascending', ' ' . Icon::get('arrow-down')];
         } else {
             return [null, $field . ' ASC', 'ascending', null];
         }
@@ -64,7 +64,7 @@ class TableView
         $this->extraHeader = $header;
     }
 
-    public function renderTable(array $columns, array $column_titles, $pagination = false, $items_name = null)
+    public function renderTable(array $columns, array $column_titles, $pagination = false, $items_name = null, array $extended_column_titles = [])
     {
         $sort_renders = array_map(array($this, 'renderSort'), $columns);
         // print_r($columns);
@@ -77,17 +77,17 @@ class TableView
             $pag = '<p class="pagination">';
             if ($this->data->start > 1) {
                 $pag .= '<a class="pagination_link -first" href="' . \PNM\Request::makeURL(\PNM\Request::get('controller'), \PNM\Request::get('id'), null, null, true, 0) . '"' . $onclick_nav . '>First</a>'
-                        . '<a class="pagination_link -previous" href="' . \PNM\Request::makeURL(\PNM\Request::get('controller'), \PNM\Request::get('id'), null, null, true, (($this->data->start - 1 - 50) >= 0 ? $this->data->start - 1 - 50 : 0))
-                        . '"' . $onclick_nav . '>' . IconView::get('chevron-left')
-                        . ' Prev ' . ($this->data->start > 50 ? 50 : $this->data->start - 1) . '</a>';
+                        . '<a class="pagination_link -previous" href="' . \PNM\Request::makeURL(\PNM\Request::get('controller'), \PNM\Request::get('id'), null, null, true, (($this->data->start - 1 - \PNM\Config::ROWS_ON_PAGE) >= 0 ? $this->data->start - 1 - \PNM\Config::ROWS_ON_PAGE : 0))
+                        . '"' . $onclick_nav . '>' . Icon::get('chevron-left')
+                        . ' Prev ' . ($this->data->start > \PNM\Config::ROWS_ON_PAGE ? \PNM\Config::ROWS_ON_PAGE : $this->data->start - 1) . '</a>';
             } else {
-                $pag .= '<span class="pagination_link -first -disabled">First</span><span class="pagination_link -previous -disabled">' . IconView::get('chevron-left') .
-                        'Prev 50</span>';
+                $pag .= '<span class="pagination_link -first -disabled">First</span><span class="pagination_link -previous -disabled">' . Icon::get('chevron-left') .
+                        'Prev ' . \PNM\Config::ROWS_ON_PAGE . '</span>';
             }
             if ($this->data->start + $this->data->count - 1 < $this->data->total_count) {
-                $pag .= '<a class="pagination_link -next" href="' . \PNM\Request::makeURL(\PNM\Request::get('controller'), \PNM\Request::get('id'), null, null, true, (($this->data->start + 49) < $this->data->total_count ? $this->data->start + 49 : $this->data->total_count - 50))
-                        . '"' . $onclick_nav . '>Next ' . (($this->data->start + 99) < $this->data->total_count ? 50 : $this->data->total_count - $this->data->start - 49 ) . ' ' . IconView::get('chevron-right') . '</a>'
-                        . '<a class="pagination_link -last" href="' . \PNM\Request::makeURL(\PNM\Request::get('controller'), \PNM\Request::get('id'), null, null, true, intdiv($this->data->total_count, 50) * 50) . '"' . $onclick_nav . '>Last</a>';
+                $pag .= '<a class="pagination_link -next" href="' . \PNM\Request::makeURL(\PNM\Request::get('controller'), \PNM\Request::get('id'), null, null, true, (($this->data->start + \PNM\Config::ROWS_ON_PAGE - 1) < $this->data->total_count ? $this->data->start + \PNM\Config::ROWS_ON_PAGE - 1 : $this->data->total_count - \PNM\Config::ROWS_ON_PAGE))
+                        . '"' . $onclick_nav . '>Next ' . (($this->data->start + 2 * \PNM\Config::ROWS_ON_PAGE - 1) < $this->data->total_count ? \PNM\Config::ROWS_ON_PAGE : $this->data->total_count - $this->data->start - \PNM\Config::ROWS_ON_PAGE - 1 ) . ' ' . Icon::get('chevron-right') . '</a>'
+                        . '<a class="pagination_link -last" href="' . \PNM\Request::makeURL(\PNM\Request::get('controller'), \PNM\Request::get('id'), null, null, true, intdiv($this->data->total_count, \PNM\Config::ROWS_ON_PAGE) * \PNM\Config::ROWS_ON_PAGE) . '"' . $onclick_nav . '>Last</a>';
             }
             $pag .= '</p>';
             echo ($pag);
@@ -104,7 +104,7 @@ class TableView
                         $url = \PNM\Request::makeURL(\PNM\Request::get('controller'), \PNM\Request::get('id'), $sort_renders[$i][self::SORT_PARAM], $this->sort_param, true, 0);
                         $hashpos = $this->id_field[0] . "_" . $i;
                         echo ('<div class="th' . $this->getLeftBorder($i) . $sort_renders[$i][self::SORT_HIGHLIGHT] . '" role="gridcell">'
-                        . '<a href="' . $url . '" title="Sort by ' . lcfirst($column_titles[$i]) . ', ' . $sort_renders[$i][self::SORT_TITLE] . '" id="' . $hashpos . '"'
+                        . '<a href="' . $url . '" title="Sort by ' . lcfirst(empty($extended_column_titles[$i])?$column_titles[$i]:$extended_column_titles[$i]) . ', ' . $sort_renders[$i][self::SORT_TITLE] . '" id="' . $hashpos . '"'
                         . ' onclick="window.location.replace(this.href + (' . "'#$hashpos'||" . 'window.location.hash));return false;">'
                         . $column_titles[$i] . $sort_renders[$i][self::SORT_ICON] . '</a></div>' . "\r");
                     }

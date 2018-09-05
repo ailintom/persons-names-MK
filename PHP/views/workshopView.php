@@ -40,7 +40,8 @@ class workshopView extends View
         $tableCo = new TableView($data->get('inscriptions'), 'inscriptions_id', 'inscription', 'sort', '#results');
         $tableCo->renderTable(['status', 'title', 'material',
             'size', 'text_content', 'dating', 'inst_prov_temp', 'orig_prod_temp', 'owner'], ['Type', 'Object', 'Material', 'Size, mm',
-            'Text', 'Date', 'Provenance', 'Origin/Prod. place', 'Owner'], true);
+            'Text', 'Date', 'Provenance', 'Origin/Prod.', 'Owner'], true, '',['Type', 'Object', 'Material', 'Size in mm',
+            'Text type', 'Date', 'Provenance or installation place', 'the origin of the owner or the place of production', 'Owner’s name']);
     }
 
     protected function inscribedObjects($id_coll, $count)

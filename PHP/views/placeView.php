@@ -14,7 +14,7 @@ class placeView extends View
         if (empty($data->get('places_id'))) {
             ?>
             <p class="info-box">
-                <?= IconView::get('info') ?>
+                <?= Icon::get('info') ?>
                 Not found in the selected version of the database.
             </p>
             <?php

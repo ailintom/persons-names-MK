@@ -1,12 +1,12 @@
 <?php
 /*
- * Description of FormFilterView
+ * Description of FormFilter
  * This class is used to generate the HTML code for a collapsible filter group (a group of controls for setting a less important search criterion) on a search page
  */
 
 namespace PNM\views;
 
-class FormFilterView
+class FormFilter
 {
 
     public $name;
@@ -27,7 +27,7 @@ class FormFilterView
     public function renderSelection()
     {
         ?><button class="filters_button" aria-controls="<?= $this->name ?>" aria-expanded="false" onclick="MK.toggleFilter('<?= $this->name ?>')" title="Toggle <?= lcfirst($this->label) ?> filter" type="button">
-        <?= IconView::get('plus') . IconView::get('minus') ?>
+        <?= Icon::get('plus') . Icon::get('minus') ?>
         <?= $this->label ?>
         </button>
         <?php
@@ -38,7 +38,7 @@ class FormFilterView
         ?><div class="filter" id="<?= $this->name ?>">
             <div class="filter_label">
                 <button class="filter_remove" onclick="MK.toggleFilter('<?= $this->name ?>')" title="Remove <?= lcfirst($this->label) ?> filter" type="button">
-                    <span id="<?= $this->name ?>-label"><?= IconView::get('minus', 'Remove ' . lcfirst($this->label) . ' filter') ?></span>
+                    <span id="<?= $this->name ?>-label"><?= Icon::get('minus', 'Remove ' . lcfirst($this->label) . ' filter') ?></span>
                 </button>
                 <?= $this->fullLabel ?>
             </div>
@@ -59,7 +59,7 @@ class FormFilterView
         <?php
     }
 
-    public static function getTogglePair(FormFilterView $filter)
+    public static function getTogglePair(FormFilter $filter)
     {
         return [$filter->mainFieldName, $filter->name];
     }

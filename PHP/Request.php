@@ -63,7 +63,7 @@ class Request
                 self::$data[$key] = trim(filter_input(INPUT_GET, $key, $filter, self::defaultFlag($filter)));
             }
         }
-        self::$data['used_ver'] = isset(self::$data['ver']) ? self::get('ver') : Config::maxVer();
+        self::$data['used_ver'] = isset(self::$data['ver']) ? self::get('ver') : self::maxVer();
     }
 
     private static function defaultFlag($filter)
@@ -87,6 +87,14 @@ class Request
             }
         }
         return false;
+    }
+    /*
+     * returns the maximum version of all the versions defined in Config.php
+     */
+
+    public static function maxVer()
+    {
+        return Config::VERSIONS[count(Config::VERSIONS) - 1][0];
     }
     /*
      * returns a stable url for the current request
@@ -130,7 +138,7 @@ class Request
             $requestString = null;
         }
         if (isset($ver)) {
-            $ver_element = ($ver == Config::maxVer()) ? null : $ver . '/';
+            $ver_element = ($ver == self::maxVer()) ? null : $ver . '/';
         } else {
             $ver_element = (!$forceVer && !isset(self::$data['ver'])) ? null : self::get('used_ver') . '/';
         }

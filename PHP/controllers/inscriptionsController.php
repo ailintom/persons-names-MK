@@ -90,7 +90,7 @@ class inscriptionsController
             }
         }
         $filter = new \PNM\models\Filter($rules);
-        $inscriptions = new \PNM\models\inscriptions(\PNM\Request::get('sort'), (\PNM\Request::get('start') ?: 0), 50, $filter); //$sort = null, $start = 0, $count = 0, Filter $filter = null
+        $inscriptions = new \PNM\models\inscriptions(\PNM\Request::get('sort'), (\PNM\Request::get('start') ?: 0), \PNM\Config::ROWS_ON_PAGE, $filter); //$sort = null, $start = 0, $count = 0, Filter $filter = null
         $view = new \PNM\views\inscriptionsView();
         $view->echoRender($inscriptions);
     }

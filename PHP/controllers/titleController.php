@@ -54,7 +54,7 @@ class titleController extends EntryController
             //array_push($rules, new \PNM\models\Rule('dating', 'exact', \PNM\Request::get('period')));
         }
         $filterTitleAtt = new \PNM\models\Filter($rules);
-        $objTitleAtt = new \PNM\models\TitleAttestations(\PNM\Request::get('sort'), (\PNM\Request::get('start') ?: 0), 50, $filterTitleAtt);
+        $objTitleAtt = new \PNM\models\TitleAttestations(\PNM\Request::get('sort'), (\PNM\Request::get('start') ?: 0), \PNM\Config::ROWS_ON_PAGE, $filterTitleAtt);
         $this->record->data['attestations'] = $objTitleAtt;
         $filterRelations = new \PNM\models\Filter([new \PNM\models\Rule('titles_id', 'exact', $this->record->get('titles_id'), 'i'), new \PNM\models\Rule('titles_id', 'exact', $this->record->get('titles_id'), 'i')]);
         $objRelations = new \PNM\models\title_relations(null, 0, 0, $filterRelations);

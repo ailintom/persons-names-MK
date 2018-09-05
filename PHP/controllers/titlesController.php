@@ -73,7 +73,7 @@ class titlesController
             array_push($rules, new \PNM\models\Rule('hannig', 'exact', \PNM\Request::get('hannig')));
         }
         $filter = new \PNM\models\Filter($rules);
-        $model = new \PNM\models\titles(\PNM\Request::get('sort'), (\PNM\Request::get('start') ?: 0), 50, $filter);
+        $model = new \PNM\models\titles(\PNM\Request::get('sort'), (\PNM\Request::get('start') ?: 0), \PNM\Config::ROWS_ON_PAGE, $filter);
         $view = new \PNM\views\titlesView();
         $view->echoRender($model);
     }

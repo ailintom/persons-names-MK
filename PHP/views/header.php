@@ -4,22 +4,23 @@
  */
 
 namespace PNM\views;
+const MAX_STABLE_URL_LENGTH = 35;
 ?><header class="header">
     <div class="header_content">
         <div class="header_title">
-            <a href="<?= \PNM\Request::makeURL('info', null, null, null, true, -1, false, \PNM\Config::maxVer()); ?>">
+            <a href="<?= \PNM\Request::makeURL('info', null, null, null, true, -1, false, \PNM\Request::maxVer()); ?>">
                 Persons <span>and</span> Names <span>of the</span> Middle Kingdom
             </a>
         </div>
         <button class="header_nav" type="button" aria-controls="nav" aria-expanded="false" onclick="MK.toggleNav(this)">
-            <?= IconView::get('menu') . IconView::get('cross') ?>
+            <?= Icon::get('menu') . Icon::get('cross') ?>
             Menu
         </button>
         <div class="header_aside">
             <?php
             $stableURL = \PNM\Request::stableURL();
             if (!empty($stableURL)) :
-                $stableURLDisplayed = \PNM\Config::HOST . ( strlen($stableURL) < 35 ? $stableURL : substr($stableURL, 0, 32) . '...')
+                $stableURLDisplayed = \PNM\Config::HOST . ( strlen($stableURL) < MAX_STABLE_URL_LENGTH ? $stableURL : substr($stableURL, 0, MAX_STABLE_URL_LENGTH-3) . '...')
                 ?>
                 <a href="<?= $stableURL ?>">Stable URL<span class="print_only">: <?= $stableURLDisplayed ?></span></a>
             <?php endif; ?>

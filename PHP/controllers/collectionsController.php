@@ -28,7 +28,7 @@ class collectionsController
         }
         $filter = new \PNM\models\Filter($rules);
 
-        $model = new \PNM\models\collections(\PNM\Request::get('sort'), (\PNM\Request::get('start') ?: 0), 50, $filter);
+        $model = new \PNM\models\collections(\PNM\Request::get('sort'), (\PNM\Request::get('start') ?: 0), \PNM\Config::ROWS_ON_PAGE, $filter);
         $view = new \PNM\views\collectionsView();
         $view->echoRender($model);
     }
