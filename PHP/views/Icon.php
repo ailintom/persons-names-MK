@@ -22,8 +22,10 @@ class Icon
             return self::$svgSymbols[$name]['html'];
         }
         $svg = file_get_contents(dirname(__DIR__) . "/assets/icons/$name.svg");
-        //$innerSVG = null;
 
+        if ($svg == false) {
+            return null;
+        }
         $matches = [];
         preg_match('#>(.*)</svg>#', $svg, $matches);
         $innerSVG = $matches[1];

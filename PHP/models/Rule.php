@@ -16,21 +16,18 @@ class Rule
     public $param_type = null; // The type of the parameter to be passed to mysqli_stmt::bind_param
     protected $field = null; // the array with fields used to make a rule
     protected $compare = null;
-
     /*
      * constructs the rule
      * @param $field The name of the field (or an SQL expression)
      * @param $value The value
      * @param $param_type The type of the $value to pass to mysqli::bindParam
      */
+
     public function __construct($field, $compareString, $value, $param_type = 's')
     {
         $this->field = (array) $field;
         switch ($compareString) {
-            case 'exact':
-                $this->compare = "=";
-                $rendVal = $value;
-                break;
+
             case 'not':
                 $this->compare = "<>";
                 $rendVal = $value;
@@ -61,6 +58,11 @@ class Rule
                 $this->compare = ">=";
                 $rendVal = $value;
                 break;
+            case 'exact':
+            default:
+                $this->compare = "=";
+                $rendVal = $value;
+                break;
         }
         $total = count($this->field);
         //
@@ -69,7 +71,7 @@ class Rule
             if (is_array($rendVal)) {
                 if ($this->compare == "=") {
                     $arrcomp = ' IN ';
-                } elseif ($this->compare == "=") {
+                } else {
                     $arrcomp = ' NOT IN ';
                 }
                 $this->WHERE .= $this->field[$i] . $arrcomp . '(' . implode(array_map(function ($val) {

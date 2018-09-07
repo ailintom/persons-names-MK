@@ -4,7 +4,8 @@
  */
 
 namespace PNM\views;
-const MAX_STABLE_URL_LENGTH = 35;
+
+
 ?><header class="header">
     <div class="header_content">
         <div class="header_title">
@@ -13,17 +14,17 @@ const MAX_STABLE_URL_LENGTH = 35;
             </a>
         </div>
         <button class="header_nav" type="button" aria-controls="nav" aria-expanded="false" onclick="MK.toggleNav(this)">
-            <?= Icon::get('menu') . Icon::get('cross') ?>
+<?= Icon::get('menu') . Icon::get('cross') ?>
             Menu
         </button>
         <div class="header_aside">
             <?php
             $stableURL = \PNM\Request::stableURL();
             if (!empty($stableURL)) :
-                $stableURLDisplayed = \PNM\Config::HOST . ( strlen($stableURL) < MAX_STABLE_URL_LENGTH ? $stableURL : substr($stableURL, 0, MAX_STABLE_URL_LENGTH-3) . '...')
+                $stableURLDisplayed = \PNM\Config::HOST . ( strlen($stableURL) < \PNM\Config::MAX_STABLE_URL_LENGTH ? $stableURL : substr($stableURL, 0, \PNM\Config::MAX_STABLE_URL_LENGTH - 3) . '...')
                 ?>
                 <a href="<?= $stableURL ?>">Stable URL<span class="print_only">: <?= $stableURLDisplayed ?></span></a>
-            <?php endif; ?>
+<?php endif; ?>
             <label for="version" class="sr-only">Change version:</label>
             <select id="version" onchange ="window.location.href = this.value;" class="header_version">
                 <?php
@@ -39,6 +40,6 @@ const MAX_STABLE_URL_LENGTH = 35;
     </div>
 </header>
 <main class="main">
-    <?php require 'views/nav.php'; ?>
+        <?php require 'views/nav.php'; ?>
     <div class="main_content" id="content">
         <?php // closed in footer.php   ?>

@@ -37,6 +37,9 @@ class Request
     const DEFAULTS = ['size-option' => 'greater', 'geo-filter' => 'all', 'chrono-filter' => 'during',
         'gender' => 'any', 'Agender' => 'any', 'Bgender' => 'any', 'match-date' => 'attested',
         'match-region' => 'attested', 'match' => 'inexact'];
+    const CONTROLLERS = ['bibliography', 'collection', 'collections', 'criterion', 'group',
+        'info', 'inscription', 'inscriptions', 'name', 'names', 'people', 'person', 'place', 'places',
+        'publication', 'title', 'titles', 'type', 'types', 'workshop'];
 
     private static $data = [];
 
@@ -64,6 +67,10 @@ class Request
             }
         }
         self::$data['used_ver'] = isset(self::$data['ver']) ? self::get('ver') : self::maxVer();
+        if (!in_array(self::get('controller'), self::CONTROLLERS)) { // only valid controller names can be used
+            self::$data['controller'] = 'info';
+            self::$data['id'] = null;
+        }
     }
 
     private static function defaultFlag($filter)

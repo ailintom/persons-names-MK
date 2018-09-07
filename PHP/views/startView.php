@@ -24,7 +24,7 @@ class startView extends View
             <a class="cards_link" href="<?= \PNM\Request::makeURL('places') ?>"><?= Icon::get('place', '') ?> Places</a>
             <a class="cards_link" href="<?= \PNM\Request::makeURL('collections') ?>"><?= Icon::get('collection', '') ?> Collections</a>
         </div>
-        <p>Additionally, have a look at <a href="types.php">the list of all name types</a> the <a href="bibliography.php">the bibliography</a>.</p>
+        <p>Additionally, have a look at <a href="types">the list of all name types</a> and <a href="bibliography">the bibliography</a>.</p>
         <h2>Information about the database</h2>
         <ul>
             <?php

@@ -22,7 +22,7 @@ namespace PNM\views;
             </div>
             <div class="column">
                 <p class="footer_logos">
-                    <a href="https://uni-mainz.de/">
+                    <a href="https://www.uni-mainz.de/">
                         <img src="<?= \PNM\Config::BASE ?>assets/logos/johannes-gutenberg-universitaet-logo.svg" alt="Johannes Gutenberg University Mainz" width="145" height="75">
                     </a>
                     <a href="http://www.fritz-thyssen-stiftung.de">

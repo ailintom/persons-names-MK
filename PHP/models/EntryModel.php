@@ -69,19 +69,19 @@ class EntryModel
             $stmt = $db->prepare($SQL);
             $stmt->bind_param($this->bindParam, $id);
             $stmt->execute();
+            $result = $stmt->get_result();
+            if ($result->num_rows !== 0) {
+                $this->data = $result->fetch_assoc();
+                if ($this->hasBiblio) { // If the loaded record has associated bibliography, load it 
+                    $this->setBiblio();
+                }
+                $this->loadChildren();
+                $this->parse();
+            } else {
+                $this->noMatch = true;
+            }
         } catch (\mysqli_sql_exception $e) {
             \PNM\CriticalError::show($e);
-        }
-        $result = $stmt->get_result();
-        if ($result->num_rows !== 0) {
-            $this->data = $result->fetch_assoc();
-            if ($this->hasBiblio) { // If the loaded record has associated bibliography, load it 
-                $this->setBiblio();
-            }
-            $this->loadChildren();
-            $this->parse();
-        } else {
-            $this->noMatch = true;
         }
     }
 

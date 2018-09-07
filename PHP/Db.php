@@ -9,7 +9,7 @@ namespace PNM;
 class Db
 {
 
-    private static $instance = null;
+    private static $instance;
 
     public static function getInstance()
     {
@@ -19,10 +19,10 @@ class Db
             try {
                 $mysqli = new \mysqli(Config::DB_CONFIG['host'], Config::DB_CONFIG['username'], Config::DB_CONFIG['password'], $dbName, Config::DB_CONFIG['port']);
                 $mysqli->set_charset('utf8');
+                self::$instance = $mysqli;
             } catch (\mysqli_sql_exception $e) {
                 CriticalError::show($e);
             }
-            self::$instance = $mysqli;
         }
         return self::$instance;
     }

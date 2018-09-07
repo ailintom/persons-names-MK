@@ -11,10 +11,6 @@ namespace PNM\models;
 class RuleExists extends Rule
 {
 
-    public $WHERE = null;
-    public $value = [];
-    public $param_type = null;
-
     public function __construct($FROMWHERE, $value, $param_type = 's')
     {
         $this->WHERE = 'EXISTS(SELECT * FROM ' . $FROMWHERE . ')=1';

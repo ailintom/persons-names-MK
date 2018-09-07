@@ -40,20 +40,18 @@ class Lookup
                 $stmt->bind_param($param, $value);
             }
             $stmt->execute();
+            $result = $stmt->get_result();
+            if ($result->num_rows !== 0) {
+                if ($list == self::RETURN_ASSOC) {
+                    return $result->fetch_all(MYSQLI_ASSOC);
+                } elseif ($list == self::RETURN_INDEXED) {
+                    return $result->fetch_all(MYSQLI_NUM);
+                } else { // RETURN_VAL = return a value from  a single row
+                    return $result->fetch_row()[0];
+                }
+            }
         } catch (\mysqli_sql_exception $e) {
             \PNM\CriticalError::show($e);
-        }
-        $result = $stmt->get_result();
-        if ($result->num_rows !== 0) {
-            if ($list == self::RETURN_ASSOC) {
-                return $result->fetch_all(MYSQLI_ASSOC);
-            } elseif ($list == self::RETURN_INDEXED) {
-                return $result->fetch_all(MYSQLI_NUM);
-            } else { // RETURN_VAL = return a value from  a single row
-                return $result->fetch_row()[0];
-            }
-        } else {
-            // echo "$SQL**$value**param*$param"; //Comment this line
         }
     }
 

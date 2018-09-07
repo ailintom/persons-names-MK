@@ -8,16 +8,16 @@ namespace PNM;
 class CriticalError
 {
 
-    public static function show(\Exception $e)
+    public static function show(\Throwable $e)
     {
         http_response_code(500);
         (new \PNM\views\HeadView())->render(\PNM\views\HeadView::HEADERSLIM, 'Error');
-        ?><p>Error: <?php
-            echo(get_class($e)) . '<br>';
-            print_r($e);
+        ?><p><?php
+            echo get_class($e), ' ', $e->getCode(), ': ', $e->getMessage();
             ?>
-        </p></body></html>
+        </p>
         <?php
+        require 'views/footer.php';
         exit();
     }
 }

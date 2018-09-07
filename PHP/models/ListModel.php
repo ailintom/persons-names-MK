@@ -13,6 +13,7 @@ class ListModel
 
     const MAX_RECORD_COUNT = 8388607; // Maximum record count defined by the structure of ID fields
 
+    public $data; // the data retrieved by the model
     protected $double_params = false;
     public $params = null;
     protected $tablename = null;
@@ -50,13 +51,13 @@ class ListModel
         if (!empty($filter)) {
             $this->WHERE = (!empty($filter->WHERE) ? ' WHERE ' . $filter->WHERE : null);
         }
-        if (!empty($Bfilter)) {
+        if (!empty($filter) && !empty($Bfilter)) {
             $this->BWHERE = (!empty($Bfilter->WHERE) ? ' WHERE ' . $Bfilter->WHERE : null);
             $filter = new Filter(array_merge($filter->getRules(), $Bfilter->getRules()));
             // echo $this->BWHERE, "doubleparams:", $this->double_params;
             // print_r($filter);
         }
-        $strsql = $this->makeSQL($sort, $start, $count, $filter);
+        $strsql = $this->makeSQL($sort, $start, $count);
         // echo "<br>$strsql";
         try {
             $stmt = $db->prepare($strsql);
@@ -64,29 +65,27 @@ class ListModel
                 $filter->bindParam($stmt, $this->double_params);
             }
             $stmt->execute();
+            $result = $stmt->get_result();
+            $this->count = $result->num_rows;
+            $this->data = $result->fetch_all(MYSQLI_ASSOC);
         } catch (\mysqli_sql_exception $e) {
             \PNM\CriticalError::show($e);
         }
-        $result = $stmt->get_result();
-        $this->count = $result->num_rows;
-        $this->data = $result->fetch_all(MYSQLI_ASSOC);
+
         if ($start == 0 && $count == 0) {
             $this->total_count = $this->count;
         } else {
-            $strsqlTotal = 'SELECT FOUND_ROWS()'; //$this->makeSQLTotal();
-            // echo "<br>$strsqlTotal";
-            // if ($this->defaultsort == 'sequence_number'){ echo "<br>$strsql";} // for testing
+            $strsqlTotal = 'SELECT FOUND_ROWS()';
+
             try {
                 $stmtTotal = $db->prepare($strsqlTotal);
-                /* if (!empty($filter)) {
-                  $filter->bindParam($stmtTotal, $this->double_params);
-                  } */
+
                 $stmtTotal->execute();
+                $resultTotal = $stmtTotal->get_result();
+                $this->total_count = $resultTotal->fetch_array(MYSQLI_NUM)[0];
             } catch (\mysqli_sql_exception $e) {
                 \PNM\CriticalError::show($e);
             }
-            $resultTotal = $stmtTotal->get_result();
-            $this->total_count = $resultTotal->fetch_array(MYSQLI_NUM)[0];
         }
         $this->loadChildren();
     }

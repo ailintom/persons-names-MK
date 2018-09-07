@@ -11,6 +11,8 @@ namespace PNM\controllers;
 class infoController
 {
 
+    protected $record; // the variable holding the data
+
     public function load()
     {
         $id = \PNM\Request::get('id');

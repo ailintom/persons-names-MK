@@ -40,12 +40,12 @@ class Filter
         $params = [];
         foreach ($this->rules as $rule) {
             $type .= $rule->param_type;
-            $params = array_merge((array) $params, (array) $rule->value);
+            $params = array_merge($params, (array) $rule->value);
         }
         if ($double_params) {
             foreach ($this->rules as $rule) {
                 $type .= $rule->param_type;
-                $params = array_merge((array) $params, (array) $rule->value);
+                $params = array_merge($params, (array) $rule->value);
             }
         }
         $stmt->bind_param($type, ...$params);

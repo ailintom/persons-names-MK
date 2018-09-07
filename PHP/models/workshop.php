@@ -25,10 +25,5 @@ class workshop extends EntryModel
         $this->parseNote(['dating_note', 'note']);
     }
 
-    protected function loadChildren()
-    {
-        $filter = new Filter([new Rule('workshops_id', 'exact', $this->getID(), 'i')]);
-        $objIns = new WorkshopInscriptions(null, 0, 0, $filter);
-        $this->data['inscriptions'] = $objIns;
-    }
+
 }
