@@ -6,6 +6,8 @@
 
 namespace PNM\views;
 
+use \PNM\Request;
+
 class placesView extends View
 {
 
@@ -18,7 +20,7 @@ class placesView extends View
             You can use <b>%</b> or <b>*</b> as wildcards.
             “Ab*” will match “Abydos” and “Abusir”.
         </p>
-        <form action="<?= \PNM\Request::makeURL('places') ?>" method="get">
+        <form action="<?= Request::makeURL('places') ?>" method="get">
             <div class="row">
                 <div class="column">
                     <?= (new TextInput('place', 'Place name', 'Enter the name region', 'Example: Abydos', 'places'))->render() ?>

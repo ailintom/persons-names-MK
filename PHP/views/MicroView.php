@@ -8,6 +8,8 @@
 
 namespace PNM\views;
 
+use \PNM\Request;
+
 class MicroView
 {
 
@@ -32,7 +34,7 @@ class MicroView
 
     protected function makeURL($inputid)
     {
-        return \PNM\Request::makeURL($this->controller, $inputid);
+        return Request::makeURL($this->controller, $inputid);
     }
 
     public function echoRender($inputvalue, $inputid = null, $secondinput = null)

@@ -6,13 +6,15 @@
 
 namespace PNM\views;
 
+use \PNM\Request;
+
 class inscriptionsView extends View
 {
 
     public function echoRender(&$data)
     {
         //$res = null;
-        (new HeadView())->render(HeadView::HEADERSLIM, 'Inscriptions');
+        (new HeadView())->render(HeadView::HEADERSLIM, 'Inscribed Objects');
         $total = $data->count;
         for ($i = 0; $i < $total; $i++) {
             $data->data[$i]['object_type'] = $this->renderObjectType($data->data[$i]['object_type']);
@@ -20,17 +22,17 @@ class inscriptionsView extends View
         }
         ?>
         <p class="info-box">
-            <?= Icon::get('info') ?>
+        <?= Icon::get('info') ?>
             You can use <b>%</b> or <b>*</b> as wildcards when searching for titles or inventory numbers. Thus,
             “CG 2011*” will match all stelae from “CG 20110” to “CG 20119”. Inventory numbers are searched for when a collection is selected.
         </p>
-        <form action="<?= \PNM\Request::makeURL('inscriptions') ?>" method="get" onreset="MK.removeAllFilters()">
+        <form action="<?= Request::makeURL('inscriptions') ?>" method="get" onreset="MK.removeAllFilters()">
             <div class="row">
                 <div class="column">
-                    <?= (new TextInput('collection', 'Collection', 'The short name of the museum', 'Example: Bruxelles', 'collections'))->render() ?>
+        <?= (new TextInput('collection', 'Collection', 'The short name of the museum', 'Example: Bruxelles', 'collections'))->render() ?>
                 </div>
                 <div class="column">
-                    <?= (new TextInput('title', 'Title or inventory number', 'The title of the insciption used in the database or the inventory number in the collection', 'Example: Adam, ASAE 56, 213 or JE 43104'))->render() ?>
+        <?= (new TextInput('title', 'Title or inventory number', 'The title of the insciption used in the database or the inventory number in the collection', 'Example: Adam, ASAE 56, 213 or JE 43104'))->render() ?>
                 </div>
             </div>
             <?php
@@ -86,9 +88,9 @@ class inscriptionsView extends View
         $tableCo = new TableView($data, 'inscriptions_id', 'inscription', 'sort', '#results');
         $tableCo->renderTable(['object_type', 'title', 'material',
             'size', 'text_content', 'dating', 'inst_prov_temp', 'orig_prod_temp', 'owner'], ['Type', 'Object', 'Material', 'Size, mm',
-            'Text', 'Date', 'Provenance', 'Origin/Prod.', 'Owner'], true, '',['Type', 'Object', 'Material', 'Size in mm',
+            'Text', 'Date', 'Provenance', 'Origin/Prod.', 'Owner'], true, '', ['Type', 'Object', 'Material', 'Size in mm',
             'Text type', 'Date', 'Provenance or installation place', 'the origin of the owner or the place of production', 'Owner’s name']);
-      
+
         // ['inscriptions_id', 'object_type', 'title', 'material', 'size', 'text_content', 'dating', 'inst_prov_temp', 'orig_prod_temp', 'owner']
         $this->toggleFilters(FormFilter::renderToggle($filters));
     }

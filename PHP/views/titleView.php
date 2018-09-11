@@ -52,7 +52,7 @@ class titleView extends View
             ?>
         </dl>
         <h2 id="attestations">Attestations</h2>
-        <form action="<?= \PNM\Request::makeURL('title', \PNM\Request::get('id')) ?>" method="get" onreset="MK.removeAllFilters()">
+        <form action="<?= Request::makeURL('title', Request::get('id')) ?>" method="get" onreset="MK.removeAllFilters()">
             <h3 class="sr-only">Filters</h3>
             <p>
                 <span id="region-label">Geographic filter:</span>

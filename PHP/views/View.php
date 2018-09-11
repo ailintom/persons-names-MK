@@ -1,11 +1,12 @@
 <?php
-
-namespace PNM\views;
-
 /*
  * Description of View
  * This is parent class for View pages, including all the functions used by two or more views
  */
+
+namespace PNM\views;
+
+use \PNM\Request;
 
 class View
 {
@@ -22,7 +23,6 @@ class View
     {
         if (!empty($value) & !empty($note)) {
             return "\n<dt>" . $term . ":</dt>\n<dd><span" . (empty($class) ? null : ' class="' . $class . '"') . '>' . $value . '</span> <span class="' . (empty($noteClass) ? 'note' : $noteClass) . '">(' . $note . ')</span></dd>';
-
         } elseif (!empty($value)) {
             return "\n<dt>" . $term . ":</dt>\n<dd" . (empty($class) ? null : ' class="' . $class . '"') . '>' . $value . '</dd>';
         }
@@ -110,8 +110,8 @@ class View
 
     public static function oldValue($field)
     {
-        if (!empty(\PNM\Request::get($field))) {
-            return ' value = "' . \PNM\Request::get($field) . '"';
+        if (!empty(Request::get($field))) {
+            return ' value = "' . Request::get($field) . '"';
         } else {
             return null;
         }
@@ -123,8 +123,8 @@ class View
 
     public static function oldValueRadio($field, $value, $default = false)
     {
-        if (!empty(\PNM\Request::get($field))) {
-            if (\PNM\Request::get($field) == $value) {
+        if (!empty(Request::get($field))) {
+            if (Request::get($field) == $value) {
                 return ' checked';
             }
         } elseif ($default) {
@@ -134,8 +134,8 @@ class View
 
     public static function oldValueSelect($field, $value, $default = false)
     {
-        if (!empty(\PNM\Request::get($field))) {
-            if (\PNM\Request::get($field) == $value) {
+        if (!empty(Request::get($field))) {
+            if (Request::get($field) == $value) {
                 return ' selected';
             }
         } elseif ($default) {
@@ -229,7 +229,7 @@ class View
             }
             return $res;
         } else {
-            if (!empty(\PNM\Request::get($fieldName)) && ( empty($defaultVal) ? true : \PNM\Request::get($fieldName) != $defaultVal)) {
+            if (!empty(Request::get($fieldName)) && ( empty($defaultVal) ? true : Request::get($fieldName) != $defaultVal)) {
                 return "MK.toggleFilter('" . $filterName . "');";
             }
         }

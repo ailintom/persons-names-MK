@@ -5,6 +5,7 @@
  */
 
 namespace PNM\views;
+use \PNM\Request;
 
 class nameView extends View
 {
@@ -112,7 +113,7 @@ class nameView extends View
     protected function renderSpelling($personal_names_id, $personal_name, $spellings_id, $spelling)
     {
         $res = '<span class="name">';
-        $res .= '<a href="' . \PNM\Request::makeURL('name', [$personal_names_id, $spellings_id]) . '">';
+        $res .= '<a href="' . Request::makeURL('name', [$personal_names_id, $spellings_id]) . '">';
         $res .= $personal_name . ' ';
         $res .= $this->spellView->render($spelling, $spellings_id)
                 . '</a>';

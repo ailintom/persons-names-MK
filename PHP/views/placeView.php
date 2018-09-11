@@ -6,6 +6,8 @@
 
 namespace PNM\views;
 
+use \PNM\Request;
+
 class placeView extends View
 {
 
@@ -14,7 +16,7 @@ class placeView extends View
         if (empty($data->get('places_id'))) {
             ?>
             <p class="info-box">
-                <?= Icon::get('info') ?>
+            <?= Icon::get('info') ?>
                 Not found in the selected version of the database.
             </p>
             <?php
@@ -54,15 +56,15 @@ class placeView extends View
         </dl>
         <dl class="-free">
             <dt>Inscribed objects found or purchased at this place:</dt>
-            <dd><a href="<?= \PNM\Request::makeURL('inscriptions') ?>?geo-filter=provenance&amp;place=<?php echo( $data->get('place_name')) ?>"><?php echo( $data->get('count_provenance') ?: '0') ?></a></dd>
+            <dd><a href="<?= Request::makeURL('inscriptions') ?>?geo-filter=provenance&amp;place=<?php echo( $data->get('place_name')) ?>"><?php echo( $data->get('count_provenance') ?: '0') ?></a></dd>
             <dt>Inscribed objects that should have been installed at this place:</dt>
-            <dd><a href="<?= \PNM\Request::makeURL('inscriptions') ?>?geo-filter=installation&amp;place=<?php echo( $data->get('place_name')) ?>"><?php echo( $data->get('count_installation_place') ?: '0') ?></a></dd>
+            <dd><a href="<?= Request::makeURL('inscriptions') ?>?geo-filter=installation&amp;place=<?php echo( $data->get('place_name')) ?>"><?php echo( $data->get('count_installation_place') ?: '0') ?></a></dd>
             <dt>Inscribed objects owned by people from this place:</dt>
-            <dd><a href="<?= \PNM\Request::makeURL('inscriptions') ?>?geo-filter=origin&amp;place=<?php echo( $data->get('place_name')) ?>"><?php echo( $data->get('count_origin') ?: '0') ?></a></dd>
+            <dd><a href="<?= Request::makeURL('inscriptions') ?>?geo-filter=origin&amp;place=<?php echo( $data->get('place_name')) ?>"><?php echo( $data->get('count_origin') ?: '0') ?></a></dd>
             <dt>Inscribed objects produced at this place:</dt>
-            <dd><a href="<?= \PNM\Request::makeURL('inscriptions') ?>?geo-filter=production&amp;place=<?php echo( $data->get('place_name')) ?>"><?php echo( $data->get('count_production_place') ?: '0') ?></a></dd>
+            <dd><a href="<?= Request::makeURL('inscriptions') ?>?geo-filter=production&amp;place=<?php echo( $data->get('place_name')) ?>"><?php echo( $data->get('count_production_place') ?: '0') ?></a></dd>
             <dt>All inscribed objects related to this place:</dt>
-            <dd><a href="<?= \PNM\Request::makeURL('inscriptions') ?>?geo-filter=all&amp;place=<?php echo( $data->get('place_name')) ?>"><?php echo( $data->get('count_total') ?: '0') ?></a></dd>
+            <dd><a href="<?= Request::makeURL('inscriptions') ?>?geo-filter=all&amp;place=<?php echo( $data->get('place_name')) ?>"><?php echo( $data->get('count_total') ?: '0') ?></a></dd>
         </dl>
         <?php
         if (intval($data->get('count_find_groups')) > 0) {

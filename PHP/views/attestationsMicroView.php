@@ -7,6 +7,8 @@
 
 namespace PNM\views;
 
+use \PNM\Request;
+
 class attestationsMicroView extends MicroView
 {
 
@@ -33,7 +35,7 @@ EOT;
         if (empty($this->inscriptionID)) {
             return "#" . \PNM\ID::shorten($inputid);
         } else {
-            return \PNM\Request::makeURL($this->controller, [$this->inscriptionID, $inputid]);
+            return Request::makeURL($this->controller, [$this->inscriptionID, $inputid]);
         }
     }
 }

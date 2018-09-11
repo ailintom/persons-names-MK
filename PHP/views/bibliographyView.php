@@ -7,6 +7,8 @@
 
 namespace PNM\views;
 
+use \PNM\Request;
+
 class bibliographyView extends View
 {
 
@@ -14,7 +16,7 @@ class bibliographyView extends View
     {
         (new HeadView())->render(HeadView::HEADERSLIM, 'Bibliography');
         foreach ($data->data as $row) {
-            echo '<a href="' . \PNM\Request::makeURL('publication', $row[$data->getFieldName(1)]) . '">' . $row[$data->getFieldName(0)] . "</a><br>";
+            echo '<a href="' . Request::makeURL('publication', $row[$data->getFieldName(1)]) . '">' . $row[$data->getFieldName(0)] . "</a><br>";
         }
     }
 }

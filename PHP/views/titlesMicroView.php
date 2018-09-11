@@ -15,7 +15,7 @@ class titlesMicroView extends MicroView
     protected function echoTemplate()
     {
         return <<<EOT
-<span class="title"><a href="$this->url">$this->value</a></span>
+<span class="tit"><a href="$this->url">$this->value</a></span>
 EOT;
     }
 }

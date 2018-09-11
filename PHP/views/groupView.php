@@ -6,6 +6,8 @@
 
 namespace PNM\views;
 
+use \PNM\Request;
+
 class groupView extends View
 {
 
@@ -48,7 +50,7 @@ class groupView extends View
     protected function inscribedObjects($id_coll, $count)
     {
         if (!empty($count)) {
-            return '<a href="' . \PNM\Request::makeURL('inscriptions') . '?collection=' . urlencode($id_coll) . '">' . $count . '</a>';
+            return '<a href="' . Request::makeURL('inscriptions') . '?collection=' . urlencode($id_coll) . '">' . $count . '</a>';
         }
     }
 }

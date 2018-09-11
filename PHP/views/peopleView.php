@@ -6,6 +6,8 @@
 
 namespace PNM\views;
 
+use \PNM\Request;
+
 class peopleView extends View
 {
 
@@ -14,11 +16,11 @@ class peopleView extends View
         (new HeadView())->render(HeadView::HEADERSLIM, 'People');
         ?>
         <p class="info-box">
-            <?= Icon::get('info') ?>
+        <?= Icon::get('info') ?>
             You can use <b>%</b> or <b>*</b> as wildcards.
             “nfr*” will match “nfr.wj” or “nfr-ḥtp”. “*nfr*” will also match “snfr.wj”.
         </p>
-        <form action="<?= \PNM\Request::makeURL('people') ?>" method="get">
+        <form action="<?= Request::makeURL('people') ?>" method="get">
             <div class="row -border">
                 <div class="column">
                     <h2>Person A</h2>
@@ -111,18 +113,18 @@ class peopleView extends View
                 <h3 class="sr-only">Filters</h3>
                 <div class="filters_selection">
                     <button class="filters_button" aria-controls="region-filter" aria-expanded="false" onclick="MK.toggleFilter('region-filter')" title="Toggle region filter" type="button">
-                        <?= Icon::get('plus') . Icon::get('minus') ?>
+        <?= Icon::get('plus') . Icon::get('minus') ?>
                         Region or locality
                     </button>
                     <button class="filters_button" aria-controls="period-filter" aria-expanded="false" onclick="MK.toggleFilter('period-filter')" title="Toggle period filter" type="button">
-                        <?= Icon::get('plus') . Icon::get('minus') ?>
+        <?= Icon::get('plus') . Icon::get('minus') ?>
                         Period or reign
                     </button>
                 </div>
                 <div class="filter" id="region-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('region-filter')" title="Remove region filter" type="button">
-                            <?= Icon::get('minus', 'Remove region filter') ?>
+        <?= Icon::get('minus', 'Remove region filter') ?>
                         </button>
                         <span id="region-label">Region or locality</span>
                     </div>
@@ -159,7 +161,7 @@ class peopleView extends View
                 <div class="filter" id="period-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('period-filter')" title="Remove period filter" type="button">
-                            <?= Icon::get('minus', 'Remove period filter') ?>
+        <?= Icon::get('minus', 'Remove period filter') ?>
                         </button>
                         <span id="period-label">Period or reign</span>
                     </div>
@@ -239,15 +241,4 @@ class peopleView extends View
     }
 }
 
-/*
-      <p>Displaying titles <?= $data->start ?>&ndash;<?= ($data->start + $data->count - 1) ?> out of <?= ($data->start + $data->total_count ) ?></p>
-      <?php
-      //$res = null;
-      foreach ($data->data as $row) {
-      echo("<a href='" . \PNM\Config::BASE . "collection/" . $row[$data->getFieldName(0)] . "'>" . $row[$data->getFieldName(1)] . ' ' .  $row['inscriptions_count'] . '<br>');
-      }
-      //return $res;
-      }
-      }
-     */
     

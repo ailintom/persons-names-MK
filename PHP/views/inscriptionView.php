@@ -6,6 +6,7 @@
  */
 
 namespace PNM\views;
+use \PNM\Request;
 
 class inscriptionView extends View
 {
@@ -97,13 +98,13 @@ class inscriptionView extends View
                             $currentLoc .= ', ';
                         }
                         $currentLoc .= '<span class="name">';
-                        $currentLoc .= '<a href="' . \PNM\Request::makeURL('name', [$name['personal_names_id'], $spelling['spellings_id']]) . '">';
+                        $currentLoc .= '<a href="' . Request::makeURL('name', [$name['personal_names_id'], $spelling['spellings_id']]) . '">';
                         if ($spellingPerNameCount++ == 0) {
                             $currentLoc .= $name['personal_name'] . ' ';
                         }
                         $currentLoc .= $spellView->render($spelling['spelling'], $spelling['spellings_id'])
                                 . '</a>';
-                        // . '<img class="spelling" src="' . \PNM\Config::BASE . 'assets/spellings/' . $spelling['spellings_id'] . '.png" alt="' . $spelling['spelling'] . '"></span>'
+              
                         $currentLoc .= $this->processAltReadings($spelling['alt_readings']);
                         $currentLoc .= '</span>';
                     }

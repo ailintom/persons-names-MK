@@ -6,6 +6,8 @@
 
 namespace PNM\views;
 
+use \PNM\Request;
+
 class collectionsView extends View
 {
 
@@ -18,7 +20,7 @@ class collectionsView extends View
             You can use <b>%</b> or <b>*</b> as wildcards.
             “Mar*” will match “Mariemont” or “Marseille”.
         </p>
-        <form action="<?= \PNM\Request::makeURL('collections') ?>" method="get">
+        <form action="<?= Request::makeURL('collections') ?>" method="get">
             <div class="row">
                 <div class="column">
                     <?= (new TextInput('title', 'Short name', 'Enter the short name of the museum or its part', 'Example: Bruxelles', 'collections'))->render() ?>

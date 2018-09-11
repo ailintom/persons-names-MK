@@ -11,7 +11,7 @@ class typesView extends View
 
     public function echoRender(&$data)
     {
-        (new HeadView())->render(HeadView::HEADERSLIM, "Name types");
+        (new HeadView())->render(HeadView::HEADERSLIM, "Name Types");
         $typesMV = new name_typesMicroView();
         //     print_r($data);
         ?>

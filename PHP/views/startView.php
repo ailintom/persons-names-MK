@@ -6,30 +6,33 @@
 
 namespace PNM\views;
 
+use \PNM\Request,
+    \PNM\Config;
+
 class startView extends View
 {
 
     public function echoRender(&$data)
     {
         (new HeadView())->render(HeadView::HEADERFULL);
-        echo \PNM\Config::START_PAGE_TEXT;
+        echo Config::START_PAGE_TEXT;
         ?>
 
         <h2>Start your search</h2>
         <div class="cards">
-            <a class="cards_link" href="<?= \PNM\Request::makeURL('names') ?>"><?= Icon::get('name', '') ?> Personal Names</a>
-            <a class="cards_link" href="<?= \PNM\Request::makeURL('titles') ?>"><?= Icon::get('title', '') ?> Titles</a>
-            <a class="cards_link" href="<?= \PNM\Request::makeURL('people') ?>"><?= Icon::get('people', '') ?> People</a>
-            <a class="cards_link" href="<?= \PNM\Request::makeURL('inscriptions') ?>"><?= Icon::get('object', '') ?> Inscribed Objects</a>
-            <a class="cards_link" href="<?= \PNM\Request::makeURL('places') ?>"><?= Icon::get('place', '') ?> Places</a>
-            <a class="cards_link" href="<?= \PNM\Request::makeURL('collections') ?>"><?= Icon::get('collection', '') ?> Collections</a>
+            <a class="cards_link" href="<?= Request::makeURL('names') ?>"><?= Icon::get('name', '') ?> Personal Names</a>
+            <a class="cards_link" href="<?= Request::makeURL('titles') ?>"><?= Icon::get('title', '') ?> Titles</a>
+            <a class="cards_link" href="<?= Request::makeURL('people') ?>"><?= Icon::get('people', '') ?> People</a>
+            <a class="cards_link" href="<?= Request::makeURL('inscriptions') ?>"><?= Icon::get('object', '') ?> Inscribed Objects</a>
+            <a class="cards_link" href="<?= Request::makeURL('places') ?>"><?= Icon::get('place', '') ?> Places</a>
+            <a class="cards_link" href="<?= Request::makeURL('collections') ?>"><?= Icon::get('collection', '') ?> Collections</a>
         </div>
-        <p>Additionally, have a look at <a href="types">the list of all name types</a> and <a href="bibliography">the bibliography</a>.</p>
+        <p>Browse <a href="types">the list of all name types</a> or <a href="bibliography">the bibliography</a>.</p>
         <h2>Information about the database</h2>
         <ul>
             <?php
             foreach ($data as $entry) {
-                echo '<li><h3><a href="' . \PNM\Request::makeURL('info') . '/' . urlencode($entry[0]) . '">', $entry[0], '</a></h3></li>';
+                echo '<li><h3><a href="' . Request::makeURL('info') . '/' . urlencode($entry[0]) . '">', $entry[0], '</a></h3></li>';
             }
             ?></ul><?php
     }

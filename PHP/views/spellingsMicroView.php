@@ -7,6 +7,8 @@
 
 namespace PNM\views;
 
+use PNM\Request;
+
 class spellingsMicroView extends MicroView
 {
 
@@ -25,6 +27,6 @@ EOF;
 
     protected function makeURL($inputid)
     {
-        return \PNM\Request::makeURL('assets/spellings', $inputid, null, null, true, -1, true) . '.png';
+        return Request::makeURL('assets/spellings', $inputid, null, null, true, -1, true) . '.png';
     }
 }

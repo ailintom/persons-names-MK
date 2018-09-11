@@ -6,6 +6,8 @@
 
 namespace PNM\views;
 
+use \PNM\Config;
+
 /*
  *     ['persons_id', 'title', 'gender', 'title_string', 'personal_name', 'dating', 'dating_note', 'region', 'region_note', 'note']
  */
@@ -27,8 +29,8 @@ class personView extends View
                 <th>Name</th></tr>
             <tr>
                 <td><?= $this->renderGender($data->get('gender')) ?></td>
-                <?= (empty($data->get('title_string')) ? null : '<td><span class="title">' . $data->get('title_string') . '</td>') ?>
-                <td><span class="name"><?= $data->get('personal_name') ?></span></td>
+                <?= (empty($data->get('title_string')) ? null : '<td><span class="tit">' . $data->get('title_string') . '</span></td>') ?>
+                <td><span class="pn"><?= $data->get('personal_name') ?></span></td>
             </tr>
         </table><dl>
             <?php
@@ -87,12 +89,11 @@ class personView extends View
                                 echo', ';
                             }
                             echo'<span class="name">';
-                            echo'<a href="' . \PNM\Config::BASE . 'name/' . $name['personal_names_id'] . '#' . $spelling['spellings_id'] . '">';
+                            echo'<a href="' . Config::BASE . 'name/' . $name['personal_names_id'] . '#' . $spelling['spellings_id'] . '">';
                             if ($spellingPerNameCount++ == 0) {
                                 echo $name['personal_name'] . ' ';
                             }
-                            echo $spellView->render($spelling['spelling'], $spelling['spellings_id'])
-                            . '</a>';
+                            echo $spellView->render($spelling['spelling'], $spelling['spellings_id']), '</a>';
                             echo $this->processAltReadings($spelling['alt_readings']);
                             echo'</span>';
                         }

@@ -6,6 +6,8 @@
 
 namespace PNM\views;
 
+use \PNM\Request;
+
 class titlesView extends View
 {
 
@@ -13,7 +15,7 @@ class titlesView extends View
     {
         (new HeadView())->render(HeadView::HEADERSLIM, "Titles");
         ?>
-        <form action="<?= \PNM\Request::makeURL('titles') ?>" method="get">
+        <form action="<?= Request::makeURL('titles') ?>" method="get">
             <div class="row">
                 <div class="column">
                     <?= (new TextInput('title', 'Title', 'MdC (jmj-rA pr) or Unicode (jmj-rꜣ pr)'))->render() ?>
@@ -202,16 +204,3 @@ class titlesView extends View
         $this->toggleFilters([['place', 'region-filter'], ['period', 'period-filter'], ['gender', 'gender-filter', 'any'], ['ward', 'ward-filter'], ['hannig', 'hannig-filter']]);
     }
 }
-
-/*
-      <p>Displaying titles <?= $data->start ?>&ndash;<?= ($data->start + $data->count - 1) ?> out of <?= ($data->start + $data->total_count ) ?></p>
-      <?php
-      //$res = null;
-      foreach ($data->data as $row) {
-      echo("<a href='" . \PNM\Config::BASE . "collection/" . $row[$data->getFieldName(0)] . "'>" . $row[$data->getFieldName(1)] . ' ' .  $row['inscriptions_count'] . '<br>');
-      }
-      //return $res;
-      }
-      }
-     */
-    
