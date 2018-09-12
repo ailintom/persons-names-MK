@@ -21,10 +21,6 @@ Config.php should include the following declarations:
 
 <?php
 
-/*
- * This is a configuration file; it should not be published
- */
-
 namespace PNM;
 
 class Config
@@ -91,4 +87,12 @@ EOT;
 }
 
 
+```
+
+Before publishing an updated database version, the following statements should be executed to update auxiliary tables:
+```
+CALL name_types_temp_calc;
+CALL children_temp_calc;
+CALL siblings_temp_calc;
+CALL spouses_temp_calc;
 ```

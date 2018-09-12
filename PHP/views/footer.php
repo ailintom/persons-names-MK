@@ -15,12 +15,12 @@ use \PNM\Request,
             <div class="column">
                 <p>
                     Copyright 2018 Alexander Ilin-Tomich.
-                    Content licensed under <a href="https://creativecommons.org/licenses/by/4.0/" title="Creative Commons Attribution 4.0 International">CC BY 4.0</a>, except for logos.
-                    Code <a href="https://github.com/ailintom/persons-names-MK">available on GitHub</a> under MIT license.
+                    Content licensed under <a href="https://creativecommons.org/licenses/by/4.0/" title="Creative Commons Attribution 4.0 International">CC BY 4.0</a>, except for logos. Dataset available under <a href="http://dx.doi.org/10.5281/zenodo.1411392">doi: 10.5281/zenodo.1411392</a>.
+                    Source code <a href="https://github.com/ailintom/persons-names-MK">on GitHub</a> under the MIT license.
                 </p>
                 <p>
                     <a class="footer_link" href="<?= Request::makeURL('info') ?>/impressum">Impressum</a>
-                    <a class="footer_link" href="<?= Request::makeURL('info') ?>/privacy">Privacy policy</a>
+                    <a class="footer_link" href="<?= Request::makeURL('info') ?>/privacy">Privacy Policy</a>
                 </p>
             </div>
             <div class="column">

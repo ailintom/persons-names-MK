@@ -66,7 +66,7 @@ try {
   const MAX_STABLE_URL_LENGTH = 35;
   const FORMAL_PATTERNS_ID = 251658605;
   const SEMANTIC_CLASSES_ID = 251658604;
-  const START_PAGE_TEXT = "<p>The online database “Persons and Names of the Middle Kingdom” (PNM) is developed as part of the project <a href='https://www.aegyptologie.uni-mainz.de/umformung-und-variabilitaet-1/'>“Umformung und Variabilität im Korpus altägyptischer Personennamen 2055–1550 v.&nbsp;Chr.”</a>, funded by the <a href='http://www.fritz-thyssen-stiftung.de'>Fritz Thyssen Foundation</a>. The database is currently under development and will include data on Egyptian Middle Kingdom personal names, people, written sources, titles, and dossiers of persons attested in various sources.</p>";
+  const START_PAGE_TEXT = "<p>The online database “Persons and Names of the Middle Kingdom” (PNM) is developed as part of the project <a href='https://www.aegyptologie.uni-mainz.de/umformung-und-variabilitaet-1/'>“Umformung und Variabilität im Korpus altägyptischer Personennamen 2055–1550 v.&nbsp;Chr.”</a>, funded by the <a href='http://www.fritz-thyssen-stiftung.de'>Fritz Thyssen Foundation</a></p>";
   const BASE = '/subpath/';
   const HOST = 'https://pnm.uni-mainz.de';
   const IMPRESSUM = "";

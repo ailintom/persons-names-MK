@@ -6,6 +6,8 @@
 
 namespace PNM\views;
 
+use \PNM\Request;
+
 class titleView extends View
 {
     /*

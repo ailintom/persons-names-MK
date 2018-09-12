@@ -22,6 +22,6 @@ class titles extends ListModel
         if (empty($sortField)) {
             $sortField = $this->defaultsort;
         }
-        return $this->replaceSortField($sortField, ['title', 'ward_fischer'], ['title_sort', 'ward_fischer_sort']);
+        return $this->replaceSortField($sortField, ['title', 'ward_fischer', 'hannig'], ['title_sort', 'ward_fischer_sort', 'hannig_sort']);
     }
 }
