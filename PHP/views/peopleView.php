@@ -47,7 +47,7 @@ class peopleView extends View
                             <label for="Atitle">Title:</label>
                         </div>
                         <div class="column -wide">
-                            <input name="Atitle" id="Atitle" placeholder="MdC (jmj-rA pr) or Unicode (jmj-rꜣ pr)" type="text" <?= View::oldValue('Atitle') ?>>
+                            <input name="Atitle" id="Atitle" placeholder="MdC (jmj-rA pr) / Unicode (jmj-rꜣ pr)" type="text" <?= View::oldValue('Atitle') ?>>
                         </div>
                     </div>
                     <div class="row -small">
@@ -55,7 +55,23 @@ class peopleView extends View
                             <label for="Aname">Name:</label>
                         </div>
                         <div class="column -wide">
-                            <input name="Aname" id="Aname" placeholder="MdC (ra-Htp) or Unicode (rꜥ-ḥtp)" type="text" <?= View::oldValue('Aname') ?>>
+                            <input name="Aname" id="Aname" placeholder="MdC (ra-Htp) / Unicode (rꜥ-ḥtp)" type="text" <?= View::oldValue('Aname') ?>>
+                        </div>
+                    </div>
+                    <div class="row -small">
+                        <div class="column">
+                            <label for="Aform_type">Name pattern:</label>
+                </div>
+                        <div class="column -wide">
+                            <input id="Aform_type" name="Aform_type" title="" placeholder="Example: DN (m)+ḥtp.w" list="name-types-formal" type="text" <?= View::oldValue('Aform_type') ?>>
+                        </div>
+                    </div>
+                    <div class="row -small">
+                        <div class="column">
+                            <label for="Asem_type">Semantic class:</label>
+                        </div>
+                        <div class="column -wide">
+                            <input id="Asem_type" name="Asem_type" title="" placeholder="Example: theophoric names" list="name-types-semantic" type="text" <?= View::oldValue('Asem_type') ?>>
                         </div>
                     </div>
                 </div>
@@ -81,7 +97,7 @@ class peopleView extends View
                             <label for="Btitle">Title:</label>
                         </div>
                         <div class="column -wide">
-                            <input name="Btitle" id="Btitle" placeholder="MdC (jmj-rB pr) or Unicode (jmj-rꜣ pr)" type="text" <?= View::oldValue('Btitle') ?>>
+                            <input name="Btitle" id="Btitle" placeholder="MdC (jmj-rA pr) / Unicode (jmj-rꜣ pr)" type="text" <?= View::oldValue('Btitle') ?>>
                         </div>
                     </div>
                     <div class="row -small">
@@ -89,10 +105,25 @@ class peopleView extends View
                             <label for="Bname">Name:</label>
                         </div>
                         <div class="column -wide">
-                            <input name="Bname" id="Bname" placeholder="MdC (ra-Htp) or Unicode (rꜥ-ḥtp)" type="text" <?= View::oldValue('Bname') ?>>
+                            <input name="Bname" id="Bname" placeholder="MdC (ra-Htp) / Unicode (rꜥ-ḥtp)" type="text" <?= View::oldValue('Bname') ?>>
                         </div>
                     </div>
-
+                    <div class="row -small">
+                        <div class="column">
+                            <label for="Bform_type">Name pattern:</label>
+                </div>
+                        <div class="column -wide">
+                            <input id="Bform_type" name="Bform_type" title="" placeholder="Example: DN (m)+ḥtp.w" list="name-types-formal" type="text" <?= View::oldValue('Bform_type') ?>>
+            </div>
+                    </div>
+                    <div class="row -small">
+                        <div class="column">
+                            <label for="Bsem_type">Semantic class:</label>
+                        </div>
+                        <div class="column -wide">
+                            <input id="Bsem_type" name="Bsem_type" title="" placeholder="Example: theophoric names" list="name-types-semantic" type="text" <?= View::oldValue('Bsem_type') ?>>
+                        </div>
+                    </div>
                 </div>
             </div>
             <p>

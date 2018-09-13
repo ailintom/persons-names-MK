@@ -117,12 +117,18 @@ class titleView extends View
             echo $dl->get('periods');
             echo $dl->get('places');
             ?>
-        </form>
-        <h2 class="sr-only">Results</h2>
-        <?php
-        $tableAtt = new TableView($data->get('attestations'), ['inscriptions_id', 'attestations_id'], 'inscription');
-        $tableAtt->renderTable(['personal_name', 'gender', 'title_string', 'title', 'dating', 'region', 'persons'], ['Name', 'Gender', 'Titles', 'Object', 'Date', 'Region', 'Person'], true, 'attestations');
-        // ['inscriptions_id', 'attestations_id', 'personal_name', 'gender', 'title_string', 'title', 'dating', 'origin', 'count_persons']
+        </form><?php
+        if (empty($data->get('attestations')) || $data->get('attestations')->count == 0) {
+            ?>
+            <h2 class="sr-only">Nothing found</h2>&nbsp;
+            <?php
+        } else {
+            ?>
+            <h2 class="sr-only" id="results">Results</h2><?php
+            $tableAtt = new TableView($data->get('attestations'), ['inscriptions_id', 'attestations_id'], 'inscription');
+            $tableAtt->renderTable(['personal_name', 'gender', 'title_string', 'title', 'dating', 'region', 'persons'], ['Name', 'Gender', 'Titles', 'Object', 'Date', 'Region', 'Person'], true, 'attestations');
+            // ['inscriptions_id', 'attestations_id', 'personal_name', 'gender', 'title_string', 'title', 'dating', 'origin', 'count_persons']
+        }
     }
 
     protected function echoRelation($predicate, $pred_string)

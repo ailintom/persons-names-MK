@@ -36,21 +36,27 @@ class Datalist
             case "materials":
                 $strsql = "SELECT item_name FROM thesauri WHERE thesaurus = ? ORDER BY item_name";
                 $value = 3;
+                break;
             case "object-subtypes":
                 $strsql = "SELECT item_name FROM thesauri WHERE thesaurus = ? ORDER BY item_name";
                 $value = 2;
+                break;
             case "object-types":
                 $strsql = "SELECT item_name FROM thesauri WHERE thesaurus = ? ORDER BY item_name";
                 $value = 1;
+                break;
             case "name-types-semantic":
                 $strsql = "SELECT title FROM name_types_temp INNER JOIN name_types ON name_types_temp.child_id = name_types.name_types_id WHERE name_types_temp.parent_id=? ORDER BY name_types.title;";
                 $value = Config::SEMANTIC_CLASSES_ID;
+                break;
             case "name-types-formal":
                 $strsql = "SELECT title FROM name_types_temp INNER JOIN name_types ON name_types_temp.child_id = name_types.name_types_id WHERE name_types_temp.parent_id=? ORDER BY name_types.title;";
                 $value = Config::FORMAL_PATTERNS_ID;
+                break;
             case "places":
                 $strsql = "SELECT place_name FROM places ORDER BY place_name";
                 return $this->datalistFromSQL($name, $strsql, null, null);
+                break;
             case "periods":
             default:
                 $strsql = "SELECT item_name FROM thesauri WHERE thesaurus = 5 OR thesaurus = ? ORDER BY item_name";
@@ -63,7 +69,7 @@ class Datalist
     {
         $html = "\n" . '<datalist id="' . $name . '">';
         $arr = \PNM\models\Lookup::getColumn($strsql, $value, $param);
-        $html .= implode(array_map([$this, 'singleDatalistEntry'], array_column($arr, 0)));
+        $html .= implode(array_map([$this, 'singleDatalistEntry'], $arr));
         $html .= '</datalist>';
         return $html;
     }

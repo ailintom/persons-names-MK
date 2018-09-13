@@ -365,8 +365,10 @@ Each record in this table represents an Egyptian title.
 | ward_fischer | VARCHAR(191)   | List of corresponding lemma numbers in Ward, Index of Egyptian Administrative and Religious Titles of the Middle Kingdom and Fischer, Egyptian Titles of the Middle Kingdom. A Supplement to Wm. Ward's Index |
 | ward_fischer_sort | VARCHAR(191)   |  Temporary field with the `ward_fischer` number converted for natural sort |
 |usage_area         | VARCHAR(191)   | The `place_name` of the record in the table `places` corresponding to the region where the title was predominantly used |
+|usage_area_sort |    INT | The `latitude` of the record in the table `places` corresponding to the `usage_area` |
 |usage_area_note    | TEXT  | Explanatory notes and bibliographic references to the `usage_area` |
 |usage_period       | VARCHAR(191)   | The `item_name` of the period when the title was predominantly used in the dating thesaurus (thesaurus 5), *loosely based on a subset of the [THOT Dates and dating systems thesaurus](http://thot.philo.ulg.ac.be/concept/thot-114)*   |
+|usage_period_sort |    INT | The sort value of the period to which the title can be dated  |
 |usage_period_note    | TEXT  | Explanatory notes and bibliographic references to the `usage_period` |
 | note              | TEXT| General notes related to the title |
 
@@ -425,8 +427,10 @@ Each record in this table represents an Egyptian name.
 |scheele-schweitzer | VARCHAR(191)   | List of corresponding entries in K. Scheele-Schweitzer, *Die Personennamen des Alten Reiches*, separated by semicolons |
 |agea               | VARCHAR(191)   | List of corresponding name numbers in the [AGÉA database](http://www.ifao.egnet.net/bases/agea/), separated by semicolons |
 |usage_area         | VARCHAR(191)   | The `place_name` of the record in the table `places` corresponding to the region where the name was predominantly used |
+|usage_area_sort |    INT | The `latitude` of the record in the table `places` corresponding to the `usage_area` |
 |usage_area_note    | TEXT  | Explanatory notes and bibliographic references to the `usage_area` |
 |usage_period       | VARCHAR(191)   | The `item_name` of the period when the name was predominantly used in the dating thesaurus (thesaurus 5), *loosely based on a subset of the [THOT Dates and dating systems thesaurus](http://thot.philo.ulg.ac.be/concept/thot-114)*   |
+|usage_period_sort |    INT | The sort value of the period to which the title can be dated  |
 |usage_period_note    | TEXT  | Explanatory notes and bibliographic references to the `usage_period` |
 | note              | TEXT  | General notes related to the name |
 
@@ -484,6 +488,18 @@ Each record represents a statement about a bond between two personal dossiers re
 |     subject_id    | INT   | `persons_id` of the record in `persons` corresponding to the subject of the statement   |
 | predicate         | VARCHAR(191) | The `item_name` of the bond type in the bond thesaurus (thesaurus 11), *based on a subset of the elements of [SNAP:DRGN Bond class](http://snapdrgn.net/ontology); example: SonOf* |
 |      object_id    | INT   | `persons_id` of the record in `persons` corresponding to the object of the statement  |
+
+### title_relations *(table_id: 3)*  
+Each record represents a statement about a relation between two titles.  
+
+| Field name        | Type  | Description |
+| ---               | :---: | :---        |
+|title_relations_id   | INT   | Unique record ID, primary key |
+| date_created| DATE | Date when the record was created in the published version of the database |
+| date_changed| DATE | Date when the last change to the record was published |
+|     subject_id    | INT   | `titles_id` of the record in `titles` corresponding to the subject of the statement   |
+| predicate         | VARCHAR(191) | The relation of the title with the `subject_id` to the title with the `object_id` |
+|      object_id    | INT   | `titles_id` of the record in `titles` corresponding to the object of the statement  |
 
 
 ### info *(no table_id)*  

@@ -22,17 +22,17 @@ class inscriptionsView extends View
         }
         ?>
         <p class="info-box">
-        <?= Icon::get('info') ?>
+            <?= Icon::get('info') ?>
             You can use <b>%</b> or <b>*</b> as wildcards when searching for titles or inventory numbers. Thus,
             “CG 2011*” will match all stelae from “CG 20110” to “CG 20119”. Inventory numbers are searched for when a collection is selected.
         </p>
         <form action="<?= Request::makeURL('inscriptions') ?>" method="get" onreset="MK.removeAllFilters()">
             <div class="row">
                 <div class="column">
-        <?= (new TextInput('collection', 'Collection', 'The short name of the museum', 'Example: Bruxelles', 'collections'))->render() ?>
+                    <?= (new TextInput('collection', 'Collection', 'The short name of the museum', 'Example: Bruxelles', 'collections'))->render() ?>
                 </div>
                 <div class="column">
-        <?= (new TextInput('title', 'Title or inventory number', 'The title of the insciption used in the database or the inventory number in the collection', 'Example: Adam, ASAE 56, 213 or JE 43104'))->render() ?>
+                    <?= (new TextInput('title', 'Title or inventory number', 'The title of the insciption used in the database or the inventory number in the collection', 'Example: Adam, ASAE 56, 213 or JE 43104'))->render() ?>
                 </div>
             </div>
             <?php
@@ -82,15 +82,19 @@ class inscriptionsView extends View
             $dl = new Datalist();
             echo $dl->get('collections'), $dl->get('materials'), $dl->get('object-types'), $dl->get('object-subtypes'), $dl->get('periods'), $dl->get('places');
             ?>
-        </form>
-        <h2 class="sr-only">Results</h2>
+        </form>                
         <?php
-        $tableCo = new TableView($data, 'inscriptions_id', 'inscription', 'sort', '#results');
-        $tableCo->renderTable(['object_type', 'title', 'material',
-            'size', 'text_content', 'dating', 'inst_prov_temp', 'orig_prod_temp', 'owner'], ['Type', 'Object', 'Material', 'Size, mm',
-            'Text', 'Date', 'Provenance', 'Origin/Prod.', 'Owner'], true, '', ['Type', 'Object', 'Material', 'Size in mm',
-            'Text type', 'Date', 'Provenance or installation place', 'the origin of the owner or the place of production', 'Owner’s name']);
-
+        if (empty($data) || $data->count == 0) {
+            ?><h2 class="sr-only">Nothing found</h2>&nbsp;
+            <?php
+        } else {
+            ?><h2 class="sr-only">Results</h2><?php
+            $tableCo = new TableView($data, 'inscriptions_id', 'inscription', 'sort', '#results');
+            $tableCo->renderTable(['object_type', 'title', 'material',
+                'size', 'text_content', 'dating', 'inst_prov_temp', 'orig_prod_temp', 'owner'], ['Type', 'Object', 'Material', 'Size, mm',
+                'Text', 'Date', 'Provenance', 'Origin/Prod.', 'Owner'], true, '', ['Type', 'Object', 'Material', 'Size in mm',
+                'Text type', 'Date', 'Provenance or installation place', 'the origin of the owner or the place of production', 'Owner’s name']);
+        }
         // ['inscriptions_id', 'object_type', 'title', 'material', 'size', 'text_content', 'dating', 'inst_prov_temp', 'orig_prod_temp', 'owner']
         $this->toggleFilters(FormFilter::renderToggle($filters));
     }

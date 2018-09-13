@@ -34,7 +34,7 @@ class collectionsView extends View
                     <?= (new TextInput('location', 'Location', 'Enter the city where the collection is located', '', 'locations'))->render() ?>
                 </div>
                 <div class="column">
-                  <?= (new TextInput('tm_coll_id', 'Trismegistos Collections ID', 'Enter the Trismegistos Collections ID', 'Example: 188'))->render() ?>  
+                  <?= (new TextInput('tm_coll_id', 'Trismegistos Collections ID', 'Enter the Trismegistos Collections ID', 'Example: 1000'))->render() ?>  
                 </div>
             </div>
             <button type="submit" class="submit">

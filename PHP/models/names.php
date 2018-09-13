@@ -27,6 +27,6 @@ class names extends ListModel
         if (empty($sortField)) {
             $sortField = $this->defaultsort;
         }
-        return $this->replaceSortField($sortField, ['personal_name', 'ranke'], ['personal_name_sort', 'ranke_sort']);
+        return $this->replaceSortField($sortField, ['personal_name', 'ranke', 'usage_area', 'usage_period'], ['personal_name_sort', 'ranke_sort', 'usage_area_sort', 'usage_period_sort']);
     }
 }

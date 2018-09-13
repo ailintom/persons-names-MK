@@ -25,7 +25,7 @@ class typeView extends View
                 $this->renderChildren($data->get('subtypes')->data[0], 0);
                 echo('</dd>');
             }
-            echo( $this->descriptionElement('Total number of attestations of names belonging to this type and its sub-types', '<a href="' . Request::makeURL('people') . '?A' . ($data->get('category') == 'formal' ? 'form' : 'sem' ) . '_type' . '=' . urlencode($data->get('title')) . '">' . $data->get('attestations_count') . '</a>'));
+            echo( $this->descriptionElement('Attestations', '<a href="' . Request::makeURL('people') . '?A' . ($data->get('category') == 'formal' ? 'form' : 'sem' ) . '_type' . '=' . urlencode($data->get('title')) . '"> Display all people with names belonging to this type and its sub-types (attestation count: '.$data->get('attestations_count') . ')</a>'));
             echo $this->descriptionElement('Note', $data->get('note'), null, 'note');
             echo $this->descriptionElement('Bibliography', $this->renderBiblio($data->get('bibliography')), null, 'biblio-ref');
             //renderURL
@@ -34,7 +34,7 @@ class typeView extends View
         <?php
         if ($data->get('names')->total_count > 0) {
             $tableCo = new TableView($data->get('names'), 'personal_names_id', 'name', 'sort');
-            $tableCo->renderTable(['personal_name', 'gender', 'count_attestations', 'usage_period', 'usage_area', 'ranke', 'translation_en'], ['Personal name', 'Gender', 'Atts.', 'Period', 'Area', 'Ranke no.', 'Translation'], true);
+            $tableCo->renderTable(['personal_name', 'gender', 'count_attestations', 'usage_period', 'usage_area', 'ranke', 'translation_en'], ['Personal name', 'Gender', 'Atts.', 'Period', 'Area', 'Ranke no.', 'Translation'], true, 'personal names');
         }
     }
 
