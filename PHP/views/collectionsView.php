@@ -43,12 +43,6 @@ class collectionsView extends View
             <button type="submit" title="Clear search and display all records" name="action" value="reset">
                 Reset
             </button>
-            <?php
-            $dl = new Datalist();
-            echo $dl->get('full-names');
-            echo $dl->get('locations');
-            echo $dl->get('collections');
-            ?>
         </form>
         <?php
         if (empty($data) || $data->count == 0) {

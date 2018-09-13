@@ -89,7 +89,7 @@ class TableView
             }
             if ($this->data->start + $this->data->count - 1 < $this->data->total_count) {
                 $pag .= '<a class="pagination_link -next" href="' . Request::makeURL(Request::get('controller'), Request::get('id'), null, null, true, (($this->data->start + Config::ROWS_ON_PAGE - 1) < $this->data->total_count ? $this->data->start + Config::ROWS_ON_PAGE - 1 : $this->data->total_count - Config::ROWS_ON_PAGE))
-                        . '"' . $onclick_nav . '>Next ' . (($this->data->start + 2 * Config::ROWS_ON_PAGE - 1) < $this->data->total_count ? Config::ROWS_ON_PAGE : $this->data->total_count - $this->data->start - Config::ROWS_ON_PAGE - 1 ) . ' ' . Icon::get('chevron-right') . '</a>'
+                        . '"' . $onclick_nav . '>Next ' . (($this->data->start + (2 * Config::ROWS_ON_PAGE) - 1) < $this->data->total_count ? Config::ROWS_ON_PAGE : $this->data->total_count - $this->data->start - Config::ROWS_ON_PAGE + 1 ) . ' ' . Icon::get('chevron-right') . '</a>'
                         . '<a class="pagination_link -last" href="' . Request::makeURL(Request::get('controller'), Request::get('id'), null, null, true, intdiv($this->data->total_count, Config::ROWS_ON_PAGE) * Config::ROWS_ON_PAGE) . '"' . $onclick_nav . '>Last</a>';
             }
             $pag .= '</p>';

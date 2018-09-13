@@ -6,6 +6,11 @@
  */
 
 namespace PNM\controllers;
+use \PNM\Request,
+    \PNM\models\Rule,
+    \PNM\models\RuleExists,
+    \PNM\models\Filter,
+    \PNM\Config;
 
 class EntryController
 {
@@ -19,7 +24,7 @@ class EntryController
 
     public function load()
     {
-        $this->loadID((int) \PNM\Request::get('id'));
+        $this->loadID((int) Request::get('id'));
     }
     /* loadID
      * This function loads the record into the EntryModel and sends it to the view

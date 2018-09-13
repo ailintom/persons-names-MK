@@ -106,6 +106,8 @@ Each record in this table represents a physical object with an Egyptian inscript
 | date_changed| DATE | Date when the last change to the record was published |
 | title  | VARCHAR(191) | The title under which the object is referred to in the database (short museum name and main inventory number for objects in the museums or the reference to the most relevant (usually first) publication for other objects)  |
 | title_sort |VARCHAR(191) | `Title` converted for natural sort|
+| topbib_id | VARCHAR(255) | The reference to the Topographical Bibliography or a list of such references divided by semicolons |
+| tmtexts_id | INT | The reference to the Trismegistos Texts database |
 | object_type  | VARCHAR(191) | The `item_name` of the inscription type in the object_type thesaurus (thesaurus 1); *example: stela*  |
 | object_subtype | VARCHAR(191) | The `item_name` of the inscription subtype in the object_subtype thesaurus (thesaurus 2); *example: block-statue*  |
 | material          | VARCHAR(191) | The `item_name` of the material type in the material  thesaurus (thesaurus 3), *based on a subset of the [THOT Material thesaurus](http://thot.philo.ulg.ac.be/concept/thot-6200)* |

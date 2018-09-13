@@ -16,7 +16,7 @@ class inscription extends EntryModel
 
     protected function initFieldNames()
     {
-        $this->field_names = new FieldList(['inscriptions_id', 'title', 'object_type', 'object_subtype', 'material', 'length', 'height', 'width', 'thickness', 'find_groups_id', 'text_content',
+        $this->field_names = new FieldList(['inscriptions_id', 'title', 'topbib_id', 'object_type', 'object_subtype', 'material', 'length', 'height', 'width', 'thickness', 'find_groups_id', 'text_content',
             'script', 'provenance', 'provenance_note', 'installation_place', 'installation_place_note', 'origin', 'origin_note', 'production_place', 'production_place_note',
             'dating', 'dating_note', 'last_king_id', 'note']);
     }

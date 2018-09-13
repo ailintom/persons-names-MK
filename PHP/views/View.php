@@ -223,15 +223,18 @@ class View
     public static function toggleSingleFilter($fieldName, $filterName, $defaultVal)
     {
         if (is_array($fieldName)) {
-            $res = null;
+            $fieldSet = false;
+
             foreach ($fieldName as $name) {
-                $res .= static::toggleSingleFilter($name, $filterName, $defaultVal);
+                if (!empty(Request::get($name))) {
+                    $fieldSet = true;
+                }
             }
-            return $res;
         } else {
-            if (!empty(Request::get($fieldName)) && ( empty($defaultVal) ? true : Request::get($fieldName) != $defaultVal)) {
-                return "MK.toggleFilter('" . $filterName . "');";
-            }
+            $fieldSet = !empty(Request::get($fieldName)) && ( empty($defaultVal) ? true : Request::get($fieldName) != $defaultVal);
+        }
+        if ($fieldSet) {
+            return "MK.toggleFilter('" . $filterName . "');";
         }
     }
 

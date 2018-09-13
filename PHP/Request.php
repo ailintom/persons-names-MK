@@ -42,6 +42,7 @@ class Request
         'publication', 'title', 'titles', 'type', 'types', 'workshop'];
 
     private static $data = [];
+    public static $noDatalist;
 
     public static function get($key, $default = null)
     {
@@ -70,6 +71,13 @@ class Request
         if (!in_array(self::get('controller'), self::CONTROLLERS)) { // only valid controller names can be used
             self::$data['controller'] = 'info';
             self::$data['id'] = null;
+        }
+        //$isSafari
+        if (isset($_SERVER['HTTP_USER_AGENT'])) {
+            $userAgent = trim(filter_input(INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW));
+            if (preg_match("/^((?!chrome|android).)*safari/i", $userAgent) || preg_match("/.*MSIE [23456789]\..*/i", $userAgent)) {
+                self::$noDatalist = true;
+            }
         }
     }
 

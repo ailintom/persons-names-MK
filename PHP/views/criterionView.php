@@ -15,15 +15,15 @@ class criterionView extends View
         ?>
         <p class="info-box">
             <?php
-            echo( Icon::get('info') . $data->get('criterion'));
+            echo Icon::get('info'), htmlspecialchars($data->get('criterion'));
             ?>
         </p>
         <dl>
             <?php
             $placesMV = new placesMicroView();
-            echo( $this->descriptionElement('Production place', $placesMV->render($data->get('production_place')), null, 'place'));
-            echo( $this->descriptionElement('Date', $data->get('dating'), null, 'date'));
-            echo( $this->descriptionElement('Bibliography', $this->renderBiblio($data->get('bibliography'))));
+            echo $this->descriptionElement('Production place', $placesMV->render($data->get('production_place')), null, 'place'),
+            $this->descriptionElement('Date', $data->get('dating'), null, 'date'),
+            $this->descriptionElement('Bibliography', $this->renderBiblio($data->get('bibliography')));
             ?>
         </dl>
         <?php

@@ -37,5 +37,4 @@ use \PNM\Request,
 </footer>
 <?= Icon::echoSvgFooter() ?>
 <script src="<?= Config::BASE ?>assets/script/script.js"></script>
-<!--<script src="<?= Config::BASE ?>assets/script/datalist.polyfill.min.js"></script>datalist polyfill for browsers such as Safari-->
 </body></html>

@@ -96,3 +96,6 @@ CALL children_temp_calc;
 CALL siblings_temp_calc;
 CALL spouses_temp_calc;
 ```
+
+Spellings rendered as png files should be put into the directory (Version number)\assets\spellings.
+For example, for version 5 it would be `5\assets\spellings`

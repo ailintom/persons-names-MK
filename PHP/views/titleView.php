@@ -83,8 +83,7 @@ class titleView extends View
                     any
                 </label>
                 in the region
-                <label for="place" class="sr-only">Region</label>
-                <input id="place" list="places" name="place" placeholder="region or locality" title="Enter the region" type="text" <?= View::oldValue('place') ?>>
+                <?= (new TextInput('place', 'Region', 'Enter the region', 'region or locality', 'places', true))->render() ?>
             </p>
             <p>
                 <span id="period-label">Chronological filter:</span>
@@ -103,8 +102,7 @@ class titleView extends View
                     not earlier than
                 </label>
                 the period
-                <label for="period" class="sr-only">Period</label>
-                <input id="period" list="periods" name="period" placeholder="period or reign" title="Enter the period" type="text" <?= View::oldValue('period') ?>>
+                <?= (new TextInput('period', 'Period', 'Enter the period', 'period or reign', 'periods', true))->render() ?>
             </p>
             <button type="submit" class="submit">
                 Filter
@@ -112,11 +110,6 @@ class titleView extends View
             <button type="submit" title="Clear filters and display all records" name="action" value="reset">
                 Reset
             </button>
-            <?php
-            $dl = new Datalist();
-            echo $dl->get('periods');
-            echo $dl->get('places');
-            ?>
         </form><?php
         if (empty($data->get('attestations')) || $data->get('attestations')->count == 0) {
             ?>

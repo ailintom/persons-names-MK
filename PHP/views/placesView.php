@@ -61,8 +61,7 @@ class placesView extends View
                         Places north of
                     </div>
                     <div class="filter_content">
-                        <label for="northof" class="sr-only">Places north of</label>
-                        <input id="northof" list="places" name="northof" placeholder="Region or locality" type="text" <?= View::oldValue('northof') ?>>
+                         <?= (new TextInput('northof', 'Region', 'Enter the region', 'region or locality', 'places', true))->render() ?>
                     </div>
                 </div>
                 <div class="filter" id="southof-filter">
@@ -73,8 +72,7 @@ class placesView extends View
                         Places south of
                     </div>
                     <div class="filter_content">
-                        <label for="southof" class="sr-only">Places south of</label>
-                        <input id="southof" list="places" name="southof" placeholder="Region or locality" type="text" <?= View::oldValue('southof') ?>>
+                         <?= (new TextInput('southof', 'Region', 'Enter the region', 'region or locality', 'places', true))->render() ?>
                     </div>
                 </div>
                 <div class="filter" id="near-filter">
@@ -85,8 +83,7 @@ class placesView extends View
                         Places near
                     </div>
                     <div class="filter_content">
-                        <label for="near" class="sr-only">Places near</label>
-                        <input id="near" list="places" name="near" placeholder="Region or locality" type="text" <?= View::oldValue('near') ?>>
+                         <?= (new TextInput('near', 'Region', 'Enter the region', 'region or locality', 'places', true))->render() ?>
                     </div>
                 </div>
                 <div class="filter" id="tm_geoid-filter">
@@ -120,10 +117,7 @@ class placesView extends View
             <button type="submit" title="Clear search and display all records" name="action" value="reset">
                 Reset
             </button>
-            <?php
-            $dl = new Datalist();
-            echo $dl->get('places');
-            ?>
+
         </form>
         <?php
         if (empty($data) || $data->count == 0) {

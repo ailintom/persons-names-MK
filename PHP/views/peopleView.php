@@ -16,7 +16,7 @@ class peopleView extends View
         (new HeadView())->render(HeadView::HEADERSLIM, 'People');
         ?>
         <p class="info-box">
-        <?= Icon::get('info') ?>
+            <?= Icon::get('info') ?>
             You can use <b>%</b> or <b>*</b> as wildcards.
             “nfr*” will match “nfr.wj” or “nfr-ḥtp”. “*nfr*” will also match “snfr.wj”.
         </p>
@@ -61,9 +61,9 @@ class peopleView extends View
                     <div class="row -small">
                         <div class="column">
                             <label for="Aform_type">Name pattern:</label>
-                </div>
+                        </div>
                         <div class="column -wide">
-                            <input id="Aform_type" name="Aform_type" title="" placeholder="Example: DN (m)+ḥtp.w" list="name-types-formal" type="text" <?= View::oldValue('Aform_type') ?>>
+                            <?= (new TextInput('Aform_type', 'Name pattern', 'Select a formal name pattern', 'Example: GN-ḥtp', 'name-types-formal', true))->render() ?>
                         </div>
                     </div>
                     <div class="row -small">
@@ -71,7 +71,7 @@ class peopleView extends View
                             <label for="Asem_type">Semantic class:</label>
                         </div>
                         <div class="column -wide">
-                            <input id="Asem_type" name="Asem_type" title="" placeholder="Example: theophoric names" list="name-types-semantic" type="text" <?= View::oldValue('Asem_type') ?>>
+                            <?= (new TextInput('Asem_type', 'Semantic class', 'Select a semantic class', 'Example: theophoric name', 'name-types-semantic', true))->render() ?>
                         </div>
                     </div>
                 </div>
@@ -111,17 +111,17 @@ class peopleView extends View
                     <div class="row -small">
                         <div class="column">
                             <label for="Bform_type">Name pattern:</label>
-                </div>
+                        </div>
                         <div class="column -wide">
-                            <input id="Bform_type" name="Bform_type" title="" placeholder="Example: DN (m)+ḥtp.w" list="name-types-formal" type="text" <?= View::oldValue('Bform_type') ?>>
-            </div>
+                            <?= (new TextInput('Bform_type', 'Name pattern', 'Select a formal name pattern', 'Example: GN-ḥtp', 'name-types-formal', true))->render() ?>
+                        </div>
                     </div>
                     <div class="row -small">
                         <div class="column">
                             <label for="Bsem_type">Semantic class:</label>
                         </div>
                         <div class="column -wide">
-                            <input id="Bsem_type" name="Bsem_type" title="" placeholder="Example: theophoric names" list="name-types-semantic" type="text" <?= View::oldValue('Bsem_type') ?>>
+                            <?= (new TextInput('Bsem_type', 'Semantic class', 'Select a semantic class', 'Example: theophoric name', 'name-types-semantic', true))->render() ?>
                         </div>
                     </div>
                 </div>
@@ -144,18 +144,18 @@ class peopleView extends View
                 <h3 class="sr-only">Filters</h3>
                 <div class="filters_selection">
                     <button class="filters_button" aria-controls="region-filter" aria-expanded="false" onclick="MK.toggleFilter('region-filter')" title="Toggle region filter" type="button">
-        <?= Icon::get('plus') . Icon::get('minus') ?>
+                        <?= Icon::get('plus') . Icon::get('minus') ?>
                         Region or locality
                     </button>
                     <button class="filters_button" aria-controls="period-filter" aria-expanded="false" onclick="MK.toggleFilter('period-filter')" title="Toggle period filter" type="button">
-        <?= Icon::get('plus') . Icon::get('minus') ?>
+                        <?= Icon::get('plus') . Icon::get('minus') ?>
                         Period or reign
                     </button>
                 </div>
                 <div class="filter" id="region-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('region-filter')" title="Remove region filter" type="button">
-        <?= Icon::get('minus', 'Remove region filter') ?>
+                            <?= Icon::get('minus', 'Remove region filter') ?>
                         </button>
                         <span id="region-label">Region or locality</span>
                     </div>
@@ -185,14 +185,13 @@ class peopleView extends View
                             all
                         </label>
                         in the region
-                        <label for="place" class="sr-only">Region</label>
-                        <input id="place" list="places" name="place" placeholder="region or locality" title="Enter the region" type="text" <?= View::oldValue('place') ?>>
+                        <?= (new TextInput('place', 'Region', 'Enter the region', 'region or locality', 'places', true))->render() ?>
                     </div>
                 </div>
                 <div class="filter" id="period-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('period-filter')" title="Remove period filter" type="button">
-        <?= Icon::get('minus', 'Remove period filter') ?>
+                            <?= Icon::get('minus', 'Remove period filter') ?>
                         </button>
                         <span id="period-label">Period or reign</span>
                     </div>
@@ -212,8 +211,7 @@ class peopleView extends View
                             not earlier than
                         </label>
                         the period
-                        <label for="period" class="sr-only">Period</label>
-                        <input id="period" list="periods" name="period" placeholder="period or reign" title="Enter the period" type="text" <?= View::oldValue('period') ?>>
+                        <?= (new TextInput('period', 'Period', 'Enter the period', 'period or reign', 'periods', true))->render() ?>
                     </div>
                 </div>
             </div>
@@ -223,13 +221,6 @@ class peopleView extends View
             <button type="submit" title="Clear search and display all records" name="action" value="reset">
                 Reset
             </button>
-            <?php
-            $dl = new Datalist();
-            echo $dl->get('name-types-formal'),
-            $dl->get('name-types-semantic'),
-            $dl->get('periods'),
-            $dl->get('places');
-            ?>
         </form>
         <?php
         if (empty($data) || $data->count == 0) {
@@ -271,5 +262,3 @@ class peopleView extends View
         $this->toggleFilters([['period', 'period-filter'], ['place', 'region-filter']]);
     }
 }
-
-    

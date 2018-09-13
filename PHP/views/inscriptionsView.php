@@ -41,22 +41,13 @@ class inscriptionsView extends View
             $filters[] = new FormFilter('type-filter', 'Type', $typeInputs, ['object_type', 'object_subtype']);
             $filters[] = new FormFilter('material-filter', 'Material', (new TextInput('material', 'Material:', 'The principal material the  object is made of', 'Example: Granite', 'materials'))->render(), 'material');
             $sizeInputs = (new RadioGroup('size-option', [['less', 'less than or equal to'], ['greater', 'greater than or equal to']], 'greater', 'size-filter'))->render()
-                    . ' ' . (new TextInput('size', 'Size in mm:', 'Size in millimeters', null, null, true))->render();
+                    . ' ' . (new TextInput('size', 'Size in mm:', 'Size in millimeters', 'Largest dimension in mm', null, true))->render();
             $filters[] = new FormFilter('size-filter', 'Size', $sizeInputs, 'size');
             $contentInputs = (new Select('text_content', 'Content:', 'The principal content of the inscription', \PNM\models\Lookup::getThesaurus(\PNM\models\Lookup::TEXT_CONTENT_THESAURUS), ''))->render();
             $filters[] = new FormFilter('content-filter', 'Content', $contentInputs, 'text_content');
             $scriptInputs = (new Select('script', 'Script:', 'The script of the inscription', \PNM\models\Lookup::getThesaurus(\PNM\models\Lookup::SCRIPT_THESAURUS), ''))->render();
             $filters[] = new FormFilter('script-filter', 'Script', $scriptInputs, 'script');
-            /*
-             *
-              <input id="greater" name="size-option" value="greater" type="radio" checked aria-labelledby="size-label">
-              <label for="greater">greater than or equal to</label>
-              /
-              <input id="less" name="size-option" value="less" type="radio" aria-labelledby="size-label">
-              <label for="less">less than or equal to</label>
-              <label for="size" class="sr-only">Size in mm</label>
-              <input id="size" name="size" placeholder="size in mm" type="text">
-             */
+
             $regioInputs = (new RadioGroup('geo-filter', [['provenance', 'Provenance', 'Attestations in sources found in the certain region']
                 , ['installation', 'installation place', 'Attestations on monuments installed in certain region']
                 , ['origin', 'origin', 'Attestations in sources found in the certain region']
@@ -78,10 +69,6 @@ class inscriptionsView extends View
             <button type="submit" title="Clear search and display all records" name="action" value="reset">
                 Reset
             </button>
-            <?php
-            $dl = new Datalist();
-            echo $dl->get('collections'), $dl->get('materials'), $dl->get('object-types'), $dl->get('object-subtypes'), $dl->get('periods'), $dl->get('places');
-            ?>
         </form>                
         <?php
         if (empty($data) || $data->count == 0) {

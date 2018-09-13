@@ -13,15 +13,22 @@ use PNM\Config;
 class Datalist
 {
 
+    private static $echoedLists = [];
     private $db;
+    private $selected;
 
     public function __construct()
     {
         $this->db = \PNM\Db::getInstance();
     }
 
-    public function get($name)
+    public function get($name, $selected = null)
     {
+        if (!\PNM\Request::$noDatalist && in_array($name, self::$echoedLists)) {
+            return null;
+        }
+        $this->selected = $selected;
+        array_push(self::$echoedLists, $name);
         switch ($name) {
             case "collections":
                 $strsql = "SELECT DISTINCT title FROM collections WHERE title >'' ORDER BY title";
@@ -62,21 +69,33 @@ class Datalist
                 $strsql = "SELECT item_name FROM thesauri WHERE thesaurus = 5 OR thesaurus = ? ORDER BY item_name";
                 $value = 6;
         }
+
         return $this->datalistFromSQL($name, $strsql, $value);
     }
 
     private function datalistFromSQL($name, $strsql, $value, $param = 'i')
     {
-        $html = "\n" . '<datalist id="' . $name . '">';
+        if (\PNM\Request::$noDatalist) {
+            $html = "\n" . '<option value = "">&nbsp;</option>';
+        } else {
+            $html = "\n" . '<datalist id="' . $name . '">';
+        }
         $arr = \PNM\models\Lookup::getColumn($strsql, $value, $param);
         $html .= implode(array_map([$this, 'singleDatalistEntry'], $arr));
-        $html .= '</datalist>';
+        if (!\PNM\Request::$noDatalist) {
+            $html .= '</datalist>';
+        }
         return $html;
     }
 
     protected function singleDatalistEntry($entry)
     {
-
-        return "\n" . '<option value="' . htmlspecialchars(trim($entry), ENT_QUOTES, 'UTF-8') . '">';
+        $sel = null;
+        if (!empty($this->selected) && \PNM\Request::$noDatalist) {
+            if ($this->selected == $entry) {
+                $sel = " selected";
+            }
+        }
+        return "\n" . '<option value="' . htmlspecialchars(trim($entry), ENT_QUOTES, 'UTF-8') . '"' . $sel . '>' . htmlspecialchars(trim($entry), ENT_QUOTES, 'UTF-8') . '</option>';
     }
 }

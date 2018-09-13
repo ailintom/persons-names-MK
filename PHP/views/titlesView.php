@@ -89,8 +89,7 @@ class titlesView extends View
                             characteristic of
                         </label>
                         the region
-                        <label for="place" class="sr-only">Region</label>
-                        <input id="place" list="places" name="place" placeholder="region or locality" title="Enter the region" type="text"<?= View::oldValue('place') ?>>
+                        <?= (new TextInput('place', 'Region', 'Enter the region', 'region or locality', 'places', true))->render() ?>
                     </div>
                 </div>
                 <div class="filter" id="period-filter">
@@ -102,8 +101,13 @@ class titlesView extends View
                     </div>
                     <div class="filter_content">
                         <input id="period-attested" name="match-date" type="radio" value="attested" aria-labelledby="period-label"<?= View::oldValueRadio('match-date', 'attested', true) ?>>
-                        <label for="period-attested" title="Match any title attested in the given period">
-                            Attested in
+                        <label for="period-attested" title="Match any title possibly attested in the given period">
+                            Attested ca.
+                        </label>
+                        /
+                       <input id="period-strictly" name="match-date" type="radio" value="strictly" aria-labelledby="period-label"<?= View::oldValueRadio('match-date', 'strictly') ?>>
+                        <label for="period-strictly" title="Match any title attested strictly in the given period">
+                            strictly in
                         </label>
                         /
                         <input id="period-characteristic" name="match-date" type="radio" value="characteristic" aria-labelledby="period-label"<?= View::oldValueRadio('match-date', 'characteristic') ?>>
@@ -111,8 +115,7 @@ class titlesView extends View
                             characteristic of
                         </label>
                         the period
-                        <label for="period" class="sr-only">Period</label>
-                        <input id="period" list="periods" name="period" placeholder="period or reign" title="Enter the period" type="text"<?= View::oldValue('period') ?>>
+                         <?= (new TextInput('period', 'Period', 'Enter the period', 'period or reign', 'periods', true))->render() ?>
                     </div>
                 </div>
                 <div class="filter" id="gender-filter">
@@ -165,7 +168,7 @@ class titlesView extends View
                     </div>
                     <div class="filter_content">
                         <label for="hannig" class="sr-only">Hannig number</label>
-                        <input id="hannig" name="hannig" placeholder="Example: 2044" title="Enter the entry number Hannig, Ägyptisches Wörterbuch II: Mittleres Reich und Zweite Zwischenzeit" type="text"<?= View::oldValue('hannig') ?>>
+                        <input id="hannig" name="hannig" placeholder="Example: 1950" title="Enter the entry number Hannig, Ägyptisches Wörterbuch II: Mittleres Reich und Zweite Zwischenzeit" type="text"<?= View::oldValue('hannig') ?>>
                     </div>
                 </div>
             </div>
@@ -175,11 +178,6 @@ class titlesView extends View
             <button type="submit" title="Clear search and display all records" name="action" value="reset">
                 Reset
             </button>
-            <?php
-            $dl = new Datalist();
-            echo $dl->get('periods');
-            echo $dl->get('places');
-            ?>
         </form>
         <?php
         if (empty($data) || $data->count == 0) {

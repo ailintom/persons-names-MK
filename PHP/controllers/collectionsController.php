@@ -8,8 +8,12 @@
 
 namespace PNM\controllers;
 
-use \PNM\models\Rule, \PNM\models\Filter, \PNM\Request, \PNM\Config;
-use \PNM\models\collections, \PNM\views\collectionsView;
+use \PNM\Request,
+    \PNM\models\Rule,
+    \PNM\models\Filter,
+    \PNM\Config;
+use \PNM\models\collections,
+    \PNM\views\collectionsView;
 
 class collectionsController
 {
@@ -17,16 +21,16 @@ class collectionsController
     public function load()
     {
         $rules = [];
-        if (!empty(\PNM\Request::get('title'))) {
+        if (!empty(Request::get('title'))) {
             array_push($rules, new Rule('title', 'exactlike', Request::get('title')));
         }
-        if (!empty(\PNM\Request::get('full_name'))) {
+        if (!empty(Request::get('full_name'))) {
             array_push($rules, new Rule(['full_name_en', 'full_name_national_language'], 'exactlike', Request::get('full_name')));
         }
-        if (!empty(\PNM\Request::get('location'))) {
+        if (!empty(Request::get('location'))) {
             array_push($rules, new Rule('location', 'exactlike', Request::get('location')));
         }
-        if (!empty(\PNM\Request::get('tm_coll_id'))) {
+        if (!empty(Request::get('tm_coll_id'))) {
             array_push($rules, new Rule('tm_coll_id', 'exact', Request::get('tm_coll_id')));
         }
         $filter = new Filter($rules);

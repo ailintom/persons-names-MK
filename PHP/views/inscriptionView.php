@@ -6,6 +6,7 @@
  */
 
 namespace PNM\views;
+
 use \PNM\Request;
 
 class inscriptionView extends View
@@ -20,6 +21,7 @@ class inscriptionView extends View
         echo $this->descriptionElement('Alternative inv.', $this->renderInvNos($data->get('alternative_inv_no')), null, 'alternative_inv_no');
         echo $this->descriptionElement('Obsolete inv.', $this->renderInvNos($data->get('obsolete_inv_no')), null, 'obsolete_inv_no');
         echo $this->descriptionElement('Erroneous inv.', $this->renderInvNos($data->get('erroneous_inv_no')), null, 'erroneous_inv_no');
+        echo $this->descriptionElement('PM', $data->get('topbib_id'), null, 'biblio-ref-no-author-date');
         echo $this->descriptionElement('Type', $this->renderObjectType($data->get('object_type')), null, 'type');
         echo $this->descriptionElement('Subtype', $data->get('object_subtype'), null, 'type');
         echo $this->descriptionElement('Material', $data->get('material'), null, 'type');
@@ -104,7 +106,7 @@ class inscriptionView extends View
                         }
                         $currentLoc .= $spellView->render($spelling['spelling'], $spelling['spellings_id'])
                                 . '</a>';
-              
+
                         $currentLoc .= $this->processAltReadings($spelling['alt_readings']);
                         $currentLoc .= '</span>';
                     }

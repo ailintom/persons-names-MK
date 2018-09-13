@@ -8,6 +8,10 @@
 
 namespace PNM\controllers;
 
+use \PNM\Request,
+    \PNM\models\Rule,
+    \PNM\models\Filter;
+
 class workshopController extends EntryController
 {
 
@@ -15,8 +19,8 @@ class workshopController extends EntryController
 
     protected function loadChildren()
     {
-        $filter = new \PNM\models\Filter([new \PNM\models\Rule('workshops_id', 'exact', $this->record->getID(), 'i')]);
-        $objIns = new \PNM\models\WorkshopInscriptions(\PNM\Request::get('sort'), 0, 0, $filter);
+        $filter = new Filter([new Rule('workshops_id', 'exact', $this->record->getID(), 'i')]);
+        $objIns = new \PNM\models\WorkshopInscriptions(Request::get('sort'), 0, 0, $filter);
         $this->record->data['inscriptions'] = $objIns;
     }
 }

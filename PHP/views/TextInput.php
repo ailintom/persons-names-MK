@@ -7,6 +7,8 @@
 
 namespace PNM\views;
 
+use \PNM\Request;
+
 class TextInput
 {
 
@@ -14,6 +16,7 @@ class TextInput
     protected $label;
     protected $title;
     protected $list;
+    protected $listName;
     protected $id;
     protected $oldVal;
     protected $placeholder = null;
@@ -31,20 +34,39 @@ class TextInput
         }
         if (!empty($listInput)) {
             $this->list = ' list="' . $listInput . '"';
+            $this->listName = $listInput;
         }
         if ($srOnly) {
             $this->class = ' class="sr-only"';
         } else {
             $this->class = null;
         }
-        //list="object-types"
+
     }
 
     public function render()
     {
-        return <<<EOF
-<label for="$this->id"$this->class>$this->label</label>
-<input name="$this->name" id="$this->id"$this->placeholder$this->list type="text" title="$this->title"$this->oldVal>
+
+        if (!\PNM\Request::$noDatalist || empty($this->listName)) {
+            if (!empty($this->listName)) {
+                $dl = new Datalist();
+                $list = $dl->get($this->listName);
+            } else {
+                $list = null;
+            }
+            return <<<EOF
+<label for="$this->id"$this->class>$this->label</label>            
+<input name="$this->name" id="$this->id"$this->placeholder$this->list type="text" title="$this->title"$this->oldVal>$list
 EOF;
+        } else {
+            $dl = new Datalist();
+            $list = $dl->get($this->listName, Request::get($this->name));
+
+            return <<<EOF
+<label for="$this->id"$this->class>$this->label</label>            
+<select name="$this->name" id="$this->id"$this->placeholder type="text" title="$this->title">$list
+</select>
+EOF;
+        }
     }
 }
