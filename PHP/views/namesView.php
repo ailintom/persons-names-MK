@@ -47,7 +47,7 @@ class namesView extends View
                 <label for="endswith" title="Match any name ending with the search term">
                     ending with
                 </label>
-                the search term.
+                the search term
             </p>
             <div class="filters">
                 <h2 class="sr-only">Filters</h2>
@@ -106,14 +106,14 @@ class namesView extends View
                         <span id="period-label">Period</span>
                     </div>
                     <div class="filter_content">
-                        <input id="period-attested" name="match-date" type="radio" value="attested" aria-labelledby="period-label"<?= View::oldValueRadio('match-date', 'attested', true) ?>>
-                        <label for="period-attested" title="Match any title possibly attested in the given period">
-                            Attested ca.
-                        </label>
-                        /
-                        <input id="period-strictly" name="match-date" type="radio" value="strictly" aria-labelledby="period-label"<?= View::oldValueRadio('match-date', 'strictly') ?>>
+                                             <input id="period-strictly" name="match-date" type="radio" value="strictly" aria-labelledby="period-label"<?= View::oldValueRadio('match-date', 'strictly', true) ?>>
                         <label for="period-strictly" title="Match any title attested strictly in the given period">
-                            strictly in
+                            Attested strictly
+                        </label>
+                       /
+                                               <input id="period-attested" name="match-date" type="radio" value="attested" aria-labelledby="period-label"<?= View::oldValueRadio('match-date', 'attested') ?>>
+                        <label for="period-attested" title="Match any title possibly attested in the given period">
+                            ca. in
                         </label>
                         /
                         <input id="period-characteristic" name="match-date" type="radio" value="characteristic" aria-labelledby="period-label"<?= View::oldValueRadio('match-date', 'characteristic') ?>>

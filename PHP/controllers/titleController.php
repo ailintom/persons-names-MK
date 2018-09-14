@@ -47,8 +47,14 @@ class titleController extends EntryController
         } elseif (!empty(Request::get('period'))) {
             $periodEnd = \PNM\models\Lookup::dateEnd(Request::get('period'));
             $periodStart = \PNM\models\Lookup::dateStart(Request::get('period'));
+            $periodType = \PNM\models\Lookup::get('SELECT thesaurus FROM thesauri WHERE item_name = ?', Request::get('period'));
             if (empty($periodStart) || empty($periodEnd)) {
                 array_push($rules, new Rule('0', 'exact', 1, 'i'));
+            } elseif (Request::get('chrono-filter') == 'strictly' && $periodType == 6) {
+                array_push($rules, new Rule('dating', 'exact', Request::get('period'), 's'));
+            } elseif (Request::get('chrono-filter') == 'strictly') {
+                array_push($rules, new Rule('dating_sort_start', 'not-earlier', $periodStart, 'i'));
+                array_push($rules, new Rule('dating_sort_end', 'not-later', $periodEnd, 'i'));
             } else {
                 array_push($rules, new Rule('dating_sort_start', 'not-later', $periodEnd, 'i'));
                 array_push($rules, new Rule('dating_sort_end', 'not-earlier', $periodStart, 'i'));

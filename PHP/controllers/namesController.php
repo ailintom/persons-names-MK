@@ -40,8 +40,15 @@ class namesController
         } elseif (!empty(Request::get('period'))) {
             $periodEnd = Lookup::dateEnd(Request::get('period'));
             $periodStart = Lookup::dateStart(Request::get('period'));
+            $periodType = \PNM\models\Lookup::get('SELECT thesaurus FROM thesauri WHERE item_name = ?', Request::get('period'));
             if (empty($periodStart) || empty($periodEnd)) {
                 array_push($rules, new Rule('0', 'exact', 1, 'i'));
+            } elseif (Request::get('match-date') == 'strictly' && $periodType == 6) {
+                array_push($rules, new RuleExists(' ((spellings INNER JOIN spellings_attestations_xref ON spellings.spellings_id = spellings_attestations_xref.spellings_id)'
+                        . ' INNER JOIN attestations ON spellings_attestations_xref.attestations_id = attestations.attestations_id) '
+                        . ' INNER JOIN inscriptions ON attestations.inscriptions_id = inscriptions.inscriptions_id'
+                        . ' WHERE spellings.personal_names_id=personal_names.personal_names_id  AND '
+                        . ' inscriptions.dating = ?', Request::get('period'), 's'));
             } elseif (Request::get('match-date') == 'strictly') {
                 array_push($rules, new RuleExists(' ((spellings INNER JOIN spellings_attestations_xref ON spellings.spellings_id = spellings_attestations_xref.spellings_id)'
                         . ' INNER JOIN attestations ON spellings_attestations_xref.attestations_id = attestations.attestations_id) '

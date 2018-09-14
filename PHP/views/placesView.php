@@ -26,7 +26,7 @@ class placesView extends View
                     <?= (new TextInput('place', 'Place name', 'Enter the name region', 'Example: Abydos', 'places'))->render() ?>
                 </div>
                 <div class="column">
-                    <?= (new Select('macroregion', 'Macroregion:', 'Select the macroregion', ['Eastern Desert', 'Levant', 'LE', 'MFR', 'Nile Valley', 'NUE', 'Nubia', 'SUE', 'Western Desert'], ''))->render() ?>
+                    <?= (new Select('macroregion', 'Macroregion', 'Select the macroregion', ['Eastern Desert', 'Levant', 'LE', 'MFR', 'Nile Valley', 'NUE', 'Nubia', 'SUE', 'Western Desert'], ''))->render() ?>
                 </div>
             </div>
             <div class="filters">

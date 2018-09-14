@@ -32,7 +32,7 @@ class inscriptionsView extends View
                     <?= (new TextInput('collection', 'Collection', 'The short name of the museum', 'Example: Bruxelles', 'collections'))->render() ?>
                 </div>
                 <div class="column">
-                    <?= (new TextInput('title', 'Title or inventory number', 'The title of the insciption used in the database or the inventory number in the collection', 'Example: Adam, ASAE 56, 213 or JE 43104'))->render() ?>
+                    <?= (new TextInput('title', 'Title or inventory number', 'The title of the insciption used in the database or the inventory number in the collection', 'Example: Adam, ASAE 56, 213'))->render() ?>
                 </div>
             </div>
             <?php
@@ -55,10 +55,10 @@ class inscriptionsView extends View
                 , ['all', 'all', 'Attestations in sources anyhow related to a certain region']], 'all', 'region-filter'))->render()
                     . ' in the region ' . (new TextInput('place', 'Region', 'Enter the place', 'Example: Abydos', 'places', true))->render();
             $filters[] = new FormFilter('region-filter', 'Region', $regioInputs, 'place');
-            $periodInputs = (new RadioGroup('chrono-filter', [['during', 'During', 'Objects beloging to a certain period']
-                , ['not-later', 'not later than', 'Objects dating not (demonstrably) later than']
+            $periodInputs = (new RadioGroup('chrono-filter', [['strictly', 'Strictly', 'Objects strictly beloging to a certain period'], ['during', 'ca. during', 'Objects beloging to a certain period']
+                ,['not-later', 'not later', 'Objects dating not (demonstrably) later than']
                 , ['not-earlier', 'not earlier than', 'Objects dating not (demonstrably) earlier than']
-                    ], 'during', 'period-filter'))->render()
+                    ], 'strictly', 'period-filter'))->render()
                     . ' the period ' . (new TextInput('period', 'Period:', 'Enter the period', 'Example: 17th Dyn.', 'periods', true))->render();
             $filters[] = new FormFilter('period-filter', 'Period', $periodInputs, 'period');
             FormFilter::renderFilters($filters);

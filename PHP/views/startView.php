@@ -27,12 +27,12 @@ class startView extends View
             <a class="cards_link" href="<?= Request::makeURL('places') ?>"><?= Icon::get('place', '') ?> Places</a>
             <a class="cards_link" href="<?= Request::makeURL('collections') ?>"><?= Icon::get('collection', '') ?> Collections</a>
         </div>
-        <p>Alternatively, browse <a href="types">the list of all name types</a> or <a href="bibliography">the bibliography</a>.</p>
+        <ul><li><a href="types">List of name types</a></li><li><a href="bibliography">Bibliography</a></li></ul>
         <h2>Information about the database</h2>
         <ul>
             <?php
             foreach ($data as $entry) {
-                echo '<li><h3><a href="' . Request::makeURL('info') . '/' . urlencode($entry[0]) . '">', $entry[0], '</a></h3></li>';
+                echo '<li><a href="' . Request::makeURL('info') . '/' . urlencode($entry[0]) . '">', $entry[0], '</a></li>';
             }
             ?></ul><?php
     }

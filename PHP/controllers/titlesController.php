@@ -57,9 +57,16 @@ class titlesController
         } elseif (!empty(Request::get('period'))) {
             $periodEnd = \PNM\models\Lookup::dateEnd(Request::get('period'));
             $periodStart = \PNM\models\Lookup::dateStart(Request::get('period'));
+            $periodType = \PNM\models\Lookup::get('SELECT thesaurus FROM thesauri WHERE item_name = ?', Request::get('period'));
             if (empty($periodStart) || empty($periodEnd)) {
                 array_push($rules, new Rule('0', 'exact', 1, 'i'));
-            } elseif (Request::get('match-date') == 'strictly') {
+            } elseif (Request::get('match-date') == 'strictly' && $periodType == 6) {
+                array_push($rules, new RuleExists('((titles_att '
+                        . 'INNER JOIN attestations ON titles_att.attestations_id = attestations.attestations_id) '
+                        . ' INNER JOIN inscriptions ON attestations.inscriptions_id = inscriptions.inscriptions_id) '
+                        . ' WHERE titles_att.titles_id=titles.titles_id AND '
+                        . ' inscriptions.dating = ?', Request::get('period'), 's'));
+            }elseif (Request::get('match-date') == 'strictly') {
                 array_push($rules, new RuleExists('((titles_att '
                         . 'INNER JOIN attestations ON titles_att.attestations_id = attestations.attestations_id) '
                         . ' INNER JOIN inscriptions ON attestations.inscriptions_id = inscriptions.inscriptions_id) '

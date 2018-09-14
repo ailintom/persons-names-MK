@@ -67,6 +67,9 @@ class Request
                 self::$data[$key] = trim(filter_input(INPUT_GET, $key, $filter, self::defaultFlag($filter)));
             }
         }
+        if (isset(self::$data['ver']) && !in_array(self::$data['ver'], array_column(Config::VERSIONS, 0))) {
+            self::$data['ver'] = null;
+        }
         self::$data['used_ver'] = isset(self::$data['ver']) ? self::get('ver') : self::maxVer();
         if (!in_array(self::get('controller'), self::CONTROLLERS)) { // only valid controller names can be used
             self::$data['controller'] = 'info';

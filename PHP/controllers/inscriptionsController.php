@@ -78,6 +78,7 @@ class inscriptionsController
         if (!empty(Request::get('period'))) {
             $periodEnd = \PNM\models\Lookup::dateEnd(Request::get('period'));
             $periodStart = \PNM\models\Lookup::dateStart(Request::get('period'));
+            $periodType = \PNM\models\Lookup::get('SELECT thesaurus FROM thesauri WHERE item_name = ?', Request::get('period'));
             if (empty($periodStart) || empty($periodEnd)) {
                 array_push($rules, new Rule('0', 'exact', 1, 'i'));
             } else {
@@ -85,6 +86,14 @@ class inscriptionsController
                     case 'during':
                         array_push($rules, new Rule('dating_sort_start', 'lessorequal', $periodEnd, 'i'));
                         array_push($rules, new Rule('dating_sort_end', 'moreorequal', $periodStart, 'i'));
+                        break;
+                    case 'strictly':
+                        if ($periodType == 6) {
+                            array_push($rules, new Rule('dating', 'exact', Request::get('period'), 's'));
+                        } else {
+                            array_push($rules, new Rule('dating_sort_start', 'moreorequal', $periodStart, 'i'));
+                            array_push($rules, new Rule('dating_sort_end', 'lessorequal', $periodEnd, 'i'));
+                        }
                         break;
                     case 'not-later':
                         array_push($rules, new Rule('dating_sort_start', 'lessorequal', $periodEnd, 'i'));

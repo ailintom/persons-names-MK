@@ -63,6 +63,7 @@ class peopleController
         if (!empty(Request::get('period'))) {
             $periodEnd = \PNM\models\Lookup::dateEnd(Request::get('period'));
             $periodStart = \PNM\models\Lookup::dateStart(Request::get('period'));
+            $periodType = \PNM\models\Lookup::get('SELECT thesaurus FROM thesauri WHERE item_name = ?', Request::get('period'));
             if (empty($periodStart) || empty($periodEnd)) {
                 array_push($Arules, new Rule('0', 'exact', 1, 'i'));
             } else {
@@ -71,6 +72,16 @@ class peopleController
                         array_push($Arules, new RuleExists('inscriptions '
                                 . ' WHERE attestations.inscriptions_id=inscriptions.inscriptions_id AND inscriptions.dating_sort_end >= ?'
                                 . ' AND inscriptions.dating_sort_start <= ?', [$periodStart, $periodEnd], 'ii'));
+                        break;
+                    case 'strictly':
+                        if ($periodType == 6) {
+                            array_push($Arules, new RuleExists('inscriptions '
+                                    . ' WHERE attestations.inscriptions_id=inscriptions.inscriptions_id AND inscriptions.dating = ?', Request::get('period'), 's'));
+                        } else {
+                            array_push($Arules, new RuleExists('inscriptions '
+                                    . ' WHERE attestations.inscriptions_id=inscriptions.inscriptions_id AND inscriptions.dating_sort_end <= ?'
+                                    . ' AND inscriptions.dating_sort_start >= ?', [$periodEnd, $periodStart], 'ii'));
+                        }
                         break;
                     case 'not-later':
                         array_push($Arules, new RuleExists('inscriptions '

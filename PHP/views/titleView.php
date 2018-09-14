@@ -87,14 +87,20 @@ class titleView extends View
             </p>
             <p>
                 <span id="period-label">Chronological filter:</span>
-                <input id="during" name="chrono-filter" type="radio" value="exact" aria-labelledby="period-label"<?= View::oldValueRadio('chrono-filter', 'exact', true) ?>>
+                    <input id="strictly" name="chrono-filter" type="radio" value="strictly" aria-labelledby="period-label"<?= View::oldValueRadio('chrono-filter', 'strictly', true) ?>>
+                <label for="strictly" title="Attestations in sources strictly beloging to a certain period">
+                    Strictly 
+                </label>
+               
+                /
+ <input id="during" name="chrono-filter" type="radio" value="exact" aria-labelledby="period-label"<?= View::oldValueRadio('chrono-filter', 'exact') ?>>
                 <label for="during" title="Attestations in sources beloging to a certain period">
-                    During
+                    ca. during
                 </label>
                 /
                 <input id="not-later" name="chrono-filter" type="radio" value="not-later" aria-labelledby="period-label"<?= View::oldValueRadio('chrono-filter', 'not-later') ?>>
                 <label for="not-later" title="Attestations in sources dating not (demonstrably) later than">
-                    not later than
+                    not later
                 </label>
                 /
                 <input id="not-earlier" name="chrono-filter" type="radio" value="not-earlier" aria-labelledby="period-label"<?= View::oldValueRadio('chrono-filter', 'not-earlier') ?>>
