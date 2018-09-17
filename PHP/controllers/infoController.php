@@ -18,7 +18,7 @@ class infoController
     public function load()
     {
         $id = Request::get('id');
-        if (!isset($id)) {
+        if (empty($id)) {
             $infos = new \PNM\models\infos();
             (new \PNM\views\startView())->echoRender($infos->data);
         } elseif ($id == 'impressum') {

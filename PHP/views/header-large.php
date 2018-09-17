@@ -7,7 +7,7 @@ namespace PNM\views;
 ?><header class="header -large">
     <div class="header_content">
         <h1 class="header_title">
-            <a href="index.php">
+            <a href="<?= \PNM\Request::makeURL('info') ?>">
                 Persons <span>and</span> Names <span>of the</span> Middle Kingdom
             </a>
         </h1>

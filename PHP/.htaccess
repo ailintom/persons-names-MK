@@ -2,7 +2,8 @@ RewriteEngine On
 
 #RewriteCond %{QUERY_STRING} ^(.+?&)?[^=]+=(?:&(.*))?$
 #RewriteRule ^ %{REQUEST_URI}?%1%2 [R=302,NE]
-RewriteRule ^$ /test3/names [QSA,R=301]
+RewriteRule ^/?$ https://pnm.uni-mainz.de/names/ [QSA,R=301]
+#RewriteRule ^/?$ /index.php?controller=names [L,QSA]
 
 RewriteCond %{QUERY_STRING} action=reset
 RewriteRule ^ %{REQUEST_URI} [R,QSD]
@@ -27,5 +28,5 @@ RewriteRule ^/?([0-9]*)/([a-z]*)/?$ /index.php?ver=$1&controller=$2 [QSA,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^/?(.*)/?$ /index.php [QSA,L]
+RewriteRule ^/?(.*)([^a-z/]+)(.*)/?$ /index.php [QSA,L]
  
