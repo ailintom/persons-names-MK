@@ -21,7 +21,7 @@ class peopleView extends View
             “nfr*” will match “nfr.wj” or “nfr-ḥtp”. “*nfr*” will also match “snfr.wj”.
         </p>
         <form action="<?= Request::makeURL('people') ?>" method="get">
-            <div class="row -border">
+            <div class="row -border-bottom">
                 <div class="column">
                     <h2>Person A</h2>
                     <div class="row -small">
@@ -75,7 +75,7 @@ class peopleView extends View
                         </div>
                     </div>
                 </div>
-                <div class="column -border">
+                <div class="column -border-left">
                     <h2>Person B</h2>
                     <div class="row -small">
                         <div class="column">
