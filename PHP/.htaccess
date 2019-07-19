@@ -1,12 +1,10 @@
 RewriteEngine On
+RewriteBase /
 
-#RewriteCond %{QUERY_STRING} ^(.+?&)?[^=]+=(?:&(.*))?$
-#RewriteRule ^ %{REQUEST_URI}?%1%2 [R=302,NE]
-RewriteRule ^/?$ https://pnm.uni-mainz.de/names/ [QSA,R=301]
-#RewriteRule ^/?$ /index.php?controller=names [L,QSA]
+RewriteRule ^/?$ https://pnm.uni-mainz.de/names/ [QSA,R=301,L]
 
 RewriteCond %{QUERY_STRING} action=reset
-RewriteRule ^ %{REQUEST_URI} [R,QSD]
+RewriteRule ^ %{REQUEST_URI} [QSD,R=302,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

@@ -107,7 +107,7 @@ class TableView
                         $url = Request::makeURL(Request::get('controller'), Request::get('id'), $sort_renders[$i][self::SORT_PARAM], $this->sort_param, true, 0);
                         $hashpos = $this->id_field[0] . "_" . $i;
                         echo ('<div class="th' . $this->getLeftBorder($i) . $sort_renders[$i][self::SORT_HIGHLIGHT] . '" role="gridcell">'
-                        . '<a href="' . $url . '" title="Sort by ' . lcfirst(empty($extended_column_titles[$i]) ? $column_titles[$i] : $extended_column_titles[$i]) . ', ' . $sort_renders[$i][self::SORT_TITLE] . '" id="' . $hashpos . '"'
+                        . '<a href="' . $url . '" title="Sort by ' . lcfirst(empty($extended_column_titles[$i]) ? $column_titles[$i] : $extended_column_titles[$i]) . ', ' . $sort_renders[$i][self::SORT_TITLE] . '" id="' . $hashpos . '" rel="nofollow"'
                         . ' onclick="window.location.replace(this.href + (' . "'#$hashpos'||" . 'window.location.hash));return false;">'
                         . $column_titles[$i] . $sort_renders[$i][self::SORT_ICON] . '</a></div>' . "\r");
                     }

@@ -248,7 +248,7 @@ Each record in this table represents a modern collection containing inscribed ob
 | url               | TEXT| Official website of the collection (main page) |
 | online_collection | TEXT| URL of the online collection |
 | tm_coll_id        | INT    | [Trismegistos Collections](http://www.trismegistos.org/coll/index.php) ID  |
-| thot_url        | TEXT    | URI of the collection in the [THOT Museums and private collections thesaurus](http://thot.philo.ulg.ac.be/concept/thot-6197) |
+| thot_concept_id   | TEXT    | URI of the collection in the [THOT Museums and private collections thesaurus](http://thot.philo.ulg.ac.be/concept/thot-6197) |
 | artefacts_url | TEXT| URL of the collection page in the [Artefacts of Excavation](http://egyptartefacts.griffith.ox.ac.uk) database |
 
   
