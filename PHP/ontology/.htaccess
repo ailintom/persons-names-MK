@@ -1,0 +1,4 @@
+DirectoryIndex index.php
+
+AddType application/rdf+xml .owl 
+AddType text/turtle .ttl

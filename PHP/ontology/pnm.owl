@@ -1,0 +1,1124 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="https://pnm.uni-mainz.de/ontology#"
+     xml:base="https://pnm.uni-mainz.de/ontology"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:foaf="http://xmlns.com/foaf/0.1/"
+     xmlns:obda="https://w3id.org/obda/vocabulary#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="https://pnm.uni-mainz.de/ontology#">
+        <rdfs:comment>Persons and Names of the Middle Kingdom ontology</rdfs:comment>
+        <rdfs:label>pnm</rdfs:label>
+        <owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</owl:versionInfo>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#attested_bond_statement_object -->
+
+    <owl:ObjectProperty rdf:about="https://pnm.uni-mainz.de/ontology#attested_bond_statement_object">
+        <rdfs:subPropertyOf rdf:resource="https://pnm.uni-mainz.de/ontology#bond_statement_object"/>
+        <rdfs:domain rdf:resource="https://pnm.uni-mainz.de/ontology#bond"/>
+        <rdfs:range rdf:resource="https://pnm.uni-mainz.de/ontology#person_attestation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#attested_bond_statement_subject -->
+
+    <owl:ObjectProperty rdf:about="https://pnm.uni-mainz.de/ontology#attested_bond_statement_subject">
+        <rdfs:subPropertyOf rdf:resource="https://pnm.uni-mainz.de/ontology#bond_statement_subject"/>
+        <rdfs:domain rdf:resource="https://pnm.uni-mainz.de/ontology#bond"/>
+        <rdfs:range rdf:resource="https://pnm.uni-mainz.de/ontology#person_attestation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#bond_statement_object -->
+
+    <owl:ObjectProperty rdf:about="https://pnm.uni-mainz.de/ontology#bond_statement_object">
+        <rdfs:domain rdf:resource="https://pnm.uni-mainz.de/ontology#bond"/>
+        <rdfs:comment xml:lang="en">A statement about a bond has an object.</rdfs:comment>
+        <rdfs:label xml:lang="en">bond_statement_object</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#bond_statement_predicate -->
+
+    <owl:ObjectProperty rdf:about="https://pnm.uni-mainz.de/ontology#bond_statement_predicate">
+        <rdfs:domain rdf:resource="https://pnm.uni-mainz.de/ontology#bond"/>
+        <rdfs:range rdf:resource="https://pnm.uni-mainz.de/ontology#bond_type"/>
+        <rdfs:comment xml:lang="en">A statement about a bond has a predicate.</rdfs:comment>
+        <rdfs:label xml:lang="en">bond_statement_predicate</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#bond_statement_subject -->
+
+    <owl:ObjectProperty rdf:about="https://pnm.uni-mainz.de/ontology#bond_statement_subject">
+        <rdfs:domain rdf:resource="https://pnm.uni-mainz.de/ontology#bond"/>
+        <rdfs:comment xml:lang="en">A statement about a bond has a subject.</rdfs:comment>
+        <rdfs:label xml:lang="en">bond_statement_subject</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#document_refers_to -->
+
+    <owl:ObjectProperty rdf:about="https://pnm.uni-mainz.de/ontology#document_refers_to">
+        <rdfs:domain rdf:resource="https://pnm.uni-mainz.de/ontology#biblio_ref"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment xml:lang="en">The entity referred to in a document</rdfs:comment>
+        <rdfs:label xml:lang="en">document_refers_to</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#has_alternative_reading -->
+
+    <owl:ObjectProperty rdf:about="https://pnm.uni-mainz.de/ontology#has_alternative_reading">
+        <rdfs:domain rdf:resource="https://pnm.uni-mainz.de/ontology#spelling"/>
+        <rdfs:range rdf:resource="https://pnm.uni-mainz.de/ontology#alternative_reading"/>
+        <rdfs:comment>A spelling has an alternative reading</rdfs:comment>
+        <rdfs:label xml:lang="en">has_alternative_reading</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#has_deposited -->
+
+    <owl:ObjectProperty rdf:about="https://pnm.uni-mainz.de/ontology#has_deposited">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E12_Production"/>
+        <rdfs:range rdf:resource="http://purl.org/crmeh#EHE0007_Context"/>
+        <rdfs:comment xml:lang="en">An event has caused a find group (context) to be deposited</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#has_identity_statement -->
+
+    <owl:ObjectProperty rdf:about="https://pnm.uni-mainz.de/ontology#has_identity_statement">
+        <rdfs:domain rdf:resource="https://pnm.uni-mainz.de/ontology#person_attestation"/>
+        <rdfs:range rdf:resource="https://pnm.uni-mainz.de/ontology#identity_statement"/>
+        <rdfs:comment>There exists a statement concerning the identity of an attestated person with a person known from other sources.</rdfs:comment>
+        <rdfs:label xml:lang="en">has_identity_statement</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#has_lexical_entry_usage -->
+
+    <owl:ObjectProperty rdf:about="https://pnm.uni-mainz.de/ontology#has_lexical_entry_usage">
+        <rdfs:subPropertyOf rdf:resource="https://pnm.uni-mainz.de/ontology#has_usage"/>
+        <rdfs:domain rdf:resource="http://www.w3.org/ns/lemon/ontolex#LexicalEntry"/>
+        <rdfs:label xml:lang="en">has_lexical_entry_usage</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#has_name_type -->
+
+    <owl:ObjectProperty rdf:about="https://pnm.uni-mainz.de/ontology#has_name_type">
+        <rdfs:subPropertyOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/P2_has_type"/>
+        <rdfs:domain rdf:resource="https://pnm.uni-mainz.de/ontology#personal_name"/>
+        <rdfs:range rdf:resource="https://pnm.uni-mainz.de/ontology#name_type"/>
+        <rdfs:comment>Indicates a name type (either formal or semantic), to which a personal name belongs.</rdfs:comment>
+        <rdfs:label xml:lang="en">has_name_type</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#has_reference_type -->
+
+    <owl:ObjectProperty rdf:about="https://pnm.uni-mainz.de/ontology#has_reference_type">
+        <rdfs:subPropertyOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/P2_has_type"/>
+        <rdfs:domain rdf:resource="https://pnm.uni-mainz.de/ontology#biblio_ref"/>
+        <rdfs:range rdf:resource="https://pnm.uni-mainz.de/ontology#reference_type"/>
+        <rdfs:comment xml:lang="en">the bibliographic reference has a type</rdfs:comment>
+        <rdfs:label xml:lang="en">has_reference_type</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#has_script -->
+
+    <owl:ObjectProperty rdf:about="https://pnm.uni-mainz.de/ontology#has_script">
+        <rdfs:subPropertyOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/P2_has_type"/>
+        <rdfs:domain rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E34_Inscription"/>
+        <rdfs:range rdf:resource="https://pnm.uni-mainz.de/ontology#script"/>
+        <rdfs:comment xml:lang="en">The inscription is written in a script.</rdfs:comment>
+        <rdfs:label xml:lang="en">has_script</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#has_spelled_personal_name -->
+
+    <owl:ObjectProperty rdf:about="https://pnm.uni-mainz.de/ontology#has_spelled_personal_name">
+        <rdfs:domain rdf:resource="https://pnm.uni-mainz.de/ontology#person_attestation"/>
+        <rdfs:range rdf:resource="https://pnm.uni-mainz.de/ontology#spelling"/>
+        <rdfs:comment>A spelled form of a personal name is attested in an inscription for a person</rdfs:comment>
+        <rdfs:label xml:lang="en">has_spelled_personal_name</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#has_spelling -->
+
+    <owl:ObjectProperty rdf:about="https://pnm.uni-mainz.de/ontology#has_spelling">
+        <rdfs:domain rdf:resource="http://www.w3.org/ns/lemon/ontolex#Form"/>
+        <rdfs:range rdf:resource="https://pnm.uni-mainz.de/ontology#spelling"/>
+        <rdfs:comment xml:lang="en">A form of a lexical entry has a particular written representation.</rdfs:comment>
+        <rdfs:label xml:lang="en">has_spelling</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#has_spelling_usage -->
+
+    <owl:ObjectProperty rdf:about="https://pnm.uni-mainz.de/ontology#has_spelling_usage">
+        <rdfs:subPropertyOf rdf:resource="https://pnm.uni-mainz.de/ontology#has_usage"/>
+        <rdfs:domain rdf:resource="https://pnm.uni-mainz.de/ontology#spelling"/>
+        <rdfs:label xml:lang="en">has_spelling_usage</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#has_text_content -->
+
+    <owl:ObjectProperty rdf:about="https://pnm.uni-mainz.de/ontology#has_text_content">
+        <rdfs:subPropertyOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/P2_has_type"/>
+        <rdfs:domain rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E34_Inscription"/>
+        <rdfs:range rdf:resource="https://pnm.uni-mainz.de/ontology#text_content"/>
+        <rdfs:comment xml:lang="en">The inscription has principal content.</rdfs:comment>
+        <rdfs:label xml:lang="en">has_text_content</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#has_title -->
+
+    <owl:ObjectProperty rdf:about="https://pnm.uni-mainz.de/ontology#has_title">
+        <rdfs:domain rdf:resource="https://pnm.uni-mainz.de/ontology#person_attestation"/>
+        <rdfs:range rdf:resource="https://pnm.uni-mainz.de/ontology#title"/>
+        <rdfs:comment>A person attested in an inscription bears a title according to the inscription</rdfs:comment>
+        <rdfs:label xml:lang="en">has_title</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#has_usage -->
+
+    <owl:ObjectProperty rdf:about="https://pnm.uni-mainz.de/ontology#has_usage">
+        <rdfs:range rdf:resource="https://pnm.uni-mainz.de/ontology#usage"/>
+        <rdfs:comment xml:lang="en">The usage of a lexical entry (name, spelling, title) is defined in terms of space or time.</rdfs:comment>
+        <rdfs:label xml:lang="en">has_usage</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#is_a_variant_of -->
+
+    <owl:ObjectProperty rdf:about="https://pnm.uni-mainz.de/ontology#is_a_variant_of">
+        <rdfs:domain rdf:resource="https://pnm.uni-mainz.de/ontology#title"/>
+        <rdfs:range rdf:resource="https://pnm.uni-mainz.de/ontology#title"/>
+        <rdfs:comment>A title is a variant of another title</rdfs:comment>
+        <rdfs:label xml:lang="en">is_a_variant_of</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#lived -->
+
+    <owl:ObjectProperty rdf:about="https://pnm.uni-mainz.de/ontology#lived">
+        <rdfs:domain rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E21_Person"/>
+        <rdfs:range rdf:resource="https://pnm.uni-mainz.de/ontology#life"/>
+        <rdfs:comment>Temporal and spatial framework of a person&apos;s life</rdfs:comment>
+        <rdfs:label xml:lang="en">lived</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#persons_bond_statement_object -->
+
+    <owl:ObjectProperty rdf:about="https://pnm.uni-mainz.de/ontology#persons_bond_statement_object">
+        <rdfs:subPropertyOf rdf:resource="https://pnm.uni-mainz.de/ontology#bond_statement_object"/>
+        <rdfs:domain rdf:resource="https://pnm.uni-mainz.de/ontology#bond"/>
+        <rdfs:range rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E21_Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#persons_bond_statement_subject -->
+
+    <owl:ObjectProperty rdf:about="https://pnm.uni-mainz.de/ontology#persons_bond_statement_subject">
+        <rdfs:subPropertyOf rdf:resource="https://pnm.uni-mainz.de/ontology#bond_statement_subject"/>
+        <rdfs:domain rdf:resource="https://pnm.uni-mainz.de/ontology#bond"/>
+        <rdfs:range rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E21_Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#reads_as -->
+
+    <owl:ObjectProperty rdf:about="https://pnm.uni-mainz.de/ontology#reads_as">
+        <rdfs:domain rdf:resource="https://pnm.uni-mainz.de/ontology#alternative_reading"/>
+        <rdfs:range rdf:resource="http://www.w3.org/ns/lemon/ontolex#Form"/>
+        <rdfs:comment>A spelling can alsobe read as a different personal name</rdfs:comment>
+        <rdfs:label xml:lang="en">reads_as</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#refers_to -->
+
+    <owl:ObjectProperty rdf:about="https://pnm.uni-mainz.de/ontology#refers_to">
+        <rdfs:domain rdf:resource="https://pnm.uni-mainz.de/ontology#identity_statement"/>
+        <rdfs:range rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E21_Person"/>
+        <rdfs:comment>Identity statement refers to a person</rdfs:comment>
+        <rdfs:label xml:lang="en">refers_to</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#refers_to_period -->
+
+    <owl:ObjectProperty rdf:about="https://pnm.uni-mainz.de/ontology#refers_to_period">
+        <rdfs:domain rdf:resource="https://pnm.uni-mainz.de/ontology#criterion"/>
+        <rdfs:range rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E4_Period"/>
+        <rdfs:comment>A dating criterion favours a certain period</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#refers_to_place -->
+
+    <owl:ObjectProperty rdf:about="https://pnm.uni-mainz.de/ontology#refers_to_place">
+        <rdfs:domain rdf:resource="https://pnm.uni-mainz.de/ontology#criterion"/>
+        <rdfs:range rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E53_Place"/>
+        <rdfs:comment>A production place criterion favours a certain production place or region</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#refers_to_title -->
+
+    <owl:ObjectProperty rdf:about="https://pnm.uni-mainz.de/ontology#refers_to_title">
+        <rdfs:domain rdf:resource="https://pnm.uni-mainz.de/ontology#title"/>
+        <rdfs:range rdf:resource="https://pnm.uni-mainz.de/ontology#title"/>
+        <rdfs:comment>A title refers to a holder of another title</rdfs:comment>
+        <rdfs:label xml:lang="en">refers_to_title</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#specificates -->
+
+    <owl:ObjectProperty rdf:about="https://pnm.uni-mainz.de/ontology#specificates">
+        <rdfs:domain rdf:resource="https://pnm.uni-mainz.de/ontology#title"/>
+        <rdfs:range rdf:resource="https://pnm.uni-mainz.de/ontology#title"/>
+        <rdfs:comment>A title specificates another title</rdfs:comment>
+        <rdfs:label xml:lang="en">specificates</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#Egyptological_transliteration -->
+
+    <owl:DatatypeProperty rdf:about="https://pnm.uni-mainz.de/ontology#Egyptological_transliteration">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/ns/lemon/ontolex#representation"/>
+        <rdfs:domain rdf:resource="http://www.w3.org/ns/lemon/ontolex#Form"/>
+        <rdfs:comment xml:lang="en">Representation of a lexical entry by means of the Egyptological transliteration.</rdfs:comment>
+        <rdfs:label xml:lang="en">Egyptological_transliteration</rdfs:label>
+        <rdfs:label xml:lang="de">ägyptologische Traskription</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#architecture -->
+
+    <owl:DatatypeProperty rdf:about="https://pnm.uni-mainz.de/ontology#architecture">
+        <rdfs:subPropertyOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/P3_has_note"/>
+        <rdfs:domain rdf:resource="http://purl.org/crmeh#EHE0007_Context"/>
+        <rdfs:comment xml:lang="en">The find group has a description of architectural features.</rdfs:comment>
+        <rdfs:label xml:lang="en">architecture</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#attested_gender -->
+
+    <owl:DatatypeProperty rdf:about="https://pnm.uni-mainz.de/ontology#attested_gender">
+        <rdfs:subPropertyOf rdf:resource="https://pnm.uni-mainz.de/ontology#gender"/>
+        <rdfs:domain rdf:resource="https://pnm.uni-mainz.de/ontology#person_attestation"/>
+        <rdfs:comment xml:lang="en">Gender of a person as attested in an inscription.</rdfs:comment>
+        <rdfs:label xml:lang="en">attested_gender</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#attested_personal_names -->
+
+    <owl:DatatypeProperty rdf:about="https://pnm.uni-mainz.de/ontology#attested_personal_names">
+        <rdfs:subPropertyOf rdf:resource="https://pnm.uni-mainz.de/ontology#personal_names"/>
+        <rdfs:domain rdf:resource="https://pnm.uni-mainz.de/ontology#person_attestation"/>
+        <rdfs:comment xml:lang="en">A list of personal names attested for a person in an inscription</rdfs:comment>
+        <rdfs:label xml:lang="en">attested_personal_names</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#attested_title_string -->
+
+    <owl:DatatypeProperty rdf:about="https://pnm.uni-mainz.de/ontology#attested_title_string">
+        <rdfs:subPropertyOf rdf:resource="https://pnm.uni-mainz.de/ontology#title_string"/>
+        <rdfs:domain rdf:resource="https://pnm.uni-mainz.de/ontology#person_attestation"/>
+        <rdfs:comment xml:lang="en">A list of titles attested for a person in an inscription</rdfs:comment>
+        <rdfs:label xml:lang="en">attested_title_string</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#csl_json -->
+
+    <owl:DatatypeProperty rdf:about="https://pnm.uni-mainz.de/ontology#csl_json">
+        <rdfs:domain rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+        <rdfs:comment>The bibliographical description of a BibliographicResource in the CSL JSON format</rdfs:comment>
+        <rdfs:label xml:lang="en">csl_json</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#finds -->
+
+    <owl:DatatypeProperty rdf:about="https://pnm.uni-mainz.de/ontology#finds">
+        <rdfs:subPropertyOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/P3_has_note"/>
+        <rdfs:domain rdf:resource="http://purl.org/crmeh#EHE0007_Context"/>
+        <rdfs:comment xml:lang="en">The find group has a description of finds.</rdfs:comment>
+        <rdfs:label xml:lang="en">finds</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#gender -->
+
+    <owl:DatatypeProperty rdf:about="https://pnm.uni-mainz.de/ontology#gender">
+        <rdfs:label>gender</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#has_dating_note -->
+
+    <owl:DatatypeProperty rdf:about="https://pnm.uni-mainz.de/ontology#has_dating_note">
+        <rdfs:subPropertyOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/P3_has_note"/>
+        <rdfs:domain rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E5_Event"/>
+        <rdfs:comment xml:lang="en">The entity has a reasoning for the dating.</rdfs:comment>
+        <rdfs:label xml:lang="en">has_dating_note</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#has_exact_location -->
+
+    <owl:DatatypeProperty rdf:about="https://pnm.uni-mainz.de/ontology#has_exact_location">
+        <rdfs:domain rdf:resource="http://purl.org/crmeh#EHE0007_Context"/>
+        <rdfs:comment xml:lang="en">A find group has an exact location within a place</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#has_installation_place_note -->
+
+    <owl:DatatypeProperty rdf:about="https://pnm.uni-mainz.de/ontology#has_installation_place_note">
+        <rdfs:subPropertyOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/P3_has_note"/>
+        <rdfs:domain rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E22_Man-Made_Object"/>
+        <rdfs:comment xml:lang="en">The entity has a reasoning for the installation place.</rdfs:comment>
+        <rdfs:label xml:lang="en">has_installation_place_note</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#has_location_note -->
+
+    <owl:DatatypeProperty rdf:about="https://pnm.uni-mainz.de/ontology#has_location_note">
+        <rdfs:subPropertyOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/P3_has_note"/>
+        <rdfs:domain rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E12_Production"/>
+        <rdfs:comment xml:lang="en">The entity has a reasoning for the location.</rdfs:comment>
+        <rdfs:label xml:lang="en">has_location_note</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#has_origin_note -->
+
+    <owl:DatatypeProperty rdf:about="https://pnm.uni-mainz.de/ontology#has_origin_note">
+        <rdfs:subPropertyOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/P3_has_note"/>
+        <rdfs:domain rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E34_Inscription"/>
+        <rdfs:comment xml:lang="en">The inscription has a reasoning for establishing its origin .</rdfs:comment>
+        <rdfs:label xml:lang="en">has_origin_note</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#has_production_place_note -->
+
+    <owl:DatatypeProperty rdf:about="https://pnm.uni-mainz.de/ontology#has_production_place_note">
+        <rdfs:subPropertyOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/P3_has_note"/>
+        <rdfs:domain rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E12_Production"/>
+        <rdfs:comment xml:lang="en">The entity has a reasoning for the production place.</rdfs:comment>
+        <rdfs:label xml:lang="en">has_production_place_note</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#has_provenance_note -->
+
+    <owl:DatatypeProperty rdf:about="https://pnm.uni-mainz.de/ontology#has_provenance_note">
+        <rdfs:subPropertyOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/P3_has_note"/>
+        <rdfs:domain rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E22_Man-Made_Object"/>
+        <rdfs:comment xml:lang="en">The entity has a reasoning for the provenance.</rdfs:comment>
+        <rdfs:label xml:lang="en">has_provenance_note</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#has_reasoning -->
+
+    <owl:DatatypeProperty rdf:about="https://pnm.uni-mainz.de/ontology#has_reasoning">
+        <rdfs:domain rdf:resource="https://pnm.uni-mainz.de/ontology#identity_statement"/>
+        <rdfs:comment>The identity statement is supported by certain arguments or is contradicted by certain arguments.</rdfs:comment>
+        <rdfs:label>has_reasoning</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#has_usage_area_note -->
+
+    <owl:DatatypeProperty rdf:about="https://pnm.uni-mainz.de/ontology#has_usage_area_note">
+        <rdfs:subPropertyOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/P3_has_note"/>
+        <rdfs:domain rdf:resource="https://pnm.uni-mainz.de/ontology#usage"/>
+        <rdfs:comment xml:lang="en">The entity has a reasoning for establishing the usage area.</rdfs:comment>
+        <rdfs:label xml:lang="en">has_usage_area_note</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#has_usage_gender -->
+
+    <owl:DatatypeProperty rdf:about="https://pnm.uni-mainz.de/ontology#has_usage_gender">
+        <rdfs:domain rdf:resource="https://pnm.uni-mainz.de/ontology#usage"/>
+        <rdfs:comment xml:lang="en">The entity is used by holders of a patrticular gender.</rdfs:comment>
+        <rdfs:label xml:lang="en">has_usage_gender</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#has_usage_period -->
+
+    <owl:DatatypeProperty rdf:about="https://pnm.uni-mainz.de/ontology#has_usage_period">
+        <rdfs:domain rdf:resource="https://pnm.uni-mainz.de/ontology#usage"/>
+        <rdfs:comment xml:lang="en">A name, spelling, title has a usage period.</rdfs:comment>
+        <rdfs:label xml:lang="en">has_usage_period</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#has_usage_period_note -->
+
+    <owl:DatatypeProperty rdf:about="https://pnm.uni-mainz.de/ontology#has_usage_period_note">
+        <rdfs:subPropertyOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/P3_has_note"/>
+        <rdfs:domain rdf:resource="https://pnm.uni-mainz.de/ontology#usage"/>
+        <rdfs:comment xml:lang="en">The entity has a reasoning for establishing the usage period.</rdfs:comment>
+        <rdfs:label xml:lang="en">has_usage_period_note</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#has_wording -->
+
+    <owl:DatatypeProperty rdf:about="https://pnm.uni-mainz.de/ontology#has_wording">
+        <rdfs:domain rdf:resource="https://pnm.uni-mainz.de/ontology#attested_bond"/>
+        <rdfs:comment>Transliterated exact expression of the bond in lowercase Unicode as attested in the inscription; *example: sꜣ⸗f*</rdfs:comment>
+        <rdfs:label xml:lang="en">has_wording</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#human_remains -->
+
+    <owl:DatatypeProperty rdf:about="https://pnm.uni-mainz.de/ontology#human_remains">
+        <rdfs:subPropertyOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/P3_has_note"/>
+        <rdfs:domain rdf:resource="http://purl.org/crmeh#EHE0007_Context"/>
+        <rdfs:comment xml:lang="en">The find group has or has no human remans.</rdfs:comment>
+        <rdfs:label xml:lang="en">human_remains</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#installation_place -->
+
+    <owl:DatatypeProperty rdf:about="https://pnm.uni-mainz.de/ontology#installation_place">
+        <rdfs:subPropertyOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/P53_has_former_or_current_location"/>
+        <rdfs:domain rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E22_Man-Made_Object"/>
+        <rdfs:comment xml:lang="en">The object was originally installed at.</rdfs:comment>
+        <rdfs:label xml:lang="en">installation_place</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#last_king_mentioned -->
+
+    <owl:DatatypeProperty rdf:about="https://pnm.uni-mainz.de/ontology#last_king_mentioned">
+        <rdfs:domain rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E34_Inscription"/>
+        <rdfs:comment xml:lang="en">the most recent king explicitly named on the object.</rdfs:comment>
+        <rdfs:label xml:lang="en">last_king_mentioned</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#location_in_the_inscription -->
+
+    <owl:DatatypeProperty rdf:about="https://pnm.uni-mainz.de/ontology#location_in_the_inscription">
+        <rdfs:domain rdf:resource="https://pnm.uni-mainz.de/ontology#person_attestation"/>
+        <rdfs:comment xml:lang="en">Location of the first attestation of a person in an inscription.</rdfs:comment>
+        <rdfs:label xml:lang="en">location_in_the_inscription</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#origin -->
+
+    <owl:DatatypeProperty rdf:about="https://pnm.uni-mainz.de/ontology#origin">
+        <rdfs:domain rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E34_Inscription"/>
+        <rdfs:comment xml:lang="en">The inscription has indications of origins.</rdfs:comment>
+        <rdfs:label xml:lang="en">origin</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#person_gender -->
+
+    <owl:DatatypeProperty rdf:about="https://pnm.uni-mainz.de/ontology#person_gender">
+        <rdfs:subPropertyOf rdf:resource="https://pnm.uni-mainz.de/ontology#gender"/>
+        <rdfs:label>person_gender</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#person_personal_names -->
+
+    <owl:DatatypeProperty rdf:about="https://pnm.uni-mainz.de/ontology#person_personal_names">
+        <rdfs:subPropertyOf rdf:resource="https://pnm.uni-mainz.de/ontology#personal_names"/>
+        <rdfs:domain rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E21_Person"/>
+        <rdfs:comment xml:lang="en">A list of personal names held by a person</rdfs:comment>
+        <rdfs:label xml:lang="en">person_personal_names</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#person_title_string -->
+
+    <owl:DatatypeProperty rdf:about="https://pnm.uni-mainz.de/ontology#person_title_string">
+        <rdfs:subPropertyOf rdf:resource="https://pnm.uni-mainz.de/ontology#title_string"/>
+        <rdfs:domain rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E21_Person"/>
+        <rdfs:comment xml:lang="en">A list of titles held by a person</rdfs:comment>
+        <rdfs:label xml:lang="en">person_title_string</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#personal_names -->
+
+    <owl:DatatypeProperty rdf:about="https://pnm.uni-mainz.de/ontology#personal_names">
+        <rdfs:comment xml:lang="en">Name or names of a person as attested in an inscription or in multiple inscriptions.</rdfs:comment>
+        <rdfs:label xml:lang="en">personal_names</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#reference_location -->
+
+    <owl:DatatypeProperty rdf:about="https://pnm.uni-mainz.de/ontology#reference_location">
+        <rdfs:comment>The location in the source where an object is referred to (typically, page numbers)</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#status_in_the_inscription -->
+
+    <owl:DatatypeProperty rdf:about="https://pnm.uni-mainz.de/ontology#status_in_the_inscription">
+        <rdfs:domain rdf:resource="https://pnm.uni-mainz.de/ontology#person_attestation"/>
+        <rdfs:comment xml:lang="en">Status of a person in regard to the inscribed object (owner, patron).</rdfs:comment>
+        <rdfs:label xml:lang="en">status_in_the_inscription</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#title_string -->
+
+    <owl:DatatypeProperty rdf:about="https://pnm.uni-mainz.de/ontology#title_string">
+        <rdfs:comment xml:lang="en">Title string of a person as attested in an inscription or across inscriptions.</rdfs:comment>
+        <rdfs:label xml:lang="en">title_string</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://lawd.info/ontology/Person -->
+
+    <owl:Class rdf:about="http://lawd.info/ontology/Person">
+        <owl:equivalentClass rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E21_Person"/>
+    </owl:Class>
+    
+
+
+    <!-- http://lawd.info/ontology/PersonalName -->
+
+    <owl:Class rdf:about="http://lawd.info/ontology/PersonalName">
+        <owl:equivalentClass rdf:resource="https://pnm.uni-mainz.de/ontology#personal_name"/>
+    </owl:Class>
+    
+
+
+    <!-- http://onto.snapdrgn.net/snap#Bond -->
+
+    <owl:Class rdf:about="http://onto.snapdrgn.net/snap#Bond">
+        <owl:equivalentClass rdf:resource="https://pnm.uni-mainz.de/ontology#persons_bond"/>
+    </owl:Class>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#alternative_reading -->
+
+    <owl:Class rdf:about="https://pnm.uni-mainz.de/ontology#alternative_reading">
+        <rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E89_Propositional_Object"/>
+    </owl:Class>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#attested_bond -->
+
+    <owl:Class rdf:about="https://pnm.uni-mainz.de/ontology#attested_bond">
+        <rdfs:subClassOf rdf:resource="https://pnm.uni-mainz.de/ontology#bond"/>
+        <rdfs:comment>A bond between two persons attested in an inscription, as attested in the same inscription</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#biblio_ref -->
+
+    <owl:Class rdf:about="https://pnm.uni-mainz.de/ontology#biblio_ref">
+        <rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E89_Propositional_Object"/>
+        <rdfs:comment>Bibliographic reference (the fact that a document refers to an entity)</rdfs:comment>
+        <rdfs:label>biblio_ref</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#bond -->
+
+    <owl:Class rdf:about="https://pnm.uni-mainz.de/ontology#bond">
+        <rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E89_Propositional_Object"/>
+        <rdfs:comment>A bond between two entries</rdfs:comment>
+        <rdfs:label>bond</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#bond_type -->
+
+    <owl:Class rdf:about="https://pnm.uni-mainz.de/ontology#bond_type">
+        <rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E55_Type"/>
+    </owl:Class>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#criterion -->
+
+    <owl:Class rdf:about="https://pnm.uni-mainz.de/ontology#criterion">
+        <rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E89_Propositional_Object"/>
+        <rdfs:comment>A criterion for dating or establishing the production place</rdfs:comment>
+        <rdfs:label>criterion</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#identity_statement -->
+
+    <owl:Class rdf:about="https://pnm.uni-mainz.de/ontology#identity_statement">
+        <rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E89_Propositional_Object"/>
+        <rdfs:comment>It is stated that a person attested in an inscription is identical to a person known from other sources.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#life -->
+
+    <owl:Class rdf:about="https://pnm.uni-mainz.de/ontology#life">
+        <rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E4_Period"/>
+    </owl:Class>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#name_type -->
+
+    <owl:Class rdf:about="https://pnm.uni-mainz.de/ontology#name_type">
+        <rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E55_Type"/>
+    </owl:Class>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#person_attestation -->
+
+    <owl:Class rdf:about="https://pnm.uni-mainz.de/ontology#person_attestation">
+        <rdfs:subClassOf rdf:resource="http://lawd.info/ontology/Attestation"/>
+        <rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E89_Propositional_Object"/>
+        <rdfs:comment xml:lang="en">Attestation of a person in an inscription.</rdfs:comment>
+        <rdfs:label xml:lang="en">person_attestation</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#personal_name -->
+
+    <owl:Class rdf:about="https://pnm.uni-mainz.de/ontology#personal_name">
+        <rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object"/>
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/lemon/ontolex#LexicalEntry"/>
+        <rdfs:comment xml:lang="en">A name of a person (or an animal) as a lexical entry.</rdfs:comment>
+        <rdfs:label xml:lang="en">personal_name</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#persons_bond -->
+
+    <owl:Class rdf:about="https://pnm.uni-mainz.de/ontology#persons_bond">
+        <rdfs:subClassOf rdf:resource="https://pnm.uni-mainz.de/ontology#bond"/>
+        <rdfs:comment>A bond between two persons.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#reference_type -->
+
+    <owl:Class rdf:about="https://pnm.uni-mainz.de/ontology#reference_type">
+        <rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E55_Type"/>
+    </owl:Class>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#script -->
+
+    <owl:Class rdf:about="https://pnm.uni-mainz.de/ontology#script">
+        <rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E55_Type"/>
+        <rdfs:comment xml:lang="en">The script of the inscription.</rdfs:comment>
+        <rdfs:label xml:lang="en">script</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#spelling -->
+
+    <owl:Class rdf:about="https://pnm.uni-mainz.de/ontology#spelling">
+        <rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object"/>
+        <rdfs:comment xml:lang="en">A particular written representation (orthographical variant, spelling) of a form.</rdfs:comment>
+        <rdfs:label xml:lang="en">spelling</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#text_content -->
+
+    <owl:Class rdf:about="https://pnm.uni-mainz.de/ontology#text_content">
+        <rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E55_Type"/>
+        <rdfs:comment xml:lang="en">The principal content of the inscription.</rdfs:comment>
+        <rdfs:label xml:lang="en">text_content</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#title -->
+
+    <owl:Class rdf:about="https://pnm.uni-mainz.de/ontology#title">
+        <rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object"/>
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/lemon/ontolex#LexicalEntry"/>
+        <rdfs:comment>Egyptian title</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#usage -->
+
+    <owl:Class rdf:about="https://pnm.uni-mainz.de/ontology#usage">
+        <rdfs:subClassOf rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E4_Period"/>
+        <rdfs:comment xml:lang="en">Usage of a lexical entry as a period.</rdfs:comment>
+        <rdfs:label xml:lang="en">usage</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#alternative_inv_no -->
+
+    <owl:NamedIndividual rdf:about="https://pnm.uni-mainz.de/ontology#alternative_inv_no">
+        <rdf:type rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E55_Type"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#bw_photo -->
+
+    <owl:NamedIndividual rdf:about="https://pnm.uni-mainz.de/ontology#bw_photo">
+        <rdf:type rdf:resource="https://pnm.uni-mainz.de/ontology#reference_type"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#colour_photo -->
+
+    <owl:NamedIndividual rdf:about="https://pnm.uni-mainz.de/ontology#colour_photo">
+        <rdf:type rdf:resource="https://pnm.uni-mainz.de/ontology#reference_type"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#description -->
+
+    <owl:NamedIndividual rdf:about="https://pnm.uni-mainz.de/ontology#description">
+        <rdf:type rdf:resource="https://pnm.uni-mainz.de/ontology#reference_type"/>
+        <rdfs:label xml:lang="en">description</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#erroneous_inv_no -->
+
+    <owl:NamedIndividual rdf:about="https://pnm.uni-mainz.de/ontology#erroneous_inv_no">
+        <rdf:type rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E55_Type"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#formal_name_type -->
+
+    <owl:NamedIndividual rdf:about="https://pnm.uni-mainz.de/ontology#formal_name_type">
+        <rdf:type rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E55_Type"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#hannig2 -->
+
+    <owl:NamedIndividual rdf:about="https://pnm.uni-mainz.de/ontology#hannig2">
+        <rdf:type rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E55_Type"/>
+        <rdfs:comment>List of corresponding lemma numbers in R. Hannig, Ägyptisches Wörterbuch II: Mittleres Reich und Zweite Zwischenzeit, separated by semicolons</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#hieroglyphic_transcription -->
+
+    <owl:NamedIndividual rdf:about="https://pnm.uni-mainz.de/ontology#hieroglyphic_transcription">
+        <rdf:type rdf:resource="https://pnm.uni-mainz.de/ontology#reference_type"/>
+        <rdfs:label xml:lang="en">hieroglyphic_transcription</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#identification_accepted -->
+
+    <owl:NamedIndividual rdf:about="https://pnm.uni-mainz.de/ontology#identification_accepted">
+        <rdf:type rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E55_Type"/>
+        <rdfs:comment>the identification of a person in an inscription with a person known from other inscriptions is accepted</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#identification_is_weak -->
+
+    <owl:NamedIndividual rdf:about="https://pnm.uni-mainz.de/ontology#identification_is_weak">
+        <rdf:type rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E55_Type"/>
+        <rdfs:comment>the identification of a person in an inscription with a person known from other inscriptions is weak</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#identification_rejected -->
+
+    <owl:NamedIndividual rdf:about="https://pnm.uni-mainz.de/ontology#identification_rejected">
+        <rdf:type rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E55_Type"/>
+        <rdfs:comment>the identification of a person in an inscription with a person known from other inscriptions is rejected</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#main_inv_no -->
+
+    <owl:NamedIndividual rdf:about="https://pnm.uni-mainz.de/ontology#main_inv_no">
+        <rdf:type rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E55_Type"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#obsolete_inv_no -->
+
+    <owl:NamedIndividual rdf:about="https://pnm.uni-mainz.de/ontology#obsolete_inv_no">
+        <rdf:type rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E55_Type"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#online_collection -->
+
+    <owl:NamedIndividual rdf:about="https://pnm.uni-mainz.de/ontology#online_collection">
+        <rdf:type rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E55_Type"/>
+        <rdfs:comment>A web-address of the online collection search</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#partial_hieroglyphic_transcription -->
+
+    <owl:NamedIndividual rdf:about="https://pnm.uni-mainz.de/ontology#partial_hieroglyphic_transcription">
+        <rdf:type rdf:resource="https://pnm.uni-mainz.de/ontology#reference_type"/>
+        <rdfs:label xml:lang="en">partial_hieroglyphic_transcription</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#partial_sketch -->
+
+    <owl:NamedIndividual rdf:about="https://pnm.uni-mainz.de/ontology#partial_sketch">
+        <rdf:type rdf:resource="https://pnm.uni-mainz.de/ontology#reference_type"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#poor_or_partial_bw_photo -->
+
+    <owl:NamedIndividual rdf:about="https://pnm.uni-mainz.de/ontology#poor_or_partial_bw_photo">
+        <rdf:type rdf:resource="https://pnm.uni-mainz.de/ontology#reference_type"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#poor_or_partial_colour_photo -->
+
+    <owl:NamedIndividual rdf:about="https://pnm.uni-mainz.de/ontology#poor_or_partial_colour_photo">
+        <rdf:type rdf:resource="https://pnm.uni-mainz.de/ontology#reference_type"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#ranke -->
+
+    <owl:NamedIndividual rdf:about="https://pnm.uni-mainz.de/ontology#ranke">
+        <rdf:type rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E55_Type"/>
+        <rdfs:comment>Reference(s) to Ranke, Die Ägyptischen Personennamen</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#scheele-schweitzer -->
+
+    <owl:NamedIndividual rdf:about="https://pnm.uni-mainz.de/ontology#scheele-schweitzer">
+        <rdf:type rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E55_Type"/>
+        <rdfs:comment>Reference to Scheele-Schweitzer, Die Personennamen des Alten Reiches</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#semantic_name_type -->
+
+    <owl:NamedIndividual rdf:about="https://pnm.uni-mainz.de/ontology#semantic_name_type">
+        <rdf:type rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E55_Type"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#sketch -->
+
+    <owl:NamedIndividual rdf:about="https://pnm.uni-mainz.de/ontology#sketch">
+        <rdf:type rdf:resource="https://pnm.uni-mainz.de/ontology#reference_type"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#topbib_id -->
+
+    <owl:NamedIndividual rdf:about="https://pnm.uni-mainz.de/ontology#topbib_id">
+        <rdf:type rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E55_Type"/>
+        <rdfs:comment>ID or list of IDs in the Topographical Bibliography</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#translation -->
+
+    <owl:NamedIndividual rdf:about="https://pnm.uni-mainz.de/ontology#translation">
+        <rdf:type rdf:resource="https://pnm.uni-mainz.de/ontology#reference_type"/>
+        <rdfs:label xml:lang="en">translation</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://pnm.uni-mainz.de/ontology#ward_fischer -->
+
+    <owl:NamedIndividual rdf:about="https://pnm.uni-mainz.de/ontology#ward_fischer">
+        <rdf:type rdf:resource="http://www.cidoc-crm.org/cidoc-crm/E55_Type"/>
+        <rdfs:comment>List of corresponding lemma numbers in Ward, Index of Egyptian Administrative and Religious Titles of the Middle Kingdom and Fischer, Egyptian Titles of the Middle Kingdom. A Supplement to Wm. Ward&apos;s Index</rdfs:comment>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+

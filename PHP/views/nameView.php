@@ -29,7 +29,7 @@ class nameView extends View
                 <?php
                 $this->spellView = new spellingsMicroView();
                 foreach ($data->get("spellings")->data as $spelling) {
-                    echo '<li><a href = "#', $spelling['spellings_id'], '">', $this->spellView->render($spelling['spelling'], $spelling['spellings_id']), ' (', $spelling['count_attestations'], ')</a></li>';
+                    echo '<li><a href = "#', \PNM\ID::shorten($spelling['spellings_id']), '">', $this->spellView->render($spelling['spelling'], $spelling['spellings_id']), ' (', $spelling['count_attestations'], ')</a></li>';
                 }
                 if ($data->get("persons")->count > 0) {
                     echo '<li><a href = "#persons">Dossiers (', $data->get("persons")->count, ')</a></li>';

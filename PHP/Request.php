@@ -39,7 +39,7 @@ class Request
         'match-region' => 'attested', 'match' => 'inexact'];
     const CONTROLLERS = ['bibliography', 'collection', 'collections', 'criterion', 'group',
         'info', 'inscription', 'inscriptions', 'name', 'names', 'people', 'person', 'place', 'places',
-        'publication', 'title', 'titles', 'type', 'types', 'workshop'];
+        'publication', 'title', 'titles', 'type', 'types', 'workshop', 'thesaurus'];
 
     private static $data = [];
     public static $noDatalist;
@@ -120,7 +120,11 @@ class Request
 
     public static function stableURL()
     {
+        if (strpos($_SERVER['REQUEST_URI'],'ontology')){
+             return self::makeURL('ontology', null, null, null, false, -1, false, null);
+        }else{
         return self::makeURL(self::get('controller'), self::get('id'), null, null, true, -1, true);
+        }
     }
     /*
      * returns a stable url for a different version of the current request

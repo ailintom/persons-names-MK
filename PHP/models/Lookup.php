@@ -78,6 +78,16 @@ class Lookup
         return self::getColumn('SELECT item_name FROM thesauri WHERE thesaurus = ? ORDER BY item_name', $thesaurusID, 'i');
     }
 
+    public static function getThesaurusID($item_name)
+    {
+        return self::get('SELECT thesauri_id FROM thesauri WHERE item_name = ? ', $item_name, 's');
+    }
+
+    public static function getThesaurusNane($thesaurusID)
+    {
+        return self::get('SELECT item_name FROM thesauri WHERE thesauri_id = ? ', $thesaurusID, 'i');
+    }
+
     public static function dateStart($dating)
     {
         return self::get('SELECT sort_date_range_start FROM thesauri WHERE item_name = ?', $dating);

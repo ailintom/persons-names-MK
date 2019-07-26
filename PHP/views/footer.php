@@ -15,7 +15,7 @@ use \PNM\Request,
             <div class="column">
                 <p>
                     <span style="display:inline-block">Copyright 2018 Alexander Ilin-Tomich.
-                    Content licensed under <a href="https://creativecommons.org/licenses/by/4.0/" title="Creative Commons Attribution 4.0 International">CC BY 4.0</a>, except for logos.</span> <span style="display:inline-block">Dataset published under <a href="http://dx.doi.org/10.5281/zenodo.1411392">doi:10.5281/zenodo.1411392</a>. Source code <a href="https://github.com/ailintom/persons-names-MK">on GitHub</a>.</span>
+                    Content licensed under <a href="https://creativecommons.org/licenses/by/4.0/" title="Creative Commons Attribution 4.0 International">CC BY 4.0</a>, except for logos.</span> <span style="display:inline-block">Dataset published under <a href="http://dx.doi.org/10.5281/zenodo.1411391">doi:10.5281/zenodo.1411391</a>. Source code <a href="https://github.com/ailintom/persons-names-MK">on GitHub</a>.</span>
                 </p>
                 <p>
                     <a class="footer_link" href="<?= Request::makeURL('info') ?>/impressum">Impressum</a>
