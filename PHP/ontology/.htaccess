@@ -2,3 +2,14 @@ DirectoryIndex index.php
 
 AddType application/rdf+xml .owl 
 AddType text/turtle .ttl
+
+RewriteBase /
+RewriteEngine On
+
+RewriteCond %{HTTP_ACCEPT} application/rdf\+xml
+RewriteRule ^/?$ ontology/pnm.owl
+
+RewriteCond %{HTTP_ACCEPT} text/turtle 
+RewriteRule ^/?$ ontology/pnm.owl.ttl
+
+

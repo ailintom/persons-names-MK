@@ -10,7 +10,7 @@ namespace PNM\controllers;
 
 class Translit
 {
-    /* This function coverts user inputs into the pseudocodes used in the database to search in the transliteration fields
+    /* This function converts user inputs into the pseudocodes used in the database to search in the transliteration fields
      * (This is required because MySQL does not search for Unicode transliteration values correctly without a custom
      * user-defined UCA collation. And creating a user-defined UCA collation requires root rights).
      * Compare the MySQL function `search_transl`
