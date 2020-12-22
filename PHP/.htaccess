@@ -1,6 +1,27 @@
 RewriteEngine On
 RewriteBase /
 
+
+RewriteCond %{QUERY_STRING} !(^|&)query($|=) [NC]
+RewriteCond %{REQUEST_METHOD} !=POST
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule "^sparql$" "/rdf/sparqlweb.html" [L]
+
+RewriteCond %{QUERY_STRING} !(^|&)query($|=) [NC]
+RewriteCond %{REQUEST_METHOD} !=POST
+RewriteRule "^sparql/$" "/sparql" [R,L]
+
+
+RewriteCond %{QUERY_STRING} !(^|&)query($|=) [NC]
+RewriteCond %{REQUEST_METHOD} !=POST
+RewriteRule "^sparql/(.+)$" "/rdf/$1" [L]
+
+
+RewriteCond %{QUERY_STRING} (^|&)query($|=)  [NC,OR]
+RewriteCond %{REQUEST_METHOD} POST
+RewriteRule "^sparql(.*)$" "http://localhost:3030/pnm/sparql" [QSA,P,L]
+
 RewriteRule ^/?$ https://pnm.uni-mainz.de/names/ [QSA,R=301,L]
 
 RewriteCond %{QUERY_STRING} action=reset

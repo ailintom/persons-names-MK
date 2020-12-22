@@ -74,9 +74,9 @@ class Rule
                 } else {
                     $arrcomp = ' NOT IN ';
                 }
-                $this->WHERE .= $this->field[$i] . $arrcomp . '(' . implode(array_map(function ($val) {
+                $this->WHERE .= $this->field[$i] . $arrcomp . '(' . implode( ', ', array_map(function ($val) {
                                     return '?';
-                                }, $rendVal), ', ') . ') ';
+                                }, $rendVal)) . ') ';
                 $this->param_type .= str_repeat($param_type, count($rendVal));
                 $this->value = array_merge($this->value, $rendVal);
             } else {
