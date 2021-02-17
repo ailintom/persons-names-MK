@@ -21,7 +21,7 @@ class MicroView
 
     public function render($inputvalue, $inputid = null, $secondinput = null)
     {
-        if (empty($inputvalue)){
+        if (empty($inputvalue) and empty($secondinput)){
             return null;
         }
         $this->value = htmlspecialchars(strip_tags($inputvalue), ENT_HTML5);
