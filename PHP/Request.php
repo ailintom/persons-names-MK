@@ -39,7 +39,7 @@ class Request
         'match-region' => 'attested', 'match' => 'inexact'];
     const CONTROLLERS = ['bibliography', 'collection', 'collections', 'criterion', 'group',
         'info', 'inscription', 'inscriptions', 'name', 'names', 'people', 'person', 'place', 'places',
-        'publication', 'title', 'titles', 'type', 'types', 'workshop', 'thesaurus'];
+        'publication', 'title', 'titles', 'type', 'types', 'workshop', 'thesaurus', 'id'];
 
     private static $data = [];
     public static $noDatalist;
