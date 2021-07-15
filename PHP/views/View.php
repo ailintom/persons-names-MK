@@ -301,7 +301,7 @@ class View
             foreach ($bondsincurrentcat as $bond) {
                 $res .= '<li>';
                 $res .= $this->genderedDesignations($currentcat, $bond['gender']);
-                $res .= (!empty($bondsincurrentcat[0]['wording']) ? '(<span class="wording">' . $bondsincurrentcat[0]['wording'] . '</span>)' : null) . ': '
+                $res .= (!empty($bond['wording']) ? '(<span class="wording">' . $bond['wording'] . '</span>)' : null) . ': '
                         . $attView->render($bond['title'], $bond['relative_id'], $bond['name'])
                         . '.</li>';
             }
@@ -313,11 +313,11 @@ class View
     protected function renderBonds($bonds_data, MicroView $attView)
     {
         $currentLoc = '<ul class="bonds">';
-        $currentcat = 0;
+        $currentcat = -1;
         $bondsincurrentcat = [];
         foreach ($bonds_data as $bond) {
             if ($currentcat !== $bond['predic_cat']) {
-                if (!empty($currentcat)) {
+                if (($currentcat)>-1) {
                     $currentLoc .= $this->processBondCat($currentcat, $bondsincurrentcat, $attView);
                 }
                 $currentcat = $bond['predic_cat'];
@@ -326,6 +326,7 @@ class View
                 array_push($bondsincurrentcat, $bond);
             }
         }
+        print_r ($bondsincurrentcat);
         $currentLoc .= $this->processBondCat($currentcat, $bondsincurrentcat, $attView);
         $currentLoc .= '</ul>';
         return $currentLoc;
