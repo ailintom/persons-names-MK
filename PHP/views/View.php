@@ -326,7 +326,7 @@ class View
                 array_push($bondsincurrentcat, $bond);
             }
         }
-        print_r ($bondsincurrentcat);
+        //print_r ($bondsincurrentcat);
         $currentLoc .= $this->processBondCat($currentcat, $bondsincurrentcat, $attView);
         $currentLoc .= '</ul>';
         return $currentLoc;
