@@ -122,7 +122,7 @@ class inscriptionView extends View
         }
         echo $this->writeLoc($loc, $currentLoc);
         echo '</ul>';
-    }
+            }
 
     protected function writeLoc($loc, $currentLoc)
     {

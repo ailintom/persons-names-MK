@@ -21,10 +21,10 @@ class titlesController
     {
         $rules = [];
         if (!empty(Request::get('title'))) {
-            array_push($rules, new Rule('title_search', Request::get('match') ?: 'exactlike', Translit::searchVal(Request::get('title'))));
+            array_push($rules, new Rule('title_search', Request::get('match') ?: Request::DEFAULTS['match'], Translit::searchVal(Request::get('title'))));
         }
         if (!empty(Request::get('translation'))) {
-            array_push($rules, new Rule(['translation_en', 'translation_de'], Request::get('match') ?: 'exactlike', Request::get('translation')));
+            array_push($rules, new Rule(['translation_en', 'translation_de'], Request::get('match') ?: Request::DEFAULTS['match'], Request::get('translation')));
         }
         if (!empty(Request::get('gender')) && Request::get('gender') != 'any') {
             array_push($rules, new Rule('gender', 'exact', Request::get('gender')));
