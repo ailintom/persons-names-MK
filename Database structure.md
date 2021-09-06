@@ -91,23 +91,22 @@ a workshop, an archaeological find group, a personal name, a title, or a criteri
 | source_url     | TEXT | URL for online sources that cannot be cited using the author-year system |
 | source_title   | TEXT | Reference to an offline source that cannot be cited using the author-year system (an archival document, an offline museum database, etc.; this also includes the references to the Topographical Bibliography to keep references to published and unpublished TopBib entries in one place) or the title of the online source referred to in `source_url` |
 | accessed_on    | DATETIME | The date when the online or offline source that cannot be cited using the author-year system was accessed |
-| object_id      | INT | The ID of the referred entity in any of the tables that can be referred to (`inscriptions`, `find_groups`, `workshops`, `persons_att`, `persons`, `titles`, `personal_names`, `name_types`) |
+| object_id      | INT | The ID of the referred entity in any of the tables that can be referred to (`objects`, `inscriptions`, `find_groups`, `workshops`, `persons_att`, `persons`, `titles`, `personal_names`, `name_types`) |
 | pages          | VARCHAR(191) | Pages, figures, plates, catalogue numbers, database ID where the entity is referred to in the source |
 | pages_sort     | VARCHAR (191) | Natural sort value of `pages` |
 | note           | TEXT | Note related to the reference (for example, mistakes in the publication) |
 
-### inscriptions *(table_id: 4)*  
+### objects *(table_id: 10)*  
 Each record in this table represents a physical object with an Egyptian inscription. This can be an object now located in a museum or a private collection or known from a publication, archival document, or sale catalogue (such as a stela, statue, offering table, coffin, seal, papyrus, etc.), a rock inscription, an inscribed tomb, or another structure. Objects originally belonging to the same structure that has a different type than the objects themselves (e. g., stelae originally installed in the same offering chapel) are considered different objects, but objects that are parts of an originally integral object of the same type, now decomposed, (e. g., two parts of the same statue, now stored in different museums) are considered the same object. 
 
 | Field name        | Type  | Description | Equivalent classes, properties |
 | ---               | :---: | :---        | :--- |
-| inscriptions_id   | INT | Unique record ID, primary key | |
+| objects_id   | INT | Unique record ID, primary key | |
 | date_created| DATE | Date when the record was created in the published version of the database |
 | date_changed| DATE | Date when the last change to the record was published |
 | title  | VARCHAR(191) | The title under which the object is referred to in the database (short museum name and main inventory number for objects in the museums or the reference to the most relevant (usually first) publication for other objects)  |
 | title_sort |VARCHAR(191) | `Title` converted for natural sort|
 | topbib_id | VARCHAR(255) | The reference to the Topographical Bibliography or a list of such references divided by semicolons |
-| tmtexts_id | INT | The reference to the Trismegistos Texts database |
 | object_type  | VARCHAR(191) | The `item_name` of the inscription type in the object_type thesaurus (thesaurus 1); *example: stela*  |
 | object_subtype | VARCHAR(191) | The `item_name` of the inscription subtype in the object_subtype thesaurus (thesaurus 2); *example: block-statue*  |
 | material          | VARCHAR(191) | The `item_name` of the material type in the material  thesaurus (thesaurus 3), *based on a subset of the [THOT Material thesaurus](http://thot.philo.ulg.ac.be/concept/thot-6200)* |
@@ -116,32 +115,55 @@ Each record in this table represents a physical object with an Egyptian inscript
 | width             | INT | Preserved width of the object in mm. | <http://www.cidoc-crm.org/cidoc-crm/P43_has_dimension>, <http://www.cidoc-crm.org/cidoc-crm/E54_Dimension> |
 | thickness         | INT | Preserved thickness of the object in mm. | <http://www.cidoc-crm.org/cidoc-crm/P43_has_dimension>, <http://www.cidoc-crm.org/cidoc-crm/E54_Dimension> | 
 | find_groups_id    | INT | The ID of the archaeological find_group to which the inscribed object belongs in the table `find_groups` |
-| text_content      | VARCHAR(191) | The `item_name` of the text content type in the text_content thesaurus (thesaurus 4), *based on a subset of the [THOT Text content thesaurus](http://thot.philo.ulg.ac.be/concept/thot-18634)* |
-| script            | VARCHAR(191) | The `item_name` of the script in the script thesaurus (thesaurus 12), *based on a subset of the [THOT Ancient Egyptian scripts thesaurus](http://thot.philo.ulg.ac.be/concept/thot-111)* |
 | provenance        | VARCHAR(191) | The `place_name` of the record in the table `places` corresponding to the place where the object was found or purchased | <http://lawd.info/ontology/foundAt> |
 | provenance_sort| INT | The `latitude` of the record in the table `places` corresponding to the `provenance` |
 | provenance_note   | TEXT | Note related to the `provenance` |
 | installation_place| VARCHAR(191) | The `place_name` of the record in the table `places` corresponding to the place where the object should have been installed (when different from the provenance or when the provenance is unknown or unreliable, as in case of purchases) |
 | installation_place_sort| INT | The `latitude` of the record in the table `places` corresponding to the `installation_place` |
 | installation_place_note   | TEXT | Note related to the `installation_place` |
-| origin            | VARCHAR(191) | The `place_name` of the record in the table `places` corresponding to the place where the person(s) named in the inscription should have lived |
-| origin_sort| INT | The `latitude` of the record in the table `places` corresponding to the `origin` |
-| origin_note       | TEXT | The reasoning behind the `origin` with relevant bibliographical references whenever possible |
 | production_place  | VARCHAR(191) | The `place_name` of the record in the table `places` corresponding to the place where the object should have been produced | <http://lawd.info/ontology/origin> |
 | production_place_sort| INT | The `latitude` of the record in the table `places` corresponding to the `production_place` |
 | production_place_note | TEXT | The reasoning behind the `production_place` with relevant bibliographical references whenever possible |
-| inst_prov_temp | VARCHAR(191) | Equals `installation_place` if defined; otherwise, `provenance` |
-| inst_prov_temp_sort | INT | Equals `installation_place_sort` if defined; otherwise, `provenance_sort` |
-| orig_prod_temp | VARCHAR(191) | Equals `origin` if defined; otherwise, `production_place` |
-| orig_prod_temp_sort | INT | Equals `origin_sort` if defined; otherwise, `production_place_sort` |
+
+### objects_inscriptions_xref *(table_id: 12)*  
+Each record in this table represents a link between an inscribed object and an inscription it carries. Several inscribed objects may carry one an the same inscription as in the case of multiple impressions of the same seal or multiple funerary cones stamped with the same inscription. On the other side one and the same object can carry several inscriptions created in different periods.  
+
+| Field name        | Type  | Description | Equivalent classes, properties |
+| ---               | :---: | :---        | :--- |
+| objects_inscriptions_xref_id   | INT | Unique record ID, primary key | |
+| date_created| DATE | Date when the record was created in the published version of the database |
+| date_changed| DATE | Date when the last change to the record was published |
+| objects_id   | INT   | ID of the inscribed object, which carries an inscription | subject of <http://www.cidoc-crm.org/cidoc-crm/P128_carries> |
+| inscriptions_id   | INT   | ID of the inscription, which is carried by an object | objects of <http://www.cidoc-crm.org/cidoc-crm/P128_carries> |
+
+### inscriptions *(table_id: 4)*  
+Each record in this table represents an Egyptian inscription attested on one or several physical objects. Texts inscribed on the same object on different occasions are separate inscriptions.  
+
+| Field name        | Type  | Description | Equivalent classes, properties |
+| ---               | :---: | :---        | :--- |
+| inscriptions_id   | INT | Unique record ID, primary key | |
+| date_created| DATE | Date when the record was created in the published version of the database |
+| date_changed| DATE | Date when the last change to the record was published |
+| title  | VARCHAR(191) | The title under which the inscription is referred to in the database. Usually the same as the object's title.  |
+| title_sort |VARCHAR(191) | `Title` converted for natural sort|
+| tmtexts_id | INT | The reference to the Trismegistos Texts database |
+| text_content      | VARCHAR(191) | The `item_name` of the text content type in the text_content thesaurus (thesaurus 4), *based on a subset of the [THOT Text content thesaurus](http://thot.philo.ulg.ac.be/concept/thot-18634)* |
+| script            | VARCHAR(191) | The `item_name` of the script in the script thesaurus (thesaurus 12), *based on a subset of the [THOT Ancient Egyptian scripts thesaurus](http://thot.philo.ulg.ac.be/concept/thot-111)* |
+| origin            | VARCHAR(191) | The `place_name` of the record in the table `places` corresponding to the place where the person(s) named in the inscription should have lived |
+| origin_sort| INT | The `latitude` of the record in the table `places` corresponding to the `origin` |
+| origin_note       | TEXT | The reasoning behind the `origin` with relevant bibliographical references whenever possible |
+| inst_prov_temp | VARCHAR(191) | Equals the object's `installation_place` if defined; otherwise, `provenance` |
+| inst_prov_temp_sort | INT | Equals the object's `installation_place_sort` if defined; otherwise, `provenance_sort` |
+| orig_prod_temp | VARCHAR(191) | Equals `origin` if defined; otherwise, the object's `production_place` |
+| orig_prod_temp_sort | INT | Equals `origin_sort` if defined; otherwise, the object's `production_place_sort` |
 | region_temp | VARCHAR(191) | Equals `orig_prod_temp` if defined; otherwise, `inst_prov_temp` |
 | region_temp_sort | INT | Equals `orig_prod_temp_sort` if defined; otherwise, `inst_prov_temp_sort` |
-| dating            | VARCHAR(191) | The `item_name` of the period to which the object can be dated in the dating thesaurus (thesaurus 5), *loosely based on a subset of the [THOT Dates and dating systems thesaurus](http://thot.philo.ulg.ac.be/concept/thot-114)* |
-| dating_sort_start | INT | The `sort_date_range_start` of the period to which the object can be dated in the dating thesaurus |
-| dating_sort_end | INT | The `sort_date_range_end` of the period to which the object can be dated in the dating thesaurus |
+| dating            | VARCHAR(191) | The `item_name` of the period to which the inscription can be dated in the dating thesaurus (thesaurus 5), *loosely based on a subset of the [THOT Dates and dating systems thesaurus](http://thot.philo.ulg.ac.be/concept/thot-114)* |
+| dating_sort_start | INT | The `sort_date_range_start` of the period to which the inscription can be dated in the dating thesaurus |
+| dating_sort_end | INT | The `sort_date_range_end` of the period to which the inscription can be dated in the dating thesaurus |
 | dating_note       | TEXT | The reasoning behind the `dating`  |
-| last_king_id      | INT | The `thesauri_id`  of the most recent king explicitly named on the object in the king thesaurus (thesaurus 6), *loosely based on a subset of the [THOT Dates and dating systems thesaurus](http://thot.philo.ulg.ac.be/concept/thot-114)* |
-| note              | TEXT | General notes related to the object |
+| last_king_id      | INT | The `thesauri_id`  of the most recent king explicitly named in the inscription in the king thesaurus (thesaurus 6), *loosely based on a subset of the [THOT Dates and dating systems thesaurus](http://thot.philo.ulg.ac.be/concept/thot-114)* |
+| note              | TEXT | General notes related to the inscription |
 
 ### find_groups *(table_id: 23)*  
 Each record in this table represents an archaeological find group (such as a burial or a memorial chapel) where one or more inscribed objects were found. These data are supplementary and are entered only to the extent that it can be relevant for dating and grouping together inscribed objects.  
@@ -185,7 +207,7 @@ Each record in this table represents a workshop producing inscribed objects that
 | note              | TEXT | General notes related to the workshop |
 
 ### inscriptions_workshops_xref *(table_id: 21)*  
-An associative table for linking workshops to inscriptions (assuming that contradictory opinions can be expressed in scholarly literature). 
+An associative table for linking workshops to objects (assuming that contradictory opinions can be expressed in scholarly literature). 
 
 | Field name        | Type  | Description |
 | ---               | :---: | :---        |
@@ -193,7 +215,7 @@ An associative table for linking workshops to inscriptions (assuming that contra
 | date_created| DATE | Date when the record was created in the published version of the database |
 | date_changed| DATE | Date when the last change to the record was published |
 | workshops_id                   | INT   | ID of the workshop |
-| inscriptions_id                | INT   | ID of the inscription |
+| objects_id                | INT   | ID of the inscribed object |
 | status            | CHAR(8)   | Status of the link ("accepted", "weak", or "rejected")  |
 | note        | TEXT | Note concerning the appurtenance of the inscribed object to the workshop |
 
@@ -225,7 +247,7 @@ Each record in this table represents an inventory number of an inscribed object 
 | inv_nos_id        | INT   | Unique record ID, primary key |
 | date_created| DATE | Date when the record was created in the published version of the database |
 | date_changed| DATE | Date when the last change to the record was published |
-| inscriptions_id   | INT   | ID of the inscribed object identified by the inventory number |
+| objects_id   | INT   | ID of the inscribed object identified by the inventory number |
 | collections_id    | INT   | ID of the museum |
 | inv_no            | VARCHAR(255) | Inventory number | <http://www.w3.org/2000/01/rdf-schema#label> |
 | inv_no_sort             | VARCHAR(191) | `inv_no` converted for natural sort |
@@ -271,6 +293,9 @@ Each record in this table represents an attestation of a person, of one or two p
 | personal_name_search | VARCHAR(191) | Generated sort value for searching in the `personal_name` column |
 | status            | CHAR(6)        | Status of the person on the monument ("owner" or "patron" or "")|
 | location          | VARCHAR(191)        | The place in the inscription where the person is mentioned (register, line number according to the standard publication or other relevant indications)| Data stored in the <http://lawd.info/ontology/Citation> class |
+| epithet | VARCHAR(191) | An epithet (Beiwort) characterizing the age or the gender of the person, which stands after the name |
+| classifier | VARCHAR(191) | Gardiner codes of classifier(s) standing after the name in the inscription |
+| representation | VARCHAR(191) | Whether the person is represented by a human figure |
 | note              | TEXT| General notes related to the attestation |
 
 
