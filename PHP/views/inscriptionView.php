@@ -9,41 +9,51 @@ namespace PNM\views;
 
 use \PNM\Request;
 
-class inscriptionView extends View
-{
+class inscriptionView extends View {
 
-    public function echoRender(&$data)
-    {
+    public function echoRender(&$data) {
         (new HeadView())->render(HeadView::HEADERSLIM, $data->get('title'));
         $placesMV = new placesMicroView();
-        echo '<p>' . $this->renderInvNos($data->get('inv_no'), true) . '</p>';
-        echo '<dl>';
-        echo $this->descriptionElement('Alternative inv.', $this->renderInvNos($data->get('alternative_inv_no')), null, 'alternative_inv_no');
-        echo $this->descriptionElement('Obsolete inv.', $this->renderInvNos($data->get('obsolete_inv_no')), null, 'obsolete_inv_no');
-        echo $this->descriptionElement('Erroneous inv.', $this->renderInvNos($data->get('erroneous_inv_no')), null, 'erroneous_inv_no');
-        echo $this->descriptionElement('PM', $data->get('topbib_id'), null, 'biblio-ref-no-author-date');
-        echo $this->descriptionElement('Type', $this->renderObjectType($data->get('object_type')), null, 'type');
-        echo $this->descriptionElement('Subtype', $data->get('object_subtype'), null, 'type');
-        echo $this->descriptionElement('Material', $data->get('material'), null, 'type');
-        echo $this->descriptionElement('Size', $this->size($data), null, 'type');
+
+        /* echo $this->descriptionElement('Type', $this->renderObjectType($data->get('object_type')), null, 'type');
+          echo $this->descriptionElement('Subtype', $data->get('object_subtype'), null, 'type');
+          echo $this->descriptionElement('Material', $data->get('material'), null, 'type');
+          echo $this->descriptionElement('Size', $this->size($data), null, 'type'); */
         echo $this->descriptionElement('Text', $this->renderTextContent($data->get('text_content')), null, 'type');
         echo $this->descriptionElement('Script', $data->get('script'), null, 'type');
         echo $this->descriptionElement('Date', $data->get('dating'), $data->get('dating_note'), 'period');
-        echo $this->descriptionElement('Provenance', $placesMV->render($data->get('provenance')), $data->get('provenance_note'), 'place');
-        if (!empty($data->get('find_groups_id'))) {
-            echo $this->descriptionElement('Find group', \PNM\Note::processID($data->get('find_groups_id')), null, 'find_group');
-        }
-        echo $this->descriptionElement('Intalled at', $placesMV->render($data->get('installation_place')), $data->get('installation_place_note'), 'place');
+        /* echo $this->descriptionElement('Provenance', $placesMV->render($data->get('provenance')), $data->get('provenance_note'), 'place');
+          if (!empty($data->get('find_groups_id'))) {
+          echo $this->descriptionElement('Find group', \PNM\Note::processID($data->get('find_groups_id')), null, 'find_group');
+          }
+          echo $this->descriptionElement('Intalled at', $placesMV->render($data->get('installation_place')), $data->get('installation_place_note'), 'place'); */
         echo $this->descriptionElement('Origin', $placesMV->render($data->get('origin')), $data->get('origin_note'), 'place');
-        echo $this->descriptionElement('Produced at', $placesMV->render($data->get('production_place')), $data->get('production_place_note'), 'place');
-        if (count($data->get('workshops')->data) > 0) {
-            echo $this->descriptionElement('Workshop', $this->renderWorkshop($data->get('workshops')), null, 'workshop');
-        }
+        /*     echo $this->descriptionElement('Produced at', $placesMV->render($data->get('production_place')), $data->get('production_place_note'), 'place');
+          if (count($data->get('workshops')->data) > 0) {
+          echo $this->descriptionElement('Workshop', $this->renderWorkshop($data->get('workshops')), null, 'workshop');
+          }
+
+         */
 //
+
         echo $this->descriptionElement('Owner', '');
         echo $this->descriptionElement('Note', $data->get('note'), null, 'note');
         echo $this->descriptionElement('Bibliography', $this->renderBiblio($data->get('bibliography')));
         echo '</dl>';
+        $objObjects = $data->get('objects');
+        if (count($objObjects->data) > 1) {
+            echo '<h2>Objects</h2><ul class="attestations">';
+            foreach ($objObjects->data as $objObject) {
+                echo '<li><h4 id="' . \PNM\ID::shorten($objObject['objects_id']) . '">' . $objObject['title'] . '</h4>';
+                $this->renderObjects($objObject);
+            }
+            echo '</ul>';
+        } else {
+            echo '<h2>Object</h2>';
+            //print_r($objObjects);
+            $this->renderObjects($objObjects->data[0]);
+        }
+
         echo '<h2>People</h2><ul class="locations">';
         $objAtt = $data->get('attestations');
         $titlesView = new titlesMicroView();
@@ -122,59 +132,80 @@ class inscriptionView extends View
         }
         echo $this->writeLoc($loc, $currentLoc);
         echo '</ul>';
-            }
+    }
 
-    protected function writeLoc($loc, $currentLoc)
-    {
+    protected function writeLoc($loc, $currentLoc) {
         if (!empty($currentLoc)) {
             return '<li><h3>' . ($loc ?: '&nbsp;') . '</h3><ul class="attestations">' . $currentLoc . ' </ul></li>';
         }
     }
+
     /*
      * renders the size data
      */
 
-    private function size(&$data)
-    {
+    private function size(&$data) {
         // 'length', 'height', 'width', 'thickness',
-        $length = $data->get('length');
+        $length = $data['length'];
         if (empty($length)) {
-            $length = $data->get('height');
+            $length = $data['height'];
         }
-        $width = $data->get('width');
+        $width = $data['width'];
         if (empty($length) & !empty($width)) {
             $length = $width;
             $width = null;
         }
-        $thickness = $data->get('thickness');
+        $thickness = $data['thickness'];
         $thicknessProcessed = (empty($thickness) ? null : '×' . $thickness);
         if (!empty($length)) {
             return $length . (empty($width) ? null : '×' . $width . $thicknessProcessed) . ' mm';
         }
     }
+
     /*
-     * Renders workshops associated with a particular inscription
+     * Renders objects associated with a particular inscription
      */
 
-    private function renderWorkshop($data)
-    {
+    private function renderObjects($data) {
+   
+        echo '<p>' . $this->renderInvNos($data['inv_no'], true) . '</p>';
+        echo '<dl>';
+        echo $this->descriptionElement('Alternative inv.', $this->renderInvNos($data['alternative_inv_no']), null, 'alternative_inv_no');
+        echo $this->descriptionElement('Obsolete inv.', $this->renderInvNos($data['obsolete_inv_no']), null, 'obsolete_inv_no');
+        echo $this->descriptionElement('Erroneous inv.', $this->renderInvNos($data['erroneous_inv_no']), null, 'erroneous_inv_no');
+        echo $this->descriptionElement('PM', $data['topbib_id'], null, 'biblio-ref-no-author-date');
+
+        echo $this->descriptionElement('Type', $this->renderObjectType($data['object_type']), null, 'type');
+        echo $this->descriptionElement('Subtype', $data['object_subtype'], null, 'type');
+        echo $this->descriptionElement('Material', $data['material'], null, 'type');
+        echo $this->descriptionElement('Size', $this->size($data), null, 'type');
+        if (array_key_exists('workshops', $data)) {
+            $this->renderWorkshop($data['workshops']);
+        }
+    }
+
+    /*
+     * Renders workshops associated with a particular object
+     */
+
+    private function renderWorkshop($data) {
         return implode(", ", array_map(array($this, 'renderSingleWorkshop'), $data->data));
     }
+
     /*
      * Renders a single workshop; used in the previous function
      */
 
-    private function renderSingleWorkshop($Wk)
-    {
+    private function renderSingleWorkshop($Wk) {
         $wkMV = new workshopsMicroView();
         return $wkMV->render($Wk['title'], $Wk['workshops_id']) . ' (' . $Wk['status'] . (empty($Wk['note']) ? null : ', ' . $Wk['note']) . ')';
     }
+
     /*
      * Renders inventory numbers of a certain type
      */
 
-    protected function renderInvNos($data, $isMain = false)
-    {
+    protected function renderInvNos($data, $isMain = false) {
         if (empty($data->data)) {
             return null;
         }
@@ -202,14 +233,15 @@ class inscriptionView extends View
         $res .= $this->renderSingleInvNo($colView, $res, $concat, $invs, $title, $id);
         return $res;
     }
+
     /*
      * Renders a single inv_no; is used in the previous function
      */
 
-    protected function renderSingleInvNo(&$colView, $res, $concat, $invs, $title, $id)
-    {
+    protected function renderSingleInvNo(&$colView, $res, $concat, $invs, $title, $id) {
         if (!empty($invs)) {
             return (empty($res) ? null : $concat) . $colView->render($title, $id) . ' ' . $invs;
         }
     }
+
 }

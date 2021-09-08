@@ -86,8 +86,11 @@ OPTIMIZE TABLE `inscriptions`;
 ALTER TABLE `inscriptions_workshops_xref`
 COMMENT 'An associative table for linking workshops to objects (assuming that contradictory opinions can be expressed in scholarly literature).',
 DROP FOREIGN KEY `inscriptions_workshops_xref_inscriptions`,
-DROP KEY `inscriptions_workshops_xref_inscriptions_idx`,
-RENAME COLUMN inscriptions_id TO objects_id,
+DROP KEY `inscriptions_workshops_xref_inscriptions_idx`;
+ALTER TABLE `inscriptions_workshops_xref`
+RENAME COLUMN inscriptions_id TO objects_id;
+UPDATE inscriptions_workshops_xref SET objects_id = make_id(10,record_id_from_id(`objects_id`));
+ALTER TABLE `inscriptions_workshops_xref`
 ADD KEY `inscriptions_workshops_xref_objects_idx` (`objects_id`), 
 ADD CONSTRAINT `inscriptions_workshops_xref_objects` FOREIGN KEY (`objects_id`) REFERENCES `objects` (`objects_id`) ON UPDATE NO ACTION ON DELETE NO ACTION;
 
@@ -95,10 +98,13 @@ OPTIMIZE TABLE `inscriptions_workshops_xref`;
 
 ALTER TABLE `inv_nos`
 DROP FOREIGN KEY `key-inv_nos-inscriptions`,
-DROP KEY `key-inv_nos-inscriptions_idx`,
-RENAME COLUMN inscriptions_id TO objects_id,
+DROP KEY `key-inv_nos-inscriptions_idx`;
+ALTER TABLE `inv_nos`
+RENAME COLUMN inscriptions_id TO objects_id;
+UPDATE inv_nos SET objects_id = make_id(10,record_id_from_id(`objects_id`));
+ALTER TABLE `inv_nos`
 ADD KEY `key-inv_nos-objects_idx` (`objects_id`), 
-ADD CONSTRAINT `key-inv_nos-inscriptions` FOREIGN KEY (`objects_id`) REFERENCES `objects` (`objects_id`) ON UPDATE NO ACTION ON DELETE NO ACTION;
+ADD CONSTRAINT `key-inv_nos-objects` FOREIGN KEY (`objects_id`) REFERENCES `objects` (`objects_id`) ON UPDATE NO ACTION ON DELETE NO ACTION;
 
 OPTIMIZE TABLE `inv_nos`;
 

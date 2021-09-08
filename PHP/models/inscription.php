@@ -7,45 +7,68 @@
 
 namespace PNM\models;
 
-class inscription extends EntryModel
-{
+class inscription extends EntryModel {
 
     protected $tablename = 'inscriptions';
     protected $hasBiblio = true;
     protected $idField = 'inscriptions_id';
 
-    protected function initFieldNames()
-    {
-        $this->field_names = new FieldList(['inscriptions_id', 'title', 'topbib_id', 'object_type', 'object_subtype', 'material', 'length', 'height', 'width', 'thickness', 'find_groups_id', 'text_content',
-            'script', 'provenance', 'provenance_note', 'installation_place', 'installation_place_note', 'origin', 'origin_note', 'production_place', 'production_place_note',
+    protected function initFieldNames() {
+        $this->field_names = new FieldList(['inscriptions_id', 'title', 'text_content',
+            'script', 'origin', 'origin_note',
             'dating', 'dating_note', 'last_king_id', 'note']);
     }
 
-    protected function parse()
-    {
+//'topbib_id', 'object_type', 'object_subtype', 'material', 'length', 'height', 'width', 'thickness', 'find_groups_id', 'provenance', 'provenance_note', 
+    protected function parse() {
 
         $this->parseNote(['provenance_note', 'installation_place_note', 'origin_note', 'production_place_note', 'dating_note', 'note']);
         //inv_nos
-        $mainRule = new Rule('inscriptions_id', 'exact', $this->getID(), 'i');
-        $filter = new Filter([$mainRule, new Rule('status', 'exact', 'main', 's')]);
-        $this->data['inv_no'] = new InscriptionInv_nos(null, 0, 0, $filter);
+        /* $mainRule = new Rule('inscriptions_id', 'exact', $this->getID(), 'i');
+          $filter = new Filter([$mainRule, new Rule('status', 'exact', 'main', 's')]);
+          $this->data['inv_no'] = new InscriptionInv_nos(null, 0, 0, $filter);
 
 
-        $filter = new Filter([$mainRule, new Rule('status', 'exact', 'alternative', 's')]);
-        $this->data['alternative_inv_no'] = new InscriptionInv_nos(null, 0, 0, $filter);
+          $filter = new Filter([$mainRule, new Rule('status', 'exact', 'alternative', 's')]);
+          $this->data['alternative_inv_no'] = new InscriptionInv_nos(null, 0, 0, $filter);
 
-        $filter = new Filter([$mainRule, new Rule('status', 'exact', 'obsolete', 's')]);
-        $this->data['obsolete_inv_no'] = new InscriptionInv_nos(null, 0, 0, $filter);
+          $filter = new Filter([$mainRule, new Rule('status', 'exact', 'obsolete', 's')]);
+          $this->data['obsolete_inv_no'] = new InscriptionInv_nos(null, 0, 0, $filter);
 
-        $filter = new Filter([$mainRule, new Rule('status', 'exact', 'erroneous', 's')]);
-        $this->data['erroneous_inv_no'] = new InscriptionInv_nos(null, 0, 0, $filter);
+          $filter = new Filter([$mainRule, new Rule('status', 'exact', 'erroneous', 's')]);
+          $this->data['erroneous_inv_no'] = new InscriptionInv_nos(null, 0, 0, $filter); */
     }
 
-    protected function loadChildren()
-    {
+    protected function loadChildren() {
+        //objects_inscriptions_xref
         $filterAtt = new Filter([new Rule('inscriptions_id', 'exact', $this->getID(), 'i')]);
-        $objWk = new InscriptionWorkshops(null, 0, 0, $filterAtt);
-        $this->data['workshops'] = $objWk;
+        $objObjects = new InscriptionObject(null, 0, 0, $filterAtt);
+        $totalObj = count($objObjects->data);
+
+        for ($i = 0; $i < $totalObj; $i++) {
+            $ruleObjChildren = new Rule('objects_id', 'exact', $objObjects->data[$i]['objects_id'], 'i');
+            $filterObjChildren = new Filter([$ruleObjChildren]);
+            $objWk = new InscriptionWorkshops(null, 0, 0, $filterObjChildren);
+            $objObjects->data[$i]['workshops'] = $objWk;
+           // echo "<br>totalWk" . count($objWk->data);
+            $filterMain = new Filter([$ruleObjChildren, new Rule('status', 'exact', 'main', 's')]);
+            //print_r($filterMain);
+            $objObjects->data[$i]['inv_no'] = new InscriptionInv_nos(null, 0, 0, $filterMain);
+           // echo "<br>totalInv" . count($objObjects->data[$i]['inv_no']->data);
+
+            $filterAlt = new Filter([$ruleObjChildren, new Rule('status', 'exact', 'alternative', 's')]);
+            $objObjects->data[$i]['alternative_inv_no'] = new InscriptionInv_nos(null, 0, 0, $filterAlt);
+
+            $filterObs = new Filter([$ruleObjChildren, new Rule('status', 'exact', 'obsolete', 's')]);
+            $objObjects->data[$i]['obsolete_inv_no'] = new InscriptionInv_nos(null, 0, 0, $filterObs);
+
+            $filterErr = new Filter([$ruleObjChildren, new Rule('status', 'exact', 'erroneous', 's')]);
+            $objObjects->data[$i]['erroneous_inv_no'] = new InscriptionInv_nos(null, 0, 0, $filterErr);
+        }
+
+        $this->data['objects'] = $objObjects;
+
+
         $objAtt = new InscriptionAttestation(null, 0, 0, $filterAtt);
         $total = count($objAtt->data);
         for ($i = 0; $i < $total; $i++) {
@@ -67,4 +90,5 @@ class inscription extends EntryModel
         $this->data['attestations'] = $objAtt;
         // print_r($objAtt);
     }
+
 }

@@ -16,7 +16,7 @@ class find_groups extends ListModelTitleSort
     protected function initFieldNames()
     {
         $this->field_names = new FieldList(['find_groups_id', 'title', 'dating', 'find_group_type',
-            'SELECT COUNT(inscriptions_id) from inscriptions WHERE inscriptions.find_groups_id=find_groups.find_groups_id'], ['find_groups_id', 'title', 'dating', 'find_group_type', 'inscriptions_count']);
+            'SELECT COUNT(objects_id) from objects WHERE objects.find_groups_id=find_groups.find_groups_id'], ['find_groups_id', 'title', 'dating', 'find_group_type', 'inscriptions_count']);
     }
 
     protected function prepareDefaultSort()

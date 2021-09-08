@@ -36,7 +36,7 @@ class collectionView extends View
             $data->data['inv_nos']->data[$i]['object_type'] = $this->renderObjectType($data->data['inv_nos']->data[$i]['object_type']);
             $data->data['inv_nos']->data[$i]['text_content'] = $this->renderTextContent($data->data['inv_nos']->data[$i]['text_content']);
         }
-        $tableCo = new TableView($data->get('inv_nos'), 'inscriptions_id', 'inscription', 'sort', '#results');
+        $tableCo = new TableView($data->get('inv_nos'), 'objects_id', 'object', 'sort', '#results');
         $tableCo->renderTable(['inv_no', 'object_type', 'title', 'material',
             'size', 'text_content', 'dating', 'inst_prov_temp', 'orig_prod_temp', 'owner'], ['Inv. no.', 'Type', 'Object', 'Material', 'Size, mm',
             'Text', 'Date', 'Provenance', 'Origin/Prod.', 'Owner'], true, 'inv. no.', ['Inventory no.', 'Type', 'Object', 'Material', 'Size in mm',

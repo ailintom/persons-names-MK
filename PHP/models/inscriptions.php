@@ -10,12 +10,13 @@ namespace PNM\models;
 class inscriptions extends ListModel
 {
 
-    protected $tablename = 'inscriptions';
+    protected $tablename = '(objects_inscriptions_xref INNER JOIN objects ON objects_inscriptions_xref.objects_id = objects.objects_id) INNER JOIN inscriptions ON objects_inscriptions_xref.inscriptions_id = inscriptions.inscriptions_id';
+            //'inscriptions INNER JOIN (objects_inscriptions_xref INNER JOIN objects on objects_inscriptions_xref.objects_id = objects.objects_id) on objects_inscriptions_xref.inscriptions_id = objects_inscriptions_xref.inscriptions_id';//'inscriptions';
     public $defaultsort = 'title';
 
     protected function initFieldNames()
     {
-        $this->field_names = new FieldList(['inscriptions_id', 'object_type', 'title', 'material', ' GREATEST(IFNULL(length,0), IFNULL(height,0), IFNULL(width,0), IFNULL(thickness,0))', 'text_content', 'dating', 'inst_prov_temp', 'orig_prod_temp',
+        $this->field_names = new FieldList(['inscriptions.inscriptions_id', 'object_type', 'inscriptions.title', 'material', ' GREATEST(IFNULL(length,0), IFNULL(height,0), IFNULL(width,0), IFNULL(thickness,0))', 'text_content', 'dating', 'inst_prov_temp', 'orig_prod_temp',
             'SELECT CONCAT_WS(" ", IF(CHAR_LENGTH(title_string)>IF(CHAR_LENGTH(personal_name)<14, 31 - CHAR_LENGTH(personal_name), 17), '
             . 'CONCAT("...", RIGHT(title_string, IF(CHAR_LENGTH(personal_name)<14, 31 - CHAR_LENGTH(personal_name), 17))), title_string), personal_name) '
             . 'FROM attestations '
@@ -28,7 +29,7 @@ class inscriptions extends ListModel
             $sortField = $this->defaultsort;
         }
         return $this->replaceSortField($sortField, ['title', 'dating', 'object_type',
-                    'inst_prov_temp', 'orig_prod_temp', 'owner', 'size'], ['title_sort', 'dating_sort_start+dating_sort_end',
+                    'inst_prov_temp', 'orig_prod_temp', 'owner', 'size'], ['inscriptions.title_sort', 'dating_sort_start+dating_sort_end',
                     'FIELD(object_type, "Unspecified","Architectural element", "Block", "Written document", "Rock inscription",'
                     . '"Scarab, seal, scaraboid, intaglio and similar objects", "Shabti", "Sculpture in the round", "Stela", "Offering table",'
                     . '"Tomb", "Tomb equipment")',

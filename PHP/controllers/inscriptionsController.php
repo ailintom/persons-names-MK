@@ -26,10 +26,10 @@ class inscriptionsController
                 array_push($rules, new Rule('0', 'exact', 1, 'i'));
             } elseif (!empty(Request::get('title'))) {
                 $inv = str_replace("*", "%", Request::get('title'));
-                array_push($rules, new RuleExists('inv_nos WHERE inv_nos.inscriptions_id = inscriptions.inscriptions_id '
+                array_push($rules, new RuleExists('inv_nos WHERE inv_nos.objects_id = objects.objects_id '
                         . 'AND inv_nos.collections_id = ? AND inv_nos.inv_no LIKE ? ', [$collID, $inv], 'is'));
             } else {
-                array_push($rules, new RuleExists('inv_nos WHERE inv_nos.inscriptions_id = inscriptions.inscriptions_id AND inv_nos.collections_id =?', $collID, 'i'));
+                array_push($rules, new RuleExists('inv_nos WHERE inv_nos.objects_id = objects.objects_id AND inv_nos.collections_id =?', $collID, 'i'));
             }
         } elseif (!empty(Request::get('title'))) {
             array_push($rules, new Rule('title', 'exactlike', Request::get('title')));
