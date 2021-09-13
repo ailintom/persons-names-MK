@@ -8,11 +8,9 @@ namespace PNM\views;
 
 use \PNM\Request;
 
-class namesView extends View
-{
+class namesView extends View {
 
-    public function echoRender(&$data)
-    {
+    public function echoRender(&$data) {
         (new HeadView())->render(HeadView::HEADERSLIM, 'Personal Names');
         ?>
         <form action="<?= Request::makeURL("names") ?>" method="get" onreset="MK.removeAllFilters()">
@@ -49,150 +47,38 @@ class namesView extends View
                 </label>
                 the search term
             </p>
-            <div class="filters">
-                <h2 class="sr-only">Filters</h2>
-                <div class="filters_selection">
-                    <button class="filters_button" aria-controls="region-filter" aria-expanded="false" onclick="MK.toggleFilter('region-filter')" title="Toggle region filter" type="button">
-                        <?= Icon::get('plus') . Icon::get('minus') ?>
-                        Region
-                    </button>
-                    <button class="filters_button" aria-controls="period-filter" aria-expanded="false" onclick="MK.toggleFilter('period-filter')" title="Toggle period filter" type="button">
-                        <?= Icon::get('plus') . Icon::get('minus') ?>
-                        Period
-                    </button>
-                    <button class="filters_button" aria-controls="gender-filter" aria-expanded="false" onclick="MK.toggleFilter('gender-filter')" title="Toggle gender filter" type="button">
-                        <?= Icon::get('plus') . Icon::get('minus') ?>
-                        Gender
-                    </button>
-                    <button class="filters_button" aria-controls="ranke-filter" aria-expanded="false" onclick="MK.toggleFilter('ranke-filter')" title="Toggle Ranke number filter" type="button">
-                        <?= Icon::get('plus') . Icon::get('minus') ?>
-                        Ranke number
-                    </button>
-                    <button class="filters_button" aria-controls="pattern-filter" aria-expanded="false" onclick="MK.toggleFilter('pattern-filter')" title="Toggle name pattern filter" type="button">
-                        <?= Icon::get('plus') . Icon::get('minus') ?>
-                        Name pattern
-                    </button>
-                    <button class="filters_button" aria-controls="class-filter" aria-expanded="false" onclick="MK.toggleFilter('class-filter')" title="Toggle name pattern filter" type="button">
-                        <?= Icon::get('plus') . Icon::get('minus') ?>
-                        Semantic class
-                    </button>
-                </div>
-                <div class="filter" id="region-filter">
-                    <div class="filter_label">
-                        <button class="filter_remove" onclick="MK.toggleFilter('region-filter')" title="Remove region filter" type="button">
-                            <?= Icon::get('minus', 'Remove region filter') ?>
-                        </button>
-                        <span id="region-label">Region</span>
-                    </div>
-                    <div class="filter_content">
-                        <input id="region-attested" name="match-region" type="radio" value="attested" aria-labelledby="region-label"<?= View::oldValueRadio('match-region', 'attested', true) ?>>
-                        <label for="region-attested" title="Match any title attested in the given region">
-                            Attested in
-                        </label>
-                        /
-                        <input id="region-characteristic" name="match-region" type="radio" value="characteristic" aria-labelledby="region-label"<?= View::oldValueRadio('match-region', 'characteristic') ?>>
-                        <label for="region-characteristic" title="Match any title characteristic of the given region">
-                            characteristic of
-                        </label>
-                        the region
-                        <?= (new TextInput('place', 'Region', 'Enter the region', 'region or locality', 'places', true))->render() ?>
-                    </div>
-                </div>
-                <div class="filter" id="period-filter">
-                    <div class="filter_label">
-                        <button class="filter_remove" onclick="MK.toggleFilter('period-filter')" title="Remove period filter" type="button">
-                            <?= Icon::get('minus', 'Remove period filter') ?>
-                        </button>
-                        <span id="period-label">Period</span>
-                    </div>
-                    <div class="filter_content">
-                                             <input id="period-strictly" name="match-date" type="radio" value="strictly" aria-labelledby="period-label"<?= View::oldValueRadio('match-date', 'strictly', true) ?>>
-                        <label for="period-strictly" title="Match any title attested strictly in the given period">
-                            Attested strictly
-                        </label>
-                       /
-                                               <input id="period-attested" name="match-date" type="radio" value="attested" aria-labelledby="period-label"<?= View::oldValueRadio('match-date', 'attested') ?>>
-                        <label for="period-attested" title="Match any title possibly attested in the given period">
-                            ca. in
-                        </label>
-                        /
-                        <input id="period-characteristic" name="match-date" type="radio" value="characteristic" aria-labelledby="period-label"<?= View::oldValueRadio('match-date', 'characteristic') ?>>
-                        <label for="period-characteristic" title="Match any title characteristic of the given period ">
-                            characteristic of
-                        </label>
-                        the period
-                        <?= (new TextInput('period', 'Period', 'Enter the period', 'period or reign', 'periods', true))->render() ?>
-                    </div>
-                </div>
-                <div class="filter" id="gender-filter">
-                    <div class="filter_label">
-                        <button class="filter_remove" onclick="MK.toggleFilter('gender-filter')" title="Remove gender filter" type="button">
-                            <?= Icon::get('minus', 'Remove gender filter') ?>
-                        </button>
-                        <span id="gender-label">Gender</span>
-                    </div>
-                    <div class="filter_content">
-                        <input type="radio" id="any" name="gender" value="any" aria-labelledby="gender-label"<?= View::oldValueRadio('gender', 'any', true) ?>>
-                        <label for="any" title="Match names regardless of gender">
-                            Regardless of gender
-                        </label>
-                        /
-                        <input type="radio" id="female" name="gender" value="f" aria-labelledby="gender-label"<?= View::oldValueRadio('gender', 'f') ?>>
-                        <label for="female" title="Match names borne only by women">
-                            female
-                        </label>
-                        /
-                        <input type="radio" id="male" name="gender" value="m" aria-labelledby="gender-label"<?= View::oldValueRadio('gender', 'm') ?>>
-                        <label for="male" title="Match names borne only by men ">
-                            male
-                        </label>
-                        /
-                        <input type="radio" id="both" name="gender" value="both" aria-labelledby="gender-label"<?= View::oldValueRadio('gender', 'both') ?>>
-                        <label for="both" title="Match names borne by both men and women">
-                            unisex names
-                        </label>
-                        /
-                        <input type="radio" id="animal" name="gender" value="a" aria-labelledby="gender-label"<?= View::oldValueRadio('gender', 'a') ?>>
-                        <label for="animal" title="Match names borne by animals">
-                            animal names
-                        </label>
-                    </div>
-                </div>
-                <div class="filter" id="ranke-filter">
-                    <div class="filter_label">
-                        <button class="filter_remove" onclick="MK.toggleFilter('ranke-filter')" title="Remove Ranke number filter" type="button">
-                            <?= Icon::get('minus', 'Remove Ranke number filter') ?>
-                        </button>
-                        Ranke number
-                    </div>
-                    <div class="filter_content">
-                        <label for="ranke" class="sr-only">Ranke number</label>
-                        <input id="ranke" name="ranke" placeholder="Example: I, 139.1" title="Enter the Ranke entry number" type="text"<?= View::oldValue('ranke') ?>>
-                    </div>
-                </div>
-                <div class="filter" id="pattern-filter">
-                    <div class="filter_label">
-                        <button class="filter_remove" onclick="MK.toggleFilter('pattern-filter')" title="Remove name pattern filter" type="button">
-                            <?= Icon::get('minus', 'Remove name pattern filter') ?>
-                        </button>
-                        Name pattern
-                    </div>
-                    <div class="filter_content">
-                        <?= (new TextInput('form_type', 'Name pattern', 'Select a formal name pattern', 'Example: GN-ḥtp', 'name-types-formal', true))->render() ?>
-                    </div>
-                </div>
-                <div class="filter" id="class-filter">
-                    <div class="filter_label">
-                        <button class="filter_remove" onclick="MK.toggleFilter('class-filter')" title="Remove semantic class filter" type="button">
-                            <?= Icon::get('minus', 'Remove semantic class filter') ?>
-                        </button>
-                        Semantic class
-                    </div>
-                    <div class="filter_content">
-                        <?= (new TextInput('sem_type', 'Semantic class', 'Select a semantic class', 'Example: theophoric name', 'name-types-semantic', true))->render() ?>
-                    </div>
-                </div>
-            </div>
+            <?php
+            $regioInputs = (new RadioGroup('match-region', [['attested', 'Attested in', 'Match any name attested in the given region']
+                        , ['characteristic', 'characteristic of', 'Match any title characteristic of the given region']], 'attested', 'region-filter'))->render()
+                    . '  the region ' . (new TextInput('place', 'Region', 'Enter the region', 'region or locality', 'places', true))->render();
+            $filters[] = new FormFilter('region-filter', 'Region', $regioInputs, 'place');
+
+            $periodInputs = (new RadioGroup('match-date', [['strictly', 'Attested strictly', 'Match any name attested only in the given period'],
+                        ['attested', 'ca. in', 'Match any name possibly attested in the given period '],
+                        ['characteristic', 'characteristic of', 'Match any name characteristic of the given period ']], 'strictly', 'period-filter'))->render()
+                    . ' the period ' . (new TextInput('period', 'Period:', 'Enter the period', 'Example: 17th Dyn.', 'periods', true))->render();
+
+            $filters[] = new FormFilter('period-filter', 'Period', $periodInputs, 'period');
+            $genInputs = (new RadioGroup('gender',
+                            [['any', 'Regardless of gender', 'Match names regardless of gender'],
+                        ['f', 'male', 'Match names borne only by women'],
+                        ['m', 'female', 'Match names borne only by men'],
+                        ['both', 'unisex', 'Match names borne by both men and women'],
+                        ['a', 'animal names', 'Match names borne by animals']],
+                            'any', 'gender-filter'))->render();
+            $filters[] = new FormFilter('gender-filter', 'Gender', $genInputs, 'gender', null, 'any');
+
+            $refInputs = [(new TextInput('ranke', 'Ranke reference:', 'Enter the Ranke entry number', 'Example: I, 293.9', null))->render(),
+                (new TextInput('tla', 'TLA ID:', 'Enter the TLA entry number', 'Example: 400186', null))->render(),
+                (new TextInput('pnmid', 'PNM Name ID:', 'Enter the PNM name number', 'Example: 294', null))->render()];
+            $filters[] = new FormFilter('ranke-filter', 'References', $refInputs, ['ranke', 'tla', 'pnmid']);
+
+            $pattInputs = (new TextInput('form_type', 'Name pattern:', 'Select a formal name pattern', 'Example: GN-ḥtp', 'name-types-formal', true))->render();
+            $filters[] = new FormFilter('pattern-filter', 'Name pattern', $pattInputs, 'form_type');
+            $classInputs = (new TextInput('sem_type', 'Semantic class', 'Select a semantic class', 'Example: theophoric name', 'name-types-semantic', true))->render();
+            $filters[] = new FormFilter('class-filter', 'Semantic class', $classInputs, 'sem_type');
+            FormFilter::renderFilters($filters);
+            ?>
             <button type="submit" class="submit">
                 Search
             </button>
@@ -217,6 +103,7 @@ class namesView extends View
          * Process filters
          *
          */
-        $this->toggleFilters([['place', 'region-filter'], ['period', 'period-filter'], ['gender', 'gender-filter', 'any'], ['ranke', 'ranke-filter'], ['form_type', 'pattern-filter'], ['sem_type', 'class-filter']]);
+        $this->toggleFilters(FormFilter::renderToggle($filters));
     }
+
 }

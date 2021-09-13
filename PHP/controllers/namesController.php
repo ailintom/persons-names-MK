@@ -13,13 +13,12 @@ use \PNM\Request,
     \PNM\models\RuleExists,
     \PNM\models\Filter,
     \PNM\Config,
-    \PNM\models\Lookup;
+    \PNM\models\Lookup,
+    \PNM\ID;
 
-class namesController
-{
+class namesController {
 
-    public function load()
-    {
+    public function load() {
 
         $rules = [];
         if (!empty(Request::get('name'))) {
@@ -34,6 +33,16 @@ class namesController
         if (!empty(Request::get('ranke'))) {
             array_push($rules, new Rule('ranke', 'inexact', Request::get('ranke')));
         }
+        if (!empty(Request::get('pnmid'))) {
+            $search_id = New ID((int) Request::get('pnmid'));
+
+            if ($search_id->getTableID() == 0) {
+                $search_id = New ID((int) Request::get('pnmid'), ID::TABLE_IDS['personal_names']);
+            }
+
+            array_push($rules, new Rule('personal_names_id', 'exact', $search_id->getID(), 'i'));
+        }
+
 
         if (!empty(Request::get('period')) && Request::get('match-date') == 'characteristic') {
             array_push($rules, new Rule('usage_period', 'exact', Request::get('period')));
@@ -45,24 +54,24 @@ class namesController
                 array_push($rules, new Rule('0', 'exact', 1, 'i'));
             } elseif (Request::get('match-date') == 'strictly' && $periodType == 6) {
                 array_push($rules, new RuleExists(' ((spellings INNER JOIN spellings_attestations_xref ON spellings.spellings_id = spellings_attestations_xref.spellings_id)'
-                        . ' INNER JOIN attestations ON spellings_attestations_xref.attestations_id = attestations.attestations_id) '
-                        . ' INNER JOIN inscriptions ON attestations.inscriptions_id = inscriptions.inscriptions_id'
-                        . ' WHERE spellings.personal_names_id=personal_names.personal_names_id  AND '
-                        . ' inscriptions.dating = ?', Request::get('period'), 's'));
+                                . ' INNER JOIN attestations ON spellings_attestations_xref.attestations_id = attestations.attestations_id) '
+                                . ' INNER JOIN inscriptions ON attestations.inscriptions_id = inscriptions.inscriptions_id'
+                                . ' WHERE spellings.personal_names_id=personal_names.personal_names_id  AND '
+                                . ' inscriptions.dating = ?', Request::get('period'), 's'));
             } elseif (Request::get('match-date') == 'strictly') {
                 array_push($rules, new RuleExists(' ((spellings INNER JOIN spellings_attestations_xref ON spellings.spellings_id = spellings_attestations_xref.spellings_id)'
-                        . ' INNER JOIN attestations ON spellings_attestations_xref.attestations_id = attestations.attestations_id) '
-                        . ' INNER JOIN inscriptions ON attestations.inscriptions_id = inscriptions.inscriptions_id'
-                        . ' WHERE spellings.personal_names_id=personal_names.personal_names_id  AND '
-                        . ' inscriptions.dating_sort_end <= ? AND '
-                        . ' inscriptions.dating_sort_start >= ?', [$periodEnd, $periodStart], 'ii'));
+                                . ' INNER JOIN attestations ON spellings_attestations_xref.attestations_id = attestations.attestations_id) '
+                                . ' INNER JOIN inscriptions ON attestations.inscriptions_id = inscriptions.inscriptions_id'
+                                . ' WHERE spellings.personal_names_id=personal_names.personal_names_id  AND '
+                                . ' inscriptions.dating_sort_end <= ? AND '
+                                . ' inscriptions.dating_sort_start >= ?', [$periodEnd, $periodStart], 'ii'));
             } else {
                 array_push($rules, new RuleExists(' ((spellings INNER JOIN spellings_attestations_xref ON spellings.spellings_id = spellings_attestations_xref.spellings_id)'
-                        . ' INNER JOIN attestations ON spellings_attestations_xref.attestations_id = attestations.attestations_id) '
-                        . ' INNER JOIN inscriptions ON attestations.inscriptions_id = inscriptions.inscriptions_id'
-                        . ' WHERE spellings.personal_names_id=personal_names.personal_names_id  AND '
-                        . ' inscriptions.dating_sort_end >= ? AND '
-                        . ' inscriptions.dating_sort_start <= ?', [$periodStart, $periodEnd], 'ii'));
+                                . ' INNER JOIN attestations ON spellings_attestations_xref.attestations_id = attestations.attestations_id) '
+                                . ' INNER JOIN inscriptions ON attestations.inscriptions_id = inscriptions.inscriptions_id'
+                                . ' WHERE spellings.personal_names_id=personal_names.personal_names_id  AND '
+                                . ' inscriptions.dating_sort_end >= ? AND '
+                                . ' inscriptions.dating_sort_start <= ?', [$periodStart, $periodEnd], 'ii'));
             }
         }
 
@@ -71,45 +80,51 @@ class namesController
             array_push($rules, new Rule('usage_area', 'exact', $place));
         } elseif ($place == 'NUELE') {
             array_push($rules, new RuleExists('(((spellings INNER JOIN spellings_attestations_xref ON spellings.spellings_id = spellings_attestations_xref.spellings_id)'
-                    . ' INNER JOIN attestations ON spellings_attestations_xref.attestations_id = attestations.attestations_id) '
-                    . ' INNER JOIN inscriptions ON attestations.inscriptions_id = inscriptions.inscriptions_id) '
-                    . ' INNER JOIN places ON region_temp = places.place_name'
-                    . ' WHERE spellings.personal_names_id=personal_names.personal_names_id AND '
-                    . ' places.macro_region IN(?, ?, ?)', ["ME", "MFR", "LE"], 'sss'));
+                            . ' INNER JOIN attestations ON spellings_attestations_xref.attestations_id = attestations.attestations_id) '
+                            . ' INNER JOIN inscriptions ON attestations.inscriptions_id = inscriptions.inscriptions_id) '
+                            . ' INNER JOIN places ON region_temp = places.place_name'
+                            . ' WHERE spellings.personal_names_id=personal_names.personal_names_id AND '
+                            . ' places.macro_region IN(?, ?, ?)', ["ME", "MFR", "LE"], 'sss'));
         } elseif (in_array($place, ['Nubia', 'SUE', 'ME', 'MFR', 'LE'])) {
             array_push($rules, new RuleExists('(((spellings INNER JOIN spellings_attestations_xref ON spellings.spellings_id = spellings_attestations_xref.spellings_id)'
-                    . ' INNER JOIN attestations ON spellings_attestations_xref.attestations_id = attestations.attestations_id) '
-                    . ' INNER JOIN inscriptions ON attestations.inscriptions_id = inscriptions.inscriptions_id) '
-                    . ' INNER JOIN places ON region_temp = places.place_name'
-                    . ' WHERE spellings.personal_names_id=personal_names.personal_names_id AND '
-                    . ' places.macro_region = ?', $place, 's'));
+                            . ' INNER JOIN attestations ON spellings_attestations_xref.attestations_id = attestations.attestations_id) '
+                            . ' INNER JOIN inscriptions ON attestations.inscriptions_id = inscriptions.inscriptions_id) '
+                            . ' INNER JOIN places ON region_temp = places.place_name'
+                            . ' WHERE spellings.personal_names_id=personal_names.personal_names_id AND '
+                            . ' places.macro_region = ?', $place, 's'));
         } elseif (!empty($place)) {
             array_push($rules, new RuleExists(' ((spellings INNER JOIN spellings_attestations_xref ON spellings.spellings_id = spellings_attestations_xref.spellings_id)'
-                    . ' INNER JOIN attestations ON spellings_attestations_xref.attestations_id = attestations.attestations_id) '
-                    . ' INNER JOIN inscriptions ON attestations.inscriptions_id = inscriptions.inscriptions_id'
-                    . ' WHERE spellings.personal_names_id=personal_names.personal_names_id  AND '
-                    . ' region_temp=?', $place, 's'));
+                            . ' INNER JOIN attestations ON spellings_attestations_xref.attestations_id = attestations.attestations_id) '
+                            . ' INNER JOIN inscriptions ON attestations.inscriptions_id = inscriptions.inscriptions_id'
+                            . ' WHERE spellings.personal_names_id=personal_names.personal_names_id  AND '
+                            . ' region_temp=?', $place, 's'));
         }
         if (!empty(Request::get('form_type'))) {
             $nt = Lookup::name_types_idGet(Request::get('form_type'));
             if (!empty($nt)) {
                 array_push($rules, new RuleExists('names_types_xref INNER JOIN name_types_temp ON names_types_xref.name_types_id = name_types_temp.child_id'
-                        . ' WHERE names_types_xref.personal_names_id=personal_names.personal_names_id AND '
-                        . ' name_types_temp.parent_id = ?', $nt, 'i'));
+                                . ' WHERE names_types_xref.personal_names_id=personal_names.personal_names_id AND '
+                                . ' name_types_temp.parent_id = ?', $nt, 'i'));
             }
         }
         if (!empty(Request::get('sem_type'))) {
             $nt = Lookup::name_types_idGet(Request::get('sem_type'));
             if (!empty($nt)) {
                 array_push($rules, new RuleExists('names_types_xref INNER JOIN name_types_temp ON names_types_xref.name_types_id = name_types_temp.child_id'
-                        . ' WHERE names_types_xref.personal_names_id=personal_names.personal_names_id AND '
-                        . ' name_types_temp.parent_id = ?', $nt, 'i'));
+                                . ' WHERE names_types_xref.personal_names_id=personal_names.personal_names_id AND '
+                                . ' name_types_temp.parent_id = ?', $nt, 'i'));
             }
         }
+        if (!empty(Request::get('tla'))) {
+
+            array_push($rules, new Rule('(FIND_IN_SET(' . Request::get('tla') . ',  REPLACE(TLA, "; ", ",")))', 'not', 0, 's'));
+        }
+        //
 
         $filter = new Filter($rules);
         $model = new \PNM\models\names(Request::get('sort'), (Request::get('start') ?: 0), Config::ROWS_ON_PAGE, $filter);
         $view = new \PNM\views\namesView();
         $view->echoRender($model);
     }
+
 }

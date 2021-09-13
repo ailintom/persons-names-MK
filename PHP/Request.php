@@ -32,7 +32,7 @@ class Request
         'macroregion' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
         'match' => FILTER_SANITIZE_FULL_SPECIAL_CHARS, 'match-date' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
         'match-region' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-        'start' => FILTER_SANITIZE_NUMBER_INT,
+        'start' => FILTER_SANITIZE_NUMBER_INT, 'tla' => FILTER_SANITIZE_NUMBER_INT,'pnmid' => FILTER_SANITIZE_NUMBER_INT,
         'sort' => FILTER_SANITIZE_FULL_SPECIAL_CHARS, 'find_groups_sort' => FILTER_SANITIZE_FULL_SPECIAL_CHARS, 'workshops_sort' => FILTER_SANITIZE_FULL_SPECIAL_CHARS];
     const DEFAULTS = ['size-option' => 'greater', 'geo-filter' => 'all', 'chrono-filter' => 'during',
         'gender' => 'any', 'Agender' => 'any', 'Bgender' => 'any', 'match-date' => 'attested',
