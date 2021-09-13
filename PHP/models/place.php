@@ -18,10 +18,10 @@ class place extends EntryModel
     {
         $this->field_names = new FieldList([
             'places_id', 'place_name', 'long_place_name', 'relative_location', 'macro_region', 'latitude', 'topbib_id', 'tm_geoid', 'pleiades_id', 'artefacts_url',
-            'SELECT COUNT(inscriptions_id) from inscriptions WHERE inscriptions.provenance=places.place_name',
-            'SELECT COUNT(inscriptions_id) from inscriptions WHERE inscriptions.installation_place=places.place_name',
+            'SELECT COUNT(objects_id) from objects WHERE objects.provenance=places.place_name',
+            'SELECT COUNT(objects_id) from objects WHERE objects.installation_place=places.place_name',
             'SELECT COUNT(inscriptions_id) from inscriptions WHERE inscriptions.origin=places.place_name',
-            'SELECT COUNT(inscriptions_id) from inscriptions WHERE inscriptions.production_place=places.place_name'
+            'SELECT COUNT(objects_id) from objects WHERE objects.production_place=places.place_name'
                 ], [
             'places_id', 'place_name', 'long_place_name', 'relative_location', 'macro_region', 'latitude', 'topbib_id', 'tm_geoid', 'pleiades_id', 'artefacts_url',
             'count_provenance', 'count_installation_place', 'count_origin', 'count_production_place']);

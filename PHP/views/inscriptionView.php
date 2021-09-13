@@ -44,7 +44,7 @@ class inscriptionView extends View {
         if (count($objObjects->data) > 1) {
             echo '<h2>Objects</h2><ul class="attestations">';
             foreach ($objObjects->data as $objObject) {
-                echo '<li><h4 id="' . \PNM\ID::shorten($objObject['objects_id']) . '">' . $objObject['title'] . '</h4>';
+                echo '<li><h4>' . $objObject['title'] . '</h4>';
                 $this->renderObjects($objObject);
             }
             echo '</ul>';
@@ -77,12 +77,21 @@ class inscriptionView extends View {
             $currentLoc .= '<li><h4 id="' . \PNM\ID::shorten($Att['attestations_id']) . '"><i>' . $tit . '<span class="pn">' . $Att['personal_name'] . '</span></i>' . $doss . $status . '</h4>';
             $spellings = $Att['spellings']->getSpellings();
             $titles = $Att['titles']->data;
+            $epithet = $Att['epithet'];
+            $classifier = $Att['classifier'];
+            $representation = $Att['representation'];
             $currentLoc .= '<table class="name-box"><tr><th></th>';
             if (!empty($titles)) {
                 $currentLoc .= '<th>Title</th>'; //if the attestation has associated titles, display the title heading
             }
             if (!empty($spellings) & !empty($spellings[0]['spellings'])) {
                 $currentLoc .= '<th>Name</th>'; //if the attestation has associated titles, display the name heading
+            }
+            if (!empty($epithet)) {
+                $currentLoc .= '<th>Epithet</th>'; //if the attestation has associated epithets, display the epithet heading
+            }
+            if (!empty($classifier)) {
+                $currentLoc .= '<th>Classifier</th>'; //if the attestation has associated epithets, display the epithet heading
             }
             $currentLoc .= '</tr><tr>';
             $currentLoc .= '<td><span class="gender" title="' . self::genderTitle($Att['gender']) . '">' . $Att['gender'] . '</span></td>';
@@ -122,6 +131,12 @@ class inscriptionView extends View {
                     }
                 }
                 $currentLoc .= '</td>';
+            }
+            if (!empty($epithet)) {
+                $currentLoc .= '<td>' . $epithet . '</td>'; //if the attestation has associated epithets, display the epithet heading
+            }
+            if (!empty($classifier)) {
+                $currentLoc .= '<td>' . $classifier . (empty($representation) ? '' : ' (' . $representation . ')' ) . '</td>'; //if the attestation has associated epithets, display the epithet heading
             }
             $currentLoc .= '</tr></table>';
             //spellings
@@ -167,7 +182,7 @@ class inscriptionView extends View {
      */
 
     private function renderObjects($data) {
-   
+        $placesMV = new placesMicroView();
         echo '<p>' . $this->renderInvNos($data['inv_no'], true) . '</p>';
         echo '<dl>';
         echo $this->descriptionElement('Alternative inv.', $this->renderInvNos($data['alternative_inv_no']), null, 'alternative_inv_no');
@@ -179,9 +194,37 @@ class inscriptionView extends View {
         echo $this->descriptionElement('Subtype', $data['object_subtype'], null, 'type');
         echo $this->descriptionElement('Material', $data['material'], null, 'type');
         echo $this->descriptionElement('Size', $this->size($data), null, 'type');
-        if (array_key_exists('workshops', $data)) {
-            $this->renderWorkshop($data['workshops']);
+        echo $this->descriptionElement('Provenance', $placesMV->render($data['provenance']), $data['provenance_note'], 'place');
+        if (!empty($data['find_groups_id'])) {
+            echo $this->descriptionElement('Find group', \PNM\Note::processID($data['find_groups_id']), null, 'find_group');
         }
+        echo $this->descriptionElement('Intalled at', $placesMV->render($data['installation_place']), $data['installation_place_note'], 'place');
+        echo $this->descriptionElement('Produced at', $placesMV->render($data['production_place']), $data['production_place_note'], 'place');
+        if (array_key_exists('workshops', $data)) {
+            echo $this->descriptionElement('Workshop', $this->renderWorkshop($data['workshops']), null, 'type');
+        }
+        //inscriptions
+        if (array_key_exists('inscriptions', $data)) {
+            echo $this->descriptionElement('Other inscriptions', $this->renderOtherInscriptions($data['inscriptions']), null, 'type');
+        }
+        echo $this->descriptionElement('Bibliography', $this->renderBiblio($data['bibliography']));
+    }
+
+    /*
+     * Renders inscriptions associated with a particular object
+     */
+
+    private function renderOtherInscriptions($data) {
+        return implode(", ", array_map(array($this, 'renderSingleInscription'), $data->data));
+    }
+
+    /*
+     * Renders a single workshop; used in the previous function
+     */
+
+    private function renderSingleInscription($Inscr) {
+        $insMV = new inscriptionsMicroView();
+        return $insMV->render($Inscr['title'], $Inscr['inscriptions_id']);
     }
 
     /*

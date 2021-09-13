@@ -50,11 +50,11 @@ class inscription extends EntryModel {
             $filterObjChildren = new Filter([$ruleObjChildren]);
             $objWk = new InscriptionWorkshops(null, 0, 0, $filterObjChildren);
             $objObjects->data[$i]['workshops'] = $objWk;
-           // echo "<br>totalWk" . count($objWk->data);
+            // echo "<br>totalWk" . count($objWk->data);
             $filterMain = new Filter([$ruleObjChildren, new Rule('status', 'exact', 'main', 's')]);
             //print_r($filterMain);
             $objObjects->data[$i]['inv_no'] = new InscriptionInv_nos(null, 0, 0, $filterMain);
-           // echo "<br>totalInv" . count($objObjects->data[$i]['inv_no']->data);
+            // echo "<br>totalInv" . count($objObjects->data[$i]['inv_no']->data);
 
             $filterAlt = new Filter([$ruleObjChildren, new Rule('status', 'exact', 'alternative', 's')]);
             $objObjects->data[$i]['alternative_inv_no'] = new InscriptionInv_nos(null, 0, 0, $filterAlt);
@@ -64,6 +64,14 @@ class inscription extends EntryModel {
 
             $filterErr = new Filter([$ruleObjChildren, new Rule('status', 'exact', 'erroneous', 's')]);
             $objObjects->data[$i]['erroneous_inv_no'] = new InscriptionInv_nos(null, 0, 0, $filterErr);
+
+            $filterOtherInscriptions = new Filter([$ruleObjChildren, new Rule('objects_inscriptions_xref.inscriptions_id', 'not', $this->getID(), 'i')]);
+            $objObjects->data[$i]['inscriptions'] = new ObjectInscription(null, 0, 0, $filterOtherInscriptions);
+
+            $filterBiblio = new Filter([new Rule('object_id', 'exact', $objObjects->data[$i]['objects_id'], 'i')]);
+            $objbibliography = new EntryBibliography(null, 0, 0, $filterBiblio);
+
+            $objObjects->data[$i]['bibliography'] = $objbibliography;
         }
 
         $this->data['objects'] = $objObjects;

@@ -294,6 +294,17 @@ END IF;
 	SET NEW.provenance_sort = (SELECT latitude from places where place_name = NEW.provenance);
 	SET NEW.installation_place_sort = (SELECT latitude from places where place_name = NEW.installation_place);
 	SET NEW.production_place_sort = (SELECT latitude from places where place_name = NEW.production_place);
+UPDATE inscriptions INNER JOIN objects_inscriptions_xref ON inscriptions.inscriptions_id = objects_inscriptions_xref.inscriptions_id 
+SET inst_prov_temp = COALESCE(NEW.installation_place, NEW.provenance), 
+inst_prov_temp_sort = COALESCE(NEW.installation_place_sort , NEW.provenance_sort),
+orig_prod_temp = COALESCE(inscriptions.origin, NEW.production_place ), 
+orig_prod_temp_sort = COALESCE(inscriptions.origin_sort, NEW.production_place)
+ WHERE objects_inscriptions_xref.objects_id = NEW.objects_id;  
+ 
+UPDATE inscriptions INNER JOIN objects_inscriptions_xref ON inscriptions.inscriptions_id = objects_inscriptions_xref.inscriptions_id 
+SET inscriptions.region_temp = COALESCE(inscriptions.orig_prod_temp, inscriptions.inst_prov_temp),
+region_temp_sort = COALESCE(inscriptions.orig_prod_temp_sort, inscriptions.inst_prov_temp_sort)
+ WHERE objects_inscriptions_xref.objects_id = NEW.objects_id;  
 END//
 DELIMITER ;
 
@@ -303,6 +314,17 @@ CREATE TRIGGER `objects_before_update` BEFORE UPDATE ON `objects` FOR EACH ROW B
 	SET NEW.provenance_sort = (SELECT latitude from places where place_name = NEW.provenance);
 	SET NEW.installation_place_sort = (SELECT latitude from places where place_name = NEW.installation_place);
 	SET NEW.production_place_sort = (SELECT latitude from places where place_name = NEW.production_place);
+	UPDATE inscriptions INNER JOIN objects_inscriptions_xref ON inscriptions.inscriptions_id = objects_inscriptions_xref.inscriptions_id 
+	SET inst_prov_temp = COALESCE(NEW.installation_place, NEW.provenance), 
+	inst_prov_temp_sort = COALESCE(NEW.installation_place_sort , NEW.provenance_sort),
+	orig_prod_temp = COALESCE(inscriptions.origin, NEW.production_place ), 
+	orig_prod_temp_sort = COALESCE(inscriptions.origin_sort, NEW.production_place)
+ 	WHERE objects_inscriptions_xref.objects_id = NEW.objects_id;  
+ 
+	UPDATE inscriptions INNER JOIN objects_inscriptions_xref ON inscriptions.inscriptions_id = objects_inscriptions_xref.inscriptions_id 
+	SET inscriptions.region_temp = COALESCE(inscriptions.orig_prod_temp, inscriptions.inst_prov_temp),
+	region_temp_sort = COALESCE(inscriptions.orig_prod_temp_sort, inscriptions.inst_prov_temp_sort)
+ WHERE objects_inscriptions_xref.objects_id = NEW.objects_id;  
 END//
 DELIMITER ;
 
@@ -311,6 +333,27 @@ CREATE TRIGGER `objects_inscriptions_xref_before_insert` BEFORE INSERT ON `objec
 IF  IFNULL(  NEW.objects_inscriptions_xref_id, 0) = 0 THEN 
 	SET NEW.objects_inscriptions_xref_id = make_id(table_id_from_name("objects_inscriptions_xref"),(SELECT MAX(record_id_from_id(objects_inscriptions_xref_id)) + 1 FROM objects_inscriptions_xref));
 END IF;
+	UPDATE inscriptions SET inst_prov_temp = COALESCE((SELECT installation_place FROM objects INNER JOIN objects_inscriptions_xref ON objects.objects_id = objects_inscriptions_xref.objects_id WHERE installation_place  <> '' AND  installation_place IS NOT NULL and objects_inscriptions_xref.inscriptions_id = NEW.inscriptions_id LIMIT 1 ), (SELECT provenance FROM objects INNER JOIN objects_inscriptions_xref ON objects.objects_id = objects_inscriptions_xref.objects_id WHERE provenance  <> '' AND  provenance IS NOT NULL and objects_inscriptions_xref.inscriptions_id = NEW.inscriptions_id LIMIT 1 )), 
+	inst_prov_temp_sort = COALESCE((SELECT installation_place_sort FROM objects INNER JOIN objects_inscriptions_xref ON objects.objects_id = objects_inscriptions_xref.objects_id WHERE installation_place_sort IS NOT NULL and objects_inscriptions_xref.inscriptions_id = NEW.inscriptions_id LIMIT 1 ), (SELECT provenance_sort FROM objects INNER JOIN objects_inscriptions_xref ON objects.objects_id = objects_inscriptions_xref.objects_id WHERE provenance_sort IS NOT NULL and objects_inscriptions_xref.inscriptions_id = NEW.inscriptions_id LIMIT 1 )),
+	orig_prod_temp = COALESCE(inscriptions.origin, (SELECT production_place FROM objects INNER JOIN objects_inscriptions_xref ON objects.objects_id = objects_inscriptions_xref.objects_id WHERE production_place  <> '' AND  production_place IS NOT NULL and objects_inscriptions_xref.inscriptions_id = NEW.inscriptions_id LIMIT 1 )), 
+	orig_prod_temp_sort = COALESCE(inscriptions.origin_sort, (SELECT production_place_sort FROM objects INNER JOIN objects_inscriptions_xref ON objects.objects_id = objects_inscriptions_xref.objects_id WHERE production_place_sort IS NOT NULL and objects_inscriptions_xref.inscriptions_id = NEW.inscriptions_id LIMIT 1 ))
+ 	WHERE inscriptions.inscriptions_id = NEW.inscriptions_id; 
+	UPDATE inscriptions SET region_temp = COALESCE(inscriptions.orig_prod_temp, inscriptions.inst_prov_temp),
+	region_temp_sort = COALESCE(inscriptions.orig_prod_temp_sort, inscriptions.inst_prov_temp_sort)
+ 	WHERE inscriptions.inscriptions_id = NEW.inscriptions_id;  
+END//
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER `objects_inscriptions_xref_before_update` BEFORE UPDATE ON `objects_inscriptions_xref` FOR EACH ROW BEGIN
+UPDATE inscriptions SET inst_prov_temp = COALESCE((SELECT installation_place FROM objects INNER JOIN objects_inscriptions_xref ON objects.objects_id = objects_inscriptions_xref.objects_id WHERE installation_place  <> '' AND  installation_place IS NOT NULL and objects_inscriptions_xref.inscriptions_id = NEW.inscriptions_id LIMIT 1 ), (SELECT provenance FROM objects INNER JOIN objects_inscriptions_xref ON objects.objects_id = objects_inscriptions_xref.objects_id WHERE provenance  <> '' AND  provenance IS NOT NULL and objects_inscriptions_xref.inscriptions_id = NEW.inscriptions_id LIMIT 1 )), 
+inst_prov_temp_sort = COALESCE((SELECT installation_place_sort FROM objects INNER JOIN objects_inscriptions_xref ON objects.objects_id = objects_inscriptions_xref.objects_id WHERE installation_place_sort IS NOT NULL and objects_inscriptions_xref.inscriptions_id = NEW.inscriptions_id LIMIT 1 ), (SELECT provenance_sort FROM objects INNER JOIN objects_inscriptions_xref ON objects.objects_id = objects_inscriptions_xref.objects_id WHERE provenance_sort IS NOT NULL and objects_inscriptions_xref.inscriptions_id = NEW.inscriptions_id LIMIT 1 )),
+orig_prod_temp = COALESCE(inscriptions.origin, (SELECT production_place FROM objects INNER JOIN objects_inscriptions_xref ON objects.objects_id = objects_inscriptions_xref.objects_id WHERE production_place  <> '' AND  production_place IS NOT NULL and objects_inscriptions_xref.inscriptions_id = NEW.inscriptions_id LIMIT 1 )), 
+orig_prod_temp_sort = COALESCE(inscriptions.origin_sort, (SELECT production_place_sort FROM objects INNER JOIN objects_inscriptions_xref ON objects.objects_id = objects_inscriptions_xref.objects_id WHERE production_place_sort IS NOT NULL and objects_inscriptions_xref.inscriptions_id = NEW.inscriptions_id LIMIT 1 ))
+ WHERE inscriptions.inscriptions_id = NEW.inscriptions_id; 
+UPDATE inscriptions SET region_temp = COALESCE(inscriptions.orig_prod_temp, inscriptions.inst_prov_temp),
+region_temp_sort = COALESCE(inscriptions.orig_prod_temp_sort, inscriptions.inst_prov_temp_sort)
+ WHERE inscriptions.inscriptions_id = NEW.inscriptions_id;  
 END//
 DELIMITER ;
 
@@ -320,6 +363,8 @@ DELIMITER //
 CREATE TRIGGER `inscriptions_before_update` BEFORE UPDATE ON `inscriptions` FOR EACH ROW BEGIN
 	SET NEW.title_sort = natural_sort_format(NEW.title,7, "");
 	SET NEW.origin_sort = (SELECT latitude from places where place_name = NEW.origin);
+	SET NEW.dating_sort_start = (SELECT sort_date_range_start from thesauri where item_name = NEW.dating);
+	SET NEW.dating_sort_end = (SELECT sort_date_range_end from thesauri where item_name = NEW.dating);
 END//
 DELIMITER ;
 
@@ -332,5 +377,7 @@ IF  IFNULL(  NEW.inscriptions_id, 0) = 0 THEN
 END IF;
 	SET NEW.title_sort = natural_sort_format(NEW.title,7, "");
 	SET NEW.origin_sort = (SELECT latitude from places where place_name = NEW.origin);
+	SET NEW.dating_sort_start = (SELECT sort_date_range_start from thesauri where item_name = NEW.dating);
+	SET NEW.dating_sort_end = (SELECT sort_date_range_end from thesauri where item_name = NEW.dating);
 END//
 DELIMITER ;

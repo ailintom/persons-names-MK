@@ -13,7 +13,7 @@ class publication extends EntryModel
     protected $tablename = 'publications';
     protected $hasBiblio = false;
     protected $idField = 'publications_id';
-    public $tables = [['criteria'], ['inscriptions', 'Inscribed objects'], ['find_groups', 'Find groups'], ['workshops'], ['persons'], ['titles'], ['spellings'], ['personal_names', 'Personal names'], ['name_types', 'Name types']];
+    public $tables = [['criteria'], ['inscriptions', 'Inscriptions'], ['objects', 'Objects'],['find_groups', 'Find groups'], ['workshops'], ['persons'], ['titles'], ['spellings'], ['personal_names', 'Personal names'], ['name_types', 'Name types']];
 
     protected function initFieldNames()
     {

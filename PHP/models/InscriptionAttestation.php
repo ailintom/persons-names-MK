@@ -15,6 +15,6 @@ class InscriptionAttestation extends ListModel
 
     protected function initFieldNames()
     {
-        $this->field_names = new FieldList(['attestations_id', 'location', 'gender', 'title_string', 'personal_name', 'status', 'note']);
+        $this->field_names = new FieldList(['attestations_id', 'location', 'gender', 'title_string', 'personal_name', 'status', 'epithet', 'classifier', 'representation', 'note']);
     }
 }

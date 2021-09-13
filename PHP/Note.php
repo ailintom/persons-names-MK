@@ -9,7 +9,7 @@ namespace PNM;
 class Note
 {
 
-    const TITLE_FIELDS = ['thesauri' => 'item_name', 'criteria' => 'title', 'publications' => 'author_year', 'biblio_refs' => 'biblio_refs_id', 'inscriptions' => 'title',
+    const TITLE_FIELDS = ['thesauri' => 'item_name', 'criteria' => 'title', 'objects' => 'title', 'publications' => 'author_year', 'biblio_refs' => 'biblio_refs_id', 'inscriptions' => 'title',
         'find_groups' => 'title', 'workshops' => 'title', 'inscriptions_workshops_xref' => 'inscriptions_workshops_xref_id', 'places' => 'place_name', 'inv_nos' => 'inv_no',
         'collections' => 'title', 'attestations' => 'CONCAT_WS(" ", title_string, personal_name) as title', 'spellings_attestations_xref' => 'spellings_attestations_xref_id', 'persons_attestations_xref' => 'persons_attestations_xref_id',
         'persons' => 'title', 'titles_att' => 'titles_att_id', 'titles' => 'title', 'spellings' => 'spelling', 'alternative_readings' => 'alternative_readings_id',

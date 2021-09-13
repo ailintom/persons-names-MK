@@ -24,6 +24,8 @@ class idController extends EntryController
             $controller = self::getParentController($strid,'SELECT inscriptions_id from attestations where attestations_id =  ?',$short_id);
         }elseif  ($controller == 'spelling'){
             $controller = self::getParentController($strid,'SELECT personal_names_id from spellings where spellings_id =  ?',$short_id);
+        }elseif  ($controller == 'object'){
+            $controller = self::getParentController($strid,'SELECT inscriptions_id from objects_inscriptions_xref where objects_id = ? ',$short_id);            
         }elseif ($controller == 'persons_attestations_xref'){
             $att_strid = Lookup::get('SELECT attestations_id from persons_attestations_xref where persons_attestations_xref_id =  ?', (int)$strid, 'i');
             if (strlen($att_strid)>0){

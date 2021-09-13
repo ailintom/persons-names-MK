@@ -25,7 +25,7 @@ class ID
         23 => 'group', 20 => 'workshop', 22 => 'place',
         26 => 'collection', 8 => 'attestation',
         27 => 'person', 5 => 'title', 25 => 'inv_no', 29 => 'spelling',
-        17 => 'name', 30 => 'type'];
+        17 => 'name', 30 => 'type', 10 => 'object'];
 
     public function __construct($IDInput, $TableInput = null)
     {
