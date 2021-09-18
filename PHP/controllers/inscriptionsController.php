@@ -32,7 +32,7 @@ class inscriptionsController
                 array_push($rules, new RuleExists('inv_nos WHERE inv_nos.objects_id = objects.objects_id AND inv_nos.collections_id =?', $collID, 'i'));
             }
         } elseif (!empty(Request::get('title'))) {
-            array_push($rules, new Rule('title', 'exactlike', Request::get('title')));
+            array_push($rules, new Rule('inscriptions.title', 'exactlike', Request::get('title')));
         }
         if (!empty(Request::get('object_subtype'))) {
             array_push($rules, new Rule('object_subtype', 'exact', Request::get('object_subtype')));
