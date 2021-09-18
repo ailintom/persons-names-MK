@@ -78,10 +78,62 @@ class inscriptionView extends View {
             $spellings = $Att['spellings']->getSpellings();
             $titles = $Att['titles']->data;
             $epithet = $Att['epithet'];
-            $classifier = $Att['classifier'];
+            $classifier = '';
             $representation = $Att['representation'];
             $currentLoc .= '<table class="name-box"><tr><th></th>';
+            //            
+//Render table data
+            $tabRow =  '<tr><td><span class="gender" title="' . self::genderTitle($Att['gender']) . '">' . $Att['gender'] . '</span></td>';
             if (!empty($titles)) {
+                $tabRow .= '<td>';
+                $titleCount = 0;
+                foreach ($titles as $title) {
+                    if ($titleCount++ > 0) {
+                        $tabRow .= '; ';
+                    }
+                    $tabRow .= $titlesView->render($title['title'], $title['titles_id']);
+                }
+                $tabRow .= '</td>';
+            }
+            if (!empty($spellings) & !empty($spellings[0]['spellings'])) {
+                $tabRow .= '<td>';
+                $spellingCount = 0;
+                foreach ($spellings as $name) {
+                    if ($spellingCount++ > 0) {
+                        $tabRow .= ' / ';
+                    }
+                    $spellingPerNameCount = 0;
+                    foreach ($name['spellings'] as $spelling) {
+                        if ($spellingPerNameCount > 0) {
+                            $tabRow .= ', ';
+                        }
+                        $tabRow .= '<span class="name">';
+                        $tabRow .= '<a href="' . Request::makeURL('name', [$name['personal_names_id'], $spelling['spellings_id']]) . '">';
+                        if ($spellingPerNameCount++ == 0) {
+                            $tabRow .= $name['personal_name'] . ' ';
+                        }
+                        $tabRow .= $spellView->render($spelling['spelling'], $spelling['spellings_id'])
+                                . '</a>';
+                        $curClassifier = $spelling['classifier'];
+                        if (!empty($curClassifier)) {
+                            $classifier .=  (!empty($classifier) ? ' / ': '') . $curClassifier ;
+                        }
+                        $tabRow .= $this->processAltReadings($spelling['alt_readings']);
+                        $tabRow .= '</span>';
+                    }
+                }
+                $tabRow .= '</td>';
+            }
+            if (!empty($epithet)) {
+                $tabRow .= '<td>' . $epithet . '</td>'; //if the attestation has associated epithets, display the epithet 
+            }
+             if (!empty($classifier)) {
+              $tabRow .= '<td>' . $classifier . (empty($representation) ? '' : ' (' . $representation . ')' ) . '</td>'; //if the attestation has associated classifier, display the classifier 
+              } 
+            $tabRow .= '</tr></table>';
+//            
+//Render table headings
+                        if (!empty($titles)) {
                 $currentLoc .= '<th>Title</th>'; //if the attestation has associated titles, display the title heading
             }
             if (!empty($spellings) & !empty($spellings[0]['spellings'])) {
@@ -90,55 +142,10 @@ class inscriptionView extends View {
             if (!empty($epithet)) {
                 $currentLoc .= '<th>Epithet</th>'; //if the attestation has associated epithets, display the epithet heading
             }
-            if (!empty($classifier)) {
-                $currentLoc .= '<th>Classifier</th>'; //if the attestation has associated epithets, display the epithet heading
-            }
-            $currentLoc .= '</tr><tr>';
-            $currentLoc .= '<td><span class="gender" title="' . self::genderTitle($Att['gender']) . '">' . $Att['gender'] . '</span></td>';
-            if (!empty($titles)) {
-                $currentLoc .= '<td>';
-                $titleCount = 0;
-                foreach ($titles as $title) {
-                    if ($titleCount++ > 0) {
-                        $currentLoc .= '; ';
-                    }
-                    $currentLoc .= $titlesView->render($title['title'], $title['titles_id']);
-                }
-                $currentLoc .= '</td>';
-            }
-            if (!empty($spellings) & !empty($spellings[0]['spellings'])) {
-                $currentLoc .= '<td>';
-                $spellingCount = 0;
-                foreach ($spellings as $name) {
-                    if ($spellingCount++ > 0) {
-                        $currentLoc .= ' / ';
-                    }
-                    $spellingPerNameCount = 0;
-                    foreach ($name['spellings'] as $spelling) {
-                        if ($spellingPerNameCount > 0) {
-                            $currentLoc .= ', ';
-                        }
-                        $currentLoc .= '<span class="name">';
-                        $currentLoc .= '<a href="' . Request::makeURL('name', [$name['personal_names_id'], $spelling['spellings_id']]) . '">';
-                        if ($spellingPerNameCount++ == 0) {
-                            $currentLoc .= $name['personal_name'] . ' ';
-                        }
-                        $currentLoc .= $spellView->render($spelling['spelling'], $spelling['spellings_id'])
-                                . '</a>';
-
-                        $currentLoc .= $this->processAltReadings($spelling['alt_readings']);
-                        $currentLoc .= '</span>';
-                    }
-                }
-                $currentLoc .= '</td>';
-            }
-            if (!empty($epithet)) {
-                $currentLoc .= '<td>' . $epithet . '</td>'; //if the attestation has associated epithets, display the epithet heading
-            }
-            if (!empty($classifier)) {
-                $currentLoc .= '<td>' . $classifier . (empty($representation) ? '' : ' (' . $representation . ')' ) . '</td>'; //if the attestation has associated epithets, display the epithet heading
-            }
-            $currentLoc .= '</tr></table>';
+             if (!empty($classifier)) {
+              $currentLoc .= '<th>Classifier</th>'; //if the attestation has associated epithets, display the epithet heading
+              } 
+            $currentLoc .= '</tr>' . $tabRow;
             //spellings
             if (!empty($Att['bonds']->data)) {
                 $currentLoc .= $this->renderBonds($Att['bonds']->data, $attView);

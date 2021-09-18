@@ -18,7 +18,9 @@ The collation `utf8mb4_unicode_ci` is used for all `CHAR` and `VARCHAR` fields. 
 The database uses a system of ID numbers that ensures that each ID uniquely identifies an entity within the whole database and thus contains information on the table where the record is stored.
  IDs are stored as signed 32-bit integers, which are used as bit fields, whereby the table is coded in bits 4 to 9, and bits 10 to 32 are used for the record number in the table, allowing for 8388607 records per table. Bits 1 to 3 are reserved. The table ID can be extracted from the record ID with two simple arithmetic operations `$table_id = (($id & 0x1F800000) >> 23);` in PHP 5 or in JavaScript or `CAST((id & 0x1F800000) >> 23 AS INT) AS table_id` in MySQL. The online web database supports references to ID numbers in any text field, coded as `@id` or `@id-any-human-readable-handle`, and renders them as links to the corresponding entities. Thus "established by @16782609, 64" or "established by @16782609-Franke-Heqaib, 64" should be rendered in HTML as `established by <a href='../publications/16782609'>Franke 1994</a>, 64`, and "datable after @33556813-Louvre-C249 (@226528715-PD-772)" should be rendered in HTML as `datable after <a href='../inscriptions/33556813'>Louvre C 239</a> (<a href='../persons/226528715'>PD 772</a> )`.
 
-[![Database structure](database_structure.svg)](database_structure.png)
+<!---
+[![Database structure](database_structure.svg)](database_structure.png) 
+-->
 
 ## Tables
 
@@ -294,13 +296,13 @@ Each record in this table represents an attestation of a person, of one or two p
 | status            | CHAR(6)        | Status of the person on the monument ("owner" or "patron" or "")|
 | location          | VARCHAR(191)        | The place in the inscription where the person is mentioned (register, line number according to the standard publication or other relevant indications)| Data stored in the <http://lawd.info/ontology/Citation> class |
 | epithet | VARCHAR(191) | An epithet (Beiwort) characterizing the age or the gender of the person, which stands after the name |
-| classifier | VARCHAR(191) | Gardiner codes of classifier(s) standing after the name in the inscription |
 | representation | VARCHAR(191) | Whether the person is represented by a human figure |
 | note              | TEXT| General notes related to the attestation |
 
 
 ### spellings_attestations_xref *(table_id: 15)*  
 Each record in this table represents a link between an attestation of a person and a spelling. When a person bears a double name in a particular source, two records are created in `spellings_attestations_xref`, one for the first name and one for the second name. When a person is attested on the same monuments with the same name in two different spellings, two records are created in  `spellings_attestations_xref`, one for the first name, and one for the second name. 
+Roughly corresponds to tokens in [iClassifier](https://www.iclassifier.pw).
 
 | Field name        | Type  | Description | Equivalent classes, properties |
 | ---               | :---: | :---        | :---        |
@@ -309,6 +311,7 @@ Each record in this table represents a link between an attestation of a person a
 | date_changed| DATE | Date when the last change to the record was published |
 | attestations_id   | INT   | ID of the attestation |
 | spellings_id      | INT   | ID of the spelling |
+| classifier | VARCHAR(191) | Gardiner codes of classifier(s) standing after the given spelling in the inscription |
 
 ### persons_attestations_xref *(table_id: 1)*  
 Each record in this table represents a statement on the appurtenance of an attestation to a dossier.  

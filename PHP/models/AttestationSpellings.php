@@ -17,7 +17,7 @@ class AttestationSpellings extends ListModel
     //(source_id>0) DESC , source_url, source_title, author_year_sort
     protected function initFieldNames()
     {
-        $this->field_names = new FieldList(['spellings.spellings_id', 'spelling', 'personal_names.personal_names_id', 'personal_name'], ['spellings_id', 'spelling', 'personal_names_id', 'personal_name']);
+        $this->field_names = new FieldList(['spellings.spellings_id', 'spelling', 'personal_names.personal_names_id', 'personal_name', 'classifier'], ['spellings_id', 'spelling', 'personal_names_id', 'personal_name', 'classifier']);
     }
 
     public function getSpellings()
@@ -30,7 +30,7 @@ class AttestationSpellings extends ListModel
             }
             $filter = new Filter([new Rule('spellings_id', 'exact', $spelling['spellings_id'], 'i')]);
             $objAltReadings = new alternative_readings(null, 0, 0, $filter);
-            array_push($spellings[$index]['spellings'], array('spelling' => $spelling['spelling'], 'spellings_id' => $spelling['spellings_id'], 'alt_readings' => $objAltReadings));
+            array_push($spellings[$index]['spellings'], array('spelling' => $spelling['spelling'], 'spellings_id' => $spelling['spellings_id'],'classifier' => $spelling['classifier'], 'alt_readings' => $objAltReadings));
         }
         return $spellings;
     }
