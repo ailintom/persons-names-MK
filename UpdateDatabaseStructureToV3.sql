@@ -112,6 +112,18 @@ ADD CONSTRAINT `key-inv_nos-objects` FOREIGN KEY (`objects_id`) REFERENCES `obje
 
 OPTIMIZE TABLE `inv_nos`;
 
+ALTER TABLE `titles` ADD COLUMN `taylor` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'List of corresponding lemma numbers in Taylor, An Index of Male Non-Royal Egyptian Titles, Epithets and Phrases of the 18th Dynasty' AFTER `ward_fischer_sort`;
+ALTER TABLE `titles` ADD COLUMN `taylor_sort` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Temporary field with the `taylor` number converted for natural sort' AFTER `taylor`;
+ALTER TABLE `titles` ADD COLUMN `ayedi` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'List of corresponding lemma numbers in al-Ayedi, Index of Egyptian administrative, religious and military titles of the New Kingdom' AFTER `taylor_sort`;
+ALTER TABLE `titles` ADD COLUMN `ayedi_sort` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Temporary field with the `ayedi` number converted for natural sort' AFTER `ayedi`;
+ALTER TABLE `titles` 
+ADD KEY `taylor_idx` (`taylor`),
+ADD KEY `taylor_sort_idx` (`taylor_sort`),
+ADD KEY `ayedi_idx` (`ayedi`),
+ADD KEY `ayedi_sort_idx` (`ayedi_sort`);
+OPTIMIZE TABLE `titles`;
+
+
 ALTER TABLE `attestations` ADD COLUMN `epithet` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'An epithet (Beiwort) characterizing the age or the gender of the person' AFTER `location`;
 ALTER TABLE `attestations` ADD COLUMN `representation` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Whether the person is represented by a human figure' AFTER `epithet`;
 ALTER TABLE `spellings_attestations_xref` ADD COLUMN `classifier` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Gardiner codes of classifier(s) standing after the name in the inscription' AFTER `spellings_id`;
@@ -288,6 +300,41 @@ CREATE TRIGGER `publications_before_update` BEFORE UPDATE ON `publications` FOR 
 	SET NEW.year  = CAST(REGEXP_SUBSTR(NEW.author_year, "\d+") AS SIGNED);
 END//
 DELIMITER ;
+
+DROP TRIGGER IF EXISTS `titles_BEFORE_UPDATE`;
+
+DELIMITER //
+CREATE TRIGGER `titles_BEFORE_UPDATE` BEFORE UPDATE ON `titles` FOR EACH ROW BEGIN
+SET NEW.title_sort = sort_transl(NEW.title);
+SET NEW.title_search = search_transl(NEW.title);
+SET NEW.ward_fischer_sort = LEFT(natural_sort_format(NEW.ward_fischer,7, ""),190);
+SET NEW.hannig_sort = LEFT(natural_sort_format(NEW.hannig,7, ""),190);
+SET NEW.taylor_sort = LEFT(natural_sort_format(NEW.taylor,7, ""),190);
+SET NEW.ayedi_sort = LEFT(natural_sort_format(NEW.ayedi,7, ""),190);
+SET NEW.usage_area_sort = (SELECT latitude from places where place_name = NEW.usage_area);
+SET NEW.usage_period_sort = (SELECT sort_date_range_start+sort_date_range_end from thesauri where item_name = NEW.usage_period);
+END//
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS `titles_before_insert`;
+
+DELIMITER //
+CREATE TRIGGER `titles_before_insert` BEFORE INSERT ON `titles` FOR EACH ROW BEGIN
+SET NEW.title_sort = sort_transl(NEW.title);
+SET NEW.title_search = search_transl(NEW.title);
+SET NEW.ward_fischer_sort = LEFT(natural_sort_format(NEW.ward_fischer,7, ""),190);
+SET NEW.hannig_sort = LEFT(natural_sort_format(NEW.hannig,7, ""),190);
+SET NEW.taylor_sort = LEFT(natural_sort_format(NEW.taylor,7, ""),190);
+SET NEW.ayedi_sort = LEFT(natural_sort_format(NEW.ayedi,7, ""),190);
+	SET NEW.usage_area_sort = (SELECT latitude from places where place_name = NEW.usage_area);
+	SET NEW.usage_period_sort = (SELECT sort_date_range_start+sort_date_range_end from thesauri where item_name = NEW.usage_period);
+
+IF  IFNULL(  NEW.titles_id, 0) = 0 THEN 
+	SET NEW.titles_id = make_id(table_id_from_name("titles"),(SELECT MAX(record_id_from_id(titles_id)) + 1 FROM titles));
+END IF;
+END//
+DELIMITER ;
+
 
 DELIMITER //
 CREATE TRIGGER `objects_before_insert` BEFORE INSERT ON `objects` FOR EACH ROW BEGIN

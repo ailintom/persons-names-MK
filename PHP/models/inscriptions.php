@@ -20,7 +20,7 @@ class inscriptions extends ListModel
             'SELECT CONCAT_WS(" ", IF(CHAR_LENGTH(title_string)>IF(CHAR_LENGTH(personal_name)<14, 31 - CHAR_LENGTH(personal_name), 17), '
             . 'CONCAT("...", RIGHT(title_string, IF(CHAR_LENGTH(personal_name)<14, 31 - CHAR_LENGTH(personal_name), 17))), title_string), personal_name) '
             . 'FROM attestations '
-            . 'WHERE attestations.inscriptions_id  = inscriptions.inscriptions_id LIMIT 1'], ['inscriptions_id', 'object_type', 'title', 'material', 'size', 'text_content', 'dating', 'inst_prov_temp', 'orig_prod_temp', 'owner']);
+            . 'WHERE status = "owner" and attestations.inscriptions_id  = inscriptions.inscriptions_id LIMIT 1'], ['inscriptions_id', 'object_type', 'title', 'material', 'size', 'text_content', 'dating', 'inst_prov_temp', 'orig_prod_temp', 'owner']);
     }
 
     protected function getSortField($sortField = null)

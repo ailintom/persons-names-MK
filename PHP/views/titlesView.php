@@ -8,20 +8,18 @@ namespace PNM\views;
 
 use \PNM\Request;
 
-class titlesView extends View
-{
+class titlesView extends View {
 
-    public function echoRender(&$data)
-    {
+    public function echoRender(&$data) {
         (new HeadView())->render(HeadView::HEADERSLIM, "Titles");
         ?>
         <form action="<?= Request::makeURL('titles') ?>" method="get">
             <div class="row">
                 <div class="column">
-                    <?= (new TextInput('title', 'Title', 'MdC (jmj-rA pr) or Unicode (jmj-rꜣ pr)'))->render() ?>
+        <?= (new TextInput('title', 'Title', 'MdC (jmj-rA pr) or Unicode (jmj-rꜣ pr)'))->render() ?>
                 </div>
                 <div class="column">
-                    <?= (new TextInput('translation', 'Translation', 'English or German translation'))->render() ?>
+        <?= (new TextInput('translation', 'Translation', 'English or German translation'))->render() ?>
                 </div>
             </div>
             <p>
@@ -51,30 +49,38 @@ class titlesView extends View
                 <h2 class="sr-only">Filters</h2>
                 <div class="filters_selection">
                     <button class="filters_button" aria-controls="region-filter" aria-expanded="false" onclick="MK.toggleFilter('region-filter')" title="Toggle region filter" type="button">
-                        <?= Icon::get('plus') . Icon::get('minus') ?>
+        <?= Icon::get('plus') . Icon::get('minus') ?>
                         Region
                     </button>
                     <button class="filters_button" aria-controls="period-filter" aria-expanded="false" onclick="MK.toggleFilter('period-filter')" title="Toggle period filter" type="button">
-                        <?= Icon::get('plus') . Icon::get('minus') ?>
+        <?= Icon::get('plus') . Icon::get('minus') ?>
                         Period
                     </button>
                     <button class="filters_button" aria-controls="gender-filter" aria-expanded="false" onclick="MK.toggleFilter('gender-filter')" title="Toggle gender filter" type="button">
-                        <?= Icon::get('plus') . Icon::get('minus') ?>
+        <?= Icon::get('plus') . Icon::get('minus') ?>
                         Gender
                     </button>
                     <button class="filters_button" aria-controls="ward-filter" aria-expanded="false" onclick="MK.toggleFilter('ward-filter')" title="Toggle Ward/Fischer number filter" type="button">
-                        <?= Icon::get('plus') . Icon::get('minus') ?>
-                        Ward/Fischer number
+        <?= Icon::get('plus') . Icon::get('minus') ?>
+                        Ward/Fischer no.
                     </button>
                     <button class="filters_button" aria-controls="hannig-filter" aria-expanded="false" onclick="MK.toggleFilter('hannig-filter')" title="Toggle Hannig number filter" type="button">
-                        <?= Icon::get('plus') . Icon::get('minus') ?>
-                        Hannig number
+        <?= Icon::get('plus') . Icon::get('minus') ?>
+                        Hannig no.
+                    </button>
+                    <button class="filters_button" aria-controls="taylor-filter" aria-expanded="false" onclick="MK.toggleFilter('taylor-filter')" title="Toggle Taylor number filter" type="button">
+        <?= Icon::get('plus') . Icon::get('minus') ?>
+                        Taylor no.
+                    </button>
+                    <button class="filters_button" aria-controls="ayedi-filter" aria-expanded="false" onclick="MK.toggleFilter('ayedi-filter')" title="Toggle al-Ayedi number filter" type="button">
+        <?= Icon::get('plus') . Icon::get('minus') ?>
+                        al-Ayedi no.
                     </button>
                 </div>
                 <div class="filter" id="region-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('region-filter')" title="Remove region filter" type="button">
-                            <?= Icon::get('minus', 'Remove region filter') ?>
+        <?= Icon::get('minus', 'Remove region filter') ?>
                         </button>
                         <span id="region-label">Region</span>
                     </div>
@@ -89,23 +95,23 @@ class titlesView extends View
                             characteristic of
                         </label>
                         the region
-                        <?= (new TextInput('place', 'Region', 'Enter the region', 'region or locality', 'places', true))->render() ?>
+        <?= (new TextInput('place', 'Region', 'Enter the region', 'region or locality', 'places', true))->render() ?>
                     </div>
                 </div>
                 <div class="filter" id="period-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('period-filter')" title="Remove period filter" type="button">
-                            <?= Icon::get('minus', 'Remove period filter') ?>
+        <?= Icon::get('minus', 'Remove period filter') ?>
                         </button>
                         <span id="period-label">Period</span>
                     </div>
                     <div class="filter_content">
-                       <input id="period-strictly" name="match-date" type="radio" value="strictly" aria-labelledby="period-label"<?= View::oldValueRadio('match-date', 'strictly', true) ?>>
+                        <input id="period-strictly" name="match-date" type="radio" value="strictly" aria-labelledby="period-label"<?= View::oldValueRadio('match-date', 'strictly', true) ?>>
                         <label for="period-strictly" title="Match any title attested strictly in the given period">
                             Attested strictly
                         </label>
-                       /
-                                               <input id="period-attested" name="match-date" type="radio" value="attested" aria-labelledby="period-label"<?= View::oldValueRadio('match-date', 'attested') ?>>
+                        /
+                        <input id="period-attested" name="match-date" type="radio" value="attested" aria-labelledby="period-label"<?= View::oldValueRadio('match-date', 'attested') ?>>
                         <label for="period-attested" title="Match any title possibly attested in the given period">
                             ca. in
                         </label>
@@ -115,13 +121,13 @@ class titlesView extends View
                             characteristic of
                         </label>
                         the period
-                         <?= (new TextInput('period', 'Period', 'Enter the period', 'period or reign', 'periods', true))->render() ?>
+        <?= (new TextInput('period', 'Period', 'Enter the period', 'period or reign', 'periods', true))->render() ?>
                     </div>
                 </div>
                 <div class="filter" id="gender-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('gender-filter')" title="Remove gender filter" type="button">
-                            <?= Icon::get('minus', 'Remove gender filter') ?>
+        <?= Icon::get('minus', 'Remove gender filter') ?>
                         </button>
                         <span id="gender-label">Gender</span>
                     </div>
@@ -150,7 +156,7 @@ class titlesView extends View
                 <div class="filter" id="ward-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('ward-filter')" title="Remove Ward/Fischer number filter" type="button">
-                            <?= Icon::get('minus', 'Remove Ward/Fischer number filter') ?>
+        <?= Icon::get('minus', 'Remove Ward/Fischer number filter') ?>
                         </button>
                         Ward/Fischer number
                     </div>
@@ -162,13 +168,37 @@ class titlesView extends View
                 <div class="filter" id="hannig-filter">
                     <div class="filter_label">
                         <button class="filter_remove" onclick="MK.toggleFilter('hannig-filter')" title="Remove Hannig number filter" type="button">
-                            <?= Icon::get('minus', 'Remove Hannig number filter') ?>
+        <?= Icon::get('minus', 'Remove Hannig number filter') ?>
                         </button>
                         Hannig number
                     </div>
                     <div class="filter_content">
                         <label for="hannig" class="sr-only">Hannig number</label>
-                        <input id="hannig" name="hannig" placeholder="Example: 1950" title="Enter the entry number Hannig, Ägyptisches Wörterbuch II: Mittleres Reich und Zweite Zwischenzeit" type="text"<?= View::oldValue('hannig') ?>>
+                        <input id="hannig" name="hannig" placeholder="Example: 1950" title="Enter the entry number in Hannig, Ägyptisches Wörterbuch II: Mittleres Reich und Zweite Zwischenzeit" type="text"<?= View::oldValue('hannig') ?>>
+                    </div>
+                </div>
+                <div class="filter" id="taylor-filter">
+                    <div class="filter_label">
+                        <button class="filter_remove" onclick="MK.toggleFilter('taylor-filter')" title="Remove Taylor number filter" type="button">
+        <?= Icon::get('minus', 'Remove Taylor number filter') ?>
+                        </button>
+                        Taylor number
+                    </div>
+                    <div class="filter_content">
+                        <label for="taylor" class="sr-only">Taylor number</label>
+                        <input id="taylor" name="taylor" placeholder="Example: 387" title="Enter the entry number in Taylor, An Index of Male Non-Royal Egyptian Titles, Epithets and Phrases of the 18th Dynasty" type="text"<?= View::oldValue('taylor') ?>>
+                    </div>
+                </div>
+                <div class="filter" id="ayedi-filter">
+                    <div class="filter_label">
+                        <button class="filter_remove" onclick="MK.toggleFilter('ayedi-filter')" title="Remove al-Ayedi number filter" type="button">
+        <?= Icon::get('minus', 'Remove al-Ayedi number filter') ?>
+                        </button>
+                        al-Ayedi number
+                    </div>
+                    <div class="filter_content">
+                        <label for="ayedi" class="sr-only">al-Ayedi number</label>
+                        <input id="ayedi" name="ayedi" placeholder="Example: 1950" title="Enter the entry number in al-Ayedi, Index of Egyptian administrative, religious and military titles of the New Kingdom" type="text"<?= View::oldValue('ayedi') ?>>
                     </div>
                 </div>
             </div>
@@ -189,7 +219,7 @@ class titlesView extends View
             <h2 class="sr-only" id="results">Results</h2>
             <?php
             $tableCo = new TableView($data, 'titles_id', 'title', 'sort');
-            $tableCo->renderTable(['title', 'gender', 'count_attestations', 'usage_period', 'usage_area', 'ward_fischer', 'hannig', 'translation_en'], ['Title', 'Gender', 'Atts.', 'Period', 'Area', 'Ward/Fischer no.', 'Hannig no.', 'Translation'], true);
+            $tableCo->renderTable(['title', 'gender', 'count_attestations', 'usage_period', 'usage_area', 'ward_fischer', 'taylor', 'ayedi', 'translation_en'], ['Title', 'Gender', 'Atts.', 'Period', 'Area', 'Ward/Fischer no.', 'Taylor no.', 'Ayedi no.', 'Translation'], true);
             /*
               ['titles_id', 'title', 'gender', 'count_attestations', 'usage_period', 'usage_area', 'ward_fischer', 'hannig', 'translation_en']
              */
@@ -199,6 +229,7 @@ class titlesView extends View
          * Process filters
          *
          */
-        $this->toggleFilters([['place', 'region-filter'], ['period', 'period-filter'], ['gender', 'gender-filter', 'any'], ['ward', 'ward-filter'], ['hannig', 'hannig-filter']]);
+        $this->toggleFilters([['place', 'region-filter'], ['period', 'period-filter'], ['gender', 'gender-filter', 'any'], ['ward', 'ward-filter'], ['hannig', 'hannig-filter'], ['taylor', 'taylor-filter'], ['ayedi', 'ayedi-filter']]);
     }
+
 }

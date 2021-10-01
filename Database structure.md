@@ -128,7 +128,7 @@ Each record in this table represents a physical object with an Egyptian inscript
 | production_place_note | TEXT | The reasoning behind the `production_place` with relevant bibliographical references whenever possible |
 
 ### objects_inscriptions_xref *(table_id: 12)*  
-Each record in this table represents a link between an inscribed object and an inscription it carries. Several inscribed objects may carry one an the same inscription as in the case of multiple impressions of the same seal or multiple funerary cones stamped with the same inscription. On the other side one and the same object can carry several inscriptions created in different periods.  
+Each record in this table represents a link between an inscribed object and an inscription it carries. Several inscribed objects may carry one an the same inscription as in the case of multiple impressions of the same seal or multiple funerary cones with identical. On the other side one and the same object can carry several inscriptions created in different periods.  
 
 | Field name        | Type  | Description | Equivalent classes, properties |
 | ---               | :---: | :---        | :--- |
@@ -394,6 +394,10 @@ Each record in this table represents an Egyptian title.
 | hannig_sort | VARCHAR(191)   | Temporary field with the `hannig` number converted for natural sort |
 | ward_fischer | VARCHAR(191)   | List of corresponding lemma numbers in Ward, Index of Egyptian Administrative and Religious Titles of the Middle Kingdom and Fischer, Egyptian Titles of the Middle Kingdom. A Supplement to Wm. Ward's Index |
 | ward_fischer_sort | VARCHAR(191)   |  Temporary field with the `ward_fischer` number converted for natural sort |
+| taylor | VARCHAR(191)   | List of corresponding lemma numbers in Taylor, An Index of Male Non-Royal Egyptian Titles, Epithets and Phrases of the 18th Dynasty |
+| taylor_sort | VARCHAR(191)   |  Temporary field with the `taylor` number converted for natural sort |
+| ayedi | VARCHAR(191)   | List of corresponding lemma numbers in al-Ayedi, Index of Egyptian administrative, religious and military titles of the New Kingdom |
+| ayedi_sort | VARCHAR(191)   |  Temporary field with the `ayedi` number converted for natural sort |
 |usage_area         | VARCHAR(191)   | The `place_name` of the record in the table `places` corresponding to the region where the title was predominantly used |
 |usage_area_sort |    INT | The `latitude` of the record in the table `places` corresponding to the `usage_area` |
 |usage_area_note    | TEXT  | Explanatory notes and bibliographic references to the `usage_area` |

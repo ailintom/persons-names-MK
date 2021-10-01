@@ -5,15 +5,14 @@
  */
 
 namespace PNM\views;
+
 use \PNM\Request;
 
-class nameView extends View
-{
+class nameView extends View {
 
     protected $spellView;
 
-    public function echoRender(&$data)
-    {
+    public function echoRender(&$data) {
         $placesMV = new placesMicroView();
         $subtitle = null;
         if (!empty($data->get('translation_en'))) {
@@ -51,12 +50,13 @@ class nameView extends View
             $this->descriptionElement('Gender', $data->get('gender'), null, 'gender');
             $altReadings = implode(', ', array_map([$this, 'renderAltReading'], $data->get('alt_readings')->data));
             echo $this->descriptionElement('Is a possible reading of', $altReadings);
-            echo $this->descriptionElement('Bibliography', $this->renderBiblio($data->get('bibliography')), null, 'biblio-ref');
+
             $ref = $this->addReference('Ranke no.', $data->get('ranke'));
             $ref = $this->addReference('TLA no.', $data->get('tla'), \PNM\ExternalLinks::TLA, $ref);
             $ref = $this->addReference('AGÉA no.', $data->get('agea'), \PNM\ExternalLinks::AGEA, $ref);
             $ref = $this->addReference('Scheele-Schweitzer no.', $data->get('scheele-schweitzer'), null, $ref);
             echo( $this->descriptionElement('References', $ref));
+            echo $this->descriptionElement('Bibliography', $this->renderBiblio($data->get('bibliography')), null, 'biblio-ref');
             //  ['titles_id', 'title', 'gender', 'count_attestations', 'usage_period', 'usage_area', 'usage_period_note', 'usage_area_note', 'note', 'ward_fischer', 'hannig', 'tla', 'translation_en', 'translation_de']
             ?>
         </dl>
@@ -105,13 +105,11 @@ class nameView extends View
         // ['inscriptions_id', 'attestations_id', 'personal_name', 'gender', 'title_string', 'title', 'dating', 'origin', 'count_persons']
     }
 
-    protected function renderAltReading($altReading)
-    {
+    protected function renderAltReading($altReading) {
         return $this->renderSpelling($altReading['personal_names_id'], $altReading['personal_name'], $altReading['spellings_id'], $altReading['spelling']);
     }
 
-    protected function renderSpelling($personal_names_id, $personal_name, $spellings_id, $spelling)
-    {
+    protected function renderSpelling($personal_names_id, $personal_name, $spellings_id, $spelling) {
         $res = '<span class="name">';
         $res .= '<a href="' . Request::makeURL('name', [$personal_names_id, $spellings_id]) . '">';
         $res .= $personal_name . ' ';
@@ -120,4 +118,5 @@ class nameView extends View
         $res .= '</span>';
         return $res;
     }
+
 }

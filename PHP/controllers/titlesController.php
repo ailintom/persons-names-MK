@@ -88,6 +88,12 @@ class titlesController
         if (!empty(Request::get('hannig'))) {
             array_push($rules, new Rule('hannig', 'exact', Request::get('hannig')));
         }
+               if (!empty(Request::get('ayedi'))) {
+            array_push($rules, new Rule('ayedi', 'exact', Request::get('ayedi')));
+        }
+               if (!empty(Request::get('taylor'))) {
+            array_push($rules, new Rule('taylor', 'exact', Request::get('taylor')));
+        }
         $filter = new Filter($rules);
         $model = new \PNM\models\titles(Request::get('sort'), (Request::get('start') ?: 0), Config::ROWS_ON_PAGE, $filter);
         $view = new \PNM\views\titlesView();
