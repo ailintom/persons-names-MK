@@ -8,19 +8,16 @@ namespace PNM\views;
 
 use \PNM\Request;
 
-class View
-{
+class View {
 
     protected $entry = null;
     protected $subEntries = null;
 
-    public function echoRender(&$data)
-    {
+    public function echoRender(&$data) {
         //to be used in child classes
     }
 
-    protected function descriptionElement($term, $value, $note = null, $class = null, $noteClass = null)
-    {
+    protected function descriptionElement($term, $value, $note = null, $class = null, $noteClass = null) {
         if (!empty($value) & !empty($note)) {
             return "\n<dt>" . $term . ":</dt>\n<dd><span" . (empty($class) ? null : ' class="' . $class . '"') . '>' . $value . '</span> <span class="' . (empty($noteClass) ? 'note' : $noteClass) . '">(' . $note . ')</span></dd>';
         } elseif (!empty($value)) {
@@ -28,19 +25,18 @@ class View
         }
     }
 
-    protected function renderURL($url, $prefix = null)
-    {
+    protected function renderURL($url, $prefix = null) {
         if (!empty($url)) {
             return '<a href="' . $prefix . $url . '">' . $url . '</a>';
         }
     }
+
     /*
      * formats the bibliograhy associated with an entry
      * 
      */
 
-    protected function renderBiblio($objbibliography)
-    {
+    protected function renderBiblio($objbibliography) {
         $res = null;
         $bibView = new publicationsMicroView();
         foreach ($objbibliography->data as $bib_etry) {
@@ -62,19 +58,18 @@ class View
         }
         return $res;
     }
+
     /*
      * Formats the "accessed on" clause
      */
 
-    protected function getAccessedOn($accessedOn)
-    {
+    protected function getAccessedOn($accessedOn) {
         if (!empty($accessedOn)) {
             return " (accessed on " . htmlspecialchars($accessedOn, ENT_HTML5) . ")";
         }
     }
 
-    protected function addReference($title, $value, $prefix = null, $string = null)
-    {
+    protected function addReference($title, $value, $prefix = null, $string = null) {
         if (empty($value)) {
             return $string;
         }
@@ -95,34 +90,33 @@ class View
         return $string . '</span>';
     }
 
-    protected function renderSingleReference($value, $prefix = null)
-    {
+    protected function renderSingleReference($value, $prefix = null) {
         if (substr($value, 0, 4) == 'http' || !empty($prefix)) {
             return $this->renderURL($value, $prefix);
         } else {
             return htmlentities($value);
         }
     }
+
     /*
      * The function returns the value of the given parameter from the current request formatted as a HTML value attribute for input controls
      *
      */
 
-    public static function oldValue($field)
-    {
+    public static function oldValue($field) {
         if (!empty(Request::get($field))) {
             return ' value = "' . Request::get($field) . '"';
         } else {
             return null;
         }
     }
+
     /*
      * The function returns 'checked' if the given field has the given value
      *
      */
 
-    public static function oldValueRadio($field, $value, $default = false)
-    {
+    public static function oldValueRadio($field, $value, $default = false) {
         if (!empty(Request::get($field))) {
             if (Request::get($field) == $value) {
                 return ' checked';
@@ -132,8 +126,7 @@ class View
         }
     }
 
-    public static function oldValueSelect($field, $value, $default = false)
-    {
+    public static function oldValueSelect($field, $value, $default = false) {
         if (!empty(Request::get($field))) {
             if (Request::get($field) == $value) {
                 return ' selected';
@@ -143,8 +136,7 @@ class View
         }
     }
 
-    public static function genderTitle($gender)
-    {
+    public static function genderTitle($gender) {
         /*
          * "m", "f", "?" gender unknown, or "a" for animals
          */
@@ -160,8 +152,7 @@ class View
         }
     }
 
-    public static function renderGender($gender)
-    {
+    public static function renderGender($gender) {
         if (!empty($gender)) {
             return '<span class="gender" title="' . self::genderTitle($gender) . '">' . $gender . '</span>';
         } else {
@@ -169,8 +160,7 @@ class View
         }
     }
 
-    public static function renderObjectType($objectType)
-    {
+    public static function renderObjectType($objectType) {
         switch ($objectType) {
             case 'Scarab, seal, scaraboid, intaglio and similar objects':
                 return 'Seal/sealing';
@@ -187,8 +177,7 @@ class View
         }
     }
 
-    public static function renderTextContent($textContent)
-    {
+    public static function renderTextContent($textContent) {
         switch ($textContent) {
             case 'Royal name and titles':
                 return 'Royal name';
@@ -205,8 +194,7 @@ class View
         }
     }
 
-    protected function renderLat($lat)
-    {
+    protected function renderLat($lat) {
         if (!empty($lat)) {
             if (strlen(strval($lat)) == 4) {
                 return substr(strval($lat), 0, 2) . "." . substr(strval($lat), 2, 2) . " ° N";
@@ -215,13 +203,13 @@ class View
             }
         }
     }
+
     /*
      * Toggles filters after loading the page based on data in the request
      *
      */
 
-    public static function toggleSingleFilter($fieldName, $filterName, $defaultVal)
-    {
+    public static function toggleSingleFilter($fieldName, $filterName, $defaultVal) {
         if (is_array($fieldName)) {
             $fieldSet = false;
 
@@ -238,8 +226,7 @@ class View
         }
     }
 
-    protected function toggleFilters($input)
-    {
+    protected function toggleFilters($input) {
         $res = null;
         foreach ((array) $input as $filter) {
             $res .= static::toggleSingleFilter($filter[0], $filter[1], isset($filter[2]) ? $filter[2] : null);
@@ -262,8 +249,7 @@ class View
         }
     }
 
-    protected function renderChildren($rec, $level)
-    {
+    protected function renderChildren($rec, $level) {
         $typesMV = new name_typesMicroView();
         if (empty($rec['children'])) {
             return null;
@@ -285,8 +271,7 @@ class View
         <?php
     }
 
-    protected function processBondCat($currentcat, $bondsincurrentcat, $attView)
-    {
+    protected function processBondCat($currentcat, $bondsincurrentcat, $attView) {
         $res = "";
         if (empty($bondsincurrentcat)) {
             return null;
@@ -310,14 +295,13 @@ class View
         }
     }
 
-    protected function renderBonds($bonds_data, MicroView $attView)
-    {
+    protected function renderBonds($bonds_data, MicroView $attView) {
         $currentLoc = '<ul class="bonds">';
         $currentcat = -1;
         $bondsincurrentcat = [];
         foreach ($bonds_data as $bond) {
             if ($currentcat !== $bond['predic_cat']) {
-                if (($currentcat)>-1) {
+                if (($currentcat) > -1) {
                     $currentLoc .= $this->processBondCat($currentcat, $bondsincurrentcat, $attView);
                 }
                 $currentcat = $bond['predic_cat'];
@@ -332,8 +316,7 @@ class View
         return $currentLoc;
     }
 
-    protected function genderedDesignations($currentcat, $gender)
-    {
+    protected function genderedDesignations($currentcat, $gender) {
         if (\PNM\models\bonds::BOND_TYPES_PLUR[$currentcat] == 'Children') {
             switch ($gender) {
                 case 'm':
@@ -357,8 +340,7 @@ class View
         }
     }
 
-    protected function processAltReadings($objAltReadings)
-    {
+    protected function processAltReadings($objAltReadings) {
         if (!empty($objAltReadings->data)) {
             $res = ' (alternative reading' . (count($objAltReadings->data) > 1 ? 's' : null ) . ': ';
             $count = 0;
@@ -371,8 +353,7 @@ class View
         }
     }
 
-    protected function renderPersons($persons)
-    {
+    protected function renderPersons($persons) {
         $res = null;
         $personsMV = new personsMicroView();
         foreach ($persons->data as $person) {
@@ -380,4 +361,37 @@ class View
         }
         return $res;
     }
+
+    protected function encode_mdc_as_filename($vMDC) {
+        if (empty($vMDC)) {
+            return NULL;
+        }
+        $res = "";
+        $byte_array = unpack('C*', $vMDC);
+        foreach ($byte_array as $c) {
+            $res .= (base_convert($c, 10, 36));
+        }
+        return $res . ".png";
+    }
+
+    protected function make_mdc_url($mdc_entry) {
+        if (in_array($mdc_entry, array("-", "(...)"))) {
+            return $mdc_entry;
+        } else {
+            $url = Request::makeURL('assets/spellings', $this->encode_mdc_as_filename($mdc_entry), null, null, true, -1, true);
+            return <<<EOF
+<span class="spelling-attestation"><img class="spelling" src="$url" alt="$mdc_entry"></span>
+EOF;
+        }
+    }
+
+    protected function render_mdc($mdc) {
+        // . '.png';
+        if (empty($mdc)) {
+            return NULL;
+        }
+        $mdc_arr = explode(" and ", $mdc);
+        return implode(" and ", array_map(array($this, 'make_mdc_url'), $mdc_arr));
+    }
+
 }

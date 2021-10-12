@@ -116,7 +116,7 @@ class inscriptionView extends View {
                                 . '</a>';
                         $curClassifier = $spelling['classifier'];
                         if (!empty($curClassifier)) {
-                            $classifier .=  (!empty($classifier) ? ' / ': '') . $curClassifier ;
+                            $classifier .=  (!empty($classifier) ? ' / ': '') . $this->render_mdc($curClassifier);
                         }
                         $tabRow .= $this->processAltReadings($spelling['alt_readings']);
                         $tabRow .= '</span>';
