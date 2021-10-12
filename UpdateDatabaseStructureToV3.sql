@@ -127,6 +127,7 @@ OPTIMIZE TABLE `titles`;
 ALTER TABLE `attestations` ADD COLUMN `epithet` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'An epithet (Beiwort) characterizing the age or the gender of the person' AFTER `location`;
 ALTER TABLE `attestations` ADD COLUMN `representation` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Whether the person is represented by a human figure' AFTER `epithet`;
 ALTER TABLE `spellings_attestations_xref` ADD COLUMN `classifier` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Gardiner codes of classifier(s) standing after the name in the inscription' AFTER `spellings_id`;
+ALTER TABLE `spellings_attestations_xref` ADD COLUMN `epithet_mdc` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'An epithet (Beiwort) characterizing the age or the gender of the person, which stands after the name, in JSesh-compatible MdC codes' AFTER `classifier`;
 
 DROP FUNCTION IF EXISTS `table_id_from_name`;
 

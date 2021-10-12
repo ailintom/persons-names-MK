@@ -66,7 +66,7 @@ Each record in this table describes a printed or online publication (a bibliogra
 | publications_id | INT | Unique record ID, primary key |
 | date_created| DATE | Date when the record was created in the published version of the database |
 | date_changed| DATE | Date when the last change to the record was published |
-| csl_json | TEXT | Bibliographical data in the [CSL-JSON](https://github.com/citation-style-language/schema/blob/master/csl-data.json) format |
+| csl_json | TEXT | Bibliographical data in the [CSL-JSON](https://resource.citationstyles.org/schema/latest/input/json/csl-data.json) format |
 | author_year | VARCHAR(191) | The author-year handle for referring |
 | author_year_sort | VARCHAR(191) | The author-year handle with the inverted order of the First and Last Name (for authors with coninciding surnames) |
 | year | INT | Year of the publication for sorting purposes |
@@ -312,6 +312,7 @@ Roughly corresponds to tokens in [iClassifier](https://www.iclassifier.pw).
 | attestations_id   | INT   | ID of the attestation |
 | spellings_id      | INT   | ID of the spelling |
 | classifier | VARCHAR(191) | Gardiner codes of classifier(s) standing after the given spelling in the inscription |
+| epithet_mdc | VARCHAR(191) | An epithet (Beiwort) characterizing the age or the gender of the person, which stands after the name, in JSesh-compatible MdC codes |
 
 ### persons_attestations_xref *(table_id: 1)*  
 Each record in this table represents a statement on the appurtenance of an attestation to a dossier.  
