@@ -369,7 +369,7 @@ class View {
         $res = "";
         $byte_array = unpack('C*', $vMDC);
         foreach ($byte_array as $c) {
-            $res .= (base_convert($c, 10, 36));
+            $res .=  sprintf("%'02s",(base_convert($c, 10, 32)));
         }
         return $res . ".png";
     }
