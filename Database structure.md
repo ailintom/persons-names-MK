@@ -482,6 +482,12 @@ Each record in this table represents a type or a  pattern in Egyptian personal n
 |title_raw              | VARCHAR(191)   | raw `title` with unfiltered # signs (see below) |
 |title_sort              | VARCHAR(191)   | A sort value generated based on the previous field, where # triggers a change from normal text to unicode and back |
 |category           | CHAR(8) |The category of the name type ("semantic" or "formal")
+|usage_area         | VARCHAR(191)   | The `place_name` of the record in the table `places` corresponding to the region where the name type was predominantly used |
+|usage_area_sort |    INT | The `latitude` of the record in the table `places` corresponding to the `usage_area` |
+|usage_area_note    | TEXT  | Explanatory notes and bibliographic references to the `usage_area` |
+|usage_period       | VARCHAR(191)   | The `item_name` of the period when the name type was predominantly used in the dating thesaurus (thesaurus 5), *loosely based on a subset of the [THOT Dates and dating systems thesaurus](http://thot.philo.ulg.ac.be/concept/thot-114)*   |
+|usage_period_sort |    INT | The sort value of the period to which the title can be dated  |
+|usage_period_note    | TEXT  | Explanatory notes and bibliographic references to the `usage_period` |
 | note              | TEXT| General notes related to the name type |
 
 ### names_types_xref *(table_id: 31)*  

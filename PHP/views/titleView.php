@@ -25,34 +25,36 @@ class titleView extends View {
         (new HeadView())->render(HeadView::HEADERSLIM, $data->get('title'));
         ?>
         <p>
-        <?= $subtitle ?>
+            <?= $subtitle ?>
         </p>
         <dl>
-        <?php
-        echo $this->descriptionElement('Note', $data->get('note'), null, 'note'),
-        $this->descriptionElement('Usage area', $data->get('usage_area'), $data->get('usage_area_note'), 'place'), $this->descriptionElement('Usage period', $data->get('usage_period'), $data->get('usage_period_note'), 'period'), $this->descriptionElement('Gender', $data->get('gender'), null, 'gender');
-        $predicate = null;
-        $pred_string = null;
-        $titlesMV = new titlesMicroView();
-        foreach ($data->get('relations')->data as $relation) {
-            if ($relation['predicate'] !== $predicate) {
-                $this->echoRelation($predicate, $pred_string);
-                $predicate = $relation['predicate'];
-                $pred_string = null;
+            <?php
+            echo $this->descriptionElement('Note', $data->get('note'), null, 'note'),
+            $this->descriptionElement('Usage area', $data->get('usage_area'), $data->get('usage_area_note'), 'place'),
+            $this->descriptionElement('Usage period', $data->get('usage_period'), $data->get('usage_period_note'), 'period'),
+            $this->descriptionElement('Gender', $data->get('gender'), null, 'gender');
+            $predicate = null;
+            $pred_string = null;
+            $titlesMV = new titlesMicroView();
+            foreach ($data->get('relations')->data as $relation) {
+                if ($relation['predicate'] !== $predicate) {
+                    $this->echoRelation($predicate, $pred_string);
+                    $predicate = $relation['predicate'];
+                    $pred_string = null;
+                }
+                $pred_string .= (empty($pred_string) ? null : ', ' ) . $titlesMV->render($relation['title'], $relation['titles_id']);
             }
-            $pred_string .= (empty($pred_string) ? null : ', ' ) . $titlesMV->render($relation['title'], $relation['titles_id']);
-        }
-        $this->echoRelation($predicate, $pred_string);
+            $this->echoRelation($predicate, $pred_string);
 
-        $ref = $this->addReference('Ward and Fischer no.', $data->get('ward_fischer'));
-        $ref = $this->addReference('TLA no.', $data->get('tla'), \PNM\ExternalLinks::TLA, $ref);
-        $ref = $this->addReference('Hannig no.', $data->get('hannig'), null, $ref);
-        $ref = $this->addReference('Taylor no.', $data->get('taylor'), null, $ref);
-        $ref = $this->addReference('Ayedi no.', $data->get('ayedi'), null, $ref);
-        echo( $this->descriptionElement('References', $ref));
-        echo $this->descriptionElement('Bibliography', $this->renderBiblio($data->get('bibliography')), null, 'biblio-ref');
-        //  ['titles_id', 'title', 'gender', 'count_attestations', 'usage_period', 'usage_area', 'usage_period_note', 'usage_area_note', 'note', 'ward_fischer', 'hannig', 'tla', 'translation_en', 'translation_de']
-        ?>
+            $ref = $this->addReference('Ward and Fischer no.', $data->get('ward_fischer'));
+            $ref = $this->addReference('TLA no.', $data->get('tla'), \PNM\ExternalLinks::TLA, $ref);
+            $ref = $this->addReference('Hannig no.', $data->get('hannig'), null, $ref);
+            $ref = $this->addReference('Taylor no.', $data->get('taylor'), null, $ref);
+            $ref = $this->addReference('Ayedi no.', $data->get('ayedi'), null, $ref);
+            echo( $this->descriptionElement('References', $ref));
+            echo $this->descriptionElement('Bibliography', $this->renderBiblio($data->get('bibliography')), null, 'biblio-ref');
+            //  ['titles_id', 'title', 'gender', 'count_attestations', 'usage_period', 'usage_area', 'usage_period_note', 'usage_area_note', 'note', 'ward_fischer', 'hannig', 'tla', 'translation_en', 'translation_de']
+            ?>
         </dl>
         <h2 id="attestations">Attestations</h2>
         <form action="<?= Request::makeURL('title', Request::get('id')) ?>" method="get" onreset="MK.removeAllFilters()">
@@ -84,7 +86,7 @@ class titleView extends View {
                     any
                 </label>
                 in the region
-        <?= (new TextInput('place', 'Region', 'Enter the region', 'region or locality', 'places', true))->render() ?>
+                <?= (new TextInput('place', 'Region', 'Enter the region', 'region or locality', 'places', true))->render() ?>
             </p>
             <p>
                 <span id="period-label">Chronological filter:</span>
@@ -109,7 +111,7 @@ class titleView extends View {
                     not earlier than
                 </label>
                 the period
-        <?= (new TextInput('period', 'Period', 'Enter the period', 'period or reign', 'periods', true))->render() ?>
+                <?= (new TextInput('period', 'Period', 'Enter the period', 'period or reign', 'periods', true))->render() ?>
             </p>
             <button type="submit" class="submit">
                 Filter

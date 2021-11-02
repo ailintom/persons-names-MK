@@ -8,11 +8,9 @@ namespace PNM\views;
 
 use \PNM\Request;
 
-class typeView extends View
-{
+class typeView extends View {
 
-    public function echoRender(&$data)
-    {
+    public function echoRender(&$data) {
         (new HeadView())->render(HeadView::HEADERSLIM, $data->get('title'));
         ?>
         <p><span class="note"><?= ($data->get('category') == 'formal' ? 'Formal name pattern' : 'Semantic name class') ?></span></p>
@@ -25,7 +23,9 @@ class typeView extends View
                 $this->renderChildren($data->get('subtypes')->data[0], 0);
                 echo('</dd>');
             }
-            echo( $this->descriptionElement('Attestations', '<a href="' . Request::makeURL('people') . '?A' . ($data->get('category') == 'formal' ? 'form' : 'sem' ) . '_type' . '=' . urlencode($data->get('title')) . '"> Display all people with names belonging to this type and its sub-types (attestation count: '.$data->get('attestations_count') . ')</a>'));
+            echo( $this->descriptionElement('Attestations', '<a href="' . Request::makeURL('people') . '?A' . ($data->get('category') == 'formal' ? 'form' : 'sem' ) . '_type' . '=' . urlencode($data->get('title')) . '"> Display all people with names belonging to this type and its sub-types (attestation count: ' . $data->get('attestations_count') . ')</a>'));
+            echo ( $this->descriptionElement('Usage area', $data->get('usage_area'), $data->get('usage_area_note'), 'place'));
+            echo ( $this->descriptionElement('Usage period', $data->get('usage_period'), $data->get('usage_period_note'), 'period'));
             echo $this->descriptionElement('Note', $data->get('note'), null, 'note');
             echo $this->descriptionElement('Bibliography', $this->renderBiblio($data->get('bibliography')), null, 'biblio-ref');
             //renderURL
@@ -38,8 +38,7 @@ class typeView extends View
         }
     }
 
-    protected function superordinate($data)
-    {
+    protected function superordinate($data) {
         if (empty($data)) {
             return null;
         }
@@ -51,4 +50,5 @@ class typeView extends View
         $res .= str_repeat('</li></ul>', count($data));
         return $res;
     }
+
 }

@@ -44,12 +44,12 @@ class inscriptionView extends View {
         if (count($objObjects->data) > 1) {
             echo '<h2>Objects</h2><ul class="attestations">';
             foreach ($objObjects->data as $objObject) {
-                echo '<li><h4>' . $objObject['title'] . '</h4>';
+                echo '<li><h4 id="object' . \PNM\ID::shorten($objObject['objects_id']) . '">' . $objObject['title'] . '</h4>';
                 $this->renderObjects($objObject);
             }
             echo '</ul>';
         } else {
-            echo '<h2>Object</h2>';
+            echo '<h2 id="object' . \PNM\ID::shorten($objObjects->data[0]['objects_id']) . '">Object</h2>';
             //print_r($objObjects);
             $this->renderObjects($objObjects->data[0]);
         }
@@ -163,28 +163,6 @@ class inscriptionView extends View {
     }
 
     /*
-     * renders the size data
-     */
-
-    private function size(&$data) {
-        // 'length', 'height', 'width', 'thickness',
-        $length = $data['length'];
-        if (empty($length)) {
-            $length = $data['height'];
-        }
-        $width = $data['width'];
-        if (empty($length) & !empty($width)) {
-            $length = $width;
-            $width = null;
-        }
-        $thickness = $data['thickness'];
-        $thicknessProcessed = (empty($thickness) ? null : '×' . $thickness);
-        if (!empty($length)) {
-            return $length . (empty($width) ? null : '×' . $width . $thicknessProcessed) . ' mm';
-        }
-    }
-
-    /*
      * Renders objects associated with a particular inscription
      */
 
@@ -200,7 +178,7 @@ class inscriptionView extends View {
         echo $this->descriptionElement('Type', $this->renderObjectType($data['object_type']), null, 'type');
         echo $this->descriptionElement('Subtype', $data['object_subtype'], null, 'type');
         echo $this->descriptionElement('Material', $data['material'], null, 'type');
-        echo $this->descriptionElement('Size', $this->size($data), null, 'type');
+        echo $this->descriptionElement('Size', $this->size($data['length'], $data['height'], $data['width'], $data['thickness']), null, 'type');
         echo $this->descriptionElement('Provenance', $placesMV->render($data['provenance']), $data['provenance_note'], 'place');
         if (!empty($data['find_groups_id'])) {
             echo $this->descriptionElement('Find group', \PNM\Note::processID($data['find_groups_id']), null, 'find_group');
@@ -212,86 +190,11 @@ class inscriptionView extends View {
         }
         //inscriptions
         if (array_key_exists('inscriptions', $data)) {
-            echo $this->descriptionElement('Other inscriptions', $this->renderOtherInscriptions($data['inscriptions']), null, 'type');
+            echo $this->descriptionElement('Other inscriptions', $this->renderInscriptions($data['inscriptions']), null, 'type');
         }
         echo $this->descriptionElement('Bibliography', $this->renderBiblio($data['bibliography']));
     }
 
-    /*
-     * Renders inscriptions associated with a particular object
-     */
 
-    private function renderOtherInscriptions($data) {
-        return implode(", ", array_map(array($this, 'renderSingleInscription'), $data->data));
-    }
-
-    /*
-     * Renders a single workshop; used in the previous function
-     */
-
-    private function renderSingleInscription($Inscr) {
-        $insMV = new inscriptionsMicroView();
-        return $insMV->render($Inscr['title'], $Inscr['inscriptions_id']);
-    }
-
-    /*
-     * Renders workshops associated with a particular object
-     */
-
-    private function renderWorkshop($data) {
-        return implode(", ", array_map(array($this, 'renderSingleWorkshop'), $data->data));
-    }
-
-    /*
-     * Renders a single workshop; used in the previous function
-     */
-
-    private function renderSingleWorkshop($Wk) {
-        $wkMV = new workshopsMicroView();
-        return $wkMV->render($Wk['title'], $Wk['workshops_id']) . ' (' . $Wk['status'] . (empty($Wk['note']) ? null : ', ' . $Wk['note']) . ')';
-    }
-
-    /*
-     * Renders inventory numbers of a certain type
-     */
-
-    protected function renderInvNos($data, $isMain = false) {
-        if (empty($data->data)) {
-            return null;
-        }
-        $sortedData = $data->data;
-        usort($sortedData, function ($a, $b) {
-            return strnatcasecmp($a['title'], $b['title']) == 0 ? strnatcasecmp($a['inv_no'], $b['inv_no']) : strnatcasecmp($a['title'], $b['title']);
-        });
-        $title = null;
-        $id = null;
-        $invs = null;
-        $res = null;
-        $concat = ($isMain ? '+' : ', '); //if several main inv_nos are present, they refer to separate parts of the object listed as a+b+c; otherwise inv_nos are treated as alternative numbers of the same object
-        $colView = new collectionsMicroView();
-        $invView = new inv_nosMicroView();
-        foreach ($sortedData as $row) {
-            if ($title !== $row['title']) {
-                $res .= $this->renderSingleInvNo($colView, $res, $concat, $invs, $title, $id);
-                $title = $row['title'];
-                $id = $row['collections_id'];
-                $invs = $invView->render($row['inv_no']);
-            } else {
-                $invs .= (empty($invs) ? null : $concat) . $invView->render($row['inv_no']);
-            }
-        }
-        $res .= $this->renderSingleInvNo($colView, $res, $concat, $invs, $title, $id);
-        return $res;
-    }
-
-    /*
-     * Renders a single inv_no; is used in the previous function
-     */
-
-    protected function renderSingleInvNo(&$colView, $res, $concat, $invs, $title, $id) {
-        if (!empty($invs)) {
-            return (empty($res) ? null : $concat) . $colView->render($title, $id) . ' ' . $invs;
-        }
-    }
 
 }

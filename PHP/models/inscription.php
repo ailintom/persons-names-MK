@@ -2,7 +2,7 @@
 
 /*
  * Description of inscription
- * A model used to load an inscribed object and child records from other tables
+ * A model used to load an inscription and child records from other tables
  */
 
 namespace PNM\models;
@@ -22,7 +22,7 @@ class inscription extends EntryModel {
 //'topbib_id', 'object_type', 'object_subtype', 'material', 'length', 'height', 'width', 'thickness', 'find_groups_id', 'provenance', 'provenance_note', 
     protected function parse() {
 
-        $this->parseNote(['provenance_note', 'installation_place_note', 'origin_note', 'production_place_note', 'dating_note', 'note']);
+        $this->parseNote(['origin_note', 'dating_note', 'note']);
         //inv_nos
         /* $mainRule = new Rule('inscriptions_id', 'exact', $this->getID(), 'i');
           $filter = new Filter([$mainRule, new Rule('status', 'exact', 'main', 's')]);

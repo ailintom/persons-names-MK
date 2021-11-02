@@ -87,6 +87,19 @@ DROP COLUMN `production_place_note`;
 
 OPTIMIZE TABLE `inscriptions`;
 
+ALTER TABLE `name_types` ADD COLUMN `usage_area` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'The `place_name` of the record in the table `places` corresponding to the region where the name type was predominantly used' AFTER `category`;
+ALTER TABLE `name_types` ADD COLUMN `usage_area_sort` int(11) DEFAULT NULL COMMENT 'The `latitude` of the record in the table `places` corresponding to the `usage_area`' AFTER `usage_area`;
+ALTER TABLE `name_types` ADD COLUMN `usage_area_note` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Explanatory notes and bibliographic references to the `usage_area`' AFTER `usage_area_sort`;
+ALTER TABLE `name_types` ADD COLUMN `usage_period` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'The `item_name` of the period when the name type was predominantly used in the dating thesaurus (thesaurus 5), *loosely based on a subset of the [THOT Dates and dating systems thesaurus](http://thot.philo.ulg.ac.be/concept/thot-114)*' AFTER `usage_area_note`;
+ALTER TABLE `name_types` ADD COLUMN `usage_period_sort` int(11) DEFAULT NULL COMMENT 'The sort value of the period to which the name type can be dated ' AFTER `usage_period`;
+ALTER TABLE `name_types` ADD COLUMN `usage_period_note` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Explanatory notes and bibliographic references to the `usage_period`' AFTER `usage_period_sort`;
+ALTER TABLE `name_types` 
+ADD KEY `usage_area_idx` (`usage_area`),
+ADD KEY `usage_area_sort_idx` (`usage_area_sort`),
+ADD KEY `usage_period_idx` (`usage_period`),
+ADD KEY `usage_period_sort_idx` (`usage_period_sort`);
+OPTIMIZE TABLE `name_types`;
+
 ALTER TABLE `inscriptions_workshops_xref`
 COMMENT 'An associative table for linking workshops to objects (assuming that contradictory opinions can be expressed in scholarly literature).',
 DROP FOREIGN KEY `inscriptions_workshops_xref_inscriptions`,
@@ -128,6 +141,30 @@ ALTER TABLE `attestations` ADD COLUMN `epithet` varchar(191) COLLATE utf8mb4_uni
 ALTER TABLE `attestations` ADD COLUMN `representation` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Whether the person is represented by a human figure' AFTER `epithet`;
 ALTER TABLE `spellings_attestations_xref` ADD COLUMN `classifier` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Gardiner codes of classifier(s) standing after the name in the inscription' AFTER `spellings_id`;
 ALTER TABLE `spellings_attestations_xref` ADD COLUMN `epithet_mdc` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'An epithet (Beiwort) characterizing the age or the gender of the person, which stands after the name, in JSesh-compatible MdC codes' AFTER `classifier`;
+
+DROP TRIGGER IF EXISTS `name_types_BEFORE_INSERT`;
+
+DELIMITER //
+CREATE TRIGGER `name_types_BEFORE_INSERT` BEFORE INSERT ON `name_types` FOR EACH ROW BEGIN
+IF  IFNULL(  NEW.name_types_id, 0) = 0 THEN 
+	SET NEW.name_types_id = make_id(table_id_from_name("name_types"),(SELECT MAX(record_id_from_id(name_types_id)) + 1 FROM name_types));
+END IF;
+SET NEW.usage_area_sort = (SELECT latitude from places where place_name = NEW.usage_area);
+SET NEW.usage_period_sort = (SELECT sort_date_range_start+sort_date_range_end from thesauri where item_name = NEW.usage_period);
+SET NEW.title_sort = sort_mixed(NEW.title_raw);
+SET NEW.title = REPLACE(NEW.title_raw, "#", "");
+END//
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS `name_types_before_update`;
+DELIMITER //
+CREATE TRIGGER `name_types_before_update` BEFORE UPDATE ON `name_types` FOR EACH ROW BEGIN
+SET NEW.title_sort = sort_mixed(NEW.title_raw);
+SET NEW.title = REPLACE(NEW.title_raw, "#", "");
+SET NEW.usage_area_sort = (SELECT latitude from places where place_name = NEW.usage_area);
+SET NEW.usage_period_sort = (SELECT sort_date_range_start+sort_date_range_end from thesauri where item_name = NEW.usage_period);
+END//
+DELIMITER ;
 
 DROP FUNCTION IF EXISTS `table_id_from_name`;
 

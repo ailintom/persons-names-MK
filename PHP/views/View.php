@@ -369,7 +369,7 @@ class View {
         $res = "";
         $byte_array = unpack('C*', $vMDC);
         foreach ($byte_array as $c) {
-            $res .=  sprintf("%'02s",(base_convert($c, 10, 32)));
+            $res .= sprintf("%'02s", (base_convert($c, 10, 32)));
         }
         return $res . ".png";
     }
@@ -392,6 +392,104 @@ EOF;
         }
         $mdc_arr = explode(" and ", $mdc);
         return implode(" and ", array_map(array($this, 'make_mdc_url'), $mdc_arr));
+    }
+
+    /*
+     * Renders inscriptions associated with a particular object
+     */
+
+    protected function renderInscriptions($data) {
+        return implode(", ", array_map(array($this, 'renderSingleInscription'), $data->data));
+    }
+
+    /*
+     * Renders a single inscription; used in the previous function
+     */
+
+    protected function renderSingleInscription($Inscr) {
+        $insMV = new inscriptionsMicroView();
+        return $insMV->render($Inscr['title'], $Inscr['inscriptions_id']);
+    }
+
+    /*
+     * Renders workshops associated with a particular object
+     */
+
+    protected function renderWorkshop($data) {
+        return implode(", ", array_map(array($this, 'renderSingleWorkshop'), $data->data));
+    }
+
+    /*
+     * Renders a single workshop; used in the previous function
+     */
+
+    protected function renderSingleWorkshop($Wk) {
+        $wkMV = new workshopsMicroView();
+        return $wkMV->render($Wk['title'], $Wk['workshops_id']) . ' (' . $Wk['status'] . (empty($Wk['note']) ? null : ', ' . $Wk['note']) . ')';
+    }
+
+    /*
+     * Renders inventory numbers of a certain type
+     */
+
+    protected function renderInvNos($data, $isMain = false) {
+        if (empty($data->data)) {
+            return null;
+        }
+        $sortedData = $data->data;
+        usort($sortedData, function ($a, $b) {
+            return strnatcasecmp($a['title'], $b['title']) == 0 ? strnatcasecmp($a['inv_no'], $b['inv_no']) : strnatcasecmp($a['title'], $b['title']);
+        });
+        $title = null;
+        $id = null;
+        $invs = null;
+        $res = null;
+        $concat = ($isMain ? '+' : ', '); //if several main inv_nos are present, they refer to separate parts of the object listed as a+b+c; otherwise inv_nos are treated as alternative numbers of the same object
+        $colView = new collectionsMicroView();
+        $invView = new inv_nosMicroView();
+        foreach ($sortedData as $row) {
+            if ($title !== $row['title']) {
+                $res .= $this->renderSingleInvNo($colView, $res, $concat, $invs, $title, $id);
+                $title = $row['title'];
+                $id = $row['collections_id'];
+                $invs = $invView->render($row['inv_no']);
+            } else {
+                $invs .= (empty($invs) ? null : $concat) . $invView->render($row['inv_no']);
+            }
+        }
+        $res .= $this->renderSingleInvNo($colView, $res, $concat, $invs, $title, $id);
+        return $res;
+    }
+
+    /*
+     * Renders a single inv_no; is used in the previous function
+     */
+
+    protected function renderSingleInvNo(&$colView, $res, $concat, $invs, $title, $id) {
+        if (!empty($invs)) {
+            return (empty($res) ? null : $concat) . $colView->render($title, $id) . ' ' . $invs;
+        }
+    }
+
+    /*
+     * renders the size data
+     */
+
+    protected function size($length_inp, $height, $width_inp, $thickness_inp) {
+        $length = $length_inp;
+        $width = $width_inp;
+        if (empty($length)) {
+            $length = $height;
+        }
+        if (empty($length) & !empty($width)) {
+            $length = $width;
+            $width = null;
+        }
+
+        $thickness = (empty($thickness_inp) ? null : '×' . $thickness_inp);
+        if (!empty($length)) {
+            return $length . (empty($width) ? null : '×' . $width . $thickness) . ' mm';
+        }
     }
 
 }
