@@ -2,7 +2,6 @@
 -- which is used starting from ver. 3. The SQL code changes the database structure;
 -- the data itself remains intact. 
 
-USE `www10000ver3`;
 
 CREATE TABLE IF NOT EXISTS `objects` (
   `objects_id` int(11) NOT NULL COMMENT 'Unique record ID, primary key	',
@@ -84,6 +83,7 @@ DROP COLUMN `installation_place_note`,
 DROP COLUMN `production_place`,
 DROP COLUMN `production_place_sort`,
 DROP COLUMN `production_place_note`;
+ALTER TABLE `inscriptions` ADD COLUMN `tla` int(11) DEFAULT NULL COMMENT 'The reference to the text in the Thesaurus Linguae Aegyptiae (http://aaew.bbaw.de/tla/servlet/TlaLogin) database' AFTER `tmtexts_id`;
 
 OPTIMIZE TABLE `inscriptions`;
 

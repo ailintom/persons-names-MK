@@ -148,7 +148,8 @@ Each record in this table represents an Egyptian inscription attested on one or 
 | date_changed| DATE | Date when the last change to the record was published |
 | title  | VARCHAR(191) | The title under which the inscription is referred to in the database. Usually the same as the object's title.  |
 | title_sort |VARCHAR(191) | `Title` converted for natural sort|
-| tmtexts_id | INT | The reference to the Trismegistos Texts database |
+| tmtexts_id | INT | The reference to the text in the [Trismegistos Texts](https://www.trismegistos.org/tm/) database |
+| tla | INT | The reference to the text in the [Thesaurus Linguae Aegyptiae](http://aaew.bbaw.de/tla/servlet/TlaLogin) database |
 | text_content      | VARCHAR(191) | The `item_name` of the text content type in the text_content thesaurus (thesaurus 4), *based on a subset of the [THOT Text content thesaurus](http://thot.philo.ulg.ac.be/concept/thot-18634)* |
 | script            | VARCHAR(191) | The `item_name` of the script in the script thesaurus (thesaurus 12), *based on a subset of the [THOT Ancient Egyptian scripts thesaurus](http://thot.philo.ulg.ac.be/concept/thot-111)* |
 | origin            | VARCHAR(191) | The `place_name` of the record in the table `places` corresponding to the place where the person(s) named in the inscription should have lived |
