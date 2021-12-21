@@ -11,6 +11,12 @@ use \PNM\Request;
 
 class inscriptionView extends View {
 
+    const titleHead = '<th>Title</th>';
+    const nameHead = '<th>Name</th>';
+    const epithetHead = '<th>Epithet</th>';
+    const classifierHead = '<th><span title="Classifier">Cl.</span></th>';
+    const genderHead = '<th></th>';
+
     public function echoRender(&$data) {
         (new HeadView())->render(HeadView::HEADERSLIM, $data->get('title'));
         $placesMV = new placesMicroView();
@@ -38,6 +44,9 @@ class inscriptionView extends View {
 
         echo $this->descriptionElement('Owner', '');
         echo $this->descriptionElement('Note', $data->get('note'), null, 'note');
+        $ref = $this->addReference('Trismegistos Texts ID', $data->get('tmtexts_id'), \PNM\ExternalLinks::TRISMEGISTOS_TEXTS);
+        $ref = $this->addReference('TLA Texts ID', $data->get('tla'), \PNM\ExternalLinks::TLA_TEXTS, $ref);
+        echo( $this->descriptionElement('External links', $ref));
         echo $this->descriptionElement('Bibliography', $this->renderBiblio($data->get('bibliography')));
         echo '</dl>';
         $objObjects = $data->get('objects');
@@ -78,74 +87,73 @@ class inscriptionView extends View {
             $spellings = $Att['spellings']->getSpellings();
             $titles = $Att['titles']->data;
             $epithet = $Att['epithet'];
-            $classifier = '';
+            $attestationRender = [];
             $representation = $Att['representation'];
             $currentLoc .= '<table class="name-box"><tr><th></th>';
             //            
 //Render table data
-            $tabRow =  '<tr><td><span class="gender" title="' . self::genderTitle($Att['gender']) . '">' . $Att['gender'] . '</span></td>';
+            $renderGender = '<span class="gender" title="' . self::genderTitle($Att['gender']) . '">' . $Att['gender'] . '</span>';
+            $this->pushAttetastionElement($attestationRender, $renderGender, self::genderHead);
+          
             if (!empty($titles)) {
-                $tabRow .= '<td>';
+                $renderTitles = '';
+
                 $titleCount = 0;
                 foreach ($titles as $title) {
                     if ($titleCount++ > 0) {
-                        $tabRow .= '; ';
+                        $renderTitles .= '; ';
                     }
-                    $tabRow .= $titlesView->render($title['title'], $title['titles_id']);
+                    $renderTitles .= $titlesView->render($title['title'], $title['titles_id']);
                 }
-                $tabRow .= '</td>';
+                $this->pushAttetastionElement($attestationRender, $renderTitles, self::titleHead);
             }
             if (!empty($spellings) & !empty($spellings[0]['spellings'])) {
-                $tabRow .= '<td>';
+               
+                $nameRender = '';
                 $spellingCount = 0;
                 foreach ($spellings as $name) {
                     if ($spellingCount++ > 0) {
-                        $tabRow .= ' / ';
+                        $nameRender .= ' / ';
                     }
                     $spellingPerNameCount = 0;
                     foreach ($name['spellings'] as $spelling) {
                         if ($spellingPerNameCount > 0) {
-                            $tabRow .= ', ';
+                            $nameRender .= ', ';
                         }
-                        $tabRow .= '<span class="name">';
-                        $tabRow .= '<a href="' . Request::makeURL('name', [$name['personal_names_id'], $spelling['spellings_id']]) . '">';
+                        $nameRender .= '<span class="name">';
+                        $nameRender .= '<a href="' . Request::makeURL('name', [$name['personal_names_id'], $spelling['spellings_id']]) . '">';
                         if ($spellingPerNameCount++ == 0) {
-                            $tabRow .= $name['personal_name'] . ' ';
+                            $nameRender .= $name['personal_name'] . ' ';
                         }
-                        $tabRow .= $spellView->render($spelling['spelling'], $spelling['spellings_id'])
+                        $nameRender .= $spellView->render($spelling['spelling'], $spelling['spellings_id'])
                                 . '</a>';
+                        $nameRender .= $this->processAltReadings($spelling['alt_readings']);
+
+                        $nameRender .= '</span>';
+                        $curEpithet_mdc = $spelling['epithet_mdc'];
                         $curClassifier = $spelling['classifier'];
-                        if (!empty($curClassifier)) {
-                            $classifier .=  (!empty($classifier) ? ' / ': '') . $this->render_mdc($curClassifier);
+                        if (!empty($curEpithet_mdc) || !empty($curClassifier)) {
+                            if (!empty($nameRender)) {
+                                $this->pushAttetastionElement($attestationRender, $nameRender, self::nameHead);
+                            }
+                            $nameRender = '';
+                            $spellingCount = 0;
+                            $spellingPerNameCount = 0;
                         }
-                        $tabRow .= $this->processAltReadings($spelling['alt_readings']);
-                        $tabRow .= '</span>';
+                        if (!empty($curEpithet_mdc)) {
+                            $this->pushAttetastionElement($attestationRender, $this->render_mdc($curEpithet_mdc), self::epithetHead);
+                        }
+
+                        if (!empty($curClassifier)) {
+
+                            $this->pushAttetastionElement($attestationRender, $this->render_mdc($curClassifier), self::classifierHead);
+                        }
                     }
                 }
-                $tabRow .= '</td>';
+              
             }
-            if (!empty($epithet)) {
-                $tabRow .= '<td>' . $epithet . '</td>'; //if the attestation has associated epithets, display the epithet 
-            }
-             if (!empty($classifier)) {
-              $tabRow .= '<td>' . $classifier . (empty($representation) ? '' : ' (' . $representation . ')' ) . '</td>'; //if the attestation has associated classifier, display the classifier 
-              } 
-            $tabRow .= '</tr></table>';
-//            
-//Render table headings
-                        if (!empty($titles)) {
-                $currentLoc .= '<th>Title</th>'; //if the attestation has associated titles, display the title heading
-            }
-            if (!empty($spellings) & !empty($spellings[0]['spellings'])) {
-                $currentLoc .= '<th>Name</th>'; //if the attestation has associated titles, display the name heading
-            }
-            if (!empty($epithet)) {
-                $currentLoc .= '<th>Epithet</th>'; //if the attestation has associated epithets, display the epithet heading
-            }
-             if (!empty($classifier)) {
-              $currentLoc .= '<th>Classifier</th>'; //if the attestation has associated epithets, display the epithet heading
-              } 
-            $currentLoc .= '</tr>' . $tabRow;
+            
+            $currentLoc .= $this->attestationTable($attestationRender);
             //spellings
             if (!empty($Att['bonds']->data)) {
                 $currentLoc .= $this->renderBonds($Att['bonds']->data, $attView);
@@ -154,6 +162,21 @@ class inscriptionView extends View {
         }
         echo $this->writeLoc($loc, $currentLoc);
         echo '</ul>';
+    }
+
+    protected function pushAttetastionElement(&$attestationRender, $element, $type) {
+        array_push($attestationRender, [$type, '<td>' . $element . '</td>']);
+    }
+
+    protected function attestationTable($attestationRender) {
+
+        $head = '';
+        $row = '';
+        foreach ($attestationRender as $el) {
+            $head .= $el[0];
+            $row .= $el[1];
+        }
+        return '<table class="name-box"><tr>' . $head . '</tr><tr>' . $row . '</tr></table>';
     }
 
     protected function writeLoc($loc, $currentLoc) {
@@ -194,7 +217,5 @@ class inscriptionView extends View {
         }
         echo $this->descriptionElement('Bibliography', $this->renderBiblio($data['bibliography']));
     }
-
-
 
 }

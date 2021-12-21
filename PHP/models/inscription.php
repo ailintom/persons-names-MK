@@ -14,7 +14,7 @@ class inscription extends EntryModel {
     protected $idField = 'inscriptions_id';
 
     protected function initFieldNames() {
-        $this->field_names = new FieldList(['inscriptions_id', 'title', 'text_content',
+        $this->field_names = new FieldList(['inscriptions_id', 'tmtexts_id', 'tla', 'title', 'text_content',
             'script', 'origin', 'origin_note',
             'dating', 'dating_note', 'last_king_id', 'note']);
     }
