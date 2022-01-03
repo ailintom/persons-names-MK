@@ -95,6 +95,7 @@ CALL name_types_temp_calc;
 CALL children_temp_calc;
 CALL siblings_temp_calc;
 CALL spouses_temp_calc;
+UPDATE `places` SET inscriptions_count_temp =  (SELECT COUNT(DISTINCT (inscriptions.inscriptions_id)) from  (objects INNER JOIN objects_inscriptions_xref ON objects.objects_id = objects_inscriptions_xref.objects_id) INNER JOIN inscriptions ON objects_inscriptions_xref.inscriptions_id = inscriptions.inscriptions_id WHERE objects.provenance=places.place_name OR objects.installation_place=places.place_name OR inscriptions.origin=places.place_name OR objects.production_place=places.place_name);
 ```
 
 Spellings rendered as png files should be put into the directory (Version number)\assets\spellings.

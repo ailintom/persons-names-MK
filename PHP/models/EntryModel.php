@@ -127,7 +127,7 @@ class EntryModel
     protected function setBiblio()
     {
         $filter = new Filter([new Rule('object_id', 'exact', $this->getID(), 'i')]);
-        $objbibliography = new EntryBibliography(null, 0, 0, $filter);
+        $objbibliography = new EntryBibliography(null, 0, 0, $filter, null, null, true);
 
         $this->data['bibliography'] = $objbibliography;
     }

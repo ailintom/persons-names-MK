@@ -24,7 +24,7 @@ class types extends ListModelTitleSort
         for ($i = 0; $i < $total; $i++) {
             $rules = [new Rule('parent_id', 'exact', $this->data[$i]['name_types_id'], 'i')];
             $filter = new Filter($rules);
-            $this->data[$i]['children'] = (new types(null, 0, 0, $filter))->data;
+            $this->data[$i]['children'] = (new types(null, 0, 0, $filter, null, null, true))->data;
         }
     }
 }

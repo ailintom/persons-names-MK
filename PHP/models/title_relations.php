@@ -16,7 +16,7 @@ class title_relations extends ListModel
         $this->field_names = new FieldList(['titles_id', 'title', 'predicate']);
     }
 
-    protected function makeSQL($sort, $start, $count)
+    protected function makeSQL($sort, $start, $count, $selectStatement = 'SELECT SQL_CALC_FOUND_ROWS ')
     {
         $sql1 = 'SELECT (object_id) as titles_id, title, predicate, title_sort, 0 as pred_sort'
                 . ' FROM title_relations INNER JOIN titles ON title_relations.object_id = titles.titles_id'
@@ -26,7 +26,7 @@ class title_relations extends ListModel
                 . 'WHEN "refers to" THEN 1 ELSE 0 END as pred_sort'
                 . ' FROM title_relations INNER JOIN titles ON title_relations.subject_id = titles.titles_id'
                 . ' WHERE object_id=? ';
-        $sqlres = "SELECT SQL_CALC_FOUND_ROWS * FROM (($sql1) UNION ($sql2)) as unibonds ORDER BY pred_sort, predicate, title_sort";
+        $sqlres = $selectStatement . "* FROM (($sql1) UNION ($sql2)) as unibonds ORDER BY pred_sort, predicate, title_sort";
         //echo ($sqlres);
         return $sqlres;
     }

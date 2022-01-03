@@ -16,8 +16,8 @@ class InscriptionWorkshops extends ListModelTitleSort
 
     protected function initFieldNames()
     {
-        $this->field_names = new FieldList(['inscriptions_workshops_xref.note', 'status',
-            'workshops.workshops_id', 'title'], ['note', 'status',
+        $this->field_names = new FieldList(['inscriptions_workshops_xref.note', '`status`',
+            'workshops.workshops_id', 'title'], ['note', '`status`',
             'workshops_id', 'title']);
     }
 }

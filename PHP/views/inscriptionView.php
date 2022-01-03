@@ -14,7 +14,7 @@ class inscriptionView extends View {
     const titleHead = '<th>Title</th>';
     const nameHead = '<th>Name</th>';
     const epithetHead = '<th>Epithet</th>';
-    const classifierHead = '<th><span title="Classifier">Cl.</span></th>';
+    const classifierHead = '<th><span title="Classifier">Class.</span></th>';
     const genderHead = '<th></th>';
 
     public function echoRender(&$data) {
@@ -94,7 +94,7 @@ class inscriptionView extends View {
 //Render table data
             $renderGender = '<span class="gender" title="' . self::genderTitle($Att['gender']) . '">' . $Att['gender'] . '</span>';
             $this->pushAttetastionElement($attestationRender, $renderGender, self::genderHead);
-          
+
             if (!empty($titles)) {
                 $renderTitles = '';
 
@@ -108,7 +108,7 @@ class inscriptionView extends View {
                 $this->pushAttetastionElement($attestationRender, $renderTitles, self::titleHead);
             }
             if (!empty($spellings) & !empty($spellings[0]['spellings'])) {
-               
+
                 $nameRender = '';
                 $spellingCount = 0;
                 foreach ($spellings as $name) {
@@ -150,9 +150,11 @@ class inscriptionView extends View {
                         }
                     }
                 }
-              
+                if (!empty($nameRender)) {
+                    $this->pushAttetastionElement($attestationRender, $nameRender, self::nameHead);
+                }
             }
-            
+
             $currentLoc .= $this->attestationTable($attestationRender);
             //spellings
             if (!empty($Att['bonds']->data)) {
@@ -162,7 +164,7 @@ class inscriptionView extends View {
         }
         echo $this->writeLoc($loc, $currentLoc);
         echo '</ul>';
-    }
+        }
 
     protected function pushAttetastionElement(&$attestationRender, $element, $type) {
         array_push($attestationRender, [$type, '<td>' . $element . '</td>']);

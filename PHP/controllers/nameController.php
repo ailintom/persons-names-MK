@@ -32,7 +32,7 @@ class nameController extends EntryController
             for ($j = 0; $j < $totalAtts; $j++) {
                 if ($objNameSpellings->data[$i]['attestations']->data[$j]['persons_count'] > 0) {
                     $rulesAttPersons = [new Rule('attestations_id', 'exact', $objNameSpellings->data[$i]['attestations']->data[$j]['attestations_id'], 'i'),
-                        new Rule('status', 'not', 'rejected', 's')];
+                        new Rule('`status`', 'not', 'rejected', 's')];
                     $filterAttPersons = new Filter($rulesAttPersons);
                     $objAttPersons = new AttestationPersons(null, 0, 0, $filterAttPersons);
                     foreach ($objAttPersons->data as $attPerson) {

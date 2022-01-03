@@ -28,9 +28,9 @@ class name extends EntryModel
     protected function loadChildren()
     {
         $filterTypes = new Filter([new Rule('personal_names_id', 'exact', $this->data['personal_names_id'], 'i')]);
-        $this->data['name_types'] = new NameTypes(null, 0, 0, $filterTypes);
+        $this->data['name_types'] = new NameTypes(null, 0, 0, $filterTypes, null, null, true);
         $filterAlt = new Filter([new Rule('alternative_readings.personal_names_id', 'exact', $this->data['personal_names_id'], 'i')]);
-        $this->data['alt_readings'] = new NameReadings(null, 0, 0, $filterAlt);
+        $this->data['alt_readings'] = new NameReadings(null, 0, 0, $filterAlt, null, null, true);
         //
     }
 }

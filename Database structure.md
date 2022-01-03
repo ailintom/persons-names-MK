@@ -240,6 +240,7 @@ Each record in this table represents the name of a place or a region associated 
 | tm_geoid          | INT   | The ID of the place in the Trismegistos Geo database; *example: [188](http://www.trismegistos.org/place/188)* |
 | pleiades_id       | INT   | The ID of the place in [Pleiades](https://pleiades.stoa.org); *example: [688038](https://pleiades.stoa.org/places/688038)* |
 | artefacts_url     | VARCHAR(255) | The URL of the site page in the [Artefacts of Excavation](http://egyptartefacts.griffith.ox.ac.uk) database; *example: <http://egyptartefacts.griffith.ox.ac.uk/node/1149>* |
+| inscriptions_count_temp | INT   | Temporary field to store the number of associated inscriptions for display in the web interface |
 
 ### inv_nos *(table_id: 25)*  
 Each record in this table represents an inventory number of an inscribed object in a museum or other modern collection.  

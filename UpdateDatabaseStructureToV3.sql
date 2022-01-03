@@ -59,7 +59,6 @@ CREATE TABLE IF NOT EXISTS `objects_inscriptions_xref` (
 INSERT INTO `objects` ( `objects_id`, `date_created`, `date_changed`, `title`, `title_sort`, `topbib_id`, `object_type`,`object_subtype`,`material`,`length`,`height`,`width`,`thickness`,`find_groups_id`,`provenance`,`provenance_sort`,`provenance_note`,`installation_place`,`installation_place_sort`,`installation_place_note`,`production_place`,`production_place_sort`,`production_place_note`)
 SELECT make_id(10,record_id_from_id(`inscriptions_id`)), `date_created`, `date_changed`, `title`, `title_sort`, `topbib_id`, `object_type`,`object_subtype`,`material`,`length`,`height`,`width`,`thickness`,`find_groups_id`,`provenance`,`provenance_sort`,`provenance_note`,`installation_place`,`installation_place_sort`,`installation_place_note`,`production_place`,`production_place_sort`,`production_place_note`
 from inscriptions;
-
 INSERT INTO `objects_inscriptions_xref` ( `objects_inscriptions_xref_id`, `objects_id`, `inscriptions_id`)
 SELECT make_id(12,record_id_from_id(`inscriptions_id`)), make_id(10,record_id_from_id(`inscriptions_id`)), inscriptions_id
 from inscriptions;
@@ -141,6 +140,24 @@ ALTER TABLE `attestations` ADD COLUMN `epithet` varchar(191) COLLATE utf8mb4_uni
 ALTER TABLE `attestations` ADD COLUMN `representation` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Whether the person is represented by a human figure' AFTER `epithet`;
 ALTER TABLE `spellings_attestations_xref` ADD COLUMN `classifier` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Gardiner codes of classifier(s) standing after the name in the inscription' AFTER `spellings_id`;
 ALTER TABLE `spellings_attestations_xref` ADD COLUMN `epithet_mdc` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'An epithet (Beiwort) characterizing the age or the gender of the person, which stands after the name, in JSesh-compatible MdC codes' AFTER `classifier`;
+
+ALTER TABLE `places` ADD COLUMN `inscriptions_count_temp` INT(11) DEFAULT 0 COMMENT 'Temporary field to store the number of associated inscriptions for display in the web interface' AFTER `artefacts_url`;
+OPTIMIZE TABLE `places`;
+
+UPDATE `places` SET inscriptions_count_temp =  (SELECT COUNT(DISTINCT (inscriptions.inscriptions_id)) from  (objects INNER JOIN objects_inscriptions_xref ON objects.objects_id = objects_inscriptions_xref.objects_id) INNER JOIN inscriptions ON objects_inscriptions_xref.inscriptions_id = inscriptions.inscriptions_id WHERE objects.provenance=places.place_name OR objects.installation_place=places.place_name OR inscriptions.origin=places.place_name OR objects.production_place=places.place_name);
+
+ALTER TABLE `biblio_refs` ADD KEY `object_id_idx` (`object_id`),
+ ADD KEY `source_url_idx` (`source_url`),
+ ADD KEY `source_title_idx` (`source_title`);
+OPTIMIZE TABLE `biblio_refs`;
+
+ALTER TABLE `titles_att` ADD KEY `sequence_number_idx` (`sequence_number`);
+OPTIMIZE TABLE `titles_att`;
+
+ALTER TABLE `spellings` ADD KEY `personal_names_id_idx` (`personal_names_id`);
+OPTIMIZE TABLE `spellings`;
+
+UPDATE `bonds` SET `predicate` = 'ChildOf' WHERE `predicate` = 'GenericChildOf';
 
 DROP TRIGGER IF EXISTS `name_types_BEFORE_INSERT`;
 

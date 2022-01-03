@@ -28,19 +28,19 @@ class person extends EntryModel
     protected function loadChildren()
     {
         $filterPersonBonds = new Filter([new Rule('persons_id', 'exact', $this->getID(), 'i')]);
-        $objPersonBonds = new PersonBonds(null, 0, 0, $filterPersonBonds);
+        $objPersonBonds = new PersonBonds(null, 0, 0, $filterPersonBonds, null, null, true);
         $this->data['bonds'] = $objPersonBonds;
         $filterAtt = new Filter([new Rule('persons_id', 'exact', $this->getID(), 'i')]);
-        $objAtt = new PersonAttestations(null, 0, 0, $filterAtt);
+        $objAtt = new PersonAttestations(null, 0, 0, $filterAtt, null, null, true);
         $total = count($objAtt->data);
         for ($i = 0; $i < $total; $i++) {
             $filter = new Filter([new Rule('attestations_id', 'exact', $objAtt->data[$i]['attestations_id'], 'i')]);
-            $objSpellings = new AttestationSpellings(null, 0, 0, $filter);
+            $objSpellings = new AttestationSpellings(null, 0, 0, $filter, null, null, true);
             $objAtt->data[$i]['spellings'] = $objSpellings;
-            $objTitles = new AttestationTitles(null, 0, 0, $filter);
+            $objTitles = new AttestationTitles(null, 0, 0, $filter, null, null, true);
             $objAtt->data[$i]['titles'] = $objTitles;
             $filterBonds = new Filter([new Rule('attestations_id', 'exact', $objAtt->data[$i]['attestations_id'])]);
-            $objBonds = new bonds(null, 0, 0, $filterBonds);
+            $objBonds = new bonds(null, 0, 0, $filterBonds, null, null, true);
             $objAtt->data[$i]['bonds'] = $objBonds;
         }
         $this->data['attestations'] = $objAtt;

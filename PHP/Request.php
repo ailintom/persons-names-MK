@@ -39,7 +39,7 @@ class Request {
         'match-region' => 'attested', 'match' => 'inexact'];
     const CONTROLLERS = ['bibliography', 'collection', 'collections', 'criterion', 'group',
         'info', 'inscription', 'inscriptions', 'name', 'names', 'people', 'person', 'place', 'places',
-        'publication', 'title', 'titles', 'type', 'types', 'workshop', 'thesaurus', 'object','id'];
+        'publication', 'title', 'titles', 'type', 'types', 'workshop', 'thesaurus', 'object', 'id'];
 
     private static $data = [];
     public static $noDatalist;
@@ -109,6 +109,16 @@ class Request {
 
     public static function maxVer() {
         return Config::VERSIONS[count(Config::VERSIONS) - 1][0];
+    }
+
+    /*
+     * returns the date of the given database version in the MySQL date literal format
+     */
+
+    public static function verDate($version) {
+        $date = array_column(Config::VERSIONS, 1)[array_search($version, array_column(Config::VERSIONS, 0))];
+        $myDate = substr($date, 6) . "-" . substr($date, 3, 2) . "-" . substr($date, 0, 2);
+        return $myDate;
     }
 
     /*

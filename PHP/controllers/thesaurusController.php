@@ -36,7 +36,7 @@ class thesaurusController extends EntryController
         $this->record->data['count_nested'] = $totalNested;
         $rules_items = [new Rule('thesaurus', 'exact', $this->record->get('thesauri_id'), 'i')];
         $filter_items = new Filter($rules_items);
-        $obj_items = new \PNM\models\thesauri(Request::get('sort'), 0, 300, $filter_items);
+        $obj_items = new \PNM\models\thesauri(Request::get('sort'), 0, 1000, $filter_items, null, null, true);
         $this->record->data['items'] = $obj_items;
         $totalItems= count($obj_items->data);
         $this->record->data['count_items'] = $totalItems;

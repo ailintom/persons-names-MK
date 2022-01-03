@@ -24,6 +24,6 @@ class typeController extends EntryController
         $this->record->data['names'] = new \PNM\models\TypeNames(Request::get('sort'), (Request::get('start') ?: 0), Config::ROWS_ON_PAGE, $filterNames);
         $rules = [new Rule('name_types_id', 'exact', $this->record->get('name_types_id'), 'i')];
         $filter = new Filter($rules);
-        $this->record->data['subtypes'] = new \PNM\models\types('name_types_id ASC', 0, 0, $filter);
+        $this->record->data['subtypes'] = new \PNM\models\types('name_types_id ASC', 0, 0, $filter, null, null, true);
     }
 }

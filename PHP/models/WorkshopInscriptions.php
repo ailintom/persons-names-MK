@@ -16,8 +16,8 @@ class WorkshopInscriptions extends ListModel
 
     protected function initFieldNames()
     {
-        $this->field_names = new FieldList(['inscriptions_workshops_xref.note', 'status', 'inscriptions.inscriptions_id', 'object_type', 'inscriptions.title', 'material', ' GREATEST(IFNULL(length,0), IFNULL(height,0), IFNULL(width,0), IFNULL(thickness,0))', 'text_content', 'dating', 'inst_prov_temp', 'orig_prod_temp',
-            'SELECT CONCAT_WS(" ", IF(CHAR_LENGTH(title_string)>IF(CHAR_LENGTH(personal_name)<14, 31 - CHAR_LENGTH(personal_name), 17), CONCAT("...", RIGHT(title_string, IF(CHAR_LENGTH(personal_name)<14, 31 - CHAR_LENGTH(personal_name), 17))), title_string), personal_name) from attestations WHERE status = "owner" and attestations.inscriptions_id  = inscriptions.inscriptions_id LIMIT 1'], ['note', 'status', 'inscriptions_id', 'object_type', 'title', 'material', 'size', 'text_content', 'dating', 'inst_prov_temp', 'orig_prod_temp', 'owner']);
+        $this->field_names = new FieldList(['inscriptions_workshops_xref.note', '`status`', 'inscriptions.inscriptions_id', 'object_type', 'inscriptions.title', 'material', ' GREATEST(IFNULL(length,0), IFNULL(height,0), IFNULL(width,0), IFNULL(thickness,0))', 'text_content', 'dating', 'inst_prov_temp', 'orig_prod_temp',
+            'SELECT CONCAT_WS(" ", IF(CHAR_LENGTH(title_string)>IF(CHAR_LENGTH(personal_name)<14, 31 - CHAR_LENGTH(personal_name), 17), CONCAT("...", RIGHT(title_string, IF(CHAR_LENGTH(personal_name)<14, 31 - CHAR_LENGTH(personal_name), 17))), title_string), personal_name) from attestations WHERE `status` = "owner" and attestations.inscriptions_id  = inscriptions.inscriptions_id LIMIT 1'], ['note', '`status`', 'inscriptions_id', 'object_type', 'title', 'material', 'size', 'text_content', 'dating', 'inst_prov_temp', 'orig_prod_temp', 'owner']);
     }
 
     protected function getSortField($sortField = null)
@@ -31,7 +31,7 @@ class WorkshopInscriptions extends ListModel
                     . '"Scarab, seal, scaraboid, intaglio and similar objects", "Shabti", "Sculpture in the round", "Stela", "Offering table",'
                     . '"Tomb", "Tomb equipment")',
                     'inst_prov_temp_sort', 'orig_prod_temp_sort',
-                    '(SELECT personal_name_sort FROM attestations WHERE status = "owner" and attestations.inscriptions_id  = inscriptions.inscriptions_id LIMIT 1)', ' GREATEST(IFNULL(length,0), IFNULL(height,0), IFNULL(width,0), IFNULL(thickness,0))']);
+                    '(SELECT personal_name_sort FROM attestations WHERE `status` = "owner" and attestations.inscriptions_id  = inscriptions.inscriptions_id LIMIT 1)', ' GREATEST(IFNULL(length,0), IFNULL(height,0), IFNULL(width,0), IFNULL(thickness,0))']);
     }
     /*       case 'Scarab, seal, scaraboid, intaglio and similar objects':
       return 'Seal/sealing';

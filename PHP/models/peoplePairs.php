@@ -18,7 +18,7 @@ class peoplePairs extends people
     public $defaultsort = 'title';
 
     const SELLIST = 'att_a.inscriptions_id as inscriptions_id, att_a.id as id, att_a.gender as gender, att_a.title_string as title_string, att_a.title_string_sort as title_string_sort, att_a.personal_name as personal_name, att_a.personal_name_sort as personal_name_sort, att_b.gender as gender_b, att_b.title_string as title_string_b, att_b.title_string_sort as title_string_sort_b, att_b.personal_name as personal_name_b, att_b.personal_name_sort as personal_name_sort_b, att_a.object_type as object_type, att_a.title as title, att_a.title_sort as title_sort, att_a.dating as dating, att_a.dating_sort as dating_sort, att_a.region as region, att_a.region_temp_sort as region_temp_sort';
-    const NOPERSONS = ' WHERE not (exists(SELECT attestations_id FROM persons_attestations_xref WHERE status = "accepted" AND persons_attestations_xref.attestations_id = att_a.attestations_id)=1 AND exists(SELECT attestations_id FROM persons_attestations_xref WHERE status = "accepted" AND persons_attestations_xref.attestations_id = att_b.attestations_id)=1)';
+    const NOPERSONS = ' WHERE not (exists(SELECT attestations_id FROM persons_attestations_xref WHERE `status` = "accepted" AND persons_attestations_xref.attestations_id = att_a.attestations_id)=1 AND exists(SELECT attestations_id FROM persons_attestations_xref WHERE `status` = "accepted" AND persons_attestations_xref.attestations_id = att_b.attestations_id)=1)';
 
     protected function initFieldNames()
     {

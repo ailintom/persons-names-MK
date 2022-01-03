@@ -22,8 +22,8 @@ class title extends EntryModel
 
     protected function parse()
     {
-        //This should be implemented in child classes to parse data after retrieving from the database
+        
         $this->parseNote(['usage_period_note', 'usage_area_note', 'note']);
-        //collections.collections_id', 'title', 'inv_no', 'status'], ['collections_id', 'title', 'inv_no', 'status']);
+        
     }
 }

@@ -23,11 +23,11 @@ class NameSpellings extends ListModel
         $total = count($this->data);
         for ($i = 0; $i < $total; $i++) {
             $filter = new Filter([new Rule('spellings_id', 'exact', $this->data[$i]['spellings_id'], 'i')]);
-            $objAltReadings = new alternative_readings(null, 0, 0, $filter);
+            $objAltReadings = new alternative_readings(null, 0, 0, $filter, null, null, true);
             $this->data[$i]['alt_readings'] = $objAltReadings;
             $rulesAtt = [new Rule('spellings_id', 'exact', $this->data[$i]['spellings_id'], 'i')];
             $filterSpellAtt = new Filter($rulesAtt);
-            $objSpellAtt = new SpellingAttestations(null, 0, 0, $filterSpellAtt);
+            $objSpellAtt = new SpellingAttestations(null, 0, 0, $filterSpellAtt, null, null, true);
             $this->data[$i]['attestations'] = $objSpellAtt;
         }
     }

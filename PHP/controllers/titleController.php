@@ -68,7 +68,7 @@ class titleController extends EntryController
         $objTitleAtt = new \PNM\models\TitleAttestations(Request::get('sort'), (Request::get('start') ?: 0), Config::ROWS_ON_PAGE, $filterTitleAtt);
         $this->record->data['attestations'] = $objTitleAtt;
         $filterRelations = new Filter([new Rule('titles_id', 'exact', $this->record->get('titles_id'), 'i'), new Rule('titles_id', 'exact', $this->record->get('titles_id'), 'i')]);
-        $objRelations = new \PNM\models\title_relations(null, 0, 0, $filterRelations);
+        $objRelations = new \PNM\models\title_relations(null, 0, 0, $filterRelations, null, null, true);
         $this->record->data['relations'] = $objRelations;
     }
 }
