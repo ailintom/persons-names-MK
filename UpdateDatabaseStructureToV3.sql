@@ -499,7 +499,7 @@ CONTAINS SQL
 SQL SECURITY DEFINER
 COMMENT 'Inverts the order of the first and last names in author_year for sorting'
 BEGIN
-SET @autname = REPLACE(REPLACE(REPLACE(author_year, 'et al.', 'et al'), ' von ', ' von. '), ' de ', ' de. ');
+SET @autname = REPLACE(REPLACE(REPLACE(REPLACE(IF(substr(author_year, 1, 3)="el-", substr(author_year,4), author_year), " el-", " "), 'et al.', 'et al'), ' von ', ' von. '), ' de ', ' de. ');
 IF @autname LIKE '%. %' THEN 
 RETURN CONCAT(Substring_index(SUBSTRING_INDEX (@autname, SUBSTRING_INDEX(@autname, ' ', -1), 1), SUBSTRING_INDEX (@autname, SUBSTRING_INDEX(@autname, '. ', -1), 1), -1), SUBSTRING_INDEX (@autname, SUBSTRING_INDEX(@autname, '. ', -1), 1), SUBSTRING_INDEX(@autname, ' ', -1));
 ELSE RETURN @autname ;
