@@ -487,3 +487,21 @@ END IF;
 	SET NEW.dating_sort_end = (SELECT sort_date_range_end from thesauri where item_name = NEW.dating);
 END//
 DELIMITER ;
+
+DROP FUNCTION IF EXISTS `invert_author_year`;
+CREATE FUNCTION `invert_author_year`(
+	`author_year` VARCHAR(190)
+)
+RETURNS varchar(190) CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci
+LANGUAGE SQL
+DETERMINISTIC
+CONTAINS SQL
+SQL SECURITY DEFINER
+COMMENT 'Inverts the order of the first and last names in author_year for sorting'
+BEGIN
+SET @autname = REPLACE(REPLACE(REPLACE(author_year, 'et al.', 'et al'), ' von ', ' von. '), ' de ', ' de. ');
+IF @autname LIKE '%. %' THEN 
+RETURN CONCAT(Substring_index(SUBSTRING_INDEX (@autname, SUBSTRING_INDEX(@autname, ' ', -1), 1), SUBSTRING_INDEX (@autname, SUBSTRING_INDEX(@autname, '. ', -1), 1), -1), SUBSTRING_INDEX (@autname, SUBSTRING_INDEX(@autname, '. ', -1), 1), SUBSTRING_INDEX(@autname, ' ', -1));
+ELSE RETURN @autname ;
+ END IF;
+END
