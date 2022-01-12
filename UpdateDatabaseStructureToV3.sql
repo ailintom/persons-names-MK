@@ -145,6 +145,11 @@ ALTER TABLE `places` ADD COLUMN `inscriptions_count_temp` INT(11) DEFAULT 0 COMM
 OPTIMIZE TABLE `places`;
 
 UPDATE `places` SET inscriptions_count_temp =  (SELECT COUNT(DISTINCT (inscriptions.inscriptions_id)) from  (objects INNER JOIN objects_inscriptions_xref ON objects.objects_id = objects_inscriptions_xref.objects_id) INNER JOIN inscriptions ON objects_inscriptions_xref.inscriptions_id = inscriptions.inscriptions_id WHERE objects.provenance=places.place_name OR objects.installation_place=places.place_name OR inscriptions.origin=places.place_name OR objects.production_place=places.place_name);
+UPDATE `persons_bonds` SET predicate = "ChildOf" where predicate = "GenericChildOf";
+CALL name_types_temp_calc;
+CALL children_temp_calc;
+CALL siblings_temp_calc;
+CALL spouses_temp_calc;
 
 ALTER TABLE `biblio_refs` ADD KEY `object_id_idx` (`object_id`),
  ADD KEY `source_url_idx` (`source_url`),

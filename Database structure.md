@@ -3,9 +3,12 @@ Author: Alexander Ilin-Tomich (ailintom@uni-mainz.de)
 Johannes Gutenberg University Mainz  
 Funded by the Fritz Thyssen Foundation as part of the project
 [Umformung und Variabilität im Korpus altägyptischer Personennamen 2055-1550 v.Chr.](https://www.aegyptologie.uni-mainz.de/umformung-und-variabilitaet-1/)  
+
 # Database structure
-## Conventions  ,
-Data are stored in a MySQL database. It is planned to export the data into an ontology-based machine-readable format (RDF); hence, equivalent classes and propertied in established ontologies are cited in this document.
+
+## Conventions
+
+Data are stored in a MySQL database. Data is also exported into an ontology-based machine-readable format (RDF); hence, equivalent classes and propertied in established ontologies are cited in this document.
 For the sake of compatibility with other relational database management systems only the following datatypes are used:  
 * `CHAR` (standard SQL data type `NATIONAL CHARACTER`) for short attributes;  
 * `VARCHAR(255)` (standard SQL data type `NATIONAL CHARACTER VARYING (255)`) for fields with a fixed set of values;  
