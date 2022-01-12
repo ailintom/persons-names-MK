@@ -10,6 +10,12 @@ use \PNM\Request;
 
 class View {
 
+    const titleHead = '<th>Title</th>';
+    const nameHead = '<th>Name</th>';
+    const epithetHead = '<th>Epithet</th>';
+    const classifierHead = '<th><span title="Classifier">Class.</span></th>';
+    const genderHead = '<th></th>';
+
     protected $entry = null;
     protected $subEntries = null;
 
@@ -426,6 +432,26 @@ EOF;
     protected function renderSingleWorkshop($Wk) {
         $wkMV = new workshopsMicroView();
         return $wkMV->render($Wk['title'], $Wk['workshops_id']) . ' (' . $Wk['status'] . (empty($Wk['note']) ? null : ', ' . $Wk['note']) . ')';
+    }
+
+    /*
+     * Adds an element to an array describing the attestation
+     */
+    protected function pushAttetastionElement(&$attestationRender, $element, $type) {
+        array_push($attestationRender, [$type, '<td>' . $element . '</td>']);
+    }
+    /*
+     * Makes a table with attestations
+     */
+    protected function attestationTable($attestationRender) {
+
+        $head = '';
+        $row = '';
+        foreach ($attestationRender as $el) {
+            $head .= $el[0];
+            $row .= $el[1];
+        }
+        return '<table class="name-box"><tr>' . $head . '</tr><tr>' . $row . '</tr></table>';
     }
 
     /*

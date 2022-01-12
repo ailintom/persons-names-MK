@@ -6,7 +6,7 @@
 
 namespace PNM\views;
 
-use \PNM\Config;
+use \PNM\Request;
 
 /*
  *     ['persons_id', 'title', 'gender', 'title_string', 'personal_name', 'dating', 'dating_note', 'region', 'region_note', 'note']
@@ -64,43 +64,73 @@ class personView extends View
                     echo '<th>Name</th>'; //if the attestation has associated titles, display the name heading
                 }
                 echo '</tr><tr>';
-                echo '<td><span class="gender" title="' . self::genderTitle($Att['gender']) . '">' . $Att['gender'] . '</span></td>';
-                if (!empty($titles)) {
-                    echo '<td>';
-                    $titleCount = 0;
-                    foreach ($titles as $title) {
-                        if ($titleCount++ > 0) {
-                            echo'; ';
-                        }
-                        echo $titlesView->render($title['title'], $title['titles_id']);
+                            $attestationRender = [];
+      //Render table data
+            $renderGender = '<span class="gender" title="' . self::genderTitle($Att['gender']) . '">' . $Att['gender'] . '</span>';
+            $this->pushAttetastionElement($attestationRender, $renderGender, self::genderHead);
+
+            if (!empty($titles)) {
+                $renderTitles = '';
+
+                $titleCount = 0;
+                foreach ($titles as $title) {
+                    if ($titleCount++ > 0) {
+                        $renderTitles .= '; ';
                     }
-                    echo '</td>';
+                    $renderTitles .= $titlesView->render($title['title'], $title['titles_id']);
                 }
-                if (!empty($spellings) & !empty($spellings[0]['spellings'])) {
-                    echo'<td>';
-                    $spellingCount = 0;
-                    foreach ($spellings as $name) {
-                        if ($spellingCount++ > 0) {
-                            echo' / ';
+                $this->pushAttetastionElement($attestationRender, $renderTitles, self::titleHead);
+            }
+            if (!empty($spellings) & !empty($spellings[0]['spellings'])) {
+
+                $nameRender = '';
+                $spellingCount = 0;
+                foreach ($spellings as $name) {
+                    if ($spellingCount++ > 0) {
+                        $nameRender .= ' / ';
+                    }
+                    $spellingPerNameCount = 0;
+                    foreach ($name['spellings'] as $spelling) {
+                        if ($spellingPerNameCount > 0) {
+                            $nameRender .= ', ';
                         }
-                        $spellingPerNameCount = 0;
-                        foreach ($name['spellings'] as $spelling) {
-                            if ($spellingPerNameCount > 0) {
-                                echo', ';
+                        $nameRender .= '<span class="name">';
+                        $nameRender .= '<a href="' . Request::makeURL('name', [$name['personal_names_id'], $spelling['spellings_id']]) . '">';
+                        if ($spellingPerNameCount++ == 0) {
+                            $nameRender .= $name['personal_name'] . ' ';
+                        }
+                        $nameRender .= $spellView->render($spelling['spelling'], $spelling['spellings_id'])
+                                . '</a>';
+                        $nameRender .= $this->processAltReadings($spelling['alt_readings']);
+
+                        $nameRender .= '</span>';
+                        $curEpithet_mdc = $spelling['epithet_mdc'];
+                        $curClassifier = $spelling['classifier'];
+                        if (!empty($curEpithet_mdc) || !empty($curClassifier)) {
+                            if (!empty($nameRender)) {
+                                $this->pushAttetastionElement($attestationRender, $nameRender, self::nameHead);
                             }
-                            echo'<span class="name">';
-                            echo'<a href="' . Config::BASE . 'name/' . $name['personal_names_id'] . '#' . $spelling['spellings_id'] . '">';
-                            if ($spellingPerNameCount++ == 0) {
-                                echo $name['personal_name'] . ' ';
-                            }
-                            echo $spellView->render($spelling['spelling'], $spelling['spellings_id']), '</a>';
-                            echo $this->processAltReadings($spelling['alt_readings']);
-                            echo'</span>';
+                            $nameRender = '';
+                            $spellingCount = 0;
+                            $spellingPerNameCount = 0;
+                        }
+                        if (!empty($curEpithet_mdc)) {
+                            $this->pushAttetastionElement($attestationRender, $this->render_mdc($curEpithet_mdc), self::epithetHead);
+                        }
+
+                        if (!empty($curClassifier)) {
+
+                            $this->pushAttetastionElement($attestationRender, $this->render_mdc($curClassifier), self::classifierHead);
                         }
                     }
-                    echo '</td>';
                 }
-                echo'</tr></table>';
+                if (!empty($nameRender)) {
+                    $this->pushAttetastionElement($attestationRender, $nameRender, self::nameHead);
+                }
+            }
+
+            echo $this->attestationTable($attestationRender);
+            
                 if (!empty($Att['reasoning']) || !empty($Att['note'])) {
                     echo '<dl>';
                     echo $this->descriptionElement('Reasoning', $Att['reasoning'], null, 'reasoning'),

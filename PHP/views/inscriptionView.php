@@ -11,11 +11,6 @@ use \PNM\Request;
 
 class inscriptionView extends View {
 
-    const titleHead = '<th>Title</th>';
-    const nameHead = '<th>Name</th>';
-    const epithetHead = '<th>Epithet</th>';
-    const classifierHead = '<th><span title="Classifier">Class.</span></th>';
-    const genderHead = '<th></th>';
 
     public function echoRender(&$data) {
         (new HeadView())->render(HeadView::HEADERSLIM, $data->get('title'));
@@ -86,9 +81,9 @@ class inscriptionView extends View {
             $currentLoc .= '<li><h4 id="' . \PNM\ID::shorten($Att['attestations_id']) . '"><i>' . $tit . '<span class="pn">' . $Att['personal_name'] . '</span></i>' . $doss . $status . '</h4>';
             $spellings = $Att['spellings']->getSpellings();
             $titles = $Att['titles']->data;
-            $epithet = $Att['epithet'];
+
             $attestationRender = [];
-            $representation = $Att['representation'];
+            //           $representation = $Att['representation'];
             $currentLoc .= '<table class="name-box"><tr><th></th>';
             //            
 //Render table data
@@ -166,20 +161,7 @@ class inscriptionView extends View {
         echo '</ul>';
         }
 
-    protected function pushAttetastionElement(&$attestationRender, $element, $type) {
-        array_push($attestationRender, [$type, '<td>' . $element . '</td>']);
-    }
 
-    protected function attestationTable($attestationRender) {
-
-        $head = '';
-        $row = '';
-        foreach ($attestationRender as $el) {
-            $head .= $el[0];
-            $row .= $el[1];
-        }
-        return '<table class="name-box"><tr>' . $head . '</tr><tr>' . $row . '</tr></table>';
-    }
 
     protected function writeLoc($loc, $currentLoc) {
         if (!empty($currentLoc)) {
