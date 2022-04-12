@@ -93,6 +93,8 @@ class ID
         if ($intid>0){
             $idObj = new ID($intid);
             return $idObj->getShortID();
+        }else{
+            return 0;
         }
     }
 }

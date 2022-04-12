@@ -169,16 +169,18 @@ class Request {
         } else {
             $ver_element = (!$forceVer && !isset(self::$data['ver'])) ? null : self::get('used_ver') . '/';
         }
+        
         if (isset($id) && !in_array($controller, ['info', 'assets/spellings'])) {
 // short ids are used for all controllers except spelling images (which use long ids) and information pages (which use textual ids)
             $idArr = (array) $id;
-            $short = implode('#', array_map('PNM\\ID::shorten', array_filter($idArr)));
+            $short = implode('#', array_map('PNM\\ID::shorten', $idArr));
             $id_element = '/' . $short;
         } elseif (isset($id)) {
             $id_element = '/' . $id;
         } else {
             $id_element = null;
         }
+        
         return Config::BASE . $ver_element . $controller . $id_element . $requestString;
     }
 
