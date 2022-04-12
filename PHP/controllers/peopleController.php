@@ -99,15 +99,15 @@ class peopleController
             switch (Request::get('geo-filter')) {
                 case 'production':
                     array_push($Arules, new RuleExists('inscriptions '
-                            . ' WHERE attestations.inscriptions_id=inscriptions.inscriptions_id AND inscriptions.production_place = ?', Request::get('place'), 's'));
+                            . ' WHERE attestations.inscriptions_id=inscriptions.inscriptions_id AND (SELECT objects.production_place FROM objects INNER JOIN objects_inscriptions_xref ON objects.objects_id = objects_inscriptions_xref.objects_id WHERE objects_inscriptions_xref.inscriptions_id=inscriptions.inscriptions_id LIMIT 1) = ?', Request::get('place'), 's'));
                     break;
                 case 'provenance':
                     array_push($Arules, new RuleExists('inscriptions '
-                            . ' WHERE attestations.inscriptions_id=inscriptions.inscriptions_id AND inscriptions.provenance = ?', Request::get('place'), 's'));
+                            . ' WHERE attestations.inscriptions_id=inscriptions.inscriptions_id AND (SELECT objects.provenance FROM objects INNER JOIN objects_inscriptions_xref ON objects.objects_id = objects_inscriptions_xref.objects_id WHERE objects_inscriptions_xref.inscriptions_id=inscriptions.inscriptions_id LIMIT 1) = ?', Request::get('place'), 's'));
                     break;
                 case 'installation-place':
                     array_push($Arules, new RuleExists('inscriptions '
-                            . ' WHERE attestations.inscriptions_id=inscriptions.inscriptions_id AND inscriptions.installation_place = ?', Request::get('place'), 's'));
+                            . ' WHERE attestations.inscriptions_id=inscriptions.inscriptions_id AND (SELECT objects.installation_place FROM objects INNER JOIN objects_inscriptions_xref ON objects.objects_id = objects_inscriptions_xref.objects_id WHERE objects_inscriptions_xref.inscriptions_id=inscriptions.inscriptions_id LIMIT 1) = ?', Request::get('place'), 's'));
                     break;
                 case 'origin':
                     array_push($Arules, new RuleExists('inscriptions '
@@ -116,7 +116,7 @@ class peopleController
                 default:
                     array_push($Arules, new RuleExists('inscriptions '
                             . ' WHERE attestations.inscriptions_id=inscriptions.inscriptions_id AND'
-                            . ' (inscriptions.provenance = ? OR inscriptions.production_place = ? OR inscriptions.origin = ? OR inscriptions.installation_place = ?)', [Request::get('place'), Request::get('place'), Request::get('place'), Request::get('place')], 'ssss'));
+                            . ' ((SELECT objects.provenance FROM objects INNER JOIN objects_inscriptions_xref ON objects.objects_id = objects_inscriptions_xref.objects_id WHERE objects_inscriptions_xref.inscriptions_id=inscriptions.inscriptions_id LIMIT 1) = ? OR (SELECT objects.production_place FROM objects INNER JOIN objects_inscriptions_xref ON objects.objects_id = objects_inscriptions_xref.objects_id WHERE objects_inscriptions_xref.inscriptions_id=inscriptions.inscriptions_id LIMIT 1) = ? OR inscriptions.origin = ? OR (SELECT objects.installation_place FROM objects INNER JOIN objects_inscriptions_xref ON objects.objects_id = objects_inscriptions_xref.objects_id WHERE objects_inscriptions_xref.inscriptions_id=inscriptions.inscriptions_id LIMIT 1) = ?)', [Request::get('place'), Request::get('place'), Request::get('place'), Request::get('place')], 'ssss'));
             }
         }
         $filter = new Filter($Arules);
