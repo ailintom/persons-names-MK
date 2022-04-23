@@ -173,6 +173,10 @@ class Request {
         if (isset($id) && !in_array($controller, ['info', 'assets/spellings'])) {
 // short ids are used for all controllers except spelling images (which use long ids) and information pages (which use textual ids)
             $idArr = (array) $id;
+            if (isset($idArr['id']) and isset($idArr['inscriptions_id']) and  !empty ($idArr['id'] ) and empty ($idArr['inscriptions_id'])){
+                 $idArr = (array) $idArr['id'] ;
+            }
+         
             $short = implode('#', array_map('PNM\\ID::shorten', $idArr));
             $id_element = '/' . $short;
         } elseif (isset($id)) {
