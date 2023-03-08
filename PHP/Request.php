@@ -58,10 +58,26 @@ class Request {
         return array_key_exists($key, self::$data);
     }
 
+// returns true if value is valid
+    private static function custom_validity_check($key, $value) {
+        if ($key === 'sort' or $key === 'find_groups_sort' or $key === 'workshops_sort') {
+            if (!((0 === substr_compare($value, " DESC", -5)) or (0 === substr_compare($value, " ASC", -4)))) {
+                return false;
+            } elseif (preg_match('/[^a-zA-Z_]/', trim(substr($value, 0, -4)))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private static function init() {
         foreach (self::GET_PARAMS as $key => $filter) {
             if (array_key_exists($key, $_GET)) {
-                self::$data[$key] = trim(filter_input(INPUT_GET, $key, $filter, self::defaultFlag($filter)));
+                $keyval = trim(filter_input(INPUT_GET, $key, $filter, self::defaultFlag($filter)));
+
+                if (self::custom_validity_check($key, $keyval)) {
+                    self::$data[$key] = $keyval;
+                }
             }
         }
         if (isset(self::$data['ver']) && !in_array(self::$data['ver'], array_column(Config::VERSIONS, 0))) {
@@ -92,7 +108,7 @@ class Request {
      */
 
     public static function emptyOrDefault($field, $value) {
-        if (!isset($value) or!isset($value[0])) {
+        if (!isset($value) or !isset($value[0])) {
             return true;
         }
         if (array_key_exists($field, self::DEFAULTS)) {
@@ -169,14 +185,14 @@ class Request {
         } else {
             $ver_element = (!$forceVer && !isset(self::$data['ver'])) ? null : self::get('used_ver') . '/';
         }
-        
+
         if (isset($id) && !in_array($controller, ['info', 'assets/spellings'])) {
 // short ids are used for all controllers except spelling images (which use long ids) and information pages (which use textual ids)
             $idArr = (array) $id;
-            if (isset($idArr['id']) and isset($idArr['inscriptions_id']) and  !empty ($idArr['id'] ) and empty ($idArr['inscriptions_id'])){
-                 $idArr = (array) $idArr['id'] ;
+            if (isset($idArr['id']) and isset($idArr['inscriptions_id']) and !empty($idArr['id']) and empty($idArr['inscriptions_id'])) {
+                $idArr = (array) $idArr['id'];
             }
-         
+
             $short = implode('#', array_map('PNM\\ID::shorten', $idArr));
             $id_element = '/' . $short;
         } elseif (isset($id)) {
@@ -184,7 +200,7 @@ class Request {
         } else {
             $id_element = null;
         }
-        
+
         return Config::BASE . $ver_element . $controller . $id_element . $requestString;
     }
 

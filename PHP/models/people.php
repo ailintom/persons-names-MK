@@ -26,7 +26,18 @@ class people extends ListModel {
         if (empty($inputsort) || $inputsort == $this->defaultsort) {
             $sort = null;
         } else {
-            $sort = $this->getSortField($inputsort);
+              $sort = $this->getSortField($inputsort);
+           /*
+              if (!((0 === substr_compare($sort, " DESC", -5)) or (0 === substr_compare($sort, " ASC", -4)))){
+                $sort = null;
+            }else{
+                $sortr = trim(substr($sort, 0, -4));
+                if (preg_match('/[^a-zA-Z_]/', $sortr)){
+                    $sort = null;
+                }
+            }
+            * 
+            */
         }
         if (!empty($sort . $this->getSortField())) {
             $ORDER = ' ORDER BY ' . $sort . (empty($sort) || empty($this->getSortField()) ? null : ', ') . $this->getSortField();
