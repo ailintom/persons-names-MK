@@ -1,8 +1,9 @@
 # Persons and Names of the Middle Kingdom  
 Author: Alexander Ilin-Tomich (ailintom@uni-mainz.de)  
 Johannes Gutenberg University Mainz  
-Funded by the Fritz Thyssen Foundation as part of the project
-[Umformung und Variabilität im Korpus altägyptischer Personennamen 2055-1550 v.Chr.](https://www.aegyptologie.uni-mainz.de/umformung-und-variabilitaet-1/)  
+Funded by the Fritz Thyssen Foundation as part of the projects
+[Umformung und Variabilität im Korpus altägyptischer Personennamen 2055-1550 v.Chr.](https://www.aegyptologie.uni-mainz.de/umformung-und-variabilitaet-1/)  and
+[Altägyptische Titel in amtlichen und familiären Kontexten, 2055-1352 v. Chr.](https://www.aegyptologie.uni-mainz.de/altaegyptische-titel-in-amtlichen-und-familiaeren-kontexten-2055-352-v-chr/)
 
 # Database structure
 
