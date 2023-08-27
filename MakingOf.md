@@ -26,5 +26,5 @@ The resulting JSON will contain the full bibliography; one can get shortened cit
 
 
 ## Egyptian hieroglyphs
-Spellings are stored in the database as JSesh-compatible MdC codes. PNG files with transparent background are produced using [JSesh-Web](https://github.com/macleginn/jsesh-web) or a similar own Java program for batch producing graphical files using [JSesh](http://jsesh.qenherkhopeshef.org/).
+Spellings are stored in the database as JSesh-compatible MdC codes. PNG files with transparent background are produced using [JSesh-Web](https://github.com/macleginn/jsesh-web) or a similar own-made Java program for batch producing graphical files using [JSesh](http://jsesh.qenherkhopeshef.org/).
 
