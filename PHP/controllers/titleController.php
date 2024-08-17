@@ -71,6 +71,10 @@ class titleController extends EntryController {
         $filterRelations = new Filter([new Rule('titles_id', 'exact', $this->record->get('titles_id'), 'i'), new Rule('titles_id', 'exact', $this->record->get('titles_id'), 'i')]);
         $objRelations = new \PNM\models\title_relations(null, 0, 0, $filterRelations, null, null, true);
         $this->record->data['relations'] = $objRelations;
+        $filterSpellings = new Filter([new Rule('titles_id', 'exact', $this->record->get('titles_id'), 'i'), new Rule('CHAR_LENGTH(spelling)', 'not', 0, 'i')]);
+// $objFG = new \PNM\models\find_groups(Request::get('find_groups_sort'), 0, 0, $filterFG);
+        $objSpellings = new \PNM\models\title_spellings(null, 0, 0, $filterSpellings);
+        $this->record->data['spellings'] = $objSpellings;
     }
 
 }

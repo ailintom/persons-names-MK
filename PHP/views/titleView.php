@@ -14,14 +14,32 @@ class titleView extends View {
       'inscriptions_count']);
      */
 
+    public function renderTitleSpellings($spellings) {
+        $res = null;
+        $insView = new inscriptionsMicroView();
+        $spellingView = new spellingsMicroView();
+        foreach ($spellings->data as $spelling) {
+            $res .= (empty($res) ? null : '; ');
+            $res .= $spellingView->render($spelling['spelling'], $spelling['titles_att_id']);
+            $res .= " (" . $insView->render($spelling['title'], $spelling['inscriptions_id']) . ")";
+        }
+        return $res; //count($spellings->data);
+    }
+
     public function echoRender(&$data) {
         $subtitle = null;
+        $spellings = $this->renderTitleSpellings($data->get('spellings'));
+        if (!empty($spellings)) {
+            $subtitle .= '<span class="spellings" >' . $spellings . '</span><br>';
+        }
         if (!empty($data->get('translation_en'))) {
-            $subtitle = '<span class="translation" lang="en">“' . $data->get('translation_en') . '”</span>' . (empty($data->get('translation_de')) ? null : ', ');
+            $subtitle .= '<span class="translation" lang="en">“' . $data->get('translation_en') . '”</span>' . (empty($data->get('translation_de')) ? null : ', ');
         }
         if (!empty($data->get('translation_de'))) {
             $subtitle .= '<span class="translation" lang="de">“' . $data->get('translation_de') . '”</span>';
         }
+        
+
         (new HeadView())->render(HeadView::HEADERSLIM, $data->get('title'));
         ?>
         <p>
@@ -138,5 +156,4 @@ class titleView extends View {
             echo $this->descriptionElement(ucfirst($predicate), $pred_string, null, 'note');
         }
     }
-
 }

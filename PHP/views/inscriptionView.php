@@ -76,7 +76,7 @@ class inscriptionView extends View {
             } else {
                 $doss = null;
             }
-            $status = (empty($Att['status']) ? null : ' (' . $Att['status'] . ')');
+            $status = (($Att['status']=='') ? '' : ' (' . $Att['status'] . ')');
             $tit = empty($Att['title_string']) ? null : '<span class="tit">' . $Att['title_string'] . '</span> ';
             $currentLoc .= '<li><h4 id="' . \PNM\ID::shorten($Att['attestations_id']) . '"><i>' . $tit . '<span class="pn">' . $Att['personal_name'] . '</span></i>' . $doss . $status . '</h4>';
             $spellings = $Att['spellings']->getSpellings();
