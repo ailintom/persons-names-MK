@@ -27,7 +27,7 @@ class startView extends View
             <a class="cards_link" href="<?= Request::makeURL('places') ?>"><?= Icon::get('place', '') ?> Places</a>
             <a class="cards_link" href="<?= Request::makeURL('collections') ?>"><?= Icon::get('collection', '') ?> Collections</a>
         </div>
-        <ul><li><a href="types">List of name types</a></li><li><a href="bibliography">Bibliography</a></li></ul>
+        <ul><li><a href="<?= Request::makeURL('types') ?>">List of name types</a></li><li><a href="<?= Request::makeURL('bibliography') ?>">Bibliography</a></li></ul>
         <h2>Information about the database</h2>
         <ul>
             <?php

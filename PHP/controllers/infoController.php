@@ -8,15 +8,14 @@
 
 namespace PNM\controllers;
 
-use \PNM\Config, \PNM\Request;
+use \PNM\Config,
+    \PNM\Request;
 
-class infoController
-{
+class infoController {
 
     protected $record; // the variable holding the data
 
-    public function load()
-    {
+    public function load() {
         $id = Request::get('id');
         if (empty($id)) {
             $infos = new \PNM\models\infos();
@@ -27,7 +26,11 @@ class infoController
             (new \PNM\views\infoView())->echoRender(['Privacy Policy', Config::PRIVACY]);
         } else {
             $this->record = new \PNM\models\info(); // an instance of the EntryModel class
-            (new \PNM\views\infoView())->echoRender($this->record->find($id)[0]);
+            if (!isset($this->record->find($id)[0])) { // the record was not found
+                (new \PNM\views\NotFoundView())->echoRender();
+            } else {
+                (new \PNM\views\infoView())->echoRender($this->record->find($id)[0]);
+            }
         }
     }
 }

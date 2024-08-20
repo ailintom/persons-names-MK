@@ -4,11 +4,18 @@
  */
 
 namespace PNM\views;
+use \PNM\Request;
 ?><header class="header -large">
     <div class="header_content">
         <h1 class="header_title">
-            <a href="<?= \PNM\Request::makeURL('info') ?>">
-                Persons <span>and</span> Names <span>of the</span> Middle Kingdom
+            <a href="<?= Request::makeURL('info') ?>">
+                 <?= 
+(Request::get('used_ver') >=5) ?
+     "Persons <span>and</span> Names <span>of the</span> Middle Kingdom <span>and</span> early New Kingdom"
+:
+     "Persons <span>and</span> Names <span>of the</span> Middle Kingdom"
+;
+ ?>
             </a>
         </h1>
     </div>

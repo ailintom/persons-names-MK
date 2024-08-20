@@ -194,9 +194,9 @@ class Request {
             }
 
             $short = implode('#', array_map('PNM\\ID::shorten', $idArr));
-            $id_element = '/' . $short;
+            $id_element = '/' . str_replace(' ', '+', $short);
         } elseif (isset($id)) {
-            $id_element = '/' . $id;
+            $id_element = '/' . str_replace(' ', '+', $id);
         } else {
             $id_element = null;
         }

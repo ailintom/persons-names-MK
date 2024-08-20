@@ -38,6 +38,7 @@ class HeadView
                 <meta property="og:url" content="<?= Config::HOST . Request::stableURL() ?>">
                 <meta property="og:type" content="website">
                 <meta property="og:image" content="<?= Config::BASE ?>assets/favicon/favicon-32x32.png">
+                <?=(Request::get('used_ver') < Request::maxVer()) ? '<meta name="robots" content="noindex">' : null ?>
                 <link rel="canonical" href="<?= Config::HOST . Request::stableURL() ?>">
                 <link rel="stylesheet" href="<?= Config::BASE ?>assets/style/style.css">
                 <link rel="shortcut icon" href="<?= Config::BASE ?>assets/favicon/favicon.ico">

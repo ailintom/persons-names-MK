@@ -11,7 +11,13 @@ use \PNM\Request,
     <div class="header_content">
         <div class="header_title">
             <a href="<?= Request::makeURL('info', null, null, null, true, -1, false, Request::maxVer()); ?>">
-                Persons <span>and</span> Names <span>of the</span> Middle Kingdom
+                <?= 
+(Request::get('used_ver') >=5) ?
+     "Persons <span>and</span> Names <span>of the</span> Middle Kingdom <span>and</span> early New Kingdom"
+:
+     "Persons <span>and</span> Names <span>of the</span> Middle Kingdom"
+;
+ ?>
             </a>
         </div>
         <button class="header_nav" type="button" aria-controls="nav" aria-expanded="false" onclick="MK.toggleNav(this)">
