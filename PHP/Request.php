@@ -66,7 +66,10 @@ class Request {
             } elseif (preg_match('/[^a-zA-Z_]/', trim(substr($value, 0, -4)))) {
                 return false;
             }
-        }
+        }elseif (self::GET_PARAMS [$key] == FILTER_SANITIZE_NUMBER_INT){
+return filter_var ($value, FILTER_VALIDATE_INT);
+}
+
         return true;
     }
 
