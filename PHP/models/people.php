@@ -58,7 +58,7 @@ class people extends ListModel {
     }
 
     protected function makeSelectFromWhere($selectStatement) {
-        return '(' . $selectStatement . $this->query1 . $this->WHERE . ') UNION (SELECT ' . $this->query2 . $this->WHERE . ')';
+        return '(' . $selectStatement . $this->query1 . $this->WHERE . ') UNION ALL (SELECT ' . $this->query2 . $this->WHERE . ')';
     }
 
     protected function makeSelectFromWherePersons($selectStatement) {

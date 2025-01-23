@@ -19,7 +19,7 @@ class peopleParent extends peoplePairs
 
     protected function makeSelectFromWhere($selectStatement)
     {
-        return '(' . $selectStatement  . static::SELLIST . ' FROM (' . $this->query1a . $this->WHERE . ') as att_a INNER JOIN (' . $this->query1b . $this->BWHERE . ') as att_b ON att_a.attestations_id = att_b.parent_id' . static::NOPERSONS . ') UNION '
+        return '(' . $selectStatement  . static::SELLIST . ' FROM (' . $this->query1a . $this->WHERE . ') as att_a INNER JOIN (' . $this->query1b . $this->BWHERE . ') as att_b ON att_a.attestations_id = att_b.parent_id' . static::NOPERSONS . ') UNION ALL '
                 . '(SELECT ' . static::SELLIST . ' FROM (' . $this->query2a . $this->WHERE . ') as att_a INNER JOIN (' . $this->query2b . $this->BWHERE . ') as att_b ON att_a.id = att_b.parent_id)';
     }
 

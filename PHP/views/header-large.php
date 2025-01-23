@@ -6,7 +6,7 @@
 namespace PNM\views;
 use \PNM\Request;
 ?><header class="header -large">
-    <div class="header_content">
+    <div class="header_content" data-nosnippet>
         <h1 class="header_title">
             <a href="<?= Request::makeURL('info') ?>">
                  <?= 

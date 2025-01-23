@@ -45,6 +45,10 @@ class inscriptionView extends View {
         echo $this->descriptionElement('Bibliography', $this->renderBiblio($data->get('bibliography')));
         echo '</dl>';
         $objObjects = $data->get('objects');
+        if (! isset($objObjects->data[0])){
+            throw new \Exception('No objects for this inscription in the database.');
+           
+        }
         if (count($objObjects->data) > 1) {
             echo '<h2>Objects</h2><ul class="attestations">';
             foreach ($objObjects->data as $objObject) {

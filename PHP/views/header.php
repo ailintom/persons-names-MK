@@ -8,7 +8,7 @@ namespace PNM\views;
 use \PNM\Request,
     \PNM\Config;
 ?><header class="header">
-    <div class="header_content">
+    <div class="header_content" data-nosnippet>
         <div class="header_title">
             <a href="<?= Request::makeURL('info', null, null, null, true, -1, false, Request::maxVer()); ?>">
                 <?= 
