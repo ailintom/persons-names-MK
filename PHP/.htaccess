@@ -1,6 +1,9 @@
 RewriteEngine On
 RewriteBase /
 
+# Replace spaces with '+'
+RewriteCond %{REQUEST_URI} ^(.*)\s(.*)$
+RewriteRule ^(.*)$ %1+%2 [L]
 
 RewriteCond %{QUERY_STRING} !(^|&)query($|=) [NC]
 RewriteCond %{REQUEST_METHOD} !=POST
@@ -22,14 +25,16 @@ RewriteCond %{QUERY_STRING} (^|&)query($|=)  [NC,OR]
 RewriteCond %{REQUEST_METHOD} POST
 RewriteRule "^sparql(.*)$" "http://localhost:3030/pnm/sparql" [QSA,P,L]
 
-RewriteRule ^/?$ https://pnm.uni-mainz.de/names/ [QSA,R=301,L]
+RewriteRule ^/?$ https://pnm.uni-mainz.de/names [QSA,R=301,L]
+RewriteRule ^([0-9]+)/$ https://pnm.uni-mainz.de/$1/names [L,R=301]
 
 RewriteCond %{QUERY_STRING} action=reset
 RewriteRule ^ %{REQUEST_URI} [QSD,R=302,L]
 
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^/?([a-z]*)/([-\.\sA-Zı̓ı͗ı҆i̓i͗i҆ỉI̓I͗I҆ỈꜣꜢꜤꜥḥẖšṯḏqHḤḪH̱SŠTṮDḎ⸗a-z0-9'+]*)/?$ /index.php?controller=$1&id=$2 [QSA,L]
+RewriteRule ^/?([a-z]*)/([-\.\sA-Zı̓ı͗ı҆i̓i͗i҆ỉI̓I͗I҆ỈꜣꜢꜤꜥḥẖšṯḏqHḤḪH̱SŠTṮDḎ⸗a-z0-9'+%]*)/?$ /index.php?controller=$1&id=$2 [QSA,L]
 
 
 RewriteCond %{REQUEST_FILENAME} !-f
@@ -39,7 +44,7 @@ RewriteRule ^/?([a-z]*)/?$ /index.php?controller=$1 [QSA,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^/?([0-9]*)/([a-z]*)/([-\.\sA-Zı̓ı͗ı҆i̓i͗i҆ỉI̓I͗I҆ỈꜣꜢꜤꜥḥẖšṯḏqHḤḪH̱SŠTṮDḎ⸗a-z0-9'+]*)/?$ /index.php?ver=$1&controller=$2&id=$3 [QSA,L]
+RewriteRule ^/?([0-9]*)/([a-z]*)/([-\.\sA-Zı̓ı͗ı҆i̓i͗i҆ỉI̓I͗I҆ỈꜣꜢꜤꜥḥẖšṯḏqHḤḪH̱SŠTṮDḎ⸗a-z0-9'+%]*)/?$ /index.php?ver=$1&controller=$2&id=$3 [QSA,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
