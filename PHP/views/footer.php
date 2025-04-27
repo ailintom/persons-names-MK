@@ -14,7 +14,7 @@ use \PNM\Request,
         <div class="row -fluid -centered-on-small">
             <div class="column">
                 <p>
-                    <span style="display:inline-block">Copyright 2024 Alexander Ilin-Tomich.
+                    <span style="display:inline-block">Copyright 2024 <a href="/personal/ilin-tomich/">Alexander Ilin-Tomich</a>.
                     Content licensed under <a href="https://creativecommons.org/licenses/by/4.0/" title="Creative Commons Attribution 4.0 International">CC BY 4.0</a>, except for logos.</span> <span style="display:inline-block">RDF version <a href="https://pnm.uni-mainz.de/sparql">via SPARQL endpoint</a>. Dataset under <a href="http://dx.doi.org/10.5281/zenodo.1411391">doi:10.5281/zenodo.1411391</a>. Source code <a href="https://github.com/ailintom/persons-names-MK">on GitHub</a>.</span>
                 </p>
                 <p>

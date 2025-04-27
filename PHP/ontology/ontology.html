@@ -1,10 +1,10 @@
 The PNM ontology is developed for representing Persons and Names of the Middle Kingdom data as RDF, in order to make data more easily accessible by other scholars and research projects. It builds upon the existing ontologies.
-<a href="http://www.cidoc-crm.org/versions-of-the-cidoc-crm">CIDOC CRM 5.0.4</a> is used to represent objects, museum collections, persons and statements.
+<a href="http://www.cidoc-crm.org/versions-of-the-cidoc-crm">CIDOC CRM 7.1.3</a> is used to represent objects, museum collections, persons and statements.
 <a href="http://purl.org/crmeh">CRMEH</a> is used for archaeological contexts.
 <a href="http://www.dublincore.org/schemas/rdfs/">Dublin Core</a> and <a href="http://purl.org/pav/2.0/">PAV</a> are used for publications.
 <a href="https://www.w3.org/2016/05/ontolex/">Ontolex</a> serves as basis for describing names and titles as lexical entries.  
 <a href="https://www.w3.org/2003/01/geo/wgs84_pos">WGS84 Geo Positioning</a> is used for geographical coordinates.
-<a href="http://lawd.info/ontology/">LAWD</a> and <a href="http://snapdrgn.net/ontology">SNAP:DRGN</a> served as inspiration. <br> 
+<a href="https://github.com/lawdi/LAWD/blob/master/ontology/lawd.rdf">LAWD</a> and <a href="http://snapdrgn.net/ontology">SNAP:DRGN</a> served as inspiration. <br> 
 In order to convert PNM data from a relational database to RDF, <a href="https://www.w3.org/TR/r2rml/">R2RML</a> mappings are developed. The mappings <a href="https://github.com/ailintom/persons-names-MK-rdf">are available on Github</a>.<br>
 The current Persons and Names of the Middle Kingdom dataset is available as a RDF-dump in both Turtle and RDF/XML in the project repository under <a href="http://dx.doi.org/10.5281/zenodo.1411391">doi:10.5281/zenodo.1411391</a>.
 A live SPAQRL endpoint is accessible under <a href="https://pnm.uni-mainz.de/sparql">https://pnm.uni-mainz.de/sparql</a>. 
@@ -46,44 +46,45 @@ The following examples aim to show how PNM data is represented in RDF using exis
 
 There exists an inscription that is designated as Cairo JE 52453 and contains a legal text. 
 <div class="info-box">
-    &lt;<a href="https://pnm.uni-mainz.de/inscription/273">https://pnm.uni-mainz.de/inscription/273</a>&gt; <a href="https://www.w3.org/TR/rdf-schema/#ch_type">a</a> &lt;<a href="http://www.cidoc-crm.org/Entity/E34-Inscription/Version-6.2.1">http://www.cidoc-crm.org/cidoc-crm/E34_Inscription</a>&gt;;<br>
+    &lt;<a href="https://pnm.uni-mainz.de/inscription/273">https://pnm.uni-mainz.de/inscription/273</a>&gt; <a href="https://www.w3.org/TR/rdf-schema/#ch_type">a</a> &lt;<a href="http://www.cidoc-crm.org/cidoc-crm/E34_Inscription">http://www.cidoc-crm.org/cidoc-crm/E34_Inscription</a>&gt;;<br>
     <div style="margin-left:2em;">&lt;<a href="https://www.w3.org/TR/skos-reference/#labels">http://www.w3.org/2004/02/skos/core#prefLabel</a>&gt; &quot;Cairo JE 52453&quot;;<br>
         pnm:has_text_content &lt;<a href="https://pnm.uni-mainz.de/thesaurus/Legal%20text">https://pnm.uni-mainz.de/thesaurus/Legal text</a>&gt; .</div>
 </div>
 The inscription is carried by an object. It is a stela, namely a round-topped stela. It was found in the Karnak temple, and is now located in the Cairo Museum.
 <div class="info-box">
-    &lt;<a href="https://pnm.uni-mainz.de/inscription/273">https://pnm.uni-mainz.de/inscription/273#physical_object</a>&gt; <a href="https://www.w3.org/TR/rdf-schema/#ch_type">a</a> &lt;<a href="http://www.cidoc-crm.org/Entity/e22-man-made-object/version-6.2.1" >http://www.cidoc-crm.org/cidoc-crm/E22_Man-Made_Object</a>&gt;; 
-    <div style="margin-left:2em;">&lt;<a href="http://www.cidoc-crm.org/Property/p128-carries/version-6.2.1">http://www.cidoc-crm.org/cidoc-crm/P128_carries</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/inscription/273">https://pnm.uni-mainz.de/inscription/273</a>&gt;; 
-        <br>&lt;<a href="http://www.cidoc-crm.org/Property/p2-has-type/version-6.2.1">http://www.cidoc-crm.org/cidoc-crm/P2_has_type</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/thesaurus/Stela">https://pnm.uni-mainz.de/thesaurus/Stela</a>&gt;; 
-        <br>&lt;<a href="http://www.cidoc-crm.org/Property/p2-has-type/version-6.2.1">http://www.cidoc-crm.org/cidoc-crm/P2_has_type</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/thesaurus/Round-topped%20stela">https://pnm.uni-mainz.de/thesaurus/Round-topped stela</a>&gt;; 
-        <br>&lt;<a href="http://www.cidoc-crm.org/Property/p52-has-current-owner/version-6.2.1">http://www.cidoc-crm.org/cidoc-crm/P52_has_current_owner</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/collection/32">https://pnm.uni-mainz.de/collection/32</a>&gt;; 
-        <br>&lt;<a href="http://lawd.info/ontology">http://lawd.info/ontology/foundAt</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/place/25">https://pnm.uni-mainz.de/place/25</a>&gt;; 
-        <br>&lt;<a href="http://www.cidoc-crm.org/Property/p53-has-former-or-current-location/version-6.2.1">http://www.cidoc-crm.org/cidoc-crm/P53_has_former_or_current_location</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/place/25">https://pnm.uni-mainz.de/place/25</a>&gt;.
+    &lt;<a href="https://pnm.uni-mainz.de/inscription/273">https://pnm.uni-mainz.de/inscription/273#physical_object</a>&gt; <a href="https://www.w3.org/TR/rdf-schema/#ch_type">a</a> &lt;<a href="http://www.cidoc-crm.org/cidoc-crm/E24_Physical_Human-Made_Thing" >http://www.cidoc-crm.org/cidoc-crm/E24_Physical_Human-Made_Thing</a>&gt;; 
+    <div style="margin-left:2em;">&lt;<a href="http://www.cidoc-crm.org/cidoc-crm/P128_carries">http://www.cidoc-crm.org/cidoc-crm/P128_carries</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/inscription/273">https://pnm.uni-mainz.de/inscription/273</a>&gt;; 
+        <br>&lt;<a href="http://www.cidoc-crm.org/cidoc-crm/P2_has_type">http://www.cidoc-crm.org/cidoc-crm/P2_has_type</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/thesaurus/Stela">https://pnm.uni-mainz.de/thesaurus/Stela</a>&gt;; 
+        <br>&lt;<a href="http://www.cidoc-crm.org/cidoc-crm/P2_has_type">http://www.cidoc-crm.org/cidoc-crm/P2_has_type</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/thesaurus/Round-topped%20stela">https://pnm.uni-mainz.de/thesaurus/Round-topped stela</a>&gt;; 
+        <br>&lt;<a href="http://www.cidoc-crm.org/cidoc-crm/P52_has_current_owner">http://www.cidoc-crm.org/cidoc-crm/P52_has_current_owner</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/collection/32">https://pnm.uni-mainz.de/collection/32</a>&gt;; 
+        <br>&lt;<a href="https://github.com/lawdi/LAWD/blob/master/ontology/lawd.rdf">http://lawd.info/ontology/foundAt</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/place/25">https://pnm.uni-mainz.de/place/25</a>&gt;; 
+        <br>&lt;<a href="http://www.cidoc-crm.org/cidoc-crm/P53_has_former_or_current_location">http://www.cidoc-crm.org/cidoc-crm/P53_has_former_or_current_location</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/place/25">https://pnm.uni-mainz.de/place/25</a>&gt;.
     </div>
 </div>
 In the museum, the stela was allocated an inventory number (JE 52453), which is now used to identify the stela.
 <div class="info-box">
-    &lt;<a href="https://pnm.uni-mainz.de/inscription/273#inv_no_259">https://pnm.uni-mainz.de/inscription/273#inv_no_259</a>&gt; <a href="https://www.w3.org/TR/rdf-schema/#ch_type">a</a> &lt;<a href="http://www.cidoc-crm.org/Entity/E42-Identifier/Version-6.2.1">http://www.cidoc-crm.org/cidoc-crm/E42_Identifier</a>&gt;; 
-    <div style="margin-left:2em;">&lt;<a href="http://www.cidoc-crm.org/Property/p48-has-preferred-identifier/version-6.2.1">http://www.cidoc-crm.org/cidoc-crm/P48i_is_preferred_identifier_of</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/inscription/273#physical_object">https://pnm.uni-mainz.de/inscription/273#physical_object</a>&gt;;
-        <br>&lt;<a href="http://www.cidoc-crm.org/Property/p2-has-type/version-6.2.1">http://www.cidoc-crm.org/cidoc-crm/P2_has_type</a>&gt; pnm:main_inv_no;
+    &lt;<a href="https://pnm.uni-mainz.de/inscription/273#inv_no_259">https://pnm.uni-mainz.de/inscription/273#inv_no_259</a>&gt; <a href="https://www.w3.org/TR/rdf-schema/#ch_type">a</a> &lt;<a href="http://www.cidoc-crm.org/cidoc-crm/E42_Identifier">http://www.cidoc-crm.org/cidoc-crm/E42_Identifier</a>&gt;; 
+    <div style="margin-left:2em;">&lt;<a href="http://www.cidoc-crm.org/cidoc-crm/P48i_is_preferred_identifier_of">http://www.cidoc-crm.org/cidoc-crm/P48i_is_preferred_identifier_of</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/inscription/273#physical_object">https://pnm.uni-mainz.de/inscription/273#physical_object</a>&gt;;
+        <br>&lt;<a href="http://www.cidoc-crm.org/cidoc-crm/P2_has_type">http://www.cidoc-crm.org/cidoc-crm/P2_has_type</a>&gt; pnm:main_inv_no;
         <br>&lt;<a href="https://www.w3.org/TR/rdf-schema/#ch_label">http://www.w3.org/2000/01/rdf-schema#label</a>&gt; &quot;JE 52453&quot;.</div>
-    <br>&lt;<a href="https://pnm.uni-mainz.de/inscription/273">https://pnm.uni-mainz.de/inscription/273#inv_no_259_assignment</a>&gt; <a href="https://www.w3.org/TR/rdf-schema/#ch_type">a</a> &lt;<a href="http://www.cidoc-crm.org/Entity/e15-identifier-assignment/version-6.2.1">http://www.cidoc-crm.org/cidoc-crm/E15_Identifier_Assignment</a>&gt;; 
-    <div style="margin-left:2em;">&lt;<a href="http://www.cidoc-crm.org/Property/p37-assigned/version-6.2.1">http://www.cidoc-crm.org/cidoc-crm/P37_assigned</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/inscription/273#inv_no_259">https://pnm.uni-mainz.de/inscription/273#inv_no_259</a>&gt;; 
-        <br>&lt;<a href="http://www.cidoc-crm.org/Property/p14-carried-out-by/version-6.2.1">http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/collection/32">https://pnm.uni-mainz.de/collection/32</a>&gt; .
+    <br>&lt;<a href="https://pnm.uni-mainz.de/inscription/273">https://pnm.uni-mainz.de/inscription/273#inv_no_259_assignment</a>&gt; <a href="https://www.w3.org/TR/rdf-schema/#ch_type">a</a> &lt;<a href="http://www.cidoc-crm.org/cidoc-crm/E15_Identifier_Assignment">http://www.cidoc-crm.org/cidoc-crm/E15_Identifier_Assignment</a>&gt;; 
+    <div style="margin-left:2em;">&lt;<a href="http://www.cidoc-crm.org/cidoc-crm/P37_assigned">http://www.cidoc-crm.org/cidoc-crm/P37_assigned</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/inscription/273#inv_no_259">https://pnm.uni-mainz.de/inscription/273#inv_no_259</a>&gt;; 
+        <br>&lt;<a href="http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by">http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/collection/32">https://pnm.uni-mainz.de/collection/32</a>&gt; .
     </div>
 </div>
 Judging from the royal name, the production of the stela should have taken place in the reign of Swꜣḏ-n-rꜥ Nebirirau. 
 <div class="info-box">
-    &lt;<a href="https://pnm.uni-mainz.de/inscription/273">https://pnm.uni-mainz.de/inscription/273#production</a>&gt; <a href="https://www.w3.org/TR/rdf-schema/#ch_type">a</a> &lt;<a href="http://www.cidoc-crm.org/Entity/E12-Production/Version-6.2.1">http://www.cidoc-crm.org/cidoc-crm/E12_Production</a>&gt;;
-    <div style="margin-left:2em;">&lt;<a href="http://www.cidoc-crm.org/Property/p108-has-produced/version-6.2.1">http://www.cidoc-crm.org/cidoc-crm/P108_has_produced</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/inscription/273">https://pnm.uni-mainz.de/inscription/273#physical_object</a>&gt;;
-        <br>&lt;<a href="http://www.cidoc-crm.org/Property/p117-occurs-during/version-6.2.1">http://www.cidoc-crm.org/cidoc-crm/P117_occurs_during</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/thesaurus/Nebirirau%20swꜣḏ-n-rꜥ%20nb-jrj-r-ꜣw">https://pnm.uni-mainz.de/thesaurus/Nebirirau swꜣḏ-n-rꜥ nb-jrj-r-ꜣw</a>&gt;;
+    &lt;<a href="https://pnm.uni-mainz.de/inscription/273">https://pnm.uni-mainz.de/inscription/273#production</a>&gt; <a href="https://www.w3.org/TR/rdf-schema/#ch_type">a</a> &lt;<a href="http://www.cidoc-crm.org/cidoc-crm/E12_Production">http://www.cidoc-crm.org/cidoc-crm/E12_Production</a>&gt;;
+    <div style="margin-left:2em;">&lt;<a href="http://www.cidoc-crm.org/cidoc-crm/P108_has_produced">http://www.cidoc-crm.org/cidoc-crm/P108_has_produced</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/inscription/273">https://pnm.uni-mainz.de/inscription/273#physical_object</a>&gt;;
+        <br>&lt;<a href="http://www.cidoc-crm.org/cidoc-crm/P175i_starts_after_or_with_the_start_of">http://www.cidoc-crm.org/cidoc-crm/P175i_starts_after_or_with_the_start_of</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/thesaurus/Nebirirau%20swꜣḏ-n-rꜥ%20nb-jrj-r-ꜣw">https://pnm.uni-mainz.de/thesaurus/Nebirirau swꜣḏ-n-rꜥ nb-jrj-r-ꜣw</a>&gt;;
+		<br>&lt;<a href="http://www.cidoc-crm.org/cidoc-crm/P184_ends_before_or_with_the_end_of">http://www.cidoc-crm.org/cidoc-crm/P184_ends_before_or_with_the_end_of</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/thesaurus/Nebirirau%20swꜣḏ-n-rꜥ%20nb-jrj-r-ꜣw">https://pnm.uni-mainz.de/thesaurus/Nebirirau swꜣḏ-n-rꜥ nb-jrj-r-ꜣw</a>&gt;;
         <br>pnm:has_dating_note &quot;royal name&quot;.
     </div>
 </div>
 In line 4 of the inscription there occurs a male person called Sbk-nḫt. He bears the title string sꜣ-nsw; ḫtmw-bjtj; jmj-rꜣ gs-pr; ḥꜣtj-ꜥ; ḥꜣtj-ꜥ n nḫb. 
 <div class="info-box">
     &lt;<a href="https://pnm.uni-mainz.de/inscription/273#6802">https://pnm.uni-mainz.de/inscription/273#6802</a>&gt; <a href="https://www.w3.org/TR/rdf-schema/#ch_type">a</a> pnm:person_attestation; 
-    <div style="margin-left:2em;">&lt;<a href="http://www.cidoc-crm.org/Property/p67-refers-to/version-6.2.1">http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/inscription/273">https://pnm.uni-mainz.de/inscription/273</a>&gt;;
+    <div style="margin-left:2em;">&lt;<a href="http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by">http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/inscription/273">https://pnm.uni-mainz.de/inscription/273</a>&gt;;
         <br>pnm:location_in_the_inscription &quot;l. 04&quot;;
         <br>pnm:attested_gender &quot;m&quot;; 
         <br>pnm:attested_personal_names &quot;sbk-nḫt&quot;; 
@@ -131,14 +132,14 @@ The title ḥꜣtj-ꜥ n nḫb was held by male persons in Elkab.
     &lt;<a href="https://pnm.uni-mainz.de/title/715">https://pnm.uni-mainz.de/title/715</a>&gt; pnm:has_lexical_entry_usage &lt;<a href="https://pnm.uni-mainz.de/title/715">https://pnm.uni-mainz.de/title/715#usage</a>&gt;.<br> 
     <br>&lt;<a href="https://pnm.uni-mainz.de/title/715">https://pnm.uni-mainz.de/title/715#usage</a>&gt; <a href="https://www.w3.org/TR/rdf-schema/#ch_type">a</a> pnm:usage; 
     <div style="margin-left:2em;">pnm:has_usage_gender &quot;m&quot;;
-        <br>&lt;<a href="http://www.cidoc-crm.org/Property/p7-took-place-at/version-6.2.1">http://www.cidoc-crm.org/cidoc-crm/P7_took_place_at</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/place/22">https://pnm.uni-mainz.de/place/22</a>&gt; .
+        <br>&lt;<a href="http://www.cidoc-crm.org/cidoc-crm/P7_took_place_at">http://www.cidoc-crm.org/cidoc-crm/P7_took_place_at</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/place/22">https://pnm.uni-mainz.de/place/22</a>&gt; .
     </div>
 </div>
 This title has a lemma number in R. Hannig, <em>Ägyptisches Wörterbuch II: Mittleres Reich und Zweite Zwischenzeit</em>.
 <div class="info-box">
-    &lt;<a href="https://pnm.uni-mainz.de/title/715">https://pnm.uni-mainz.de/title/715</a>&gt; &lt;<a href="http://www.cidoc-crm.org/Property/p1-is-identified-by/version-6.2.1">http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/title/715">https://pnm.uni-mainz.de/title/715#hannig</a>&gt;.<br>
-    <br>&lt;<a href="https://pnm.uni-mainz.de/title/715">https://pnm.uni-mainz.de/title/715#hannig</a>&gt; <a href="https://www.w3.org/TR/rdf-schema/#ch_type">a</a> &lt;<a href="http://www.cidoc-crm.org/Entity/e42-identifier/version-6.2.1">http://www.cidoc-crm.org/cidoc-crm/E42_Identifier</a>&gt;; 
-    <div style="margin-left:2em;">&lt;<a href="http://www.cidoc-crm.org/Property/p2-has-type/version-6.2.1">http://www.cidoc-crm.org/cidoc-crm/P2_has_type</a>&gt; pnm:hannig2; 
+    &lt;<a href="https://pnm.uni-mainz.de/title/715">https://pnm.uni-mainz.de/title/715</a>&gt; &lt;<a href="http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by">http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/title/715">https://pnm.uni-mainz.de/title/715#hannig</a>&gt;.<br>
+    <br>&lt;<a href="https://pnm.uni-mainz.de/title/715">https://pnm.uni-mainz.de/title/715#hannig</a>&gt; <a href="https://www.w3.org/TR/rdf-schema/#ch_type">a</a> &lt;<a href="http://www.cidoc-crm.org/cidoc-crm/E42_Identifier">http://www.cidoc-crm.org/cidoc-crm/E42_Identifier</a>&gt;; 
+    <div style="margin-left:2em;">&lt;<a href="http://www.cidoc-crm.org/cidoc-crm/P2_has_type">http://www.cidoc-crm.org/cidoc-crm/P2_has_type</a>&gt; pnm:hannig2; 
         <br>&lt;<a href="https://www.w3.org/TR/rdf-schema/#ch_label">http://www.w3.org/2000/01/rdf-schema#label</a>&gt; &quot;49136&quot; .
     </div>
 </div>
@@ -150,7 +151,7 @@ According to the inscription on the stela, the man called Sbk-nḫt (&lt;<a href
         <br>pnm:attested_bond_statement_subject &lt;<a href="https://pnm.uni-mainz.de/inscription/273#6802">https://pnm.uni-mainz.de/inscription/273#6802</a>&gt;; 
         <br>pnm:attested_bond_statement_object &lt;<a href="https://pnm.uni-mainz.de/inscription/273#6801">https://pnm.uni-mainz.de/inscription/273#6801</a>&gt;. </div>
     <br>&lt;<a href="https://pnm.uni-mainz.de/inscription/273#6801">https://pnm.uni-mainz.de/inscription/273#6801</a>&gt; <a href="https://www.w3.org/TR/rdf-schema/#ch_type">a</a> pnm:person_attestation; 
-    <div style="margin-left:2em;">&lt;<a href="http://www.cidoc-crm.org/Property/p67-refers-to/version-6.2.1">http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/inscription/273">https://pnm.uni-mainz.de/inscription/273</a>&gt;;
+    <div style="margin-left:2em;">&lt;<a href="http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by">http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/inscription/273">https://pnm.uni-mainz.de/inscription/273</a>&gt;;
         <br>pnm:location_in_the_inscription &quot;l. 04&quot;;
         <br>pnm:attested_gender &quot;m&quot;; 
         <br>pnm:attested_personal_names &quot;kbsj&quot;; 
@@ -162,17 +163,18 @@ It is stated that the man called Sbk-nḫt known from the inscription on stela C
 &lt;<a href="https://pnm.uni-mainz.de/inscription/273#6802">https://pnm.uni-mainz.de/inscription/273#6802</a>&gt; pnm:has_identity_statement &lt;<a href="https://pnm.uni-mainz.de/inscription/273">https://pnm.uni-mainz.de/inscription/273#6802_identity_statement_4337</a>&gt;. <br> 
 <br>
 &lt;<a href="https://pnm.uni-mainz.de/inscription/273">https://pnm.uni-mainz.de/inscription/273#6802_identity_statement_4337</a>&gt; <a href="https://www.w3.org/TR/rdf-schema/#ch_type">a</a> pnm:identity_statement; 
-<div style="margin-left:2em;">&lt;<a href="http://www.cidoc-crm.org/Property/p2-has-type/version-6.2.1">http://www.cidoc-crm.org/cidoc-crm/P2_has_type</a>&gt; pnm:identification_accepted; 
+<div style="margin-left:2em;">&lt;<a href="http://www.cidoc-crm.org/cidoc-crm/P2_has_type">http://www.cidoc-crm.org/cidoc-crm/P2_has_type</a>&gt; pnm:identification_accepted; 
     <br>pnm:has_reasoning &quot;name, title, father, and grandfather&quot; ; 
     <br>pnm:refers_to &lt;<a href="https://pnm.uni-mainz.de/person/565">https://pnm.uni-mainz.de/person/565</a>&gt;.</div>
-<br>&lt;<a href="https://pnm.uni-mainz.de/person/565">https://pnm.uni-mainz.de/person/565</a>&gt; <a href="https://www.w3.org/TR/rdf-schema/#ch_type">a</a> &lt;<a href="http://www.cidoc-crm.org/Entity/e21-person/version-6.2.1">http://www.cidoc-crm.org/cidoc-crm/E21_Person</a>&gt;; 
+<br>&lt;<a href="https://pnm.uni-mainz.de/person/565">https://pnm.uni-mainz.de/person/565</a>&gt; <a href="https://www.w3.org/TR/rdf-schema/#ch_type">a</a> &lt;<a href="http://www.cidoc-crm.org/cidoc-crm/E21_Person">http://www.cidoc-crm.org/cidoc-crm/E21_Person</a>&gt;; 
 <div style="margin-left:2em;">pnm:person_gender &quot;m&quot;; 
     <br>pnm:person_personal_names &quot;sbk-nḫt&quot;; 
     <br>pnm:person_title_string &quot;sꜣ-nsw; ḫtmw-bjtj; jmj-rꜣ gs-pr; ḥꜣtj-ꜥ&quot;;
     <br>pnm:lived &lt;<a href="https://pnm.uni-mainz.de/person/565">https://pnm.uni-mainz.de/person/565#life</a>&gt;.</div>
 <br>&lt;<a href="https://pnm.uni-mainz.de/person/565">https://pnm.uni-mainz.de/person/565#life</a>&gt; <a href="https://www.w3.org/TR/rdf-schema/#ch_type">a</a> pnm:life;
-<div style="margin-left:2em;">&lt;<a href="http://www.cidoc-crm.org/Property/p117-occurs-during/version-6.2.1">http://www.cidoc-crm.org/cidoc-crm/P117_occurs_during</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/thesaurus/16th%20Dyn.">https://pnm.uni-mainz.de/thesaurus/16th Dyn.</a>&gt;; 
-    <br>&lt;<a href="http://www.cidoc-crm.org/Property/p7-took-place-at/version-6.2.1">http://www.cidoc-crm.org/cidoc-crm/P7_took_place_at</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/place/22">https://pnm.uni-mainz.de/place/22</a>&gt; .
+<div style="margin-left:2em;">&lt;<a href="http://www.cidoc-crm.org/cidoc-crm/P175i_starts_after_or_with_the_start_of">http://www.cidoc-crm.org/cidoc-crm/P175i_starts_after_or_with_the_start_of</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/thesaurus/16th%20Dyn.">https://pnm.uni-mainz.de/thesaurus/16th Dyn.</a>&gt;; 
+<br>&lt;<a href="http://www.cidoc-crm.org/cidoc-crm/P184_ends_before_or_with_the_end_of">http://www.cidoc-crm.org/cidoc-crm/P184_ends_before_or_with_the_end_of</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/thesaurus/16th%20Dyn.">https://pnm.uni-mainz.de/thesaurus/16th Dyn.</a>&gt;; 
+<br>&lt;<a href="http://www.cidoc-crm.org/cidoc-crm/P7_took_place_at">http://www.cidoc-crm.org/cidoc-crm/P7_took_place_at</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/place/22">https://pnm.uni-mainz.de/place/22</a>&gt; .
     </div>
 </div>
 Sbk-nḫt (known from various sources) has bonds with other persons, whose dossiers can be reconstructed from other sources. For example, with his father, the vizier Jj-mrw: Sbk-nḫt was the son of Jj-mrw.
@@ -181,7 +183,7 @@ Sbk-nḫt (known from various sources) has bonds with other persons, whose dossi
     <div style="margin-left:2em;">pnm:bond_statement_predicate &lt;<a href="https://pnm.uni-mainz.de/thesaurus/ChildOf">https://pnm.uni-mainz.de/thesaurus/ChildOf</a>&gt;; 
    <br>pnm:persons_bond_statement_subject &lt;<a href="https://pnm.uni-mainz.de/person/565">https://pnm.uni-mainz.de/person/565</a>&gt;; 
    <br>pnm:persons_bond_statement_object &lt;<a href="https://pnm.uni-mainz.de/person/798">https://pnm.uni-mainz.de/person/798</a>&gt;. </div>
-<br>&lt;<a href="https://pnm.uni-mainz.de/person/798">https://pnm.uni-mainz.de/person/798</a>&gt; <a href="https://www.w3.org/TR/rdf-schema/#ch_type">a</a> &lt;<a href="http://www.cidoc-crm.org/Entity/e21-person/version-6.2.1">http://www.cidoc-crm.org/cidoc-crm/E21_Person</a>&gt;; 
+<br>&lt;<a href="https://pnm.uni-mainz.de/person/798">https://pnm.uni-mainz.de/person/798</a>&gt; <a href="https://www.w3.org/TR/rdf-schema/#ch_type">a</a> &lt;<a href="http://www.cidoc-crm.org/cidoc-crm/E21_Person">http://www.cidoc-crm.org/cidoc-crm/E21_Person</a>&gt;; 
 <div style="margin-left:2em;">pnm:person_gender &quot;m&quot;; 
     <br>pnm:person_personal_names &quot;jj-mrw&quot;; 
     <br>pnm:person_title_string &quot;jmj-rꜣ njwt; ṯꜣtj; ḥꜣtj-ꜥ n nḫb&quot; .
@@ -194,7 +196,7 @@ The dossier of Sbk-nḫt (known from various sources) was defined in Franke, <em
 <div style="margin-left:2em;">pnm:document_refers_to &lt;<a href="https://pnm.uni-mainz.de/person/565">https://pnm.uni-mainz.de/person/565</a>&gt;; 
     <br>pnm:reference_location &quot;565&quot;;
     <br>&lt;<a href="http://www.dublincore.org/specifications/dublin-core/dcmi-terms/2012-06-14/#elements-source">http://purl.org/dc/terms/source</a>&gt; &lt;<a href="https://pnm.uni-mainz.de/publication/2761">https://pnm.uni-mainz.de/publication/2761</a>&gt;.</div>
-    <br>&lt;<a href="https://pnm.uni-mainz.de/publication/2761">https://pnm.uni-mainz.de/publication/2761</a>&gt; <a href="https://www.w3.org/TR/rdf-schema/#ch_type">a</a> &lt;<a href="http://www.dublincore.org/specifications/dublin-core/dcmi-terms/2012-06-14/#terms-BibliographicResource">http://purl.org/dc/terms/BibliographicResource</a>&gt;, &lt;<a href="http://www.cidoc-crm.org/Entity/e31-document/version-6.2.1">http://www.cidoc-crm.org/cidoc-crm/E31_document</a>&gt;; 
+    <br>&lt;<a href="https://pnm.uni-mainz.de/publication/2761">https://pnm.uni-mainz.de/publication/2761</a>&gt; <a href="https://www.w3.org/TR/rdf-schema/#ch_type">a</a> &lt;<a href="http://www.dublincore.org/specifications/dublin-core/dcmi-terms/2012-06-14/#terms-BibliographicResource">http://purl.org/dc/terms/BibliographicResource</a>&gt;, &lt;<a href="http://www.cidoc-crm.org/cidoc-crm/E31_document">http://www.cidoc-crm.org/cidoc-crm/E31_document</a>&gt;; 
     <div style="margin-left:2em;">&lt;<a href="http://www.dublincore.org/specifications/dublin-core/dcmi-terms/2012-06-14/#terms-bibliographicCitation">http://purl.org/dc/terms/bibliographicCitation</a>&gt; &quot;&quot;&quot;&lt;div class=\&quot;csl-bib-body\&quot;&gt; &lt;div class=\&quot;csl-entry\&quot; id=\&quot;16779977\&quot;&gt;Franke, D. 1984. &lt;i&gt;Personendaten aus dem Mittleren Reich (20.-16. Jahrhundert v. Chr.): Dossiers 1&ndash;796&lt;/i&gt;. &Auml;gyptologische Abhandlungen 41. Wiesbaden: Harrassowitz.&lt;/div&gt; &lt;/div&gt;&quot;&quot;&quot;; 
     <br>&lt;<a href="https://www.w3.org/TR/skos-reference/#labels">http://www.w3.org/2004/02/skos/core#prefLabel</a>&gt; &quot;Franke 1984a&quot;.
  </div>
