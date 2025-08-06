@@ -66,7 +66,7 @@ try {
   const MAX_STABLE_URL_LENGTH = 35;
   const FORMAL_PATTERNS_ID = 251658605;
   const SEMANTIC_CLASSES_ID = 251658604;
-  const START_PAGE_TEXT = "<p>The online database “Persons and Names of the Middle Kingdom” (PNM) is developed as part of the project <a href='https://www.aegyptologie.uni-mainz.de/umformung-und-variabilitaet-1/'>“Umformung und Variabilität im Korpus altägyptischer Personennamen 2055–1550 v.&nbsp;Chr.”</a>, funded by the <a href='http://www.fritz-thyssen-stiftung.de'>Fritz Thyssen Foundation</a></p>";
+  const START_PAGE_TEXT = "<p>The online database “Persons and Names of the Middle Kingdom and early New Kingdom” (PNM) is developed as part of the projects <a href='https://iaw.uni-mainz.de/personennamen-und-titel-aeg/'>“Umformung und Variabilität im Korpus altägyptischer Personennamen 2055–1550 v.&nbsp;Chr.”</a> and <a href='https://iaw.uni-mainz.de/personennamen-und-titel-aeg/'>“Altägyptische Titel in amtlichen und familiären Kontexten, 2055-1352 v.&nbsp;Chr.”</a>, funded by the <a href='http://www.fritz-thyssen-stiftung.de'>Fritz Thyssen Foundation</a>. The database contains Egyptian Middle Kingdom and early New Kingdom personal names, people, written sources, titles, and dossiers of persons attested in various sources. Version 6, currently available online, covers the sources from the reign of Mentuhotep II to the reign of Amenhotep III. The database is a work in progress. Along with additional sources, future versions will also include better translations and classification of names and titles as well as more elaborate datings.</p>";
   const BASE = '/subpath/';
   const HOST = 'https://pnm.uni-mainz.de';
   const IMPRESSUM = "";

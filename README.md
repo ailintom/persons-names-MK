@@ -1,15 +1,16 @@
-# Persons and Names of the Middle Kingdom
+# Persons and Names of the Middle Kingdom and early New Kingdom
 
 These are the source files and documentation related to the project 
-Persons and Names of the Middle Kingdom  
+Persons and Names of the Middle Kingdom and early New Kingdom
 Author: Alexander Ilin-Tomich (ailintom@uni-mainz.de)  
 Johannes Gutenberg University Mainz  
-Funded by the Fritz Thyssen Foundation as part of the project
-[Umformung und Variabilität im Korpus altägyptischer Personennamen 2055-1550 v.Chr.](https://www.aegyptologie.uni-mainz.de/umformung-und-variabilitaet-1/)  
+Funded by the Fritz Thyssen Foundation as part of the projects
+[Umformung und Variabilität im Korpus altägyptischer Personennamen 2055-1550 v.Chr.](https://iaw.uni-mainz.de/personennamen-und-titel-aeg/)  
+[Altägyptische Titel in amtlichen und familiären Kontexten, 2055–1352 v. Chr.](https://iaw.uni-mainz.de/personennamen-und-titel-aeg/)  
 
 The project pursues the goal of making the complete dataset available for research. The data and the web interface can freely be republished elsewhere especially if the present website is no longer updated. For this end, the entire dataset is licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) license, and the source code is published here under the MIT License.
 
-The website runs on an Apache 2.4 server under Debian, using PHP 7.0 and MariaDB 10.1.26 (also tested to work with PHP 7.2 and MariaDB 10.1.32). It uses no custom packages and can run without root privileges (it can basically be deployed on any shared web-hosting).
+The website runs on an Apache 2.4 server under Debian, using PHP 7.4.33 and MariaDB 10.5.29. It uses no custom packages and can run without root privileges (it can basically be deployed on any shared web-hosting).
 
 The database dump is published in an open-access repository at doi: [10.5281/zenodo.1411392](http://dx.doi.org/10.5281/zenodo.1411392). 
 
@@ -42,7 +43,7 @@ class Config
     const MAX_STABLE_URL_LENGTH = 35;
     const FORMAL_PATTERNS_ID = 251658605;
     const SEMANTIC_CLASSES_ID = 251658604;
-    const START_PAGE_TEXT = "<p>The online database “Persons and Names of the Middle Kingdom” (PNM) is developed as part of the project <a href='https://www.aegyptologie.uni-mainz.de/umformung-und-variabilitaet-1/'>“Umformung und Variabilität im Korpus altägyptischer Personennamen 2055–1550 v.&nbsp;Chr.”</a>, funded by the <a href='http://www.fritz-thyssen-stiftung.de'>Fritz Thyssen Foundation</a>. The database is currently under development and will include data on Egyptian Middle Kingdom personal names, people, written sources, titles, and dossiers of persons attested in various sources.</p>";
+    const START_PAGE_TEXT = "<p>The online database “Persons and Names of the Middle Kingdom and early New Kingdom” (PNM) is developed as part of the projects <a href='https://iaw.uni-mainz.de/personennamen-und-titel-aeg/'>“Umformung und Variabilität im Korpus altägyptischer Personennamen 2055–1550 v.&nbsp;Chr.”</a> and <a href='https://iaw.uni-mainz.de/personennamen-und-titel-aeg/'>“Altägyptische Titel in amtlichen und familiären Kontexten, 2055-1352 v.&nbsp;Chr.”</a>, funded by the <a href='http://www.fritz-thyssen-stiftung.de'>Fritz Thyssen Foundation</a>. The database contains Egyptian Middle Kingdom and early New Kingdom personal names, people, written sources, titles, and dossiers of persons attested in various sources. Version 6, currently available online, covers the sources from the reign of Mentuhotep II to the reign of Amenhotep III. The database is a work in progress. Along with additional sources, future versions will also include better translations and classification of names and titles as well as more elaborate datings.</p>";
     const IMPRESSUM = <<<EOT
 Copyright (c) 2018 Alexander Ilin-Tomich. Content is licensed under <a href="https://creativecommons.org/licenses/by/4.0/" title="Creative Commons Attribution 4.0 International">Creative Commons Attribution 4.0 International (CC BY 4.0)</a> and can be freely reused, except for logos, which are the property of Johannes Gutenberg-Universität Mainz and Fritz Thyssen Foundation.
 </p>            
@@ -64,14 +65,14 @@ Using <a href="https://github.com/google/roboto/releases">Roboto</a> font by Goo
 EOT;
     const PRIVACY = <<<EOT
 <h2>The PNM does not collect or use your information</h2>
-The website Persons and Names of the Middle Kingdom does not knowingly collect, store, or share any personally identifiable information from the visitors.
+The website Persons and Names of the Middle Kingdom and early New Kingdom does not knowingly collect, store, or share any personally identifiable information from the visitors.
 The website does not use cookies or any other means to track the users.
 It does not record internet protocol (IP) addresses, browser type, Internet Service Provider (ISP) of the users in the log files.
 Search requests are logged for improving the database functionality without any personally identifiable information.
 The website does not include any third-party components to track usage statistics.
 <h2>The PNM links to other websites and is not responsible for their practices</h2>
 Some pages of the website include links to other websites.
-We are not responsible for the practices employed by websites linked to from the website Persons and Names of the Middle Kingdom,
+We are not responsible for the practices employed by websites linked to from the website Persons and Names of the Middle Kingdom and early New Kingdom,
 including the information contained therein.
 When you use a link to go to another website, our Privacy policy does not apply to third-party websites or services.
 Your browsing and interaction on any third-party website or service are subject to that third party’s own rules and policies.

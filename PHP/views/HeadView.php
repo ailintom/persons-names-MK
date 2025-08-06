@@ -32,9 +32,9 @@ class HeadView
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <meta http-equiv="X-UA-Compatible" content="ie=edge">
                 <meta name="description" content="An online database of ancient Egyptian personal names, titles, and persons from the Middle Kingdom.">
-                <title><?= !empty($title) ? "$strippedTitle | " : "" ?>Persons and Names of the Middle Kingdom</title>
+                <title><?= !empty($title) ? "$strippedTitle | " : "" ?>Persons and Names of the Middle Kingdom and early New Kingdom</title>
                                                                                         <!--<base href="<?= Config::BASE ?>">-->
-                <meta property="og:title" content="<?= !empty($title) ? "$strippedTitle | " : "" ?>Persons and Names of the Middle Kingdom">
+                <meta property="og:title" content="<?= !empty($title) ? "$strippedTitle | " : "" ?>Persons and Names of the Middle Kingdom and early New Kingdom">
                 <meta property="og:url" content="<?= Config::HOST . Request::stableURL() ?>">
                 <meta property="og:type" content="website">
                 <meta property="og:image" content="<?= Config::BASE ?>assets/favicon/favicon-32x32.png">
