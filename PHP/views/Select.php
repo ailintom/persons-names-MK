@@ -42,12 +42,13 @@ class Select
 
     protected function renderOption($option)
     {
+        $option = trim($option ?? '');
         if (isset($this->default)) {
             $isDef = $option == $this->default;
         } else {
             $isDef = false;
         }
         $selected = View::oldValueSelect($this->name, $option, $isDef);
-        return '<option value="' . htmlspecialchars(trim($option), ENT_QUOTES, 'UTF-8') . '"' . $selected . '>' . (htmlspecialchars(trim($option), ENT_QUOTES, 'UTF-8') ?: '&nbsp;') . '</option>';
+        return '<option value="' . htmlspecialchars($option, ENT_QUOTES, 'UTF-8') . '"' . $selected . '>' . (htmlspecialchars($option, ENT_QUOTES, 'UTF-8') ?: '&nbsp;') . '</option>';
     }
 }

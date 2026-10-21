@@ -90,12 +90,13 @@ class Datalist
 
     protected function singleDatalistEntry($entry)
     {
+        $entry = trim($entry ?? '');
         $sel = null;
         if (!empty($this->selected) && \PNM\Request::$noDatalist) {
             if ($this->selected == $entry) {
                 $sel = " selected";
             }
         }
-        return "\n" . '<option value="' . htmlspecialchars(trim($entry), ENT_QUOTES, 'UTF-8') . '"' . $sel . '>' . htmlspecialchars(trim($entry), ENT_QUOTES, 'UTF-8') . '</option>';
+        return "\n" . '<option value="' . htmlspecialchars($entry, ENT_QUOTES, 'UTF-8') . '"' . $sel . '>' . htmlspecialchars($entry, ENT_QUOTES, 'UTF-8') . '</option>';
     }
 }

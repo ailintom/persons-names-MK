@@ -50,6 +50,7 @@ class Lookup
                     return $result->fetch_row()[0];
                 }
             }
+            return $list ? [] : null;
         } catch (\mysqli_sql_exception $e) {
             \PNM\CriticalError::show($e);
         }
