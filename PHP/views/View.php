@@ -179,7 +179,7 @@ class View {
             case 'Written document':
                 return 'Hieratic text';
             default:
-                return ucfirst($objectType);
+                return $objectType === null ? null : ucfirst($objectType);
         }
     }
 
@@ -196,7 +196,7 @@ class View {
             case 'Biographical text':
                 return 'Biography';
             default:
-                return ucfirst($textContent);
+                return $textContent === null ? null : ucfirst($textContent);
         }
     }
 

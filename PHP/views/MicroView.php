@@ -24,9 +24,9 @@ class MicroView
         if (empty($inputvalue) and empty($secondinput)){
             return null;
         }
-        $this->value = htmlspecialchars(strip_tags($inputvalue), ENT_HTML5);
+        $this->value = htmlspecialchars(strip_tags($inputvalue ?? ''), ENT_HTML5);
         if (isset($secondinput)) {
-            $this->secondinput = htmlspecialchars(strip_tags($secondinput), ENT_HTML5);
+            $this->secondinput = htmlspecialchars(strip_tags($secondinput ?? ''), ENT_HTML5);
         }
         if (isset($inputid)) {
             $this->url = $this->makeURL($inputid);

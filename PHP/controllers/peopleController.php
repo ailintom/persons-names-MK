@@ -122,7 +122,7 @@ class peopleController
         $filter = new Filter($Arules);
         $Bempty = empty(Request::get('Bname')) && empty(Request::get('Btitle')) && empty(Request::get('Bform_type')) && empty(Request::get('Bsem_type')) && (empty(Request::get('Bgender')) || Request::get('Bgender') == 'any');
         $pat = '/[^? *%\[\]]+/';
-        $EmptyPair = (Request::get('relation') == 'same_inscription' || Request::get('relation') == 'siblings') && !( preg_match($pat, Request::get('Aname')) || preg_match($pat, Request::get('Atitle')) || preg_match($pat, Request::get('Bname')) || preg_match($pat, Request::get('Btitle')) || !empty(Request::get('Aform_type')) || !empty(Request::get('Asem_type')) || !empty(Request::get('Bform_type')) || !empty(Request::get('Bsem_type')));
+        $EmptyPair = (Request::get('relation') == 'same_inscription' || Request::get('relation') == 'siblings') && !( preg_match($pat, Request::get('Aname') ?? '') || preg_match($pat, Request::get('Atitle') ?? '') || preg_match($pat, Request::get('Bname') ?? '') || preg_match($pat, Request::get('Btitle') ?? '') || !empty(Request::get('Aform_type')) || !empty(Request::get('Asem_type')) || !empty(Request::get('Bform_type')) || !empty(Request::get('Bsem_type')));
         if ($Bempty || $EmptyPair) {
             // second part of the request is not used
             $model = new \PNM\models\people(Request::get('sort'), (Request::get('start') ?: 0), Config::ROWS_ON_PAGE, $filter, null, $persons);

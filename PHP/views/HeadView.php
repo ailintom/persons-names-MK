@@ -20,7 +20,7 @@ class HeadView
 
     public function render($header, $title = null)
     {
-        $strippedTitle = strip_tags($title);
+        $strippedTitle = strip_tags($title ?? '');
         if (self::$headSent == true) {
             return null;
         }

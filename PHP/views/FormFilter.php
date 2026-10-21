@@ -13,6 +13,7 @@ class FormFilter {
     protected $content;
     public $mainFieldName;
     protected $fullLabel;
+    protected $defaultVal;
 
     public function __construct($name, $label, $content, $mainFieldName, $fullLabel = null, $defaultVal = null) {
         $this->name = $name;
@@ -65,7 +66,7 @@ class FormFilter {
             }
 
             public static function renderToggle(array $filters) {
-                return array_map('self::getTogglePair', $filters);
+                return array_map([self::class, 'getTogglePair'], $filters);
             }
 
             public static function renderFilters(array $filters) {
