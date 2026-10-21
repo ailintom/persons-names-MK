@@ -41,7 +41,7 @@ class ListModel {
      * 
      */
 
-    public function __construct($sort = null, $start = 0, $count = 0, Filter $filter = null, Filter $Bfilter = null, $params = null, $noTotalCount = false) {
+    public function __construct($sort = null, $start = 0, $count = 0, ?Filter $filter = null, ?Filter $Bfilter = null, $params = null, $noTotalCount = false) {
         $db = \PNM\Db::getInstance();
         $this->initFieldNames();
         $this->start = $start + 1;

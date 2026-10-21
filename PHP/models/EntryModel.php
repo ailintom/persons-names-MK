@@ -37,7 +37,7 @@ class EntryModel
 //This should be implemented in child classes to set the list of fields retrieved from the database
     }
 
-    public function __construct(array $data = null)
+    public function __construct(?array $data = null)
     {
         if (!empty($data)) {
             $this->data = $data;

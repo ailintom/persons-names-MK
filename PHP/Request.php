@@ -10,21 +10,21 @@ namespace PNM;
 class Request {
 
 // This constant stores the filter parameteters for each possible value in GET requests
-    const GET_PARAMS = ['id' => FILTER_SANITIZE_STRING, 'ver' => FILTER_SANITIZE_NUMBER_INT, 'size' => FILTER_SANITIZE_NUMBER_INT,
+    const GET_PARAMS = ['id' => FILTER_UNSAFE_RAW, 'ver' => FILTER_SANITIZE_NUMBER_INT, 'size' => FILTER_SANITIZE_NUMBER_INT,
         'tm_coll_id' => FILTER_SANITIZE_NUMBER_INT, 'tm_geoid' => FILTER_SANITIZE_NUMBER_INT,
         'controller' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-        'name' => FILTER_SANITIZE_STRING, 'Aname' => FILTER_SANITIZE_STRING, 'Bname' => FILTER_SANITIZE_STRING,
-        'title' => FILTER_SANITIZE_STRING, 'Atitle' => FILTER_SANITIZE_STRING, 'Btitle' => FILTER_SANITIZE_STRING,
-        'collection' => FILTER_SANITIZE_STRING, 'inv_no' => FILTER_SANITIZE_STRING, 'material' => FILTER_SANITIZE_STRING,
-        'short_name' => FILTER_SANITIZE_STRING, 'full_name' => FILTER_SANITIZE_STRING, 'location' => FILTER_SANITIZE_STRING,
-        'object_type' => FILTER_SANITIZE_STRING, 'object_subtype' => FILTER_SANITIZE_STRING,
-        'translation' => FILTER_SANITIZE_STRING, 'place' => FILTER_SANITIZE_STRING,
-        'northof' => FILTER_SANITIZE_STRING, 'southof' => FILTER_SANITIZE_STRING, 'near' => FILTER_SANITIZE_STRING,
-        'period' => FILTER_SANITIZE_STRING, 'ranke' => FILTER_SANITIZE_STRING, 'ward' => FILTER_SANITIZE_STRING,
-        'hannig' => FILTER_SANITIZE_STRING, 'taylor' => FILTER_SANITIZE_STRING,
-        'ayedi' => FILTER_SANITIZE_STRING, 'topbib_id' => FILTER_SANITIZE_STRING,
-        'form_type' => FILTER_SANITIZE_STRING, 'Aform_type' => FILTER_SANITIZE_STRING, 'Bform_type' => FILTER_SANITIZE_STRING,
-        'sem_type' => FILTER_SANITIZE_STRING, 'Asem_type' => FILTER_SANITIZE_STRING, 'Bsem_type' => FILTER_SANITIZE_STRING,
+        'name' => FILTER_UNSAFE_RAW, 'Aname' => FILTER_UNSAFE_RAW, 'Bname' => FILTER_UNSAFE_RAW,
+        'title' => FILTER_UNSAFE_RAW, 'Atitle' => FILTER_UNSAFE_RAW, 'Btitle' => FILTER_UNSAFE_RAW,
+        'collection' => FILTER_UNSAFE_RAW, 'inv_no' => FILTER_UNSAFE_RAW, 'material' => FILTER_UNSAFE_RAW,
+        'short_name' => FILTER_UNSAFE_RAW, 'full_name' => FILTER_UNSAFE_RAW, 'location' => FILTER_UNSAFE_RAW,
+        'object_type' => FILTER_UNSAFE_RAW, 'object_subtype' => FILTER_UNSAFE_RAW,
+        'translation' => FILTER_UNSAFE_RAW, 'place' => FILTER_UNSAFE_RAW,
+        'northof' => FILTER_UNSAFE_RAW, 'southof' => FILTER_UNSAFE_RAW, 'near' => FILTER_UNSAFE_RAW,
+        'period' => FILTER_UNSAFE_RAW, 'ranke' => FILTER_UNSAFE_RAW, 'ward' => FILTER_UNSAFE_RAW,
+        'hannig' => FILTER_UNSAFE_RAW, 'taylor' => FILTER_UNSAFE_RAW,
+        'ayedi' => FILTER_UNSAFE_RAW, 'topbib_id' => FILTER_UNSAFE_RAW,
+        'form_type' => FILTER_UNSAFE_RAW, 'Aform_type' => FILTER_UNSAFE_RAW, 'Bform_type' => FILTER_UNSAFE_RAW,
+        'sem_type' => FILTER_UNSAFE_RAW, 'Asem_type' => FILTER_UNSAFE_RAW, 'Bsem_type' => FILTER_UNSAFE_RAW,
         'gender' => FILTER_SANITIZE_FULL_SPECIAL_CHARS, 'Agender' => FILTER_SANITIZE_FULL_SPECIAL_CHARS, 'Bgender' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
         'size-option' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
         'only_persons' => FILTER_SANITIZE_FULL_SPECIAL_CHARS, 'geo-filter' => FILTER_SANITIZE_FULL_SPECIAL_CHARS, 'chrono-filter' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
@@ -59,6 +59,15 @@ class Request {
     }
 
 // returns true if value is valid
+    private static function sanitizeString($value) {
+        if (!is_string($value)) {
+            return '';
+        }
+        $value = strip_tags($value);
+        $value = preg_replace('/[\x00-\x1F]/', '', $value);
+        return str_replace(['"', "'"], ['&#34;', '&#39;'], $value);
+    }
+
     private static function custom_validity_check($key, $value) {
         if ($key === 'sort' or $key === 'find_groups_sort' or $key === 'workshops_sort') {
             if (!((0 === substr_compare($value, " DESC", -5)) or (0 === substr_compare($value, " ASC", -4)))) {
@@ -76,7 +85,14 @@ return filter_var ($value, FILTER_VALIDATE_INT);
     private static function init() {
         foreach (self::GET_PARAMS as $key => $filter) {
             if (array_key_exists($key, $_GET)) {
-                $keyval = trim(filter_input(INPUT_GET, $key, $filter, self::defaultFlag($filter)));
+                $keyval = filter_input(INPUT_GET, $key, $filter, 0);
+                if ($keyval === null) {
+                    continue;
+                }
+                if ($filter === FILTER_UNSAFE_RAW) {
+                    $keyval = self::sanitizeString($keyval);
+                }
+                $keyval = trim($keyval);
 
                 if ($keyval !== "" &&  self::custom_validity_check($key, $keyval)) {
                     self::$data[$key] = $keyval;
@@ -93,16 +109,10 @@ return filter_var ($value, FILTER_VALIDATE_INT);
         }
         //$isSafari
         if (isset($_SERVER['HTTP_USER_AGENT'])) {
-            $userAgent = trim(filter_input(INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW));
+            $userAgent = trim(self::sanitizeString(filter_input(INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_UNSAFE_RAW)));
             if (preg_match("/^((?!chrome|android).)*safari/i", $userAgent) || preg_match("/.*MSIE [23456789]\..*/i", $userAgent)) {
                 self::$noDatalist = true;
             }
-        }
-    }
-
-    private static function defaultFlag($filter) {
-        if ($filter == FILTER_SANITIZE_STRING) {
-            return FILTER_FLAG_STRIP_LOW;
         }
     }
 
